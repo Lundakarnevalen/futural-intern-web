@@ -3,12 +3,15 @@ source 'https://rubygems.org'
 # Main rails dependency
 gem 'rails', '4.0.2'
 
-# Security is overrated.
-gem 'protected_attributes'
+
+# General dependencies
+gem 'devise'
+gem 'protected_attributes' # Security is overrated.
 
 # Production dependencies
 group :production do
-  gem 'mysql2'
+  gem 'pg'
+  gem 'rails_12factor'
 end
 
 # Development dependencies
@@ -26,4 +29,5 @@ end
 # Asset compilation dependencies
 group :assets do
   gem 'uglifier'
+  gem 'sass-rails'
 end

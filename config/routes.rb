@@ -1,5 +1,7 @@
 Futural::Application.routes.draw do
-  root 'karnevalister#index'
-
   resources :karnevalister
+
+  devise_for :users
+
+  root to: 'home#index'
 end
