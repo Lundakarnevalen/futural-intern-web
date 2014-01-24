@@ -1,4 +1,12 @@
-<h1>Karnevalistan</h1>
+<% content_for :head do %>
+<%= stylesheet_link_tag    :karnevalister, :media => :all %>
+<% end %>
+
+<div class="header">
+	<div class="container">
+		<h1>Karnevalistan</h1>
+	</div>
+</div>
 
 <ul>
   <% @karnevalister.each do |k| %>

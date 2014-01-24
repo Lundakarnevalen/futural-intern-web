@@ -36,7 +36,7 @@ class KarnevalisterController < ApplicationController
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
     @method = :post
-    render :edit
+    render :new
   end
 
   def create
