@@ -152,3 +152,44 @@ label {
 	border-bottom: rgba(255,255,255,0.5) 1px dashed;
 	margin: 0 0 15px 0;
 }
+
+/* KARNEVALISTER */
+
+.logo {
+	padding: 30px 0;
+	margin: 0 auto;
+	max-width: 640px;
+	width: 100%
+}
+
+.logo img {
+	width: 640px;
+}
+
+.logo p {
+	color: white;
+	text-align: center;
+	font-size: 1.5em;
+}
+
+#progressbar {
+	padding: 10px 0;
+}
+
+@media only screen and (max-width: 640px) {
+	.logo {
+		max-width: 100%;
+	}
+
+	.logo img {
+		width: 100%;
+	}
+
+	.logo p {
+		font-size: 0.8em;
+	}
+
+	#progressbar {
+		padding: 0;
+	}
+}
