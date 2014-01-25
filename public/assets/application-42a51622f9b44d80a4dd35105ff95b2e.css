@@ -90,7 +90,7 @@ input[type="checkbox"] + label:before {
 	margin-right: 10px;
 	position: absolute;
 	left: 0;
-	bottom: 20%;
+	bottom: 0;
 	background-color: #f3f3f3;
 
 	border-radius: 2px;
@@ -101,7 +101,7 @@ input[type=checkbox]:checked + label:before {
     font-size: 30px;  
     color: rgba(238,104,95,1);
     text-align: center;  
-    line-height: 32px;  
+    line-height: 15px;  
 } 
 
 input[type='checkbox'] {
