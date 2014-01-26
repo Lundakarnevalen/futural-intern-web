@@ -10,6 +10,8 @@ gem 'protected_attributes' # Security is overrated.
 gem 'jquery-rails', '~> 2.1'
 gem 'gcm'
 
+gem "postmark-rails", "~> 0.6.0"
+
 # Production dependencies
 group :production do
   gem 'pg'
