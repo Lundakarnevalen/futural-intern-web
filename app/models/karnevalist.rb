@@ -7,4 +7,6 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :nation
   belongs_to :storlek
   belongs_to :korkort
+
+  has_attached_file :foto
 end
