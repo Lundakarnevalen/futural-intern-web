@@ -1,0 +1,13 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag :notifications, :media => :all %>
+<% end %>
+
+<div class="header">
+	<div class="container">
+		<h1>Push-meddelanden för Android</h1>
+	</div>
+</div>
+
+<h2>Skickat <%= "#{@notification.created_at}" %></h2>
+<p><%= "#{@notification.text}" %></p>
+

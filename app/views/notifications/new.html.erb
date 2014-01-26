@@ -1,0 +1,33 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag :notifications, :media => :all %>
+<% end %>
+
+<div class="header">
+  <div class="container">
+    <h1>Push-meddelanden för Android</h1>
+  </div>
+</div>
+<div class="container">
+  <%= form_for(@notification) do |f| %>
+    <h2>Nytt push-meddelande</h2>
+    <% if @notification.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+        <% @notification.errors.each do |field, msg| %>
+          <li><%= msg %></li>
+        <% end %>
+        </ul>
+      </div>
+    <% end %>
+
+    <div class=form-group>
+      <%= f.label :text, "Vad vill du skicka till Android-appen?" %>
+      <br>
+      <%= f.text_area :text, :rows => 6, :cols => 40 %>
+    </div>
+
+    <div class=form-controls>
+      <%= f.submit "Skicka" %>
+    </div>
+  <% end %>
+</div>

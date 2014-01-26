@@ -8,6 +8,7 @@ gem 'rails', '4.0.2'
 gem 'devise'
 gem 'protected_attributes' # Security is overrated.
 gem 'jquery-rails', '~> 2.1'
+gem 'gcm'
 
 # Production dependencies
 group :production do

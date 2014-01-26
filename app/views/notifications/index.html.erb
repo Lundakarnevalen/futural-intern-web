@@ -1,0 +1,19 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag :notifications, :media => :all %>
+<% end %>
+
+<div class="header">
+	<div class="container">
+		<h1>Push-meddelanden för Android</h1>
+	</div>
+</div>
+<ul>
+  <% @notifications.each do |n| %>
+    <li>
+      <a href=<%= url_for n %>>
+        <%= n.text %>
+      </a>
+    </li>
+  <% end %>
+</ul>
+

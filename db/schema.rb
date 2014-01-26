@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140122220708) do
+ActiveRecord::Schema.define(version: 20140125231802) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -76,6 +76,12 @@ ActiveRecord::Schema.define(version: 20140122220708) do
 
   create_table "nationer", force: true do |t|
     t.string "name", null: false
+  end
+
+  create_table "notifications", force: true do |t|
+    t.text     "text"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sektioner", force: true do |t|
