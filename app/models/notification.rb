@@ -1,3 +1,4 @@
 class Notification < ActiveRecord::Base
-  validates :text, :presence => {:message => "Du måste skriva något i fältet." }
+  validates :title, :presence => {:message => "Du måste skriva något i fältet Rubrik." }
+  validates :message, :presence => {:message => "Du måste skriva något i fältet Meddelande." }
 end
