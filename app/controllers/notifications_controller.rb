@@ -15,11 +15,11 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new(params[:notification])
-    api_key = "AIzaSyAlHznHeZCUJklbZxBBeKlw53sfkguXAJ4"
+    api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
 
     if @notification.save
       gcm = GCM.new(api_key)
-      registration_ids = Array.new
+      registration_ids = Array.new # Kan maximalt innehålla 1000 enheter (lös med for-loop)
       Karnevalist.all.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
@@ -27,10 +27,11 @@ class NotificationsController < ApplicationController
       end
       options = {
         'data' => {
+          'id' => @notification.id,
           'title' => @notification.title,
           'message' => @notification.message,
           'message_type' => @notification.message_type,
-          'created_at' => @notification.created_at
+          'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
         }
       }
       @response = gcm.send_notification(registration_ids, options)
