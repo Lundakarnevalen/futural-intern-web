@@ -15,15 +15,24 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new(params[:notification])
-    api_key = "123456789"
+    api_key = "AIzaSyAlHznHeZCUJklbZxBBeKlw53sfkguXAJ4"
 
     if @notification.save
       gcm = GCM.new(api_key)
       registration_ids = Array.new
       Karnevalist.all.each do |k|
-        registration_ids.push k.google_token
+        if !k.google_token.blank?
+          registration_ids.push k.google_token
+        end
       end
-      options = {data: {text: @notification.text}}
+      options = {
+        'data' => {
+          'title' => @notification.title,
+          'message' => @notification.message,
+          'message_type' => @notification.message_type,
+          'created_at' => @notification.created_at
+        }
+      }
       @response = gcm.send_notification(registration_ids, options)
       redirect_to :action => 'index'
     else

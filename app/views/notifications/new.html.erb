@@ -21,9 +21,15 @@
     <% end %>
 
     <div class=form-group>
-      <%= f.label :text, "Vad vill du skicka till Android-appen?" %>
+      <%= f.label :title, "Rubrik" %>
       <br>
-      <%= f.text_area :text, :rows => 6, :cols => 40 %>
+      <%= f.text_field :title %>
+    </div>
+
+    <div class=form-group>
+      <%= f.label :message, "Meddelande" %>
+      <br>
+      <%= f.text_area :message, :rows => 6, :cols => 40 %>
     </div>
 
     <div class=form-controls>

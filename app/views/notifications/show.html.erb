@@ -8,6 +8,11 @@
 	</div>
 </div>
 
-<h2>Skickat <%= "#{@notification.created_at}" %></h2>
-<p><%= "#{@notification.text}" %></p>
+<div class="container">
+    <h2><%= @notification.title %></h2>
+    <p><%= @notification.message %></p>
+    <br>
+    <p>Skickat <%= @notification.created_at %></p>
+</div>
+
 
