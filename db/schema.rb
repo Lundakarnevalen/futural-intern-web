@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140126112908) do
+ActiveRecord::Schema.define(version: 20140126180210) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -46,7 +46,7 @@ ActiveRecord::Schema.define(version: 20140126112908) do
     t.boolean  "jobbat_forman"
     t.boolean  "jobbat_aktiv"
     t.boolean  "karnevalist_2010"
-    t.string   "google_token"
+    t.text     "google_token"
     t.boolean  "vill_ansvara"
     t.integer  "snalla_intresse"
     t.integer  "snalla_sektion"
@@ -56,7 +56,7 @@ ActiveRecord::Schema.define(version: 20140126112908) do
     t.boolean  "medlem_kar"
     t.boolean  "medlem_nation"
     t.boolean  "karneveljsbiljett"
-    t.boolean  "utcheckad"
+    t.integer  "utcheckad"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
