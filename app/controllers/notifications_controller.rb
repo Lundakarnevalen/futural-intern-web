@@ -15,7 +15,7 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new(params[:notification])
-    api_key = "AIzaSyAlHznHeZCUJklbZxBBeKlw53sfkguXAJ4"
+    api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
 
     if @notification.save
       gcm = GCM.new(api_key)
