@@ -8,5 +8,9 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :storlek
   belongs_to :korkort
 
-  has_attached_file :foto
+  has_attached_file :foto, styles: {
+    thumb: '100x100>',
+    square: '200x200#',
+    medium: '300x300>'
+  }
 end
