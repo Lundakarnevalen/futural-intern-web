@@ -47,11 +47,11 @@ class KarnevalisterController < ApplicationController
         render :json => 
           if karnevalist.errors.any?
             { :status => :failure,
-              :message => karnevalist.errors.full_messages }
+              :message => karnevalist.errors.full_messages.join('; ') }
           else
             { :status => :success,
               :id => karnevalist.id,
-              :token => '#yoloswag' }
+              :token => karnevalist.password }
           end
       end
     end
@@ -59,7 +59,7 @@ class KarnevalisterController < ApplicationController
 
   def update
     karnevalist = Karnevalist.find params[:id]
-    karnevalist.update_attributes! params[:karnevalist]
+    karnevalist.update_if_password_valid params[:karnevalist]
     karnevalist.save
     respond_to do |format|
       format.html{ redirect_to karnevalist }
@@ -67,10 +67,9 @@ class KarnevalisterController < ApplicationController
         render :json => 
           if karnevalist.errors.any?
             { :status => :failure,
-              :message => karnevalist.errors.full_messages }
+              :message => karnevalist.errors.full_messages.join('; ') }
           else
-            { :status => :success,
-              :token => '#yoloswag' }
+            { :status => :success }
           end
       end
     end
