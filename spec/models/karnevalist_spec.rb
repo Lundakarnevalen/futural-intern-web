@@ -14,8 +14,12 @@ describe (K = Karnevalist) do
       K.create(:email => nil, :fornamn => 'irrelevant').errors.should_not be_empty
     end
 
-    it 'creates a user with every new karnevalist' do
-      create_some_guy().user.should_not be_nil
+    it 'creates one and only one user with every karnevalist' do
+      k = create_some_guy
+      u = k.user
+      u.should_not be_nil
+      k.save
+      k.user.should eq(u)
     end
 
     it 'does not expose the password in obvious ways' do
