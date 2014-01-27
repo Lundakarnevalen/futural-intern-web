@@ -141,8 +141,9 @@
       <% Intresse.all.each do |i| %>
         <%= f.radio_button :snalla_intresse, i.id %>
         <%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
-                          @intresse_ids.include?(i.id) %>
-        <%= f.label nil, i.name %>
+                          @intresse_ids.include?(i.id), 
+                          :id => "karnevalist_intresse_id_#{i.id}" %>
+        <%= f.label "intresse_id_#{i.id}", i.name %>
         <br>
       <% end %>
     </div>
@@ -153,8 +154,9 @@
       <% Sektion.all.each do |s| %>
         <%= f.radio_button :snalla_sektion, s.id %>
         <%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
-                          @sektion_ids.include?(s.id) %>
-        <%= f.label nil, s.name %>
+                          @sektion_ids.include?(s.id),
+                          :id => "karnevalist_sektion_id_#{s.id}" %>
+        <%= f.label "sektion_id_#{s.id}", s.name %>
         <br>
       <% end %>
     </div>
