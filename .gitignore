@@ -14,3 +14,10 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+
+# Ignore rspec
+/.rspec
+
+# Ignore production assets etc.
+/public/system
+/public/assets
