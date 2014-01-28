@@ -20,19 +20,19 @@
       </div>
     <% end %>
 
-    <div class=form-group>
+    <div class="form-group">
       <%= f.label :title, "Rubrik" %>
-      <br>
+      
       <%= f.text_field :title %>
     </div>
 
-    <div class=form-group>
+    <div class="form-group">
       <%= f.label :message, "Meddelande" %>
-      <br>
+      
       <%= f.text_area :message, :rows => 6, :cols => 40 %>
     </div>
 
-    <div class=form-controls>
+    <div class="form-controls">
       <%= f.hidden_field :message_type, :value => 0 %>
       <%= f.submit "Skicka" %>
     </div>

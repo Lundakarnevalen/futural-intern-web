@@ -1,202 +1,190 @@
 <div class="header">
-  <div class="container">
-    <h1>Karnevalistlisteregistret</h1>
-  </div>
+	<div class="container">
+		<h1>Karnevalistlisteregistret</h1>
+	</div>
 </div>
 <div class="container">
-  <%= form_for @karnevalist, :method => @method do |f| %>
-    <h2>Dina uppgifter</h2>
+	<%= form_for @karnevalist, :method => @method do |f| %>
+	<h2>Dina uppgifter</h2>
 
-    <div class=form-group>
-      <%= f.label :id, 'ID' %>
-      <br>
-      <%= f.text_field :id, :disabled => true %>
-    </div>
+	<div class="form-group">
+		<%= f.label :id, 'ID' %>
+		<%= f.text_field :id, :disabled => true %>
+	</div>
+	<div class="form-group">
+		<%= f.label :personnummer, 'Personnummer' %>
+		<%= f.text_field :personnummer, :pattern => '[0-9]*' %>
+	</div>
+	<div class="form-group">
+		<%= f.label nil, 'Namn' %>
+		<%= f.text_field :fornamn, :placeholder => "Förnamn" %>
+		<%= f.text_field :efternamn, :placeholder => "Efternamn" %>
+	</div>
+	<div class="form-group">
+		<%= f.label nil, 'Kön' %>
+		<% Kon.order('id desc').all.each do |k| %>
+		<div>
+			<%= f.radio_button :kon_id, k.id %>
+			<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
+		</div>
+		<% end %>
+	</div>
+	<div class="form-group">
+		<%= f.label nil, 'Adress' %>
+		<%= f.text_field :gatuadress, :placeholder => "Gatuadress" %>
+		<%= f.text_field :postnr, :placeholder => "Postnummer" %>
+		<%= f.text_field :postort, :placeholder => "Ort" %>
+	</div>
+	<div class="form-group">
+		<%= f.label :email, 'Email' %>
+		<%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none %>
+	</div>
+	<div class="form-group">
+		<%= f.label :telnr, 'Telefonnummer' %>
+		<%= f.telephone_field :telnr %>
+	</div>
+	<div class="form-group">
+		<%= f.label :nation_id, 'Nation' %>
+		<div>
+			<%= f.select :nation_id, Nation.all.collect{ |n| [n.name, n.id] } %>
+		</div>
+	</div>
+	<div class="form-group">
+		<%= f.label :matpref, 'Matpreferenser' %>
+		<%= f.text_field :matpref %>
+	</div>
+	<div class="form-group">
+		<%= f.label :storlek_id, 'Klädstorlek' %>
+		<div>
+			<%= f.select :storlek_id, Storlek.all.collect{ |s| [s.name, s.id] } %>
+		</div>
+	</div>
+	<div class="form-group">
+		<%= f.label :terminer, 'Terminer i Lund' %>
+		<%= f.number_field :terminer, :pattern => '[0-9]*' %>
+	</div>
+	<div class="form-group">
+		<%= f.label :korkort_id, 'Körkortsbehörighet' %>
+		<div>
+			<%= f.select :korkort_id, Korkort.all.collect{ |k| [k.name, k.id] } %>
+		</div>
+	</div>
 
-    <div class=form-group>
-      <%= f.label :personnummer, 'Personnummer' %>
-      <br>
-      <%= f.text_field :personnummer, :pattern => '[0-9]*' %>
-    </div>
+	<h2>Tidigare engagemang</h2>
+	<h3>Jag har tidigare engagerat mig i</h3>
+	<div class="form-group">
+		<%= f.label :engagerad_kar, 'En studentkår, vilken och hur?' %>
+		<%= f.text_field :engagerad_kar %>
+	</div>
+	<div class="form-group">
+		<%= f.label :engagerad_nation, 'En nation, vilken och hur?' %>
+		<%= f.text_field :engagerad_nation %>
+	</div>
+	<div class="form-group">
+		<%= f.label :engagerad_studentikos, 'Annan studentikos förening?' %>
+		<%= f.text_field :engagerad_studentikos %>
+	</div>
+	<div class="form-group">
+		<%= f.label :engagerad_etc, 'Annan förening?' %>
+		<%= f.text_field :engagerad_etc %>
+	</div>
 
-    <div class=form-group>
-      <%= f.label nil, 'Namn' %>
-      <br>
-      <%= f.text_field :fornamn, :placeholder => "Förnamn" %>
-      <%= f.text_field :efternamn, :placeholder => "Efternamn" %>
-    </div>
+	<h3>Jag har tidigare varit aktiv som</h3>
+	<div class="form-group">
+		<div>
+			<%= f.check_box :jobbat_heltid %>
+			<%= f.label :jobbat_heltid, 'Heltidare' %>
+		</div>
+		<div> 
+			<%= f.check_box :jobbat_styrelse %>
+			<%= f.label :jobbat_styrelse, 'Styrelseledamot' %>
+		</div>
+		<div> 
+			<%= f.check_box :jobbat_forman %>
+			<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
+		</div>
+		<div> 
+			<%= f.check_box :jobbat_aktiv %>
+			<%= f.label :jobbat_aktiv, 'Jobbare' %>
+		</div>
 
-    <div class=form-group>
-      <%= f.label nil, 'Kön' %>
-      <br>
-      <% Kon.order('id desc').all.each do |k| %>
-        <%= f.radio_button :kon_id, k.id %>
-        <%= f.label nil, k.name %>
-      <% end %>
-    </div>
+		<h3>Lundakarnevalen</h3>
+		<div class="form-group">
+			<%= check_box :karnevalist, :karnevalist_2010 %>
+			<%= f.label :karnevalist_2010, 
+			'Jag var karnevalist under Lundakarnevalen 2010' %>
+		</div>
 
-    <div class=form-group>
-      <%= f.label nil, 'Adress' %>
-      <br>
-      <%= f.text_field :gatuadress, :placeholder => "Gatuadress" %>
-      <br>
-      <%= f.text_field :postnr, :placeholder => "Postnummer" %>
-      <%= f.text_field :postort, :placeholder => "Ort" %>
-    </div>
+		<h3>Intressen</h3>
+		<p>Bocka för de du är intresserad av. Sjärnmarkera det du är mest intresserad av.</p>
+		<div class="form-group">
+			<%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
+			<% Intresse.all.each do |i| %>
+			<div>
+				<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
+				<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
+				<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
+				@intresse_ids.include?(i.id), 
+				:id => "karnevalist_intresse_id_#{i.id}" %>
+				<%= f.label "intresse_id_#{i.id}", i.name %>
+			</div>
+			<% end %>
+		</div>
 
-    <div class=form-group>
-      <%= f.label :email, 'Email' %>
-      <br>
-      <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none %>
-    </div>
+		<h3>Sektioner</h3>
+		<div class="form-group">
+			<%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
+			<% Sektion.all.each do |s| %>
+			<div>
+				<%= f.radio_button :snalla_sektion, s.id, :class=>'radio_snalla' %>
+				<%= f.label "snalla_sektion_#{s.id}", ".", :class=>'radio_snalla' %>
+				<%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
+				@sektion_ids.include?(s.id),
+				:id => "karnevalist_sektion_id_#{s.id}" %>
+				<%= f.label "sektion_id_#{s.id}", s.name %>
+			</div>
+			<% end %>
+		</div>
+		<h3>Övrigt</h3>
+		<div class="form-group">
+			<%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
 
-    <div class=form-group>
-      <%= f.label :telnr, 'Telefonnummer' %>
-      <br>
-      <%= f.telephone_field :telnr %>
-    </div>
+			<%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
+		</div>
 
-    <div class=form-group>
-      <%= f.label :nation_id, 'Nation' %>
-      <br>
-<!--       <select>
-        <option>Test</option>
-      </select> -->
-      <%= f.select :nation_id, Nation.all.collect{ |n| [n.name, n.id] } %>
-    </div>
+		<h3>Utcheckning</h3>
+		<div class="form-group">
+			<%= f.label :foto %>
+			<%= f.file_field :foto %>
+			<%= image_tag @karnevalist.foto.url(:medium) %>
+		</div>
 
-    <div class=form-group>
-      <%= f.label :matpref, 'Matpreferenser' %>
-      <br>
-      <%= f.text_field :matpref %>
-    </div>
+		<div class="form-group">
+			<div>
+				<%= f.check_box :medlem_af %>
+				<%= f.label :medlem_af, 'Jag är medlem i AF' %>
+			</div>
+			<div>
+				<%= f.check_box :medlem_kar %>
+				<%= f.label :medlem_kar, 'Jag är medlem i min kår' %>
+			</div>
+			<div>
+				<%= f.check_box :medlem_nation %>
+				<%= f.label :medlem_nation, 'Jag är medlem i en nation' %>
+			</div>
+			<div>
+				<%= f.check_box :karneveljsbiljett %>
+				<%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
+			</div>
+		</div>
 
-    <div class=form-group>
-      <%= f.label :storlek_id, 'Klädstorlek' %>
-      <br>
-      <%= f.select :storlek_id, Storlek.all.collect{ |s| [s.name, s.id] } %>
-    </div>
+		<div class="form-group">
+			<%= f.check_box :utcheckad %>
+			<%= f.label :utcheckad, 'Karnevalisten är utcheckad och klar!' %>
+		</div>
 
-    <div class=form-group>
-      <%= f.label :terminer, 'Terminer i Lund' %>
-      <br>
-      <%= f.number_field :terminer, :pattern => '[0-9]*' %>
-    </div>
-
-    <div class=form-group>
-      <%= f.label :korkort_id, 'Körkortsbehörighet' %>
-      <br>
-      <%= f.select :korkort_id, Korkort.all.collect{ |k| [k.name, k.id] } %>
-    </div>
-
-    <h2>Tidigare engagemang</h2>
-
-    <h3>Jag har tidigare engagerat mig i</h3>
-    <div class=form-group>
-      <%= f.label :engagerad_kar, 'En studentkår, vilken och hur?' %>
-      <br>
-      <%= f.text_field :engagerad_kar %>
-    </div>
-    <div class=form-group>
-      <%= f.label :engagerad_nation, 'En nation, vilken och hur?' %>
-      <br>
-      <%= f.text_field :engagerad_nation %>
-    </div>
-    <div class=form-group>
-      <%= f.label :engagerad_studentikos, 'Annan studentikos förening?' %>
-      <br>
-      <%= f.text_field :engagerad_studentikos %>
-    </div>
-    <div class=form-group>
-      <%= f.label :engagerad_etc, 'Annan förening?' %>
-      <br>
-      <%= f.text_field :engagerad_etc %>
-    </div>
-
-    <h3>Jag har tidigare varit aktiv som</h3>
-    <div class=form-group>
-      <%= f.check_box :jobbat_heltid %>
-      <%= f.label :jobbat_heltid, 'Heltidare' %>
-      <br>
-      <%= f.check_box :jobbat_styrelse %>
-      <%= f.label :jobbat_styrelse, 'Styrelseledamot' %>
-      <br>
-      <%= f.check_box :jobbat_forman %>
-      <%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
-      <br>
-      <%= f.check_box :jobbat_aktiv %>
-      <%= f.label :jobbat_aktiv, 'Jobbare' %>
-    </div>
-
-    <h3>Lundakarnevalen</h3>
-    <div class=form-group>
-      <%= check_box :karnevalist, :karnevalist_2010 %>
-      <%= f.label :karnevalist_2010,
-                  'Jag var karnevalist under Lundakarnevalen 2010' %>
-    </div>
-
-    <h3>Intressen</h3>
-    <div class=form-group>
-      <%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
-      <% Intresse.all.each do |i| %>
-        <%= f.radio_button :snalla_intresse, i.id %>
-        <%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
-                          @intresse_ids.include?(i.id), 
-                          :id => "karnevalist_intresse_id_#{i.id}" %>
-        <%= f.label "intresse_id_#{i.id}", i.name %>
-        <br>
-      <% end %>
-    </div>
-
-    <h3>Sektioner</h3>
-    <div class=form-group>
-      <%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
-      <% Sektion.all.each do |s| %>
-        <%= f.radio_button :snalla_sektion, s.id %>
-        <%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
-                          @sektion_ids.include?(s.id),
-                          :id => "karnevalist_sektion_id_#{s.id}" %>
-        <%= f.label "sektion_id_#{s.id}", s.name %>
-        <br>
-      <% end %>
-    </div>
-    <h3>Övrigt</h3>
-    <div class=form-group>
-      <%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
-      <br>
-      <%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
-    </div>
-
-    <h3>Utcheckning</h3>
-    <div class=form-group>
-      <%= f.label :foto %>
-      <%= f.file_field :foto %>
-      <%= image_tag @karnevalist.foto.url(:medium) %>
-    </div>
-
-    <div class=form-group>
-      <%= f.check_box :medlem_af %>
-      <%= f.label :medlem_af, 'Jag är medlem i AF' %>
-      <br>
-      <%= f.check_box :medlem_kar %>
-      <%= f.label :medlem_kar, 'Jag är medlem i min kår' %>
-      <br>
-      <%= f.check_box :medlem_nation %>
-      <%= f.label :medlem_nation, 'Jag är medlem i en nation' %>
-      <br>
-      <%= f.check_box :karneveljsbiljett %>
-      <%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
-    </div>
-
-    <hr>
-
-    <div class=form-group>
-      <%= f.check_box :utcheckad %>
-      <%= f.label :utcheckad, 'Karnevalisten är utcheckad och klar!' %>
-    </div>
-
-    <div class=form-controls>
-      <%= f.submit'Spara' %>
-    </div>
-  <% end %>
-</div>
+		<div class="form-controls">
+			<%= f.submit'Spara' %>
+		</div>
+		<% end %>
+	</div>

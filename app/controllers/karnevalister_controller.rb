@@ -30,7 +30,64 @@ class KarnevalisterController < ApplicationController
 
   alias :edit :show
 
-  # HTML only
+    # Views for steps
+
+  def step1
+    @karnevalist = Karnevalist.new
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    @method = :post
+    render :step1
+  end
+
+  def step1_post
+    @karnevalist = Karnevalist.create params[:karnevalist]
+    redirect_to action: 'step2', id: @karnevalist.id
+  end
+
+  def step2
+    @karnevalist = Karnevalist.find params[:id]
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    @method = :post
+    render :step2
+  end
+
+  def enter_pwd
+    @karnevalist = Karnevalist.find params[:id]
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    if (params[:password] == "futural") 
+      redirect_to step3_karnevalist_path(@karnevalist)
+    else
+      render text: params[:password]
+    end
+  end
+
+  def step3
+    @karnevalist = Karnevalist.find params[:id]
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    @method = :put
+    render :step3
+  end
+
+  def step3_put
+    @karnevalist = Karnevalist.find params[:id]
+    @karnevalist.update_if_password_valid params[:karnevalist]
+    @karnevalist.save
+    redirect_to step4_karnevalist_path(@karnevalist)
+  end
+
+  def step4
+    @karnevalist = Karnevalist.find params[:id]
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    @method = :put
+    render :step4
+  end
+
+    # HTML only
   def new
     @karnevalist = Karnevalist.new
     @intresse_ids = @karnevalist.intresse_ids
