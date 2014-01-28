@@ -113,6 +113,12 @@ input[type='submit'] {
 	border-radius: 2px;
 }
 
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
 input:hover, textarea:hover, {
 	background-color: rgba(238,104,95,0.6);
 }
