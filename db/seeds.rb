@@ -28,15 +28,16 @@ Storlek.delete_all
   3 => 'M',
   4 => 'L',
   5 => 'XL',
-  6 => '> XL',
+  6 => 'XXL',
+  7 => 'XXXL',
 }.each{ |k, v| Storlek.create :id => k, :name => v }
 
 Korkort.delete_all
 { 0 => 'Ingen',
-  1 => 'B',
-  2 => 'B, C',
-  3 => 'B, D',
-  4 => 'B, C, D',
+  1 => 'B/BE',
+  2 => 'B/BE + C/CE',
+  3 => 'B/BE + D/DE',
+  4 => 'B/BE + C/CE + D/DE',
 }.each{ |k, v| Korkort.create :id => k, :name => v }
 
 Intresse.delete_all
@@ -70,11 +71,11 @@ Sektion.delete_all
   8   => 'Fabriken',
   9   => 'Klipperiet',
   10  => 'Kommunikation',
-  11  => 'Krog Anna',
-  12  => 'Krog Dahlstål',
-  13  => 'Krog Sara Gunnarsson',
-  14  => 'Krog Kågell',
-  15  => 'Krog Alexander',
+  11  => 'Krog Fine dine',
+  12  => 'Krog l[a]unchingpad',
+  13  => 'Krog Molnet',
+  14  => 'Krog Nangilima',
+  15  => 'Krog Undervatten',
   16  => 'Området',
   17  => 'Musiken',
   18  => 'Radion',
@@ -90,18 +91,16 @@ Sektion.delete_all
   100 => 'Festmästeriet - Bamba',
   101 => 'Festmästeriet - VIP',
   102 => 'Festmästeriet - Lager',
- 
-  200 => 'Smånöjen - Oklart',
-# ...
+
+  200 => 'Smånöjen - Vad som',
+  202 => 'Smånöjen - Undergången',
+  203 => 'Smånöjen - Sketcetera',
+  204 => 'Smånöjen - FuturalFuneral',
  
   300 => 'Tåget - Billig',
-  301 => 'Tåget - Vagn 1',
-# ...
   399 => 'Tåget - Centralt',
  
   400 => 'Tältnöjen - Billig',
-  401 => 'Tältnöjen - Tält 1',
-# ...
   499 => 'Tältnöjen - Centralt',
 }.each{ |k, v| Sektion.create :id => k, :name => v }
 
