@@ -15,10 +15,6 @@
 	font-size: 1.5em;
 }
 
-#progressbar {
-	padding: 10px 0;
-}
-
 @media only screen and (max-width: 640px) {
 	.logo {
 		max-width: 100%;
@@ -30,9 +26,5 @@
 
 	.logo p {
 		font-size: 0.8em;
-	}
-
-	#progressbar {
-		padding: 0;
 	}
 }
