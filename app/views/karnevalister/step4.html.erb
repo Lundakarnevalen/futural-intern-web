@@ -19,7 +19,7 @@
 		</div>
 		<p>karnevalist. Nu ska du välja vilken sektion du gillar.</p>
 	</div>
-	<%= form_for @karnevalist, :method => @method do |f| %>
+	<%= form_for @karnevalist, url: {action: "step4_put"}, :method => @method do |f| %>
 	<div>
 		<span class="title">STEG 1</span><span class="visa">visa</span>
 	</div>
