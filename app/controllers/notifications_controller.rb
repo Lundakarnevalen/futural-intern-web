@@ -3,6 +3,16 @@ class NotificationsController < ApplicationController
 
   def index
     @notifications = Notification.all
+    respond_to do |format|
+      format.html{ render }
+      format.json do
+        render :json => 
+          { :status => :success,
+            :records => @notifications.length,
+            :remaining => false,
+            :karnevalister => @notifications }
+      end
+    end
   end
 
   def show
