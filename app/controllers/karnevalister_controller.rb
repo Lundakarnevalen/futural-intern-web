@@ -93,7 +93,7 @@ class KarnevalisterController < ApplicationController
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
     @method = :put
-    render :step4
+    render :checkout
   end
 
   def checkout_put
