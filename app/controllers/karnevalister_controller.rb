@@ -89,6 +89,28 @@ class KarnevalisterController < ApplicationController
     render :step4
   end
 
+  def step4_put
+    @karnevalist = Karnevalist.find params[:id]
+    @karnevalist.update_if_password_valid params[:karnevalist]
+    if @karnevalist.save && !@karnevalist.google_token.blank?
+      api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+      gcm = GCM.new(api_key)
+      registration_id = Array.new
+      registration_id.push karnevalist.google_token
+      time = Time.new
+      options = {
+        'data' => {
+          'title' => 'Utcheckad!',
+          'message' => 'Nu är du utcheckad och klar, så nu kan du gå hem och sova.',
+          'message_type' => '0',
+          'created_at' => time.strftime("%y-%m-%d %h:%m")
+        }
+      }
+      @response = gcm.send_notification(registration_id, options)
+    end
+    redirect_to @karnevalist
+  end
+
     # HTML only
   def new
     @karnevalist = Karnevalist.new

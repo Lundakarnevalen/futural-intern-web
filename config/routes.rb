@@ -11,6 +11,7 @@ Futural::Application.routes.draw do
   		get 'step4'
   		post 'enter_pwd'
   		put 'step3_put'
+        put 'step4_put'
   	end
   end
 
