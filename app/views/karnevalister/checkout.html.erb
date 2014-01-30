@@ -13,13 +13,13 @@
 		<p><strong>Du vill bli karnevalist.</strong> Du är för tillfället</p>
 		<div style="margin: 0.25em 0;">
 			<div class="progressbar">
-				<div class="progress" style="width: 50%;"></div>
+				<div class="progress" style="width: 95%;"></div>
 			</div>
-			<div class="progress-percent">60 %</div>
+			<div class="progress-percent">95 %</div>
 		</div>
 		<p>karnevalist. Nu ska du välja vilken sektion du gillar.</p>
 	</div>
-	<%= form_for @karnevalist, url: {action: "step4_put"}, :method => @method do |f| %>
+	<%= form_for @karnevalist, url: {action: "checkout_put"}, :method => @method do |f| %>
 	<div>
 		<span class="title">STEG 1</span><span class="visa">visa</span>
 	</div>
@@ -215,10 +215,10 @@
 		</div>
 	</div>
 
-	<div class="form-group">
-		<%= f.check_box :utcheckad %>
-		<%= f.label :utcheckad, 'Karnevalisten är utcheckad och klar!' %>
-	</div>
+    <div class="form-controls">
+        <%= f.hidden_field :utcheckad, :value => 3 %>
+        <%= f.submit "Skicka" %>
+    </div>
 
 	<div class="form-controls">
 		<%= f.submit'Spara' %>

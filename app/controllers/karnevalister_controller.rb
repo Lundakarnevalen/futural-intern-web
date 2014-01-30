@@ -1,4 +1,6 @@
 class KarnevalisterController < ApplicationController
+  require 'gcm'
+
   def index
     @karnevalister = Karnevalist.all
     respond_to do |format|
@@ -83,8 +85,37 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
+    render :step4
+  end
+
+  def checkout
+    @karnevalist = Karnevalist.find params[:id]
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
     @method = :put
     render :step4
+  end
+
+  def checkout_put
+    @karnevalist = Karnevalist.find params[:id]
+    @karnevalist.update_if_password_valid params[:karnevalist]
+    if @karnevalist.save && !@karnevalist.google_token.blank?
+      api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+      gcm = GCM.new(api_key)
+      registration_id = Array.new
+      registration_id.push karnevalist.google_token
+      time = Time.new
+      options = {
+        'data' => {
+          'title' => 'Utcheckad!',
+          'message' => 'Nu är du utcheckad och klar, så nu kan du gå hem och sova.',
+          'message_type' => '0',
+          'created_at' => time.strftime("%y-%m-%d %h:%m")
+        }
+      }
+      @response = gcm.send_notification(registration_id, options)
+    end
+    redirect_to @karnevalist
   end
 
     # HTML only
@@ -129,6 +160,18 @@ class KarnevalisterController < ApplicationController
             { :status => :success }
           end
       end
+    end
+    if !karnevalist.google_token.blank?
+      api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+      gcm = GCM.new(api_key)
+      registration_id = Array.new
+      registration_id.push karnevalist.google_token
+      options = {
+        'data' => {
+          'message_type' => '1'
+        }
+      }
+      @response = gcm.send_notification(registration_id, options)  # Tells Android app that user should be updated.
     end
   end
 

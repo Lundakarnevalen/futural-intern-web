@@ -31,6 +31,17 @@ describe (K = Karnevalist) do
       k = create_some_guy
       k.user.valid_password?(k.password).should be_true
     end
+
+    it 'sets `utcheckad_at` if `utcheckad` is set for the first time' do
+      k = create_some_guy
+      k.utcheckad.should be_false
+      k.utcheckad_at.should be_nil
+      
+      k.utcheckad = true
+      k.save
+      k.utcheckad.should be_true
+      k.utcheckad_at.should_not be_nil
+    end
   end
 
   describe '#save' do
