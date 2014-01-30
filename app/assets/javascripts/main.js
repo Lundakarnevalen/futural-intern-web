@@ -1,7 +1,7 @@
 $(function() {
-	
+
 	var form = $('form');
-	if (form.length) {		
+	if (form.length) {
 		form.each(function() {
 			$(this).validate();
 		});
