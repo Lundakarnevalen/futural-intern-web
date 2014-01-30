@@ -29,44 +29,53 @@
     <div class="form-group">
       <%= f.label :personnummer, 'Personnummer' %>
       
-      <%= f.text_field :personnummer, :pattern => '[0-9]*' %>
+      <%= f.text_field :personnummer, :pattern => '[0-9]*', :required => true %>
     </div>
 
     <div class="form-group">
-      <%= f.label nil, 'Namn' %>
-      
-      <%= f.text_field :fornamn, :placeholder => "Förnamn" %>
-      <%= f.text_field :efternamn, :placeholder => "Efternamn" %>
+      <h3>Namn</h3>
+
+      <%= f.label :fornamn, 'Förnamn', :class => "structural" %>
+
+      <%= f.text_field :fornamn, :placeholder => "Förnamn", :required => true %>
+
+      <%= f.label :efternamn, 'Efternamn', :class => "structural" %>
+
+      <%= f.text_field :efternamn, :placeholder => "Efternamn", :required => true %>
     </div>
 
     <div class="form-group">
-      <%= f.label nil, 'Kön' %>
+     <h3>Kön</h3>
       
       <% Kon.order('id desc').all.each do |k| %>
-        <%= f.radio_button :kon_id, k.id %>
-        <%= f.label nil, k.name %>
+        <%= f.radio_button :kon_id, k.id, :required => true %>
+        <%= f.label "kon_id_#{k.id}", k.name %>
       <% end %>
     </div>
 
     <div class="form-group">
-      <%= f.label nil, 'Adress' %>
+      <h3>Adress</h3>
       
-      <%= f.text_field :gatuadress, :placeholder => "Gatuadress" %>
+      <%= f.label :gatuadress, 'Gatuadress', :class => "structural" %>
+      <%= f.text_field :gatuadress, :placeholder => "Gatuadress", :required => true %>
       
-      <%= f.text_field :postnr, :placeholder => "Postnummer" %>
-      <%= f.text_field :postort, :placeholder => "Ort" %>
+      <%= f.label :postnr, 'Postnummer', :class => "structural" %>
+      <%= f.text_field :postnr, :placeholder => "Postnummer", :required => true %>
+
+      <%= f.label :postort, 'Ort', :class => "structural" %>
+      <%= f.text_field :postort, :placeholder => "Ort", :required => true %>
     </div>
 
     <div class="form-group">
       <%= f.label :email, 'Email' %>
       
-      <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none %>
+      <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true %>
     </div>
 
     <div class="form-group">
       <%= f.label :telnr, 'Telefonnummer' %>
       
-      <%= f.telephone_field :telnr %>
+      <%= f.telephone_field :telnr, :required => true %>
     </div>
 
     <div class="form-group">
