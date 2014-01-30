@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140127122306) do
+ActiveRecord::Schema.define(version: 20140130204329) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -59,10 +59,6 @@ ActiveRecord::Schema.define(version: 20140127122306) do
     t.integer  "utcheckad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "foto_file_name"
-    t.string   "foto_content_type"
-    t.integer  "foto_file_size"
-    t.datetime "foto_updated_at"
     t.integer  "user_id"
   end
 

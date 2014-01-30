@@ -12,12 +12,6 @@ class Karnevalist < ActiveRecord::Base
 
   validates :email, :presence => true
 
-  has_attached_file :foto, styles: {
-    thumb: '100x100>',
-    square: '200x200#',
-    medium: '300x300>'
-  }
-
   before_save do
     if user.nil?
       # In memory only!
