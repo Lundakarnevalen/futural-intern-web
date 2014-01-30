@@ -13,6 +13,7 @@ module Futural
     config.time_zone = 'Stockholm'
     config.i18n.default_locale = :sv
     config.i18n.enforce_available_locales = true
+    I18n.config.enforce_available_locales = true
 
     # Postmark
     config.action_mailer.delivery_method   = :postmark
