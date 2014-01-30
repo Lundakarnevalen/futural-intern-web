@@ -1,3 +1,4 @@
+# encoding: utf-8
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
@@ -6,7 +7,7 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html{ render }
       format.json do
-        render :json => 
+        render :json =>
           { :status => :success,
             :records => @karnevalister.length,
             :remaining => false,
@@ -23,7 +24,7 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html{ render :edit }
       format.json do
-        render :json => 
+        render :json =>
           { :status => :success,
             :karnevalist => @karnevalist }
       end
@@ -59,7 +60,7 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
-    if (params[:password] == "futural") 
+    if (params[:password] == "futural")
       redirect_to step3_karnevalist_path(@karnevalist)
     else
       render text: params[:password]
@@ -132,7 +133,7 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
-        render :json => 
+        render :json =>
           if karnevalist.errors.any?
             { :status => :failure,
               :message => karnevalist.errors.full_messages.join('; ') }
@@ -152,7 +153,7 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
-        render :json => 
+        render :json =>
           if karnevalist.errors.any?
             { :status => :failure,
               :message => karnevalist.errors.full_messages.join('; ') }
@@ -179,8 +180,8 @@ class KarnevalisterController < ApplicationController
     Karnevalist.delete params[:id]
     respond_to do |format|
       format.html { redirect_to Karnevalist }
-      format.json do 
-        render :json => 
+      format.json do
+        render :json =>
           { :status => :success }
       end
     end
