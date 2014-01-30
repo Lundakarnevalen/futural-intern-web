@@ -1,3 +1,4 @@
+#encoding: utf-8
 Kon.delete_all
 { 0 => 'Oklart',
   1 => 'Man',
