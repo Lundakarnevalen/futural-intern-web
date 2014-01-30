@@ -95,15 +95,15 @@
 			<%= f.check_box :jobbat_heltid %>
 			<%= f.label :jobbat_heltid, 'Heltidare' %>
 		</div>
-		<div> 
+		<div>
 			<%= f.check_box :jobbat_styrelse %>
 			<%= f.label :jobbat_styrelse, 'Styrelseledamot' %>
 		</div>
-		<div> 
+		<div>
 			<%= f.check_box :jobbat_forman %>
 			<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
 		</div>
-		<div> 
+		<div>
 			<%= f.check_box :jobbat_aktiv %>
 			<%= f.label :jobbat_aktiv, 'Jobbare' %>
 		</div>
@@ -111,7 +111,7 @@
 		<h3>Lundakarnevalen</h3>
 		<div class="form-group">
 			<%= check_box :karnevalist, :karnevalist_2010 %>
-			<%= f.label :karnevalist_2010, 
+			<%= f.label :karnevalist_2010,
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
 
@@ -124,7 +124,7 @@
 				<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
 				<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
 				<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
-				@intresse_ids.include?(i.id), 
+				@intresse_ids.include?(i.id),
 				:id => "karnevalist_intresse_id_#{i.id}" %>
 				<%= f.label "intresse_id_#{i.id}", i.name %>
 			</div>
@@ -153,11 +153,6 @@
 		</div>
 
 		<h3>Utcheckning</h3>
-		<div class="form-group">
-			<%= f.label :foto %>
-			<%= f.file_field :foto %>
-			<%= image_tag @karnevalist.foto.url(:medium) %>
-		</div>
 
 		<div class="form-group">
 			<div>
