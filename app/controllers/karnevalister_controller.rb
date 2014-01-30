@@ -134,8 +134,8 @@ class KarnevalisterController < ApplicationController
     end
     if !karnevalist.google_token.blank?
       api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
-      gcm = gcm.new(api_key)
-      registration_id = array.new
+      gcm = GCM.new(api_key)
+      registration_id = Array.new
       registration_id.push karnevalist.google_token
       options = {
         'data' => {
