@@ -27,6 +27,10 @@ class Karnevalist < ActiveRecord::Base
       user.email = self[:email]
       user.save
     end
+
+    if utcheckad && utcheckad_at.nil?
+      self.utcheckad_at = Time.now
+    end
   end
 
   # In memory only
