@@ -59,7 +59,7 @@ Intresse.delete_all
   15 => 'Spexeri',
 }.each{ |k, v| Intresse.create :id => k, :name => v }
 
-Sektion.delete_all 
+Sektion.delete_all
 { 0   => 'Billig',
   1   => 'Barnevalen',
   2   => 'Biljetteriet',
@@ -87,7 +87,7 @@ Sektion.delete_all
   24  => 'Säkerhet',
   25  => 'Tombola',
   26  => 'Vieriet',
- 
+
   100 => 'Festmästeriet - Bamba',
   101 => 'Festmästeriet - VIP',
   102 => 'Festmästeriet - Lager',
@@ -96,11 +96,11 @@ Sektion.delete_all
   202 => 'Smånöjen - Undergången',
   203 => 'Smånöjen - Sketcetera',
   204 => 'Smånöjen - FuturalFuneral',
- 
-  300 => 'Tåget - Billig',
+
+  300 => 'Tåget - Vagn',
   399 => 'Tåget - Centralt',
- 
-  400 => 'Tältnöjen - Billig',
+
+  400 => 'Tältnöjen - Tält',
   499 => 'Tältnöjen - Centralt',
 }.each{ |k, v| Sektion.create :id => k, :name => v }
 
@@ -134,7 +134,7 @@ Karnevalist.create({
   :medlem_kar => true,
   :medlem_nation => false,
   :karneveljsbiljett => false,
-  :utcheckad => false, 
+  :utcheckad => false,
 })
 
 # Add J. Random Hackress
@@ -143,5 +143,5 @@ Karnevalist.create({
   :fornamn => 'Filippa',
   :efternamn => 'de Laval',
   :kon_id => Kon.where(:name => 'Kvinna').first.id(),
-  :utcheckad => true, 
+  :utcheckad => true,
 })
