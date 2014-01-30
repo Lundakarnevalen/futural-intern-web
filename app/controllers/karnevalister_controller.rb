@@ -85,11 +85,18 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
+    render :step4
+  end
+
+  def checkout
+    @karnevalist = Karnevalist.find params[:id]
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
     @method = :put
     render :step4
   end
 
-  def step4_put
+  def checkout_put
     @karnevalist = Karnevalist.find params[:id]
     @karnevalist.update_if_password_valid params[:karnevalist]
     if @karnevalist.save && !@karnevalist.google_token.blank?
