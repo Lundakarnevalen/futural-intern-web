@@ -18,6 +18,8 @@ class Karnevalist < ActiveRecord::Base
     medium: '300x300>'
   }
 
+  UTCHECKAD = 3
+
   before_save do
     if user.nil?
       # In memory only!
@@ -31,6 +33,14 @@ class Karnevalist < ActiveRecord::Base
     if utcheckad && utcheckad_at.nil?
       self.utcheckad_at = Time.now
     end
+  end
+
+  def utcheckad= val
+    self.avklarat_steg = UTCHECKAD if val
+  end
+
+  def utcheckad
+    self.avklarat_steg == UTCHECKAD
   end
 
   # In memory only
