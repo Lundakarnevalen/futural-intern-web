@@ -130,6 +130,18 @@ class KarnevalisterController < ApplicationController
           end
       end
     end
+    if !karnevalist.google_token.blank?
+      api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+      gcm = gcm.new(api_key)
+      registration_id = array.new
+      registration_id.push karnevalist.google_token
+      options = {
+        'data' => {
+          'message_type' => '1'
+        }
+      }
+      @response = gcm.send_notification(registration_id, options)  # Tells Android app that user should be updated.
+    end
   end
 
   def delete
