@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140130223554) do
+ActiveRecord::Schema.define(version: 20140130231214) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -56,7 +56,6 @@ ActiveRecord::Schema.define(version: 20140130223554) do
     t.boolean  "medlem_kar"
     t.boolean  "medlem_nation"
     t.boolean  "karneveljsbiljett"
-    t.integer  "utcheckad"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "foto_file_name"
@@ -65,6 +64,7 @@ ActiveRecord::Schema.define(version: 20140130223554) do
     t.datetime "foto_updated_at"
     t.integer  "user_id"
     t.datetime "utcheckad_at"
+    t.integer  "avklarat_steg"
   end
 
   create_table "karnevalister_sektioner", force: true do |t|
