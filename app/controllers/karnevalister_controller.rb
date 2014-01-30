@@ -1,4 +1,6 @@
 class KarnevalisterController < ApplicationController
+  require 'gcm'
+
   def index
     @karnevalister = Karnevalist.all
     respond_to do |format|
