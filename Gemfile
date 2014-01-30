@@ -12,9 +12,6 @@ gem 'gcm'
 
 gem "postmark-rails", "~> 0.6.0"
 
-gem 'paperclip'
-gem 'aws-sdk'
-
 # Production dependencies
 group :production do
   gem 'pg'
