@@ -9,9 +9,11 @@ Futural::Application.routes.draw do
   		get 'step2'
   		get 'step3'
   		get 'step4'
+        get 'checkout'
   		post 'enter_pwd'
   		put 'step3_put'
         put 'step4_put'
+        put 'checkout_put'
   	end
   end
 
