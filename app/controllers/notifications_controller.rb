@@ -1,3 +1,4 @@
+# encoding: utf-8
 class NotificationsController < ApplicationController
   require 'gcm'
 
@@ -6,7 +7,7 @@ class NotificationsController < ApplicationController
     respond_to do |format|
       format.html{ render }
       format.json do
-        render :json => 
+        render :json =>
           { :status => :success,
             :records => @notifications.length,
             :remaining => false,
@@ -18,7 +19,7 @@ class NotificationsController < ApplicationController
   def show
     @notification = Notification.find(params[:id])
   end
-  
+
   def new
     @notification = Notification.new
   end
