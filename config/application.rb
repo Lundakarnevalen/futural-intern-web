@@ -11,6 +11,7 @@ module Futural
     config.autoload_paths += ["#{config.root}/lib/**/"]
 
     config.time_zone = 'Stockholm'
+    config.active_record.default_timezone = :local
     config.i18n.default_locale = :sv
     config.i18n.enforce_available_locales = true
     I18n.config.enforce_available_locales = true

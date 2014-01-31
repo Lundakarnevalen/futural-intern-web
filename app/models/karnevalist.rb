@@ -9,6 +9,7 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :korkort
   belongs_to :user
   accepts_nested_attributes_for :user
+  belongs_to :phone
 
   mount_uploader :foto, FotoUploader
 
@@ -37,6 +38,10 @@ class Karnevalist < ActiveRecord::Base
 
   def utcheckad
     self.avklarat_steg == UTCHECKAD
+  end
+  
+  def avklarat_steg= val
+    self[:avklarat_steg] = val if val > self[:avklarat_steg]
   end
 
   # In memory only
