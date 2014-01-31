@@ -38,14 +38,14 @@
 
 		<div class="form-group">
 			<%= f.label nil, 'Namn' %>
-			
+
 			<%= f.text_field :fornamn, :placeholder => "Förnamn" %>
 			<%= f.text_field :efternamn, :placeholder => "Efternamn" %>
 		</div>
 
 		<div class="form-group">
 			<%= f.label nil, 'Kön' %>
-			
+
 			<% Kon.order('id desc').all.each do |k| %>
 			<div>
 				<%= f.radio_button :kon_id, k.id %>
@@ -128,15 +128,15 @@
 				<%= f.check_box :jobbat_heltid %>
 				<%= f.label :jobbat_heltid, 'Heltidare' %>
 			</div>
-			<div> 
+			<div>
 				<%= f.check_box :jobbat_styrelse %>
 				<%= f.label :jobbat_styrelse, 'Styrelseledamot' %>
 			</div>
-			<div> 
+			<div>
 				<%= f.check_box :jobbat_forman %>
 				<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
 			</div>
-			<div> 
+			<div>
 				<%= f.check_box :jobbat_aktiv %>
 				<%= f.label :jobbat_aktiv, 'Jobbare' %>
 			</div>
@@ -144,7 +144,7 @@
 		<h3>Lundakarnevalen</h3>
 		<div class="form-group">
 			<%= check_box :karnevalist, :karnevalist_2010 %>
-			<%= f.label :karnevalist_2010, 
+			<%= f.label :karnevalist_2010,
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
 	</div>
@@ -161,7 +161,7 @@
 				<%= f.radio_button :snalla_intresse, i.id %>
 				<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
 				<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
-				@intresse_ids.include?(i.id), 
+				@intresse_ids.include?(i.id),
 				:id => "karnevalist_intresse_id_#{i.id}" %>
 				<%= f.label "intresse_id_#{i.id}", i.name %>
 			</div>
@@ -190,7 +190,12 @@
 	</div>
 
 	<h3>Utcheckning</h3>
-    <!-- Add photo upload -->
+  <div class="form-group">
+    <div>
+      <%= f.label :foto %>
+      <%= f.file_field :foto %>
+    </div>
+  </div>
 
 	<div class="form-group">
 		<div>
