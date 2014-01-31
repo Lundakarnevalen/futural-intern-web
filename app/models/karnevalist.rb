@@ -37,6 +37,10 @@ class Karnevalist < ActiveRecord::Base
   def utcheckad
     self.avklarat_steg == UTCHECKAD
   end
+  
+  def avklarat_steg= val
+    self[:avklarat_steg] = val if val > self[:avklarat_steg]
+  end
 
   # In memory only
   def password
