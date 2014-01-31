@@ -85,7 +85,12 @@ ActiveRecord::Schema.define(version: 20140131014734) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "message"
-    t.integer  "message_type"
+  end
+
+  create_table "phones", force: true do |t|
+    t.text     "google_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sektioner", force: true do |t|

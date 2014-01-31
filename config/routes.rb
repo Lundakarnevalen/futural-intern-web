@@ -1,4 +1,5 @@
 Futural::Application.routes.draw do
+  resources :phones, only: [:new, :create]
   resources :notifications, only: [:new, :create, :show, :index]
   resources :karnevalister do 
   	collection do
