@@ -10,7 +10,7 @@ class NotificationsController < ApplicationController
           { :status => :success,
             :records => @notifications.length,
             :remaining => false,
-            :karnevalister => @notifications }
+            :notifications => @notifications }
       end
     end
   end
@@ -29,7 +29,7 @@ class NotificationsController < ApplicationController
 
     if @notification.save
       gcm = GCM.new(api_key)
-      registration_ids = Array.new # Kan maximalt innehålla 1000 enheter (lös med for-loop)
+      registration_ids = Array.new # kan maximalt innehålla 1000 enheter (lös med for-loop)
       Karnevalist.all.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
@@ -40,7 +40,7 @@ class NotificationsController < ApplicationController
           'id' => @notification.id,
           'title' => @notification.title,
           'message' => @notification.message,
-          'message_type' => @notification.message_type,
+          'message_type' => '0',
           'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
         }
       }
