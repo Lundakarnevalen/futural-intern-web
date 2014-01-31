@@ -39,9 +39,9 @@ class Karnevalist < ActiveRecord::Base
   def utcheckad
     self.avklarat_steg == UTCHECKAD
   end
-  
+
   def avklarat_steg= val
-    self[:avklarat_steg] = val if val > self[:avklarat_steg]
+    self[:avklarat_steg] = val if self[:avklarat_steg].nil? or val > self[:avklarat_steg]
   end
 
   # In memory only
