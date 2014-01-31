@@ -153,6 +153,13 @@
 		</div>
 
 		<h3>Utcheckning</h3>
+    <div class="form-group">
+      <div>
+        <%= f.label :foto %>
+        <%= f.file_field :foto %>
+      </div>
+      <%= image_tag @karnevalist.foto_url.to_s if @karnevalist.foto_url.present? %>
+    </div>
 
 		<div class="form-group">
 			<div>

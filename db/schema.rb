@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140130231214) do
+ActiveRecord::Schema.define(version: 20140131014734) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -51,7 +51,6 @@ ActiveRecord::Schema.define(version: 20140130231214) do
     t.integer  "snalla_intresse"
     t.integer  "snalla_sektion"
     t.text     "ovrigt"
-    t.string   "foto"
     t.boolean  "medlem_af"
     t.boolean  "medlem_kar"
     t.boolean  "medlem_nation"
@@ -61,6 +60,7 @@ ActiveRecord::Schema.define(version: 20140130231214) do
     t.integer  "user_id"
     t.datetime "utcheckad_at"
     t.integer  "avklarat_steg"
+    t.string   "foto"
   end
 
   create_table "karnevalister_sektioner", force: true do |t|

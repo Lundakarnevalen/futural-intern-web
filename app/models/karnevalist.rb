@@ -10,6 +10,8 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :user
   accepts_nested_attributes_for :user
 
+  mount_uploader :foto, FotoUploader
+
   validates :email, :presence => true
 
   UTCHECKAD = 3
