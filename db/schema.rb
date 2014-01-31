@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140130231214) do
+ActiveRecord::Schema.define(version: 20140131004619) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -85,7 +85,6 @@ ActiveRecord::Schema.define(version: 20140130231214) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "message"
-    t.integer  "message_type"
   end
 
   create_table "sektioner", force: true do |t|
