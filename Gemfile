@@ -12,6 +12,9 @@ gem 'gcm'
 
 gem "postmark-rails", "~> 0.6.0"
 
+gem 'carrierwave'
+gem "fog", "~> 1.3.1"
+
 # Production dependencies
 group :production do
   gem 'pg'
