@@ -104,7 +104,7 @@ class KarnevalisterController < ApplicationController
       api_key = "***REMOVED***"
       gcm = GCM.new(api_key)
       registration_id = Array.new
-      registration_id.push karnevalist.google_token
+      registration_id.push @karnevalist.google_token
       options = {
         'data' => {
           'title' => 'Utcheckad!',
