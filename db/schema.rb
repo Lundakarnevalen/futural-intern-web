@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131004619) do
+ActiveRecord::Schema.define(version: 20140131010513) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -85,6 +85,12 @@ ActiveRecord::Schema.define(version: 20140131004619) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "message"
+  end
+
+  create_table "phones", force: true do |t|
+    t.text     "google_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sektioner", force: true do |t|
