@@ -90,14 +90,29 @@ class KarnevalisterController < ApplicationController
   end
 
   def checkout
+    @id = params[:id]
+  end
+
+  def checkout_paper
+    @karnevalist = Karnevalist.new
+    @method = :post
+    render :checkout_paper
+  end
+
+  def checkout_paper_post
+    @karnevalist = Karnevalist.create params[:karnevalist]
+    redirect_to action: 'checkout', id: @karnevalist.id
+  end
+
+  def checkout_digital
     @karnevalist = Karnevalist.find params[:id]
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
     @method = :put
-    render :checkout
+    render :checkout_digital
   end
 
-  def checkout_put
+  def checkout_digital_put
     @karnevalist = Karnevalist.find params[:id]
     @karnevalist.update_if_password_valid params[:karnevalist]
     if @karnevalist.save && !@karnevalist.google_token.blank?
@@ -110,12 +125,12 @@ class KarnevalisterController < ApplicationController
           'title' => 'Utcheckad!',
           'message' => 'Nu är du utcheckad och klar, så nu kan du gå hem och sova.',
           'message_type' => '0',
-          'utcheckad_at' => @karnevalist.utcheckad_at
+          'utcheckad_at' => @karnevalist.utcheckad_at.strftime("%Y-%m-%d %H:%M")
         }
       }
       @response = gcm.send_notification(registration_id, options)
     end
-    redirect_to @karnevalist
+    redirect_to action: 'checkout', id: @karnevalist.id
   end
 
     # HTML only
