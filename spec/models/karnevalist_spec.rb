@@ -73,4 +73,32 @@ describe (K = Karnevalist) do
       k.email.should eq('some@guy.com')
     end
   end
+
+  describe '#search' do
+    def create_johan
+      K.create :email => 'johan@forberg.se', :fornamn => 'Johan',
+                         :efternamn => 'Förberg', :personnummer => '9110251817'
+    end
+
+    it 'performs simple matches' do
+      create_johan
+      K.search('johan').should_not be_empty
+      K.search('förberg').should_not be_empty
+      K.search('johan förberg').should_not be_empty
+      K.search('91').should_not be_empty
+    end
+
+    it 'performs direct matches' do
+      k = create_johan
+      K.search(k.id.to_s).to_a.should eq([k])
+    end
+
+    it 'does not return false matches' do
+      create_johan
+      K.search('apa').should be_empty
+      K.search('johann').should be_empty
+      K.search('johan förberger').should be_empty
+      K.search('9210251817').should be_empty
+    end
+  end
 end
