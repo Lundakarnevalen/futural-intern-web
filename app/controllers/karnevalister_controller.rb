@@ -18,9 +18,7 @@ class KarnevalisterController < ApplicationController
 
   def show
     @karnevalist = Karnevalist.find params[:id]
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
-    @method = :put
+    put_base
     respond_to do |format|
       format.html{ render :edit }
       format.json do
@@ -37,9 +35,7 @@ class KarnevalisterController < ApplicationController
 
   def new
     @karnevalist = Karnevalist.new
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
-    @method = :post
+    post_base
     render :new
   end
 
@@ -103,9 +99,18 @@ class KarnevalisterController < ApplicationController
   end
 
   def search
-    @karnevalister = Karnevalist.search params[:q]
+    @results = Karnevalist.search params[:q]
     respond_to do |format|
-      format.html{ render :index }
+      format.html do
+        if @results.length == 1
+          @karnevalist = @results[0]
+          put_base
+          render :edit
+        else
+          @karnevalister = @results
+          render :index
+        end
+      end
       format.json do
         render :json =>
           { :status => :success,
@@ -120,9 +125,7 @@ class KarnevalisterController < ApplicationController
 
   def step1
     @karnevalist = Karnevalist.new
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
-    @method = :post
+    post_base
     render :step1
   end
 
@@ -133,16 +136,13 @@ class KarnevalisterController < ApplicationController
 
   def step2
     @karnevalist = Karnevalist.find params[:id]
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
-    @method = :post
+    post_base
     render :step2
   end
 
   def enter_pwd
     @karnevalist = Karnevalist.find params[:id]
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
+    put_base
     if (params[:password] == "futural")
       redirect_to step3_karnevalist_path(@karnevalist)
     else
@@ -152,9 +152,7 @@ class KarnevalisterController < ApplicationController
 
   def step3
     @karnevalist = Karnevalist.find params[:id]
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
-    @method = :put
+    put_base
     render :step3
   end
 
@@ -167,8 +165,7 @@ class KarnevalisterController < ApplicationController
 
   def step4
     @karnevalist = Karnevalist.find params[:id]
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
+    put_base
     render :step4
   end
 
@@ -189,9 +186,7 @@ class KarnevalisterController < ApplicationController
 
   def checkout_digital
     @karnevalist = Karnevalist.find params[:id]
-    @intresse_ids = @karnevalist.intresse_ids
-    @sektion_ids = @karnevalist.sektion_ids
-    @method = :put
+    put_base
     render :checkout_digital
   end
 
@@ -214,5 +209,17 @@ class KarnevalisterController < ApplicationController
       @response = gcm.send_notification(registration_id, options)
     end
     redirect_to action: 'checkout', id: @karnevalist.id
+  end
+
+  def put_base
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    @method = :put
+  end
+
+  def post_base
+    @intresse_ids = @karnevalist.intresse_ids
+    @sektion_ids = @karnevalist.sektion_ids
+    @method = :post
   end
 end
