@@ -9,7 +9,6 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :korkort
   belongs_to :user
   accepts_nested_attributes_for :user
-  belongs_to :phone
 
   mount_uploader :foto, FotoUploader
 
