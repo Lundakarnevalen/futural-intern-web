@@ -3,10 +3,12 @@
 <% end %>
 
 <div class="header">
-	<div class="container">
-		<h1>Karnevalistan</h1>
-	</div>
+  <div class="container">
+    <h1>Karnevalistan</h1>
+  </div>
 </div>
+
+<%= render 'search_form' %>
 
 <ul>
   <% @karnevalister.each do |k| %>

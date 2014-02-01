@@ -31,6 +31,36 @@ class Karnevalist < ActiveRecord::Base
     end
   end
 
+  def self.search str
+    words = str.split ' '
+    # Search terms are chained together, one term after the other.
+    q = self.all
+    words.each do |w|
+      if (i = Integer w rescue nil)
+        # Search term is integer. Attempt direct match against id.
+        direct_match = Karnevalist.find i rescue nil
+        if direct_match
+          # Break if direct match.
+          return [direct_match]
+        else 
+          # Else attempt match against personnummer.
+          q = q.where('   id = :i
+                       or personnummer like :is', :i => i, :is => "%#{i}%")
+        end
+      else
+        # Search term is string. Attempt fuzzy match.
+        q = q.where('   upper(fornamn) like upper(:w) 
+                     or upper(efternamn) like upper(:w)', 
+                     :w => "%#{w}%")
+      end
+    end
+    return q
+  end
+
+  def personnummer= val
+    self[:personnummer] = val.gsub /[^0-9]/, ''
+  end
+
   def utcheckad= val
     self.avklarat_steg = UTCHECKAD if val
   end
