@@ -9,12 +9,22 @@
 		<p><strong>Dags att registrera en karnevalist.</strong></p>
 	</div>
     <% if !@id.blank? %>
-    <div class="id_box"> <!-- TODO: CSS - .id_box -->
+    <div class="info_box">
         <p>Karnevalist sparad med <strong>ID <%= @id %></strong>.</p>
     </div>
     <% end %>
 	<h2>Utcheckning av karnevalist</h2>
-    <a class="button" href="/karnevalister/checkout_paper">Papper</a> <!-- TODO: CSS a.button -->
-    <h3>Digital ansökan</h3>
-    <!-- TODO: Sökfuntion för att hitta digitala ansökningar -->
+    <h3>Pappersansökan</h3>
+    <%= link_to "Formulär - Pappersansökan", controller: "karnevalister", action: "checkout_paper" %>
+    <h3>Digital ansökan (Android/iPhone)</h3>
+    <%= render 'search_form' %>
+    <% if !@karnevalister.blank? %>
+    <ul>
+        <% @karnevalister.each do |k| %>
+            <li><%= link_to "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})", controller: "karnevalister", action: "checkout_digital", id: k %>
+            </a>
+            </li>
+        <% end %>
+    </ul>
+    <% end %>
 </div>
