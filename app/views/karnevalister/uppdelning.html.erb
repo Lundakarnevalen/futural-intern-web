@@ -1,0 +1,39 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag    :karnevalister, :media => :all %>
+<% end %>
+
+<div class="header">
+  <div class="container">
+    <h1>Uppdelning av karnevalister</h1>
+  </div>
+</div>
+
+<div class="container">
+  <%= render 'search_form' %>
+  <p><a href="http://datagrid.heroku.com/user_reports?utf8=%E2%9C%93&user_report%5Bid%5D=&user_report%5Bemail%5D=&user_report%5Bdisabled%5D=YES&user_report%5Bregistration_type%5D=FACEBOOK&user_report%5Blogins_count%5D%5B%5D=0&user_report%5Blogins_count%5D%5B%5D=9&user_report%5Bregistered_at%5D%5B%5D=&user_report%5Bregistered_at%5D%5B%5D=&user_report%5Bcondition%5D%5B%5D=id&user_report%5Bcondition%5D%5B%5D=%3D&user_report%5Bcondition%5D%5B%5D=&user_report%5Bcolumn_names%5D%5B%5D=&user_report%5Bcolumn_names%5D%5B%5D=&user_report%5Bcolumn_names%5D%5B%5D=&user_report%5Bcolumn_names%5D%5B%5D=&commit=Search"</a>Inspiration</a></p>
+  <p>Välj filter i sökrutan ovan. Skriv en variant av Johans sökfunktion. _search_filter_form.html.erb</p>
+</div>
+
+<table class="table table-condensed">
+  <thead>
+    <tr>
+      <th>Namn</th>
+      <th>Personnummer</th>
+      <th>Tilldelad sektion</th>
+      <th>Stjärnmarkerad sektion</th>
+      <th>Stjärnmarkerad funktion</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @karnevalister.each do |k| %>
+      <tr>
+        <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+        <td><%= k.personnummer %></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+

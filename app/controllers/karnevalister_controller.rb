@@ -105,10 +105,18 @@ class KarnevalisterController < ApplicationController
         if @results.length == 1
           @karnevalist = @results[0]
           put_base
-          render :edit
+          if URI(request.referer).path == '/karnevalister/checkout'
+            redirect_to action: 'checkout_digital', id: @karnevalist.id
+          else
+            redirect_to action: 'edit', id: @karnevalist.id
+          end
         else
           @karnevalister = @results
-          render :index
+          if URI(request.referer).path == '/karnevalister/checkout'
+            redirect_to action: 'checkout', q: params[:q]
+          else
+            render :index
+          end
         end
       end
       format.json do
@@ -120,6 +128,8 @@ class KarnevalisterController < ApplicationController
       end
     end
   end
+
+
 
   # Stuff for apps.
 
@@ -171,6 +181,9 @@ class KarnevalisterController < ApplicationController
 
   def checkout
     @id = params[:id]
+    if !params[:q].blank?
+      @karnevalister = Karnevalist.search params[:q]
+    end
   end
 
   def checkout_paper
@@ -209,6 +222,15 @@ class KarnevalisterController < ApplicationController
       @response = gcm.send_notification(registration_id, options)
     end
     redirect_to action: 'checkout', id: @karnevalist.id
+  end
+
+  def uppdelning
+    @karnevalister = Karnevalist.all
+  end
+
+  def show_modal
+    @karnevalist = Karnevalist.find params[:id]
+    put_base
   end
 
   def put_base
