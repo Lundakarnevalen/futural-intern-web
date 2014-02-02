@@ -16,6 +16,8 @@ module Futural
     config.i18n.enforce_available_locales = true
     I18n.config.enforce_available_locales = true
 
+    config.assets.precompile += %w(*.png *.jpg *.jpeg *.gif)
+
     # Postmark
     config.action_mailer.delivery_method   = :postmark
     config.action_mailer.postmark_settings = { :api_key => ENV['POSTMARK_API_KEY'] }
