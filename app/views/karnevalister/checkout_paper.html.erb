@@ -24,10 +24,12 @@
 		<%= f.text_field :id, :disabled => true %>
 	</div>
 
-	<div class="form-group">
-		<%= f.label :personnummer, 'Personnummer' %>
-		<%= f.text_field :personnummer, :pattern => '[0-9]*' %>
-	</div>
+    <div class="form-group">
+      <%= f.label :email, 'Email' %>
+      
+      <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true %>
+    </div>
+    
     <div class="form-group">
         <div>
             <%= f.label :foto %>
@@ -38,8 +40,6 @@
     <div class="form-controls">
         <%= f.hidden_field :avklarat_steg, :value => 3 %>
     </div>
-
-    <!-- # TODO: Fungerar ej i nuläget eftersom det är krav på att e-post ska anges. -->
 
 	<div class="form-controls">
 	  <%= submit_tag "Spara" %>

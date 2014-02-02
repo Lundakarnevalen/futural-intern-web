@@ -4,19 +4,21 @@
 
 <div class="header">
   <div class="container">
-    <h1>Karnevalistan</h1>
+    <h1>Karnevalistlisteregistret</h1>
   </div>
 </div>
 
-<%= render 'search_form' %>
+<div class="container">
+  <%= render 'search_form' %>
 
-<ul>
-  <% @karnevalister.each do |k| %>
-    <li>
-      <a href=<%= url_for k %>>
-        <%= "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})" %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+  <ul>
+    <% @karnevalister.each do |k| %>
+      <li>
+        <a href=<%= url_for k %>>
+          <%= "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})" %>
+        </a>
+      </li>
+    <% end %>
+  </ul>
+</div>
 

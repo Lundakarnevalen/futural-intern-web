@@ -4,11 +4,11 @@
 	</div>
 </div>
 
-<%= render 'search_form' %>
-
 <div class="container">
+    <%= render 'search_form' %>
+
 	<%= form_for @karnevalist, :method => @method do |f| %>
-	<h2>Dina uppgifter</h2>
+	<h2>Karnevalistens uppgifter</h2>
 
 	<div class="form-group">
 		<%= f.label :id, 'ID' %>

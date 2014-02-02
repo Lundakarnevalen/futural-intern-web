@@ -10,6 +10,11 @@
 <div class="container">
 	<div class="logo">
 		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
+<% if @karnevalist.avklarat_steg == 3 %>
+    </div>
+	<h2><%= "#{@karnevalist.fornamn} #{@karnevalist.efternamn}" %> är redan utcheckad.</h2>
+    <p><%= link_to "Tillbaka till utcheckningssidan", controller: "karnevalister", action: "checkout" %></p>
+<% else %>
 		<p><strong>Dags att registrera en karnevalist.</strong> Personen är för tillfället</p>
 		<div style="margin: 0.25em 0;">
 			<div class="progressbar">
@@ -189,13 +194,15 @@
 		</div>
 	</div>
 
-	<h3>Utcheckning</h3>
-  <div class="form-group">
-    <div>
-      <%= f.label :foto %>
-      <%= f.file_field :foto %>
+	<div>
+		<span class="title">UTCHECKNING</span>
+	</div>
+    <div class="form-group">
+        <div>
+            <%= f.label :foto %>
+            <%= f.file_field :foto %>
+        </div>
     </div>
-  </div>
 
 	<div class="form-group">
 		<div>
@@ -225,4 +232,5 @@
 	</div>
 
 	<% end %>
+<% end %>
 </div>
