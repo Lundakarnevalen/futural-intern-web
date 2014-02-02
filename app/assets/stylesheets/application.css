@@ -325,14 +325,14 @@ table {
 }
 
 .modal a.close-modal {
-    background: url('close.png') no-repeat 0 0;
+    background: url('/images/close.png') no-repeat 0 0;
     position: absolute;
     top: -2px;
     right: -3px;
 }
 
 .modal-spinner {
-    background: url('spinner.gif') #111 no-repeat center center;
+    background: url('/images/spinner.gif') #111 no-repeat center center;
 }
 
 /* KARNEVALISTER */
