@@ -1,3 +1,7 @@
+/*
+ *= require jquery.ui.all
+ *= require jquery.modal
+ */
 /* Hide text from screen readers
  * http://snook.ca/archives/html_and_css/hiding-content-for-accessibility
  */
@@ -61,7 +65,7 @@ h3 + p {
 
 .header {
 	width: auto;
-	margin: 0;
+	margin: 0 0 30px 0;
 	background: #ee685f url('/images/SektionerNavigation.png') right bottom no-repeat;
 	background-size: auto;
 }
@@ -96,6 +100,16 @@ h3 + p {
 }
 
 /* MAIN CONTENT */
+
+a {
+    color: #1919FF;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #08084C;
+    text-decoration: underline;
+}
 
 input, textarea {
 	padding: 20px;
@@ -218,6 +232,19 @@ input:disabled, input:disabled {
     color:    rgba(255,255,255,0.3);
 }
 
+select {
+    display: inline-block;
+    padding: 20px;
+	background-color: rgba(238,104,95,0.8);
+	border: none;
+	color: white;
+	font-size: 15px;
+}
+
+select option {
+    color: black;
+}
+
 .form-group {
 	margin: 0 0 20px 0;
 }
@@ -232,7 +259,7 @@ label {
 	margin: 0 0 15px 0;
 }
 
-#error_explanation {
+#error_explanation, .info_box {
     padding: 8px 35px 8px 14px;
     margin-bottom: 20px;
 	color: rgba(238,104,95,1);
@@ -255,10 +282,82 @@ div.error-message {
 }
 
 
+table {
+    max-width: 100%;
+    background-color: transparent;
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+.table {
+    width: 90%;
+    margin: 0 auto 20px;
+    color: #333333;
+}
+
+.table th, .table td {
+    padding: 8px;
+    line-height: 20px;
+    text-align: left;
+    vertical-align: top;
+    border-top: 1px solid #333333;
+}
+
+.table th {
+    font-weight: bold;
+}
+
+.table thead th {
+    vertical-align: bottom;
+}
+
+.table caption + thead tr:first-child th,
+.table caption + thead tr:first-child td,
+.table colgroup + thead tr:first-child th,
+.table colgroup + thead tr:first-child td,
+.table thead:first-child tr:first-child th,
+.table thead:first-child tr:first-child td {
+    border-top: 0;
+}
+
+.table tbody + tbody {
+    border-top: 2px solid #333333;
+}
+
+.table-condensed th, .table-condensed td {
+    padding: 4px 5px;
+}
+
+.table tbody tr.green > td {
+    background-color: #47B247;
+}
+
+.table tbody tr.yellow > td {
+    background-color: #FFFF5F;
+}
+
+.modal {
+    width: 600px;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 90%;
+}
+
+.modal a.close-modal {
+    background: url('/images/close.png') no-repeat 0 0;
+    position: absolute;
+    top: -2px;
+    right: -3px;
+}
+
+.modal-spinner {
+    background: url('/images/spinner.gif') #111 no-repeat center center;
+}
+
 /* KARNEVALISTER */
 
 .logo {
-	padding: 30px 0;
+	padding: 0 0 30px 0;
 	margin: 0 auto;
 	max-width: 640px;
 	width: 100%

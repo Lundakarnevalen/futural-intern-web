@@ -11,6 +11,8 @@ gem 'gcm'
 gem 'postmark-rails'
 gem 'carrierwave'
 gem 'fog'
+gem 'jquery-ui-rails'
+gem 'jquery-modal-rails'
 
 # Production dependencies
 group :production do

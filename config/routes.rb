@@ -11,12 +11,14 @@ Futural::Application.routes.draw do
       get 'checkout'
       get 'checkout_paper'
       post 'checkout_paper_post'
+      get 'uppdelning'
     end
     member do
       get 'step2'
       get 'step3'
       get 'step4'
       get 'checkout_digital'
+      get 'show_modal'
       post 'enter_pwd'
       put 'step3_put'
       put 'checkout_digital_put'
