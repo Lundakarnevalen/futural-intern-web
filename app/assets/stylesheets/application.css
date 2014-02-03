@@ -238,6 +238,18 @@ select option {
     color: black;
 }
 
+td select, #uppdelning_search select {
+    padding: 0px;
+}
+
+#uppdelning_search input {
+    padding: 15px;
+}
+
+#uppdelning_search input[type='submit'] {
+    width: 20%;
+}
+
 .form-group {
 	margin: 0 0 20px 0;
 }
@@ -281,7 +293,7 @@ table {
     line-height: 20px;
     text-align: left;
     vertical-align: top;
-    border-top: 1px solid #333333;
+    border-top: 1px solid #5C5C5C;
 }
 
 .table th {
@@ -302,7 +314,7 @@ table {
 }
 
 .table tbody + tbody {
-    border-top: 2px solid #333333;
+    border-top: 2px solid #5C5C5C;
 }
 
 .table-condensed th, .table-condensed td {
