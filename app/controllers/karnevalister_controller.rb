@@ -3,7 +3,7 @@ class KarnevalisterController < ApplicationController
   require 'gcm'
 
   def index
-    @karnevalister = Karnevalist.all
+    @karnevalister = Karnevalist.all.order("efternamn ASC")
     respond_to do |format|
       format.html{ render }
       format.json do
@@ -111,7 +111,7 @@ class KarnevalisterController < ApplicationController
             redirect_to action: 'edit', id: @karnevalist.id
           end
         else
-          @karnevalister = @results
+          @karnevalister = @results.order("efternamn ASC")
           if URI(request.referer).path == '/karnevalister/checkout'
             redirect_to action: 'checkout', q: params[:q]
           else
@@ -150,14 +150,15 @@ class KarnevalisterController < ApplicationController
       end
     end
     if params[:stjarnmarkerad_funktion] == 'all'
-      @karnevalister = @filter2
+      @filter3 = @filter2
     else
       if params[:stjarnmarkerad_funktion] == 'null'
-        @karnevalister = @filter2.where("snalla_intresse IS NULL")
+        @filter3 = @filter2.where("snalla_intresse IS NULL")
       else
-        @karnevalister = @filter2.where("snalla_intresse = ?", params[:stjarnmarkerad_funktion])
+        @filter3 = @filter2.where("snalla_intresse = ?", params[:stjarnmarkerad_funktion])
       end
     end
+    @karnevalister = @filter3.order("efternamn ASC")
     render :uppdelning
   end
 

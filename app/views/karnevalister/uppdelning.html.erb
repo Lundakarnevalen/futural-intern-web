@@ -13,7 +13,7 @@
 </div>
 
 <% if !@karnevalister.blank? %>
-<table class="table table-condensed">
+<table class="table table-condensed" id="uppdelning">
   <thead>
     <tr>
       <th>Namn</th>
@@ -21,44 +21,54 @@
       <th>Tilldelad sektion</th>
       <th>Stjärnmarkerad sektion</th>
       <th>Stjärnmarkerad funktion</th>
-      <th>Klar?</th>
+      <th class="center">Klar?</th>
     </tr>
   </thead>
   <tbody>
     <% @karnevalister.each do |k| %>
-      <tr>
-        <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
-        <td><%= k.personnummer %></td>
-        <td>
+      <% if !k.tilldelad_sektion.blank? && !k.tilldelad_klar %>
+        <tr id="<%= k.id %>" class="yellow">
+      <% elsif k.tilldelad_klar %>
+        <tr id="<%= k.id %>" class ="green">
+      <% else %>
+        <tr id="<%= k.id %>">
+      <% end %>
+          <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+          <td><%= k.personnummer %></td>
+          <td>
+            <form>
             <% if k.tilldelad_sektion.blank? %>
-              <!-- Ajax code -->
-              <%= form_tag '/karnevalister/search_filter', :method => :get do %>
-                <%= select_tag :tilldelad_sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), {:prompt => "-- Välj sektion --"} %>
-              <% end %>
+                <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name), {:prompt => "-- Välj sektion --", :id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
+            <% elsif !k.tilldelad_sektion.blank? && !k.tilldelad_klar %>
+                <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name, k.tilldelad_sektion), {:id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
             <% else %>
-                <%= Sektion.find(k.tilldelad_sektion).name %>
+                <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name, k.tilldelad_sektion), {:disabled => true, :id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
             <% end %>
-        </td>
-        <td>
+            </form>
+          </td>
+          <td>
             <% if !k.snalla_sektion.blank? %>
                 <%= Sektion.find(k.snalla_sektion).name %>
             <% end %>
-        </td>
-        <td>
+          </td>
+          <td>
             <% if !k.snalla_intresse.blank? %>
                 <%= Intresse.find(k.snalla_intresse).name %>
             <% end %>
-        </td>
-        <td>
-            <% if !k.tilldelad_sektion.blank? %>
+          </td>
+          <td class="center">
+            <form>
+            <% if k.tilldelad_sektion.blank? %>
+              <%= check_box_tag :tilldelad_klar, "true", false, {:disabled => true, :id => "checkbox#{k.id}", :onchange => "tilldelad_klar_submit(#{k.id})"} %>
+            <% else %>
               <% if k.tilldelad_klar %>
-                <img src="/images/yellowDot.png">
+                    <%= check_box_tag :tilldelad_klar, "true", true, {:id => "checkbox#{k.id}", :onchange => "tilldelad_klar_submit(#{k.id})"} %>
               <% else %>
-                <!-- Ska vara möjligt att ändra tilldelad sektion i detta läge -->
-                <img src="/images/greenDot.png">
+                    <%= check_box_tag :tilldelad_klar, "true", false, {:id => "checkbox#{k.id}", :onchange => "tilldelad_klar_submit(#{k.id})"} %>
               <% end %>
             <% end %>
-        </td>
+            </form>
+          </td>
       </tr>
     <% end %>
   </tbody>
