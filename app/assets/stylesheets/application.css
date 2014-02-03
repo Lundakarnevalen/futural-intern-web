@@ -99,6 +99,11 @@ h3 + p {
 	padding: 0 30px;
 }
 
+.wide {
+    width: 90%;
+    margin: 0 auto;
+}
+
 /* MAIN CONTENT */
 
 a {
@@ -219,6 +224,14 @@ input:disabled, input:disabled {
 	background-color: rgba(255,255,255,0.3);
 }
 
+.modal input:disabled {
+    background-color: rgba(238,104,95,0.8);
+}
+
+.modal h3 + p {
+    color: #333333;
+}
+
 ::-webkit-input-placeholder { /* WebKit browsers */
     color:    rgba(255,255,255,0.3);
 }
@@ -307,7 +320,7 @@ table {
 }
 
 .table {
-    width: 90%;
+    width: 100%;
     margin: 0 auto 20px;
     color: #333333;
 }

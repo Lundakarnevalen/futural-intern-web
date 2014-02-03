@@ -11,8 +11,9 @@
 <div class="container" id="uppdelning_search">
   <%= render 'search_filter_form' %>
 </div>
-
+<div class="wide">
 <% if !@karnevalister.blank? %>
+<h2>Sökresultat (<%= @karnevalister.count %> personer)</h2>
 <table class="table table-condensed" id="uppdelning">
   <thead>
     <tr>
@@ -73,4 +74,5 @@
     <% end %>
   </tbody>
 </table>
+</div>
 <% end %>

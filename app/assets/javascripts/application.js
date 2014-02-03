@@ -8,7 +8,7 @@
 function tilldelad_sektion_submit(karnevalist_id) {
     (function($){
         $.ajax({
-            url: 'http://www.karnevalist.se/karnevalister/'+karnevalist_id+'.json',
+            url: '/karnevalister/'+karnevalist_id+'.json',
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify({"karnevalist": {"tilldelad_sektion": $("#select"+karnevalist_id+" option:selected").val()}}),
@@ -26,7 +26,7 @@ function tilldelad_sektion_submit(karnevalist_id) {
 function tilldelad_klar_submit(karnevalist_id) {
     (function($){
         $.ajax({
-            url: 'http://www.karnevalist.se/karnevalister/'+karnevalist_id+'.json',
+            url: '/karnevalister/'+karnevalist_id+'.json',
             type: 'PUT',
             contentType: 'application/json',
             data: JSON.stringify({"karnevalist": {"tilldelad_klar": $("#checkbox"+karnevalist_id).prop('checked')}}),
