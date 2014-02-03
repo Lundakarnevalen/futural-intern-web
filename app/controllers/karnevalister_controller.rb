@@ -131,6 +131,7 @@ class KarnevalisterController < ApplicationController
 
   def search_filter
     @search = Karnevalist.search params[:q]
+    @search = @search.where("avklarat_steg = ?", 3)
     if params[:tilldelad_sektion] == 'all'
       @filter1 = @search
     else
