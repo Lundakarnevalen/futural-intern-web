@@ -131,32 +131,32 @@ class KarnevalisterController < ApplicationController
 
   def search_filter
     @search = Karnevalist.search params[:q]
-    if !params[:tilldelad_sektion].blank?
-      if params[:tilldelad_sektion] == 'NULL'
+    if params[:tilldelad_sektion] == 'all'
+      @filter1 = @search
+    else
+      if params[:tilldelad_sektion] == 'null'
         @filter1 = @search.where("tilldelad_sektion IS NULL")
       else
         @filter1 = @search.where("tilldelad_sektion = ?", params[:tilldelad_sektion])
       end
-    else
-      @filter1 = @search
     end
-    if !params[:stjarnmarkerad_sektion].blank?
-      if params[:stjarnmarkerad_sektion] == 'NULL'
+    if params[:stjarnmarkerad_sektion] == 'all'
+      @filter2 = @filter1
+    else
+      if params[:stjarnmarkerad_sektion] == 'null'
         @filter2 = @filter1.where("snalla_sektion IS NULL")
       else
         @filter2 = @filter1.where("snalla_sektion = ?", params[:stjarnmarkerad_sektion])
       end
-    else
-      @filter2 = @filter1
     end
-    if !params[:stjarnmarkerad_funktion].blank?
-      if params[:stjarnmarkerad_funktion] == 'NULL'
+    if params[:stjarnmarkerad_funktion] == 'all'
+      @karnevalister = @filter2
+    else
+      if params[:stjarnmarkerad_funktion] == 'null'
         @karnevalister = @filter2.where("snalla_intresse IS NULL")
       else
         @karnevalister = @filter2.where("snalla_intresse = ?", params[:stjarnmarkerad_funktion])
       end
-    else
-      @karnevalister = @filter2
     end
     render :uppdelning
   end
