@@ -129,6 +129,37 @@ class KarnevalisterController < ApplicationController
     end
   end
 
+  def search_filter
+    @search = Karnevalist.search params[:q]
+    if !params[:tilldelad_sektion].blank?
+      if params[:tilldelad_sektion] == 'NULL'
+        @filter1 = @search.where("tilldelad_sektion IS NULL")
+      else
+        @filter1 = @search.where("tilldelad_sektion = ?", params[:tilldelad_sektion])
+      end
+    else
+      @filter1 = @search
+    end
+    if !params[:stjarnmarkerad_sektion].blank?
+      if params[:stjarnmarkerad_sektion] == 'NULL'
+        @filter2 = @filter1.where("snalla_sektion IS NULL")
+      else
+        @filter2 = @filter1.where("snalla_sektion = ?", params[:stjarnmarkerad_sektion])
+      end
+    else
+      @filter2 = @filter1
+    end
+    if !params[:stjarnmarkerad_funktion].blank?
+      if params[:stjarnmarkerad_funktion] == 'NULL'
+        @karnevalister = @filter2.where("snalla_intresse IS NULL")
+      else
+        @karnevalister = @filter2.where("snalla_intresse = ?", params[:stjarnmarkerad_funktion])
+      end
+    else
+      @karnevalister = @filter2
+    end
+    render :uppdelning
+  end
 
 
   # Stuff for apps.
@@ -225,7 +256,6 @@ class KarnevalisterController < ApplicationController
   end
 
   def uppdelning
-    @karnevalister = Karnevalist.all
   end
 
   def show_modal

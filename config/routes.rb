@@ -12,6 +12,7 @@ Futural::Application.routes.draw do
       get 'checkout_paper'
       post 'checkout_paper_post'
       get 'uppdelning'
+      get 'search_filter', :action => 'search_filter'
     end
     member do
       get 'step2'

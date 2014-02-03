@@ -1,0 +1,21 @@
+<%= form_tag '/karnevalister/search_filter', :method => :get do %>
+  <div class="form-group">
+    <%= label_tag :q, 'Sök (namn, personnummer, e-post):' %>
+    <%= text_field_tag :q %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :tilldelad_sektion, 'Filtrera på tilldelad sektion:' %>
+    <%= select_tag :tilldelad_sektion, options_for_select([['Alla', ''], ['Ej tilldelad', 'NULL']])+options_from_collection_for_select(Sektion.all, :id, :name) %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :stjarnmarkerad_sektion, 'Filtrera på stjärnmarkerad sektion:' %>
+    <%= select_tag :stjarnmarkerad_sektion, options_for_select([['Alla', ''], ['Ej valt', 'NULL']])+options_from_collection_for_select(Sektion.all, :id, :name) %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :stjarnmarkerad_funktion, 'Filtrera på stjärnmarkerad sektion:' %>
+    <%= select_tag :stjarnmarkerad_funktion, options_for_select([['Alla', ''], ['Ej valt', 'NULL']])+options_from_collection_for_select(Intresse.all, :id, :name) %>
+  </div>
+  <div class="form-group">
+    <%= submit_tag 'Sök' %>
+  </div>
+<% end %>
