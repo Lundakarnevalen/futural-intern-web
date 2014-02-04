@@ -33,8 +33,7 @@
     </div>
 
     <div class="form-group">
-      <h3>Namn</h3>
-      <span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
+      <h3>Namn <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
 
       <%= f.label :fornamn, 'Förnamn', :class => "structural" %>
       <%= f.text_field :fornamn, :placeholder => "Förnamn", :required => true %>
@@ -44,8 +43,7 @@
     </div>
 
     <div class="form-group">
-     <h3>Kön</h3>
-     <span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
+     <h3>Kön <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
       
       <div class="radio-group">
       <% Kon.order('id desc').all.each do |k| %>
@@ -59,8 +57,8 @@
     </div>
 
     <div class="form-group">
-      <h3>Adress</h3>
-      <span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
+      <h3>Adress <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
+     
       
       <%= f.label :gatuadress, 'Gatuadress', :class => "structural" %>
       <%= f.text_field :gatuadress, :placeholder => "Gatuadress", :required => true %>
