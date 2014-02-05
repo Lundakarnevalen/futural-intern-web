@@ -50,7 +50,8 @@ class Karnevalist < ActiveRecord::Base
       else
         # Search term is string. Attempt fuzzy match.
         q = q.where('   upper(fornamn) like upper(:w)
-                     or upper(efternamn) like upper(:w)',
+                     or upper(efternamn) like upper(:w)
+                     or upper(email) like upper(:w)',
                      :w => "%#{w}%")
       end
     end
