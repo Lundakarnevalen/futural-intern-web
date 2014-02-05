@@ -1,5 +1,5 @@
 <% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
+<%= stylesheet_link_tag :karnevalister, :media => :all %>
 <% end %>
 
 <div class="header">
@@ -46,20 +46,17 @@
      <h3>Kön <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
       
       <div class="radio-group">
-      <% Kon.order('id desc').all.each do |k| %>
+        <% Kon.order('id desc').all.each do |k| %>
         <div>
-          <%= f.radio_button :kon_id, k.id, :required => true %>
-          <%= f.label "kon_id_#{k.id}", k.name %>
+          <%= f.radio_button :kon_id, k.id, :class=>'kon_radio', :required => true %>
+          <%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
         </div>
-      <% end %>
+        <% end %>
       </div>
-
     </div>
 
     <div class="form-group">
       <h3>Adress <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
-     
-      
       <%= f.label :gatuadress, 'Gatuadress', :class => "structural" %>
       <%= f.text_field :gatuadress, :placeholder => "Gatuadress", :required => true %>
       
@@ -103,7 +100,7 @@
 
     <div class="form-group">
       <%= f.label :terminer, 'Terminer i Lund' %>
-      <%= f.number_field :terminer, :pattern => '[0-9]*' %>
+      <%= f.number_field :terminer, :pattern => '[0-9]*', :min => 0 %>
     </div>
 
     <div class="form-group">
@@ -159,14 +156,23 @@
       <%= f.label :karnevalist_2010, 'Jag var karnevalist under Lundakarnevalen 2010' %>
     </div>
 
+    <div class=form-group>
+        <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept' %>
+        <%= label_tag 'pul', 'Jag accepterar att mina personuppgifter lagras enligt PUL' %>
+      </div>
+
     <h3>Intressen</h3>
+    <p>Bocka för de du är intresserad av. Sjärnmarkera det du är mest intresserad av.</p>
     <div class="form-group">
       <%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
       <% Intresse.all.each do |i| %>
       <div>
-        <%= f.radio_button :snalla_intresse, i.id %>
-        <%= check_box_tag 'karnevalist[intresse_ids][]', i.id, @intresse_ids.include?(i.id) %>
-        <%= f.label nil, i.name %>
+        <%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
+        <%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
+        <%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
+        @intresse_ids.include?(i.id),
+        :id => "karnevalist_intresse_id_#{i.id}" %>
+        <%= f.label "intresse_id_#{i.id}", i.name %>
       </div>
       <% end %>
     </div>
@@ -176,12 +182,16 @@
       <%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
       <% Sektion.all.each do |s| %>
       <div>
-        <%= f.radio_button :snalla_sektion, s.id %>
-        <%= check_box_tag 'karnevalist[sektion_ids][]', s.id, @sektion_ids.include?(s.id) %>
-        <%= f.label nil, s.name %>
+        <%= f.radio_button :snalla_sektion, s.id, :class=>'radio_snalla' %>
+        <%= f.label "snalla_sektion_#{s.id}", ".", :class=>'radio_snalla' %>
+        <%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
+        @sektion_ids.include?(s.id),
+        :id => "karnevalist_sektion_id_#{s.id}" %>
+        <%= f.label "sektion_id_#{s.id}", s.name %>
       </div>
       <% end %>
     </div>
+    
     <h3>Övrigt</h3>
     <div class="form-group">
       <%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
