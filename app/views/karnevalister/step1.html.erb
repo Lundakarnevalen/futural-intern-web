@@ -40,7 +40,7 @@
 		
 		<% Kon.order('id desc').all.each do |k| %>
 		<div>
-			<%= f.radio_button :kon_id, k.id %>
+			<%= f.radio_button :kon_id, k.id, :class=>'kon_radio'  %>
 			<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
 		</div>
 		<% end %>
@@ -88,7 +88,7 @@
 
 	<div class="form-group">
 		<%= f.label :terminer, 'Terminer i Lund' %>
-		<%= f.number_field :terminer, :pattern => '[0-9]*' %>
+		<%= f.number_field :terminer, :pattern => '[0-9]*', :min => 0 %>
 	</div>
 
 	<div class="form-group">
@@ -147,6 +147,11 @@
 			<%= f.label :karnevalist_2010, 
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
+
+	    <div class=form-group>
+	      <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept' %>
+	      <%= label_tag 'pul', 'Jag accepterar att mina personuppgifter lagras enligt PUL' %>
+	    </div>
 
 		<div class="form-controls">
 			<%= f.submit'Spara' %>

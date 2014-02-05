@@ -189,7 +189,8 @@ class KarnevalisterController < ApplicationController
     if (params[:password] == "futural")
       redirect_to step3_karnevalist_path(@karnevalist)
     else
-      render text: params[:password]
+      flash[:notice] = 'Fel lösenord. Du får veta vad lösenordet är när du kommer till Stora Salen i AF-borgen.'
+      redirect_to action: 'step2', id: @karnevalist.id
     end
   end
 
