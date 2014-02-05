@@ -40,8 +40,8 @@
 		
 		<% Kon.order('id desc').all.each do |k| %>
 		<div>
-			<%= f.radio_button :kon_id, k.id %>
-			<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
+			<%= f.radio_button :kon_id, k.id, :class=>'kon_radio'  %>
+			<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio'  %>
 		</div>
 		<% end %>
 	</div>
@@ -88,7 +88,7 @@
 
 	<div class="form-group">
 		<%= f.label :terminer, 'Terminer i Lund' %>
-		<%= f.number_field :terminer, :pattern => '[0-9]*' %>
+		<%= f.number_field :terminer, :pattern => '[0-9]*', :min => 0 %>
 	</div>
 
 	<div class="form-group">
