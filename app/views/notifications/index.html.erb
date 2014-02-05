@@ -4,16 +4,16 @@
 
 <div class="header">
 	<div class="container">
-		<h1>Push-meddelanden för Android</h1>
+		<h1>Push-meddelanden</h1>
 	</div>
 </div>
-<ul>
-  <% @notifications.each do |n| %>
-    <li>
-      <a href=<%= url_for n %>>
-        <%= n.title %>
-      </a>
-    </li>
-  <% end %>
-</ul>
+<div class="container">
+	<% @notifications.each do |n| %>
+		<a href=<%= url_for n %>>
+			<div class="message">
+				<div class="title"><%= n.title %></div>
+				<div class="date"><%= n.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+			</div>	
+	<% end %>
+</div>
 

@@ -1,0 +1,78 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag    :karnevalister, :media => :all %>
+<% end %>
+
+<div class="header">
+  <div class="container">
+    <h1>Uppdelning av karnevalister</h1>
+  </div>
+</div>
+
+<div class="container" id="uppdelning_search">
+  <%= render 'search_filter_form' %>
+</div>
+<div class="wide">
+<% if !@karnevalister.blank? %>
+<h2>Sökresultat (<%= @karnevalister.count %> personer)</h2>
+<table class="table table-condensed" id="uppdelning">
+  <thead>
+    <tr>
+      <th>Namn</th>
+      <th>Personnummer</th>
+      <th>Tilldelad sektion</th>
+      <th>Stjärnmarkerad sektion</th>
+      <th>Stjärnmarkerad funktion</th>
+      <th class="center">Klar?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @karnevalister.each do |k| %>
+      <% if !k.tilldelad_sektion.blank? && !k.tilldelad_klar %>
+        <tr id="<%= k.id %>" class="yellow">
+      <% elsif k.tilldelad_klar %>
+        <tr id="<%= k.id %>" class ="green">
+      <% else %>
+        <tr id="<%= k.id %>">
+      <% end %>
+          <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+          <td><%= k.personnummer %></td>
+          <td>
+            <form>
+            <% if k.tilldelad_sektion.blank? %>
+                <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name), {:prompt => "-- Välj sektion --", :id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
+            <% elsif !k.tilldelad_sektion.blank? && !k.tilldelad_klar %>
+                <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name, k.tilldelad_sektion), {:id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
+            <% else %>
+                <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name, k.tilldelad_sektion), {:disabled => true, :id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
+            <% end %>
+            </form>
+          </td>
+          <td>
+            <% if !k.snalla_sektion.blank? %>
+                <%= Sektion.find(k.snalla_sektion).name %>
+            <% end %>
+          </td>
+          <td>
+            <% if !k.snalla_intresse.blank? %>
+                <%= Intresse.find(k.snalla_intresse).name %>
+            <% end %>
+          </td>
+          <td class="center">
+            <form>
+            <% if k.tilldelad_sektion.blank? %>
+              <%= check_box_tag :tilldelad_klar, "true", false, {:disabled => true, :id => "checkbox#{k.id}", :onchange => "tilldelad_klar_submit(#{k.id})"} %>
+            <% else %>
+              <% if k.tilldelad_klar %>
+                    <%= check_box_tag :tilldelad_klar, "true", true, {:id => "checkbox#{k.id}", :onchange => "tilldelad_klar_submit(#{k.id})"} %>
+              <% else %>
+                    <%= check_box_tag :tilldelad_klar, "true", false, {:id => "checkbox#{k.id}", :onchange => "tilldelad_klar_submit(#{k.id})"} %>
+              <% end %>
+            <% end %>
+            </form>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>

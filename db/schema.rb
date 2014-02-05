@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140131014734) do
+ActiveRecord::Schema.define(version: 20140202213443) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -61,6 +61,8 @@ ActiveRecord::Schema.define(version: 20140131014734) do
     t.datetime "utcheckad_at"
     t.integer  "avklarat_steg"
     t.string   "foto"
+    t.integer  "tilldelad_sektion"
+    t.boolean  "tilldelad_klar"
   end
 
   create_table "karnevalister_sektioner", force: true do |t|
