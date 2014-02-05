@@ -1,0 +1,33 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag    :karnevalister, :media => :all %>
+<% end %>
+
+<div class="header">
+	<div class="container">
+		<h1>Karnevalistlisteregistret</h1>
+	</div>
+</div>
+<div class="container">
+	<div class="logo">
+		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
+		<p><strong>Du vill bli karnevalist.</strong> Du är för tillfället</p>
+		<div style="margin: 0.25em 0;">
+			<div class="progressbar">
+				<div class="progress" style="width: 25%;"></div>
+			</div>
+			<div class="progress-percent">25 %</div>
+		</div>
+		<p>karnevalist. Vi behöver ett lösenord.</p>
+	</div>
+
+	<%= form_tag enter_pwd_karnevalist_path(@karnevalist) do %>
+		<div class="form-group">
+			<%= label_tag "password", "Lösenord"%>
+			<%= password_field_tag "password" %>
+		</div>
+		<div class="form-controls">
+			<%= submit_tag "Spara" %>
+		</div>
+	<% end %>
+
+</div>

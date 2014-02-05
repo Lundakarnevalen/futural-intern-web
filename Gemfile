@@ -8,11 +8,11 @@ gem 'rails', '4.0.2'
 gem 'devise'
 gem 'protected_attributes' # Security is overrated.
 gem 'gcm'
-
-gem "postmark-rails", "~> 0.6.0"
-
-gem 'paperclip'
-gem 'aws-sdk'
+gem 'postmark-rails'
+gem 'carrierwave'
+gem 'fog'
+gem 'jquery-ui-rails'
+gem 'jquery-modal-rails'
 
 # Production dependencies
 group :production do
