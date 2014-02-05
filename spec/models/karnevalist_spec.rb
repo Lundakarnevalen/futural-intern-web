@@ -100,5 +100,10 @@ describe (K = Karnevalist) do
       K.search('johan förberger').should be_empty
       K.search('9210251817').should be_empty
     end
+
+    it 'can search for email' do
+      create_johan
+      K.search('johan@forberg.se').should_not be_empty
+    end
   end
 end
