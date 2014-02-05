@@ -136,12 +136,3 @@ Karnevalist.create({
   :karneveljsbiljett => false,
   :utcheckad => false, 
 })
-
-# Add J. Random Hackress
-Karnevalist.create({
-  :personnummer => '9101245240',
-  :fornamn => 'Filippa',
-  :efternamn => 'de Laval',
-  :kon_id => Kon.where(:name => 'Kvinna').first.id(),
-  :utcheckad => true, 
-})

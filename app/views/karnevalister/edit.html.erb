@@ -191,6 +191,13 @@
     <hr>
 
     <div class=form-group>
+      <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept' %>
+      <%= label_tag 'pul', 'Jag accepterar att mina personuppgifter lagras enligt PUL' %>
+    </div>
+
+    <hr>
+
+    <div class=form-group>
       <%= f.check_box :utcheckad %>
       <%= f.label :utcheckad, 'Karnevalisten är utcheckad och klar!' %>
     </div>
