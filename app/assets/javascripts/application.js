@@ -1,6 +1,9 @@
-// = require jquery
-// = require jquery_ujs
-// = require jquery.validate
-// = require additional-methods
-// = require messages_sv
-// = require main
+//= require jquery_ujs
+//= require notifications
+//= require karnevalister
+//= require jquery.validate
+//= require additional-methods
+//= require messages_sv
+//= require main
+//= require jquery.ui.all
+//= require jquery.modal

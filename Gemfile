@@ -7,13 +7,13 @@ gem 'rails', '4.0.2'
 # General dependencies
 gem 'devise'
 gem 'protected_attributes' # Security is overrated.
-gem 'jquery-rails', '~> 2.1'
 gem 'gcm'
-
-gem "postmark-rails", "~> 0.6.0"
-
+gem 'postmark-rails'
 gem 'carrierwave'
-gem "fog", "~> 1.3.1"
+gem 'fog'
+gem 'jquery-rails'
+gem 'jquery-ui-rails'
+gem 'jquery-modal-rails'
 
 # Production dependencies
 group :production do
