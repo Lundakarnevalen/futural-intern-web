@@ -86,4 +86,8 @@ class Karnevalist < ActiveRecord::Base
       fail StandardError, message
     end
   end
+
+  def as_json(options={})
+    super(:include =>[:sektioner, :intressen])
+  end
 end
