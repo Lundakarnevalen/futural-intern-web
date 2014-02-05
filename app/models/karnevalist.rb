@@ -42,15 +42,15 @@ class Karnevalist < ActiveRecord::Base
         if direct_match
           # Break if direct match.
           return [direct_match]
-        else 
+        else
           # Else attempt match against personnummer.
           q = q.where('   id = :i
                        or personnummer like :is', :i => i, :is => "%#{i}%")
         end
       else
         # Search term is string. Attempt fuzzy match.
-        q = q.where('   upper(fornamn) like upper(:w) 
-                     or upper(efternamn) like upper(:w)', 
+        q = q.where('   upper(fornamn) like upper(:w)
+                     or upper(efternamn) like upper(:w)',
                      :w => "%#{w}%")
       end
     end
