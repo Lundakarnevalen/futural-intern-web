@@ -4,15 +4,20 @@
 
 <div class="header">
 	<div class="container">
-		<h1>Push-meddelanden för Android</h1>
+		<h1>Push-meddelanden</h1>
 	</div>
 </div>
 
 <div class="container">
-    <h2><%= @notification.title %></h2>
-    <p><%= @notification.message %></p>
-    
-    <p>Skickat <%= @notification.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+	<div class="message">
+	    <h2><%= @notification.title %></h2>
+	    <p><%= @notification.message %></p>
+	    
+	    <p class="message-date">Skickat <%= @notification.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+	</div>
+	<a href="<%= notifications_path %>" ><div class="button">
+		Tillbaka
+	</div></a>
 </div>
 
 
