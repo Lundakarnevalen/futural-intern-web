@@ -134,6 +134,4 @@ Karnevalist.create({
   :medlem_kar => true,
   :medlem_nation => false,
   :karneveljsbiljett => false,
-<<<<<<< HEAD
->>>>>>> 0ff63a4d02a6ffc22b603a95f790627d2866b53d
 })
