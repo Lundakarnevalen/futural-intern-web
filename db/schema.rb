@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140127122306) do
+ActiveRecord::Schema.define(version: 20140202213443) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -51,19 +51,18 @@ ActiveRecord::Schema.define(version: 20140127122306) do
     t.integer  "snalla_intresse"
     t.integer  "snalla_sektion"
     t.text     "ovrigt"
-    t.string   "foto"
     t.boolean  "medlem_af"
     t.boolean  "medlem_kar"
     t.boolean  "medlem_nation"
     t.boolean  "karneveljsbiljett"
-    t.integer  "utcheckad"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "foto_file_name"
-    t.string   "foto_content_type"
-    t.integer  "foto_file_size"
-    t.datetime "foto_updated_at"
     t.integer  "user_id"
+    t.datetime "utcheckad_at"
+    t.integer  "avklarat_steg"
+    t.string   "foto"
+    t.integer  "tilldelad_sektion"
+    t.boolean  "tilldelad_klar"
   end
 
   create_table "karnevalister_sektioner", force: true do |t|
@@ -88,7 +87,12 @@ ActiveRecord::Schema.define(version: 20140127122306) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "message"
-    t.integer  "message_type"
+  end
+
+  create_table "phones", force: true do |t|
+    t.text     "google_token"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "sektioner", force: true do |t|

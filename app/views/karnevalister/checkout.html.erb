@@ -1,0 +1,30 @@
+<div class="header">
+  <div class="container">
+    <h1>Karnevalistlisteregistret</h1>
+  </div>
+</div>
+<div class="container">
+	<div class="logo">
+		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
+		<p><strong>Dags att registrera en karnevalist.</strong></p>
+	</div>
+    <% if !@id.blank? %>
+    <div class="info_box">
+        <p>Karnevalist sparad med <strong>ID <%= @id %></strong>.</p>
+    </div>
+    <% end %>
+	<h2>Utcheckning av karnevalist</h2>
+    <h3>Pappersansökan</h3>
+    <%= link_to "Formulär - Pappersansökan", controller: "karnevalister", action: "checkout_paper" %>
+    <h3>Digital ansökan (Android/iPhone)</h3>
+    <%= render 'search_form' %>
+    <% if !@karnevalister.blank? %>
+    <ul>
+        <% @karnevalister.each do |k| %>
+            <li><%= link_to "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})", controller: "karnevalister", action: "checkout_digital", id: k %>
+            </a>
+            </li>
+        <% end %>
+    </ul>
+    <% end %>
+</div>

@@ -1,11 +1,12 @@
+#encoding: utf-8
 Kon.delete_all
-{ 0 => 'Oklart',
+{ 0 => 'Annat',
   1 => 'Man',
   2 => 'Kvinna',
 }.each{ |k, v| Kon.create :id => k, :name => v }
 
 Nation.delete_all
-{ 0  => 'Oklart',
+{ 0  => 'Vet ej',
   1  => 'Blekingska',
   2  => 'Göteborgs',
   3  => 'Hallands',
@@ -22,7 +23,7 @@ Nation.delete_all
 }.each{ |k, v| Nation.create :id => k, :name => v }
 
 Storlek.delete_all
-{ 0 => 'Oklar',
+{
   1 => 'XS',
   2 => 'S',
   3 => 'M',
@@ -33,7 +34,7 @@ Storlek.delete_all
 }.each{ |k, v| Storlek.create :id => k, :name => v }
 
 Korkort.delete_all
-{ 0 => 'Ingen',
+{ 0 => 'Inget',
   1 => 'B/BE',
   2 => 'B/BE + C/CE',
   3 => 'B/BE + D/DE',
@@ -41,26 +42,26 @@ Korkort.delete_all
 }.each{ |k, v| Korkort.create :id => k, :name => v }
 
 Intresse.delete_all
-{ 0  => 'Billig',
+{ 0  => 'Allt! Jag kan göra vad som helst, jag vill bara vara med.',
   1  => 'Mat',
   2  => 'Dryck',
-  3  => 'Teknik',
-  4  => 'Layout',
+  3  => 'Teknik (ljud, ljus, el)',
+  4  => 'Layout/design',
   5  => 'IT',
   6  => 'Skriva',
-  7  => 'Fota & filma',
+  7  => 'Fota/filma/redigering',
   8  => 'Adminstration',
   9  => 'Försäljning',
   10 => 'Säkerhet',
-  11 => 'Bygga',
-  12 => 'Dekorera',
+  11 => 'Bygga/snickra',
+  12 => 'Måla/dekoration',
   13 => 'Sy',
   14 => 'Smink',
-  15 => 'Spexeri',
+  15 => 'Skådespela/sjunga/dansa/spela instrument',
 }.each{ |k, v| Intresse.create :id => k, :name => v }
 
-Sektion.delete_all 
-{ 0   => 'Billig',
+Sektion.delete_all
+{ 0   => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.',
   1   => 'Barnevalen',
   2   => 'Biljetteriet',
   3   => 'Blädderiet',
@@ -87,20 +88,19 @@ Sektion.delete_all
   24  => 'Säkerhet',
   25  => 'Tombola',
   26  => 'Vieriet',
- 
+
   100 => 'Festmästeriet - Bamba',
   101 => 'Festmästeriet - VIP',
   102 => 'Festmästeriet - Lager',
 
-  200 => 'Smånöjen - Vad som',
-  202 => 'Smånöjen - Undergången',
-  203 => 'Smånöjen - Sketcetera',
-  204 => 'Smånöjen - FuturalFuneral',
- 
-  300 => 'Tåget - Billig',
+  202 => 'Smånöjena - Undergången',
+  203 => 'Smånöjena - Sketcetera',
+  204 => 'Smånöjena - FuturalFuneral',
+
+  300 => 'Tåget - Vagn',
   399 => 'Tåget - Centralt',
- 
-  400 => 'Tältnöjen - Billig',
+
+  400 => 'Tältnöjen - Tält',
   499 => 'Tältnöjen - Centralt',
 }.each{ |k, v| Sektion.create :id => k, :name => v }
 
@@ -128,11 +128,12 @@ Karnevalist.create({
   :jobbat_forman => true,
   :jobbat_aktiv => true,
   :karnevalist_2010 => false,
-  :intressen => Intresse.where(:name => 'Billig'),
-  :sektioner => Sektion.where(:name => 'Billig'),
+  :intressen => Intresse.where(:name => 'Allt! Jag kan göra vad som helst, jag vill bara vara med.'),
+  :sektioner => Sektion.where(:name => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.'),
   :medlem_af => false,
   :medlem_kar => true,
   :medlem_nation => false,
   :karneveljsbiljett => false,
-  :utcheckad => false, 
+<<<<<<< HEAD
+>>>>>>> 0ff63a4d02a6ffc22b603a95f790627d2866b53d
 })
