@@ -148,6 +148,11 @@
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
 
+		    <div class=form-group>
+		      <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept' %>
+		      <%= label_tag 'pul', 'Jag accepterar att mina personuppgifter lagras enligt PUL' %>
+		    </div>
+
 		<div class="form-controls">
 			<%= f.submit'Spara' %>
 		</div>
