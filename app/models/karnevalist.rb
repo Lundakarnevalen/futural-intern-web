@@ -89,6 +89,9 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def as_json(options={})
-    super(:include =>[:sektioner, :intressen])
+    super.merge({
+      'intresse_ids' => self.intresse_ids,
+      'sektion_ids' => self.sektion_ids,
+    })
   end
 end
