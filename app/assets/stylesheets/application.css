@@ -344,7 +344,6 @@ div.error-message {
 .photo {
 	width: 80%;
 	border: 1em solid white;
-	rotate: 30deg;
 	transform: rotate(7deg);
 	-ms-transform: rotate(7deg);
 	-webkit-transform: rotate(7deg);
