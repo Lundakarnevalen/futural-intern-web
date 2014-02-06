@@ -37,52 +37,49 @@
       <div>
         <%= f.label :foto %>
         <script type="text/javascript">
-        Camera.prototype.print = function() {
-          var imagepath = this.videoUrl;
-          var height = 480
-          var width = 640
+        Camera.prototype = {
+          print: function() {
+            var imagepath = this.videoUrl;
+            var height = 480
+            var width = 640
 
-          var output = '<img SRC="' + imagepath + '"width="' + width + '"height="' + height +'" width="' + width;
-          output += '" border=0 ALT="If no image is displayed, there might be too many viewers, or the browser configuration may have to be changed. See help for detailed instructions on how to do this." width=' + width + ' height=' + height +' width=' + width + ' id="camera_photo">';
+            var output = '<img SRC="' + imagepath + '"width="' + width + '"height="' + height +'" width="' + width;
+            output += '" border=0 ALT="If no image is displayed, there might be too many viewers, or the browser configuration may have to be changed. See help for detailed instructions on how to do this." width=' + width + ' height=' + height +' width=' + width + ' id="camera_photo">';
 
-          document.write(output);
+            document.write(output);
+          },
+
+          snapshot: function() {
+            var img = document.getElementById('camera_photo');
+            var self = this;
+            img.onload = function(e) {
+              var b64 = self._getBase64Image(img);
+              document.getElementById('karnevalist_image_data').value = b64;
+            };
+            img.crossOrigin = '';
+            img.src = this.photoUrl;
+          },
+
+          video: function() {
+            var img = document.getElementById('camera_photo');
+            img.src = this.videoUrl;
+          },
+
+          // Code taken from MatthewCrumley
+          // http://stackoverflow.com/a/934925/298479
+          _getBase64Image: function() {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            var dataURL = canvas.toDataURL("image/png");
+
+            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+          }
         };
-
-        // Code taken from MatthewCrumley
-        // http://stackoverflow.com/a/934925/298479
-        Camera.prototype._getBase64Image = function(img) {
-          // Create an empty canvas element
-          var canvas = document.createElement("canvas");
-          canvas.width = img.width;
-          canvas.height = img.height;
-
-          // Copy the image contents to the canvas
-          var ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0);
-
-          // Get the data-URL formatted image
-          // Firefox supports PNG and JPEG. You could check img.src to guess the
-          // original format, but be aware the using "image/jpg" will re-encode the image.
-          var dataURL = canvas.toDataURL("image/png");
-
-          return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
-        };
-
-        Camera.prototype.snapshot = function(){
-          var img = document.getElementById('camera_photo');
-          var self = this;
-          img.onload = function(e) {
-            var b64 = self._getBase64Image(img);
-            document.getElementById('karnevalist_image_data').value = b64;
-          };
-          img.crossOrigin = '';
-          img.src = this.photoUrl;
-        };
-
-        Camera.prototype.video = function(){
-          var img = document.getElementById('camera_photo');
-          img.src = this.videoUrl;
-        }
 
         function Camera(cameraUrl) {
           this.cameraUrl = cameraUrl;
