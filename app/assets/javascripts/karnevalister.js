@@ -4,7 +4,7 @@ $(function() {
   }).submit(function(e) {
     var that = this;
     var $mustAccept = $('input.must-accept');
-    if($mustAccept.lengt > 0 && !$mustAccept.is(':checked')) {
+    if($mustAccept.length > 0 && !$mustAccept.is(':checked')) {
       e.preventDefault();
       alert(
         'Du måste acceptera att vi lagrar dina personuppgifter enligt PUL!'
