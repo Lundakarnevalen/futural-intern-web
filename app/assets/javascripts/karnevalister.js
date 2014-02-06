@@ -4,13 +4,25 @@ $(function() {
   }).submit(function(e) {
     var that = this;
     var $mustAccept = $('input#pul.must-accept');
-    if($mustAccept.length > 0 && !$mustAccept.is(':checked')) {
+    if($mustAccept.length && !$mustAccept.is(':checked')) {
       e.preventDefault();
       alert(
         'Du måste acceptera att vi lagrar dina personuppgifter enligt PUL!'
       );
     }
   });
+
+  var $musicInterest = $('input#karnevalist_intresse_id_15');
+  if ($musicInterest.length) {
+    $musicInterest.change(function(){
+      if ($musicInterest.is(':checked')) {
+        alert(
+          'För att få skådespela, sjunga, spela eller dansa måste du komma på audition! '
+          + 'Auditionstid bokas hos Nöjessektionen i Stora Salen.'
+        );
+      }
+    });
+  }
 });
 
 function tilldelad_sektion_submit(karnevalist_id) {
