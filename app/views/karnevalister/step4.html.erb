@@ -23,8 +23,11 @@
 		<p>karnevalist. Vi behöver bara en bild på dig.</p>
         <p>Den tar du längst fram vid <b>disken inuti AF-borgen</b>
 	</div>
-	<div>
+	<div class="message">
         <h2>Dina uppgifter</h2>
-        <p>Ska se likadant ut som i Android-appen</p>
+        <p><strong>Namn: </strong><%= @karnevalist.fornamn + " " + @karnevalist.efternamn %></p>
+        <p><strong>E-post: </strong><%= @karnevalist.email %></p>
+        <p><strong>Personnummer: </strong><%= @karnevalist.personnummer %></p>
 	</div>
+    <%= button_to "Redigera mina uppgifter", {controller: "karnevalister", action: "step3"}, {method: :get} %>
 </div>

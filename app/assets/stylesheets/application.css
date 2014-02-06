@@ -317,6 +317,16 @@ div.error-message {
     border-radius: 4px;
 }
 
+.message {
+	background-color: white;
+	padding: 0.8em 1em 1.2em 1em;
+	border-radius: 0.25em;
+	list-style: none;
+	margin-bottom: 0.3em;
+	color: rgba(238,104,95,1);
+	position: relative;
+}
+
 
 table {
     max-width: 100%;
