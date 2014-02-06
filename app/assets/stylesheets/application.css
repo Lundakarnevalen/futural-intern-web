@@ -158,7 +158,8 @@ input[type="checkbox"] + label, input[type="radio"] + label.radio_snalla, input[
     position: relative;  
      
     margin-right: 10px;  
-    font-size: 0.75em;  
+    font-size: 0.75em;
+    max-width: 75%;  
 }
 
 input[type="radio"] + label.radio_snalla:before {
