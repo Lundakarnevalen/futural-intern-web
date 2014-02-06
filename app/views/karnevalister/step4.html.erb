@@ -2,11 +2,14 @@
 <%= stylesheet_link_tag    :karnevalister, :media => :all %>
 <% end %>
 
+<% if !(browser.iphone? && browser.version == "0") %>
 <div class="header">
 	<div class="container">
-		<h1>Karnevalistlisteregistret</h1>
+		<h1>Registrering</h1>
 	</div>
 </div>
+<% end %>
+
 <div class="container">
 	<div class="logo">
 		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
