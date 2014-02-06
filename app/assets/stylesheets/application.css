@@ -65,7 +65,7 @@ h3 + p {
 .header {
 	width: auto;
 	margin: 0 0 30px 0;
-	background: #ee685f url('/images/SektionerNavigation.png') right bottom no-repeat;
+	background: #ee685f url('/images/header_bg.png') right bottom no-repeat;
 	background-size: auto;
 }
 
