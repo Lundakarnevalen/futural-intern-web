@@ -20,8 +20,50 @@
 		<p>karnevalist. Nu ska du välja vilken sektion du gillar.</p>
 	</div>
 	<%= form_for @karnevalist, url: {action: "step3_put"}, :method => @method do |f| %>
-	<span class="title">STEG 1</span><span class="visa">visa</span>
-	<div id="steg1" style="display:none">
+	<h3>Intressen</h3>
+	<p>
+    Bocka för det du är intresserad av (minst 3).
+    Stjärnmarkera det du är mest intresserad av.
+  </p>
+	<div class="form-group">
+		<%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
+		<% Intresse.all.each do |i| %>
+		<div>
+			<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
+			<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
+			<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
+			@intresse_ids.include?(i.id),
+			:id => "karnevalist_intresse_id_#{i.id}" %>
+			<%= f.label "intresse_id_#{i.id}", i.name %>
+		</div>
+		<% end %>
+	</div>
+
+	<h3>Sektioner</h3>
+  <p>
+    Bocka för de sektioner du är intresserad av (minst 5).
+    Stjärnmarkera den sektion du är mest intresserad av.
+  </p>
+	<div class="form-group">
+		<%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
+		<% Sektion.all.each do |s| %>
+		<div>
+			<%= f.radio_button :snalla_sektion, s.id, :class=>'radio_snalla' %>
+			<%= f.label "snalla_sektion_#{s.id}", ".", :class=>'radio_snalla' %>
+			<%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
+			@sektion_ids.include?(s.id),
+			:id => "karnevalist_sektion_id_#{s.id}" %>
+			<%= f.label "sektion_id_#{s.id}", s.name %>
+		</div>
+		<% end %>
+	</div>
+	<h3>Övrigt</h3>
+	<div class="form-group">
+		<%= f.label :ovrigt, 'Är det något annat du vill berätta? Har du andra relevanta erfarenheter?' %>
+
+		<%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
+	</div>
+	<div id="steg1">
 		<h2>Dina uppgifter</h2>
 
 		<div class="form-group">
@@ -145,50 +187,6 @@
 			<%= f.label :karnevalist_2010,
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
-	</div>
-
-	<h3>Intressen</h3>
-	<p>
-    Bocka för det du är intresserad av (minst 3).
-    Stjärnmarkera det du är mest intresserad av.
-  </p>
-	<div class="form-group">
-		<%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
-		<% Intresse.all.each do |i| %>
-		<div>
-			<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
-			<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
-			<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
-			@intresse_ids.include?(i.id),
-			:id => "karnevalist_intresse_id_#{i.id}" %>
-			<%= f.label "intresse_id_#{i.id}", i.name %>
-		</div>
-		<% end %>
-	</div>
-
-	<h3>Sektioner</h3>
-  <p>
-    Bocka för de sektioner du är intresserad av (minst 5).
-    Stjärnmarkera den sektion du är mest intresserad av.
-  </p>
-	<div class="form-group">
-		<%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
-		<% Sektion.all.each do |s| %>
-		<div>
-			<%= f.radio_button :snalla_sektion, s.id, :class=>'radio_snalla' %>
-			<%= f.label "snalla_sektion_#{s.id}", ".", :class=>'radio_snalla' %>
-			<%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
-			@sektion_ids.include?(s.id),
-			:id => "karnevalist_sektion_id_#{s.id}" %>
-			<%= f.label "sektion_id_#{s.id}", s.name %>
-		</div>
-		<% end %>
-	</div>
-	<h3>Övrigt</h3>
-	<div class="form-group">
-		<%= f.label :ovrigt, 'Är det något annat du vill berätta? Har du andra relevanta erfarenheter?' %>
-
-		<%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
 	</div>
 	<div class="form-controls">
       <%= f.submit'Spara' %>
