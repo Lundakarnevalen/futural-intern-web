@@ -26,6 +26,10 @@ class Karnevalist < ActiveRecord::Base
       user.save
     end
 
+    if self.avklarat_steg.nil?
+      self.avklarat_steg = 1
+    end
+
     if utcheckad && utcheckad_at.nil?
       self.utcheckad_at = Time.now
     end
@@ -93,5 +97,29 @@ class Karnevalist < ActiveRecord::Base
       'intresse_ids' => self.intresse_ids,
       'sektion_ids' => self.sektion_ids,
     })
+  end
+
+  # Base64 Upload as explained by Radek Paviensky
+  # http://stackoverflow.com/a/14904045/1227116
+  def image_data=(data)
+    io = CarrierStringIO.new(Base64.decode64(data))
+
+    self.foto = io
+  end
+
+  def image_data
+    ""
+  end
+end
+
+class CarrierStringIO < StringIO
+  def original_filename
+    # the real name does not matter
+    "photo.jpeg"
+  end
+
+  def content_type
+    # this should reflect real content type, but for this example it's ok
+    "image/jpeg"
   end
 end

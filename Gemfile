@@ -17,13 +17,14 @@ gem 'jquery-modal-rails'
 
 # Production dependencies
 group :production do
-  gem 'pg'
+  gem 'mysql2'
   gem 'rails_12factor'
 end
 
 # Development dependencies
 group :development do
   gem 'sqlite3'
+  gem 'mysql2'
   gem 'thin'
 end
 

@@ -3,7 +3,8 @@ $(function() {
     return /karnevalist/.test(this.id);
   }).submit(function(e) {
     var that = this;
-    if(!$('input.must-accept').is(':checked')) {
+    var $mustAccept = $('input#pul.must-accept');
+    if($mustAccept.length > 0 && !$mustAccept.is(':checked')) {
       e.preventDefault();
       alert(
         'Du måste acceptera att vi lagrar dina personuppgifter enligt PUL!'
@@ -26,7 +27,7 @@ function tilldelad_sektion_submit(karnevalist_id) {
                     $("#checkbox"+karnevalist_id).removeAttr("disabled");
                 }
             },
-        }); 
+        });
     })(jQuery);
 }
 
@@ -51,6 +52,6 @@ function tilldelad_klar_submit(karnevalist_id) {
                     }
                 }
             },
-        }); 
+        });
     })(jQuery);
 }

@@ -44,7 +44,7 @@
 
     <div class="form-group">
      <h3>Kön <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
-      
+
       <div class="radio-group">
         <% Kon.order('id desc').all.each do |k| %>
         <div>
@@ -59,7 +59,7 @@
       <h3>Adress <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
       <%= f.label :gatuadress, 'Gatuadress', :class => "structural" %>
       <%= f.text_field :gatuadress, :placeholder => "Gatuadress", :required => true %>
-      
+
       <%= f.label :postnr, 'Postnummer', :class => "structural" %>
       <%= f.text_field :postnr, :placeholder => "Postnummer", :required => true %>
 
@@ -149,7 +149,7 @@
         <%= f.label :jobbat_aktiv, 'Jobbare' %>
       </div>
     </div>
-    
+
     <h3>Lundakarnevalen</h3>
     <div class="form-group">
       <%= check_box :karnevalist, :karnevalist_2010 %>
@@ -191,7 +191,7 @@
       </div>
       <% end %>
     </div>
-    
+
     <h3>Övrigt</h3>
     <div class="form-group">
       <%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
@@ -219,11 +219,6 @@
     </div>
 
     <%= content_tag(:div, "", :id => 'hr') %>
-
-    <div class="form-group">
-      <%= f.check_box :utcheckad %>
-      <%= f.label :utcheckad, 'Karnevalisten är utcheckad och klar!' %>
-    </div>
 
     <div class="form-controls">
       <%= f.submit'Spara' %>
