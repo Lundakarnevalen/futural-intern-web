@@ -507,7 +507,7 @@ jQuery.validator.addMethod("pattern", function(value, element, param) {
 		param = new RegExp('^(?:' + param + ')$');
 	}
 	return param.test(value);
-}, "Invalid format.");
+}, "Felaktigt format.");
 
 
 /*
