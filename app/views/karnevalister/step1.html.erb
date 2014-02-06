@@ -25,19 +25,19 @@
 
 	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
-		<%= f.text_field :personnummer, :pattern => '[0-9]*' %>
+		<%= f.text_field :personnummer, { :pattern => '[0-9]*', :placeholder => "ÅÅMMDDNNNN" } %>
 	</div>
 
 	<div class="form-group">
 		<%= f.label nil, 'Namn' %>
-		
+
 		<%= f.text_field :fornamn, :placeholder => "Förnamn" %>
 		<%= f.text_field :efternamn, :placeholder => "Efternamn" %>
 	</div>
 
 	<div class="form-group">
 		<%= f.label nil, 'Kön' %>
-		
+
 		<% Kon.order('id desc').all.each do |k| %>
 		<div>
 			<%= f.radio_button :kon_id, k.id, :class=>'kon_radio'  %>
@@ -48,27 +48,27 @@
 
 	<div class="form-group">
 		<%= f.label nil, 'Adress' %>
-		
+
 		<%= f.text_field :gatuadress, :placeholder => "Gatuadress" %>
-		
+
 		<%= f.text_field :postnr, :placeholder => "Postnummer" %>
 		<%= f.text_field :postort, :placeholder => "Ort" %>
 	</div>
 
 	<div class="form-group">
 		<%= f.label :email, 'Email' %>
-		
+
 		<%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none %>
 	</div>
 
 	<div class="form-group">
 		<%= f.label :telnr, 'Telefonnummer' %>
-		
+
 		<%= f.telephone_field :telnr %>
 	</div>
 
 	<div class="form-group">
-		<%= f.label :nation_id, 'Nation' %>
+		<%= f.label :nation_id, 'Studentnation' %>
 		<div>
 			<%= f.select :nation_id, Nation.all.collect{ |n| [n.name, n.id] } %>
 		</div>
@@ -87,7 +87,7 @@
 	</div>
 
 	<div class="form-group">
-		<%= f.label :terminer, 'Terminer i Lund' %>
+		<%= f.label :terminer, 'Antal studieterminer i Lund' %>
 		<%= f.number_field :terminer, :pattern => '[0-9]*', :min => 0 %>
 	</div>
 
@@ -103,40 +103,40 @@
 	<h3>Jag har tidigare engagerat mig i</h3>
 	<div class="form-group">
 		<%= f.label :engagerad_kar, 'En studentkår, vilken och hur?' %>
-		
+
 		<%= f.text_field :engagerad_kar %>
 	</div>
 	<div class="form-group">
 		<%= f.label :engagerad_nation, 'En nation, vilken och hur?' %>
-		
+
 		<%= f.text_field :engagerad_nation %>
 	</div>
 	<div class="form-group">
 		<%= f.label :engagerad_studentikos, 'Annan studentikos förening?' %>
-		
+
 		<%= f.text_field :engagerad_studentikos %>
 	</div>
 	<div class="form-group">
 		<%= f.label :engagerad_etc, 'Annan förening?' %>
-		
+
 		<%= f.text_field :engagerad_etc %>
 	</div>
 
-	<h3>Jag har tidigare varit aktiv som</h3>
+	<h3>Jag har tidigare varit aktiv inom kår/nation/förening som</h3>
 	<div class="form-group">
 		<div>
 			<%= f.check_box :jobbat_heltid %>
 			<%= f.label :jobbat_heltid, 'Heltidare' %>
 		</div>
-		<div>	
+		<div>
 			<%= f.check_box :jobbat_styrelse %>
 			<%= f.label :jobbat_styrelse, 'Styrelseledamot' %>
 		</div>
-		<div>	
+		<div>
 			<%= f.check_box :jobbat_forman %>
 			<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
 		</div>
-		<div>	
+		<div>
 			<%= f.check_box :jobbat_aktiv %>
 			<%= f.label :jobbat_aktiv, 'Jobbare' %>
 		</div>
@@ -144,7 +144,7 @@
 		<h3>Lundakarnevalen</h3>
 		<div class="form-group">
 			<%= check_box :karnevalist, :karnevalist_2010 %>
-			<%= f.label :karnevalist_2010, 
+			<%= f.label :karnevalist_2010,
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
 
