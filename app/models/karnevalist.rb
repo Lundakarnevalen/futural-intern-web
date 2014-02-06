@@ -26,6 +26,10 @@ class Karnevalist < ActiveRecord::Base
       user.save
     end
 
+    if self.avklarat_steg.nil?
+      self.avklarat_steg = 1
+    end
+
     if utcheckad && utcheckad_at.nil?
       self.utcheckad_at = Time.now
     end

@@ -187,6 +187,8 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     if (params[:password] == "futural")
+      @karnevalist.avklarat_steg = 2
+      @karnevalist.save
       redirect_to step3_karnevalist_path(@karnevalist)
     else
       flash[:notice] = 'Fel lösenord. Du får veta vad lösenordet är när du kommer till Stora Salen i AF-borgen.'
@@ -196,8 +198,13 @@ class KarnevalisterController < ApplicationController
 
   def step3
     @karnevalist = Karnevalist.find params[:id]
-    put_base
-    render :step3
+
+    if (@karnevalist.avklarat_steg < 2)
+      redirect_to step2_karnevalist_path(@karnevalist)
+    else
+      put_base
+      render :step3
+    end
   end
 
   def step3_put
@@ -228,6 +235,10 @@ class KarnevalisterController < ApplicationController
 
   def checkout_paper_post
     @karnevalist = Karnevalist.create params[:karnevalist]
+
+    @karnevalist.utcheckad = true
+    @karnevalist.save
+
     redirect_to action: 'checkout', id: @karnevalist.id
   end
 
@@ -240,6 +251,9 @@ class KarnevalisterController < ApplicationController
   def checkout_digital_put
     @karnevalist = Karnevalist.find params[:id]
     @karnevalist.update_if_password_valid params[:karnevalist]
+
+    @karnevalist.utcheckad = true
+
     if @karnevalist.save && !@karnevalist.google_token.blank?
       api_key = "***REMOVED***"
       gcm = GCM.new(api_key)
