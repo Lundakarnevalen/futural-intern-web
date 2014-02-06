@@ -198,8 +198,14 @@ input[type="checkbox"]:checked + label:before, input[type="radio"].kon_radio:che
     line-height: 28px;  
 } 
 
-input[type='checkbox'], input[type="radio"].radio_snalla, input[type="radio"].kon_radio  {
-	display: none;
+input[type='checkbox'], 
+input[type="radio"].radio_snalla, 
+input[type="radio"].kon_radio  {
+	position: absolute !important;
+	height: 1px; width: 1px; 
+	overflow: hidden;
+	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
+	clip: rect(1px, 1px, 1px, 1px);
 }
 
 input[type='submit'] {

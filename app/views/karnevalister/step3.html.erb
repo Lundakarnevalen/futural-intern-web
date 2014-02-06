@@ -76,25 +76,29 @@
 
 		<div class="form-group">
 			<%= f.label :personnummer, 'Personnummer' %>
-			<%= f.text_field :personnummer, :pattern => '[0-9]*' %>
+			<span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
+			<%= f.text_field :personnummer, { :pattern => '[0-9-]*', :placeholder => "ÅÅMMDDNNNN", :required => true }  %>
 		</div>
 
 		<div class="form-group">
-			<%= f.label nil, 'Namn' %>
-
-			<%= f.text_field :fornamn, :placeholder => "Förnamn" %>
-			<%= f.text_field :efternamn, :placeholder => "Efternamn" %>
+			<h3>Namn <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
+			<%= f.label :fornamn, 'Förnamn', :class => "structural" %>
+			<%= f.text_field :fornamn, :placeholder => "Förnamn", :required => true %>
+			<%= f.label :efternamn, 'Efternamn', :class => "structural" %>
+			<%= f.text_field :efternamn, :placeholder => "Efternamn", :required => true %>
 		</div>
 
 		<div class="form-group">
-			<%= f.label nil, 'Kön' %>
+			<h3>Kön <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
 
-			<% Kon.order('id desc').all.each do |k| %>
-			<div>
-				<%= f.radio_button :kon_id, k.id, :class=>'kon_radio'  %>
-				<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
+			<div class="radio-group">
+				<% Kon.order('id desc').all.each do |k| %>
+				<div>
+					<%= f.radio_button :kon_id, k.id, :class=>'kon_radio', :required => true  %>
+					<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
+				</div>
+				<% end %>
 			</div>
-			<% end %>
 		</div>
 
 		<div class="form-group">
