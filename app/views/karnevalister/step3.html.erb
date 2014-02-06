@@ -36,18 +36,18 @@
 
 		<div class="form-group">
 			<%= f.label nil, 'Namn' %>
-			
+
 			<%= f.text_field :fornamn, :placeholder => "Förnamn" %>
 			<%= f.text_field :efternamn, :placeholder => "Efternamn" %>
 		</div>
 
 		<div class="form-group">
 			<%= f.label nil, 'Kön' %>
-			
+
 			<% Kon.order('id desc').all.each do |k| %>
 			<div>
-				<%= f.radio_button :kon_id, k.id %>
-				<%= f.label "kon_id_#{k.id}", k.name %>
+				<%= f.radio_button :kon_id, k.id, :class=>'kon_radio'  %>
+				<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
 			</div>
 			<% end %>
 		</div>
@@ -126,15 +126,15 @@
 				<%= f.check_box :jobbat_heltid %>
 				<%= f.label :jobbat_heltid, 'Heltidare' %>
 			</div>
-			<div>	
+			<div>
 				<%= f.check_box :jobbat_styrelse %>
 				<%= f.label :jobbat_styrelse, 'Styrelseledamot' %>
 			</div>
-			<div>	
+			<div>
 				<%= f.check_box :jobbat_forman %>
 				<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
 			</div>
-			<div>	
+			<div>
 				<%= f.check_box :jobbat_aktiv %>
 				<%= f.label :jobbat_aktiv, 'Jobbare' %>
 			</div>
@@ -142,13 +142,16 @@
 		<h3>Lundakarnevalen</h3>
 		<div class="form-group">
 			<%= check_box :karnevalist, :karnevalist_2010 %>
-			<%= f.label :karnevalist_2010, 
+			<%= f.label :karnevalist_2010,
 			'Jag var karnevalist under Lundakarnevalen 2010' %>
 		</div>
 	</div>
 
 	<h3>Intressen</h3>
-	<p>Bocka för de du är intresserad av. Sjärnmarkera det du är mest intresserad av.</p>
+	<p>
+    Bocka för det du är intresserad av (minst 3).
+    Stjärnmarkera det du är mest intresserad av.
+  </p>
 	<div class="form-group">
 		<%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
 		<% Intresse.all.each do |i| %>
@@ -156,7 +159,7 @@
 			<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
 			<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
 			<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
-			@intresse_ids.include?(i.id), 
+			@intresse_ids.include?(i.id),
 			:id => "karnevalist_intresse_id_#{i.id}" %>
 			<%= f.label "intresse_id_#{i.id}", i.name %>
 		</div>
@@ -164,6 +167,10 @@
 	</div>
 
 	<h3>Sektioner</h3>
+  <p>
+    Bocka för de sektioner du är intresserad av (minst 5).
+    Stjärnmarkera den sektion du är mest intresserad av.
+  </p>
 	<div class="form-group">
 		<%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
 		<% Sektion.all.each do |s| %>
@@ -179,7 +186,7 @@
 	</div>
 	<h3>Övrigt</h3>
 	<div class="form-group">
-		<%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
+		<%= f.label :ovrigt, 'Är det något annat du vill berätta? Har du andra relevanta erfarenheter?' %>
 
 		<%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
 	</div>

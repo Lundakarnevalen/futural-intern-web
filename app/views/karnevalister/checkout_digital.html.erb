@@ -53,8 +53,8 @@
 
 			<% Kon.order('id desc').all.each do |k| %>
 			<div>
-				<%= f.radio_button :kon_id, k.id %>
-				<%= f.label "kon_id_#{k.id}", k.name %>
+				<%= f.radio_button :kon_id, k.id, :class=>'kon_radio'  %>
+				<%= f.label "kon_id_#{k.id}", k.name, :class=>'kon_radio' %>
 			</div>
 			<% end %>
 		</div>

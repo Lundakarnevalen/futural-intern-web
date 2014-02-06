@@ -1,26 +1,34 @@
 #encoding: utf-8
 Kon.delete_all
-{ 0 => 'Annat',
-  1 => 'Man',
-  2 => 'Kvinna',
-}.each{ |k, v| Kon.create :id => k, :name => v }
+{ 1 => 'Vill inte definiera mig',
+  2 => 'Man',
+  3 => 'Kvinna',
+}.each{ |k, v| Kon.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
 
 Nation.delete_all
-{ 0  => 'Vet ej',
-  1  => 'Blekingska',
-  2  => 'Göteborgs',
-  3  => 'Hallands',
-  4  => 'Helsingkrona',
-  5  => 'Kalmar',
-  6  => 'Krischan',
-  7  => 'Lunds',
-  8  => 'Malmö',
-  9  => 'Sydskånska',
-  10 => 'Västgöta',
-  11 => 'Wermlands',
-  12 => 'Östgöta',
-  13 => 'Smålands',
-}.each{ |k, v| Nation.create :id => k, :name => v }
+{ 1  => 'Vet ej',
+  2  => 'Blekingska',
+  3  => 'Göteborgs',
+  4  => 'Hallands',
+  5  => 'Helsingkrona',
+  6  => 'Kalmar',
+  7  => 'Krischan',
+  8  => 'Lunds',
+  9  => 'Malmö',
+  10 => 'Sydskånska',
+  11 => 'Västgöta',
+  12 => 'Wermlands',
+  13 => 'Östgöta',
+  14 => 'Smålands',
+}.each{ |k, v| Nation.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
 
 Storlek.delete_all
 {
@@ -31,18 +39,26 @@ Storlek.delete_all
   5 => 'XL',
   6 => 'XXL',
   7 => 'XXXL',
-}.each{ |k, v| Storlek.create :id => k, :name => v }
+}.each{ |k, v| Storlek.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
 
 Korkort.delete_all
-{ 0 => 'Inget',
-  1 => 'B/BE',
-  2 => 'B/BE + C/CE',
-  3 => 'B/BE + D/DE',
-  4 => 'B/BE + C/CE + D/DE',
-}.each{ |k, v| Korkort.create :id => k, :name => v }
+{ 1 => 'Inget',
+  2 => 'B/BE',
+  3 => 'B/BE + C/CE',
+  4 => 'B/BE + D/DE',
+  5 => 'B/BE + C/CE + D/DE',
+}.each{ |k, v| Korkort.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
 
 Intresse.delete_all
-{ 0  => 'Allt! Jag kan göra vad som helst, jag vill bara vara med.',
+{
   1  => 'Mat',
   2  => 'Dryck',
   3  => 'Teknik (ljud, ljus, el)',
@@ -58,10 +74,15 @@ Intresse.delete_all
   13 => 'Sy',
   14 => 'Smink',
   15 => 'Skådespela/sjunga/dansa/spela instrument',
-}.each{ |k, v| Intresse.create :id => k, :name => v }
+  16 => 'Allt! Jag kan göra vad som helst, jag vill bara vara med.',
+}.each{ |k, v| Intresse.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
 
 Sektion.delete_all
-{ 0   => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.',
+{
   1   => 'Barnevalen',
   2   => 'Biljetteriet',
   3   => 'Blädderiet',
@@ -102,7 +123,13 @@ Sektion.delete_all
 
   400 => 'Tältnöjen - Tält',
   499 => 'Tältnöjen - Centralt',
-}.each{ |k, v| Sektion.create :id => k, :name => v }
+
+  500 => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.',
+}.each{ |k, v| Sektion.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
 
 # Add J. Random Hacker
 Karnevalist.create({
