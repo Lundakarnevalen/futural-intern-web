@@ -257,6 +257,7 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     @karnevalist.update_if_password_valid params[:karnevalist]
 
+    @karnevalist.reload
     @karnevalist.utcheckad = true
 
     if @karnevalist.save && !@karnevalist.google_token.blank?
