@@ -2,6 +2,8 @@
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
+  before_filter :returning_karnevalist, :only => :step1
+
   def index
     @karnevalister = Karnevalist.all.order("efternamn ASC")
     respond_to do |format|
@@ -174,6 +176,9 @@ class KarnevalisterController < ApplicationController
 
   def step1_post
     @karnevalist = Karnevalist.create params[:karnevalist]
+
+    cookies[:karnevalist_id] = { value: @karnevalist.id, expires: 7.days.from_now }
+
     redirect_to action: 'step2', id: @karnevalist.id
   end
 
@@ -290,5 +295,23 @@ class KarnevalisterController < ApplicationController
     @intresse_ids = @karnevalist.intresse_ids
     @sektion_ids = @karnevalist.sektion_ids
     @method = :post
+  end
+
+  def returning_karnevalist
+    if !cookies[:karnevalist_id].nil?
+      @karnevalist = Karnevalist.find cookies[:karnevalist_id]
+
+      if @karnevalist.nil?
+        return
+      end
+
+      if @karnevalist.avklarat_steg == 1
+        redirect_to action: 'step2', id: cookies[:karnevalist_id]
+      elsif @karnevalist.avklarat_steg == 2
+        redirect_to action: 'step3', id: cookies[:karnevalist_id]
+      elsif @karnevalist.avklarat_steg == 3
+        # Karnevalist utcheckad och kan inte redigeras
+      end
+    end
   end
 end
