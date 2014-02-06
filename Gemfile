@@ -23,7 +23,7 @@ end
 
 # Development dependencies
 group :development do
-  gem 'mysql2'
+  gem 'sqlite3'
   gem 'thin'
 end
 
