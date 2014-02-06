@@ -2,7 +2,7 @@ Futural::Application.routes.draw do
   resources :phones, only: [:new, :create]
   resources :notifications, only: [:new, :create, :show, :index]
 
-  resources :karnevalister do 
+  resources :karnevalister do
     collection do
       get 'search/:q', :action => 'search'
       get 'search', :action => 'search'
@@ -28,5 +28,5 @@ Futural::Application.routes.draw do
 
   devise_for :users
 
-  root to: 'home#index'
+  root to: 'karnevalister#step1'
 end

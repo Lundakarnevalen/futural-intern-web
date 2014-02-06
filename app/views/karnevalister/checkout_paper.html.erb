@@ -26,15 +26,75 @@
 
     <div class="form-group">
       <%= f.label :email, 'Email' %>
-      
+
       <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
     </div>
-    
+
     <div class="form-group">
-        <div>
-            <%= f.label :foto %>
-            <%= f.file_field :foto %>
-        </div>
+      <div style="display: none;">
+          <%= f.hidden_field :image_data %>
+      </div>
+      <div>
+        <%= f.label :foto %>
+        <script type="text/javascript">
+        Camera.prototype = {
+          print: function() {
+            var imagepath = this.videoUrl;
+            var height = 480
+            var width = 640
+
+            var output = '<img SRC="' + imagepath + '"width="' + width + '"height="' + height +'" width="' + width;
+            output += '" border=0 ALT="If no image is displayed, there might be too many viewers, or the browser configuration may have to be changed. See help for detailed instructions on how to do this." width=' + width + ' height=' + height +' width=' + width + ' id="camera_photo">';
+
+            document.write(output);
+          },
+
+          snapshot: function() {
+            var img = document.getElementById('camera_photo');
+            var self = this;
+            img.onload = function(e) {
+              var b64 = self._getBase64Image(img);
+              document.getElementById('karnevalist_image_data').value = b64;
+            };
+            img.crossOrigin = '';
+            img.src = this.photoUrl;
+          },
+
+          video: function() {
+            var img = document.getElementById('camera_photo');
+            img.src = this.videoUrl;
+          },
+
+          // Code taken from MatthewCrumley
+          // http://stackoverflow.com/a/934925/298479
+          _getBase64Image: function(img) {
+            var canvas = document.createElement("canvas");
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            var ctx = canvas.getContext("2d");
+            ctx.drawImage(img, 0, 0);
+
+            var dataURL = canvas.toDataURL("image/png");
+
+            return dataURL.replace(/^data:image\/(png|jpg);base64,/, "");
+          }
+        };
+
+        function Camera(cameraUrl) {
+          this.cameraUrl = cameraUrl;
+
+          this.videoUrl = this.cameraUrl + "mjpg/video.mjpg";
+          this.photoUrl = this.cameraUrl + "jpg/image.jpg";
+        }
+
+        var camera = new Camera("http://192.168.0.90/");
+        camera.print();
+        </script>
+
+        <a href="javascript:camera.snapshot();">Snapshot</a>
+        <a href="javascript:camera.video();">Reset</a>
+      </div>
     </div>
 
 	<div class="form-group">
@@ -55,10 +115,6 @@
 			<%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
 		</div>
 	</div>
-    
-    <div class="form-controls">
-        <%= f.hidden_field :avklarat_steg, :value => 3 %>
-    </div>
 
 	<div class="form-controls">
 	  <%= submit_tag "Spara" %>

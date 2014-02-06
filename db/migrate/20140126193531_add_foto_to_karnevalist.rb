@@ -1,6 +1,6 @@
 class AddFotoToKarnevalist < ActiveRecord::Migration
   def up
-    add_attachment :karnevalister, :foto
+    # add_attachment :karnevalister, :foto
   end
 
   def down
