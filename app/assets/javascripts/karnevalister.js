@@ -3,7 +3,7 @@ $(function() {
     return /karnevalist/.test(this.id);
   }).submit(function(e) {
     var that = this;
-    var $mustAccept = $('input.must-accept');
+    var $mustAccept = $('input#pul.must-accept');
     if($mustAccept.length > 0 && !$mustAccept.is(':checked')) {
       e.preventDefault();
       alert(
