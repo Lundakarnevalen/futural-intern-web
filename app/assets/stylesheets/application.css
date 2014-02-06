@@ -132,6 +132,8 @@ input, textarea {
 	border: none;
 	color: white;
 	font-size: 15px;
+	-webkit-border-radius: 0;
+	-moz-border-radius: 0;
 	border-radius: 0;
 
 }
@@ -187,6 +189,8 @@ input[type="checkbox"] + label:before, input[type="radio"].kon_radio + label:bef
 	bottom: 20%;
 	background-color: #f3f3f3;
 
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
 
@@ -210,6 +214,8 @@ input[type="radio"].kon_radio  {
 
 input[type='submit'] {
 	-webkit-appearance: none;
+	-webkit-border-radius: 2px;
+	-moz-border-radius: 2px;
 	border-radius: 2px;
 }
 
@@ -327,12 +333,23 @@ div.error-message {
 	background-color: white;
 	padding: 0.8em 1em 1.2em 1em;
 	border-radius: 0.25em;
+	-webkit-border-radius: 0.25em;
+	-moz-border-radius: 0.25em;
 	list-style: none;
 	margin-bottom: 0.3em;
 	color: rgba(238,104,95,1);
 	position: relative;
 }
 
+.photo {
+	width: 80%;
+	border: 1em solid white;
+	rotate: 30deg;
+	transform: rotate(7deg);
+	-ms-transform: rotate(7deg);
+	-webkit-transform: rotate(7deg);
+	margin: 3em 0 0 1em;
+}
 
 table {
     max-width: 100%;
@@ -432,6 +449,8 @@ td.center, th.center {
 .progressbar {
 	background-color: white;
 	width: 80%;
+	-webkit-border-radius: 1em;
+	-moz-border-radius: 1em;
 	border-radius: 1em;
 	padding: 0.5em;
 	display: inline-block;
@@ -440,6 +459,8 @@ td.center, th.center {
 .progress {
 	background-color: rgba(238,104,95,0.7);
 	height: 1em;
+	-webkit-border-radius: 0.5em;
+	-moz-border-radius: 0.5em;
 	border-radius: 0.5em;
 	min-width: 1em;
 }
@@ -465,6 +486,8 @@ td.center, th.center {
 	}
 
 	.progressbar {
+		-webkit-border-radius: 0.5em;
+		-moz-border-radius: 0.5em;
 		border-radius: 0.5em;
 		padding: 0.25em;
 	}
@@ -472,6 +495,8 @@ td.center, th.center {
 	.progress {
 		background-color: rgba(238,104,95,1);
 		height: 0.5em;
+		-webkit-border-radius: 0.25em;
+		-moz-border-radius: 0.25em;
 		border-radius: 0.25em;
 
 		width: 75%;
