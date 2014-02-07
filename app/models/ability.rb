@@ -31,18 +31,20 @@ class Ability
 
     user ||= User.new
 
-    admin = user.roles.find_by_name "admin"
-    if !admin.nil?
-      can :manage, :all
-    end
-
-    # Has account
+    # Karnevalist
     can [:step2, :enter_pwd, :step3, :step3_put, :step4, :update, :show], Karnevalist, :user_id => user.id
-    # Create account
     can [:create, :step1, :step1_post], Karnevalist
+    cannot [:step3_put, :update], Karnevalist, :utcheckad => true
 
+    # Notification
     can :read, Notification
 
+    # Phone
     can [:create, :read, :update, :destroy], Phone
+
+    # Admin
+    if user.is? :admin
+      can :manage, :all
+    end
   end
 end
