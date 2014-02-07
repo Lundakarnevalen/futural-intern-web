@@ -2,11 +2,14 @@
 <%= stylesheet_link_tag :notifications, :media => :all %>
 <% end %>
 
+<% if !(browser.iphone? && browser.version == "0") %>
 <div class="header">
   <div class="container">
     <h1>Push-meddelanden</h1>
   </div>
 </div>
+<% end %>
+
 <div class="container">
   <%= form_for(@notification) do |f| %>
     <h2>Nytt push-meddelande</h2>

@@ -467,7 +467,7 @@ td.center, th.center {
 
 .progress-percent {
 	display: inline-block;
-	margin-left: 10px;
+	margin-left: 5px;
 	position: relative;
 	top:-3px;
 }
