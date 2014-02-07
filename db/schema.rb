@@ -101,17 +101,19 @@ ActiveRecord::Schema.define(version: 20140207002728) do
     t.datetime "updated_at"
   end
 
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+
+  create_table "roles_users", force: true do |t|
+    t.integer "user_id"
+    t.integer "role_id"
+  end
+
   create_table "sektioner", force: true do |t|
     t.string "name", null: false
   end
 
   create_table "storlekar", force: true do |t|
     t.string "name", null: false
-  end
-
-  create_table "user_roles", force: true do |t|
-    t.integer "role_id"
-    t.integer "user_id"
   end
 
   create_table "users", force: true do |t|

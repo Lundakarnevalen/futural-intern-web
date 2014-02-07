@@ -6,9 +6,11 @@ class CreateRoles < ActiveRecord::Migration
       t.timestamps
     end
 
-    create_table :user_roles do |t|
-      t.belongs_to :role
+    add_index :roles, :name
+
+    create_table :roles_users do |t|
       t.belongs_to :user
+      t.belongs_to :role
     end
   end
 end

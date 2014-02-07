@@ -131,6 +131,15 @@ Sektion.delete_all
   i.save
 end }
 
+Role.delete_all
+{
+  1 => 'admin',
+}.each{ |k, v| Role.new do |i|
+  i.id = k
+  i.name = v
+  i.save
+end }
+
 # Add J. Random Hacker
 Karnevalist.create({
   :personnummer => '9110251817',
