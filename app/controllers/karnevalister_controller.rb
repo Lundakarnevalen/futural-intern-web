@@ -2,8 +2,8 @@
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  before_filter :authenticate_user_from_token!, :except => [:step1, :step1_post]
-  before_filter :authenticate_user!, :except => [:step1, :step1_post]
+  before_filter :authenticate_user_from_token!, :except => [:create, :step1, :step1_post]
+  before_filter :authenticate_user!, :except => [:create, :step1, :step1_post]
 
   before_filter :returning_karnevalist, :only => :step1
 
@@ -74,7 +74,8 @@ class KarnevalisterController < ApplicationController
             { :status => :failure,
               :message => karnevalist.errors.full_messages.join('; ') }
           else
-            { :status => :success }
+            { :status => :success,
+              :token => karnevalist.user.authentication_token }
           end
       end
     end
