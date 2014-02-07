@@ -2,12 +2,12 @@
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  load_and_authorize_resource
-
   before_filter :authenticate_user_from_token!, :except => [:create, :step1, :step1_post]
   before_filter :authenticate_user!, :except => [:create, :step1, :step1_post]
 
-  before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new]
+  load_and_authorize_resource
+
+  before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new, :step2, :step3, :step4]
 
   def index
     @karnevalister = Karnevalist.all.order("efternamn ASC")
@@ -184,7 +184,6 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.create params[:karnevalist]
 
     sign_in(@karnevalist.user)
-    cookies[:karnevalist_id] = { value: @karnevalist.id, expires: 7.days.from_now }
 
     redirect_to action: 'step2', id: @karnevalist.id
   end
@@ -211,12 +210,12 @@ class KarnevalisterController < ApplicationController
   def step3
     @karnevalist = Karnevalist.find params[:id]
 
-    if (@karnevalist.avklarat_steg < 2)
-      redirect_to step2_karnevalist_path(@karnevalist)
-    else
+    # if (@karnevalist.avklarat_steg < 2)
+    #   redirect_to step2_karnevalist_path(@karnevalist)
+    # else
       put_base
       render :step3
-    end
+    # end
   end
 
   def step3_put
@@ -306,17 +305,17 @@ class KarnevalisterController < ApplicationController
   end
 
   def returning_karnevalist
-    if !cookies[:karnevalist_id].nil?
-      @karnevalist = Karnevalist.find cookies[:karnevalist_id]
+    if user_signed_in?
+      @karnevalist = Karnevalist.find_by_user_id current_user.id
 
       if @karnevalist.nil?
         return
       end
 
       if @karnevalist.avklarat_steg == 1
-        redirect_to action: 'step2', id: cookies[:karnevalist_id]
+        redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
       elsif @karnevalist.avklarat_steg == 2
-        redirect_to action: 'step3', id: cookies[:karnevalist_id]
+        redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
       elsif @karnevalist.avklarat_steg == 3
         # Karnevalist utcheckad och kan inte redigeras
       end
