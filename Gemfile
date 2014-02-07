@@ -15,6 +15,7 @@ gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-modal-rails'
 gem 'browser'
+gem 'cancan'
 
 # Production dependencies
 group :production do

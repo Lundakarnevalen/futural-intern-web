@@ -2,7 +2,12 @@
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  before_filter :returning_karnevalist, :only => :step1
+  load_and_authorize_resource
+
+  before_filter :authenticate_user_from_token!, :except => [:create, :step1, :step1_post]
+  before_filter :authenticate_user!, :except => [:create, :step1, :step1_post]
+
+  before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new]
 
   def index
     @karnevalister = Karnevalist.all.order("efternamn ASC")
@@ -53,7 +58,7 @@ class KarnevalisterController < ApplicationController
           else
             { :status => :success,
               :id => karnevalist.id,
-              :token => karnevalist.password }
+              :token => karnevalist.user.authentication_token }
           end
       end
     end
@@ -71,7 +76,8 @@ class KarnevalisterController < ApplicationController
             { :status => :failure,
               :message => karnevalist.errors.full_messages.join('; ') }
           else
-            { :status => :success }
+            { :status => :success,
+              :token => karnevalist.user.authentication_token }
           end
       end
     end
@@ -177,6 +183,7 @@ class KarnevalisterController < ApplicationController
   def step1_post
     @karnevalist = Karnevalist.create params[:karnevalist]
 
+    sign_in(@karnevalist.user)
     cookies[:karnevalist_id] = { value: @karnevalist.id, expires: 7.days.from_now }
 
     redirect_to action: 'step2', id: @karnevalist.id
