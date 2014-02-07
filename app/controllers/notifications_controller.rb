@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @notifications = Notification.all
+    @notifications = Notification.all.order("created_at DESC")
     respond_to do |format|
       format.html{ render }
       format.json do
@@ -35,7 +35,7 @@ class NotificationsController < ApplicationController
 
     if @notification.save
       gcm = GCM.new(api_key)
-      registration_ids = Array.new # kan maximalt innehålla 1000 enheter (lös med for-loop)
+      registration_ids = Array.new
       #Karnevalist.all.each do |k|
       #  if !k.google_token.blank?
       #    registration_ids.push k.google_token
@@ -46,7 +46,7 @@ class NotificationsController < ApplicationController
           registration_ids.push p.google_token
         end
       end
-      registration_ids.each_slice(1000).to_a do |reg_ids|
+      registration_ids.each_slice(1000) do |reg_ids|
         options = {
           'data' => {
             'id' => @notification.id,
