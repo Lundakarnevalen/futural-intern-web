@@ -57,8 +57,8 @@ class NotificationsController < ApplicationController
           }
         }
         @response = gcm.send_notification(reg_ids, options)
-        redirect_to :action => 'index'
       end
+      redirect_to :action => 'index'
     else
       render 'new'
     end
