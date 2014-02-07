@@ -13,6 +13,7 @@ class Karnevalist < ActiveRecord::Base
   mount_uploader :foto, FotoUploader
 
   validates :email, :presence => true
+  validates_uniqueness_of :email
 
   UTCHECKAD = 3
 
