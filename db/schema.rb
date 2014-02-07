@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207002728) do
+ActiveRecord::Schema.define(version: 20140207163030) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -94,6 +94,8 @@ ActiveRecord::Schema.define(version: 20140207002728) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "roles", force: true do |t|
     t.string   "name"
