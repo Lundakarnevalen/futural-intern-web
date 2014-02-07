@@ -42,19 +42,23 @@ class NotificationsController < ApplicationController
       #  end
       #end
       Phone.all.each do |p|
-        registration_ids.push p.google_token
+        if !p.google_token.blank?
+          registration_ids.push p.google_token
+        end
       end
-      options = {
-        'data' => {
-          'id' => @notification.id,
-          'title' => @notification.title,
-          'message' => @notification.message,
-          'message_type' => '0',
-          'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
+      registration_ids.each_slice(1000).to_a do |reg_ids|
+        options = {
+          'data' => {
+            'id' => @notification.id,
+            'title' => @notification.title,
+            'message' => @notification.message,
+            'message_type' => '0',
+            'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
+          }
         }
-      }
-      @response = gcm.send_notification(registration_ids, options)
-      redirect_to :action => 'index'
+        @response = gcm.send_notification(reg_ids, options)
+        redirect_to :action => 'index'
+      end
     else
       render 'new'
     end
