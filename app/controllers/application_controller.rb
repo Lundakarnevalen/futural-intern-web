@@ -20,4 +20,8 @@ class ApplicationController < ActionController::Base
       sign_in user, store: false
     end
   end
+
+  rescue_from CanCan::AccessDenied do |exception|
+    redirect_to root_url, :alert => exception.message
+  end
 end
