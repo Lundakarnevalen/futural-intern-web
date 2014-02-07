@@ -279,6 +279,7 @@ class KarnevalisterController < ApplicationController
           'message_type' => '0',
           'created_at' => @karnevalist.utcheckad_at.strftime("%Y-%m-%d %H:%M")
         }
+      }
       options2 = {
         'data' => {
           'message_type' => '1'
