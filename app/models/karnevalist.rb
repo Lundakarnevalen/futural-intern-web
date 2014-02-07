@@ -83,15 +83,6 @@ class Karnevalist < ActiveRecord::Base
     @pass
   end
 
-  def update_if_password_valid attr
-    if true # user.valid_password? attr[:token]
-      update_attributes! attr.except('token')
-    else
-      message = I18n.t 'devise.failure.invalid_token'
-      fail StandardError, message
-    end
-  end
-
   def as_json(options={})
     super.merge({
       'intresse_ids' => self.intresse_ids,
