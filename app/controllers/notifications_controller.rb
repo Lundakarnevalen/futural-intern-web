@@ -2,6 +2,11 @@
 class NotificationsController < ApplicationController
   require 'gcm'
 
+  load_and_authorize_resource
+
+  before_filter :authenticate_user_from_token!, :except => [:index, :show]
+  before_filter :authenticate_user!, :except => [:index, :show]
+
   def index
     @notifications = Notification.all
     respond_to do |format|
