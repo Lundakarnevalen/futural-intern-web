@@ -2,13 +2,8 @@
 <%= stylesheet_link_tag :notifications, :media => :all %>
 <% end %>
 
-<% if !(browser.iphone? && browser.version == "0") %>
-<div class="header">
-	<div class="container">
-		<h1>Push-meddelanden</h1>
-	</div>
-</div>
-<% end %>
+<%= render partial: "shared/header", locals: {title: "Push-meddelanden"} %>
+
 <div class="container">
 	<% @notifications.each do |n| %>
 		<a href=<%= url_for n %>>
