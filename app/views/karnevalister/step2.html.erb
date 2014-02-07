@@ -2,26 +2,11 @@
 <%= stylesheet_link_tag    :karnevalister, :media => :all %>
 <% end %>
 
-<% if !(browser.iphone? && browser.version == "0") %>
-<div class="header">
-	<div class="container">
-		<h1>Registrering</h1>
-	</div>
-</div>
-<% end %>
+<%= render partial: "shared/header", locals: {title: "Registrering"} %>
 
 <div class="container">
-	<div class="logo">
-		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
-		<p><strong>Du vill bli karnevalist.</strong> Du är för tillfället</p>
-		<div style="margin: 0.25em 0;">
-			<div class="progressbar">
-				<div class="progress" style="width: 25%;"></div>
-			</div>
-			<div class="progress-percent">25 %</div>
-		</div>
-		<p>karnevalist. Vi behöver ett lösenord. Detta får du inuti AF-borgen. Köa lugnt!</p>
-	</div>
+
+	<%= render partial: "shared/logo", locals: {percent: "25", text: "Vi behöver ett lösenord. Detta får du inuti AF-borgen. Köa lugnt!"} %>
 
 	<%= form_tag enter_pwd_karnevalist_path(@karnevalist) do %>
 		<div class="form-group">

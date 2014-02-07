@@ -2,20 +2,10 @@
 <%= stylesheet_link_tag :karnevalister, :media => :all %>
 <% end %>
 
-<div class="header">
-  <div class="container">
-    <h1>Karnevalistlisteregistret</h1>
-  </div>
-</div>
+<%= render partial: "shared/header", locals: {title: "Registrering"} %>
+
 <div class="container">
-  <div class="logo">
-    <img alt="" src="/images/RegistreringRobotTitle@2x.png" />
-    <p><strong>Du vill bli karnevalist.</strong> Du är för tillfället</p>
-      <div id="progressbar">
-        <img src="/images/RegistreringProgressBar@2x.png" alt="Registreringprogressbar@2x.png" />
-      </div>
-    <p>karnevalist. Vi behöver bara veta vem du är.</p>
-  </div>
+    <%= render partial: "shared/logo", locals: {percent: "1", text: "Vi behöver bara veta vem du är."} %>
 
   <%= form_for @karnevalist, :method => @method do |f| %>
 
