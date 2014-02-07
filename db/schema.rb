@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207163030) do
+ActiveRecord::Schema.define(version: 20140207002728) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -95,15 +95,13 @@ ActiveRecord::Schema.define(version: 20140207163030) do
     t.datetime "updated_at"
   end
 
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
-
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name"], name: "index_roles_on_name"
+  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
 
   create_table "roles_users", force: true do |t|
     t.integer "user_id"
@@ -134,8 +132,8 @@ ActiveRecord::Schema.define(version: 20140207163030) do
     t.string   "authentication_token"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
 end
