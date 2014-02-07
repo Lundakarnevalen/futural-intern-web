@@ -11,7 +11,7 @@
 	<%= form_for @karnevalist, url: {action: "step3_put"}, :method => @method do |f| %>
 	<h3>Intressen</h3>
 	<p>
-	    Bocka för det du är intresserad av (minst 3).
+	    Bocka för det du är intresserad av (minst 3).<br>
 	    Stjärnmarkera det du är mest intresserad av.
 	</p>
 	<div class="form-group">
@@ -30,7 +30,7 @@
 
 	<h3>Sektioner</h3>
   <p>
-    Bocka för de sektioner du är intresserad av (minst 5).
+    Bocka för de sektioner du är intresserad av (minst 5).<br>
     Stjärnmarkera den sektion du är mest intresserad av.
   </p>
 	<div class="form-group">
@@ -48,7 +48,11 @@
 	</div>
 	<h3>Övrigt</h3>
 	<div class="form-group">
-		<%= f.label :ovrigt, 'Är det något annat du vill berätta? Har du andra relevanta erfarenheter?' %>
+	    <%= f.check_box :vill_ansvara %>
+		<%= f.label :vill_ansvara, 'Jag vill ha ansvar' %>
+	</div>
+	<div class="form-group">
+		<%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
 
 		<%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
 	</div>

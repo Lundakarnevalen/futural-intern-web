@@ -272,15 +272,22 @@ class KarnevalisterController < ApplicationController
       gcm = GCM.new(api_key)
       registration_id = Array.new
       registration_id.push @karnevalist.google_token
-      options = {
+      options1 = {
         'data' => {
+          'id' => '1337',
           'title' => 'Utcheckad!',
           'message' => 'Nu är du utcheckad och klar, så nu kan du gå hem och sova.',
           'message_type' => '0',
-          'utcheckad_at' => @karnevalist.utcheckad_at.strftime("%Y-%m-%d %H:%M")
+          'created_at' => @karnevalist.utcheckad_at.strftime("%Y-%m-%d %H:%M")
         }
       }
-      @response = gcm.send_notification(registration_id, options)
+      options2 = {
+        'data' => {
+          'message_type' => '1'
+        }
+      }
+      @response1 = gcm.send_notification(registration_id, options1)
+      @response2 = gcm.send_notification(registration_id, options2)
     end
     redirect_to action: 'checkout', id: @karnevalist.id
   end
