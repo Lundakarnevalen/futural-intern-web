@@ -2,10 +2,12 @@
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
+  load_and_authorize_resource
+
   before_filter :authenticate_user_from_token!, :except => [:create, :step1, :step1_post]
   before_filter :authenticate_user!, :except => [:create, :step1, :step1_post]
 
-  before_filter :returning_karnevalist, :only => :step1
+  before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new]
 
   def index
     @karnevalister = Karnevalist.all.order("efternamn ASC")

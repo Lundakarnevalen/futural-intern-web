@@ -1,4 +1,7 @@
 class PhonesController < ApplicationController
+
+  load_and_authorize_resource
+
   def new
     @phone = Phone.new
     @method = :post
