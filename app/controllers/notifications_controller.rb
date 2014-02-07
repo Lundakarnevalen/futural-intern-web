@@ -8,7 +8,7 @@ class NotificationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @notifications = Notification.all.where("message_type = ?", 0), order("created_at DESC")
+    @notifications = Notification.all.order("created_at DESC")
     respond_to do |format|
       format.html{ render }
       format.json do
