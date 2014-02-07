@@ -66,7 +66,7 @@ class KarnevalisterController < ApplicationController
 
   def update
     karnevalist = Karnevalist.find params[:id]
-    karnevalist.update_if_password_valid params[:karnevalist]
+    karnevalist.update_attributes! params[:karnevalist]
     karnevalist.save
     respond_to do |format|
       format.html{ redirect_to karnevalist }
@@ -220,7 +220,7 @@ class KarnevalisterController < ApplicationController
 
   def step3_put
     @karnevalist = Karnevalist.find params[:id]
-    @karnevalist.update_if_password_valid params[:karnevalist]
+    @karnevalist.update_attributes! params[:karnevalist]
     @karnevalist.save
     redirect_to step4_karnevalist_path(@karnevalist)
   end
@@ -261,7 +261,7 @@ class KarnevalisterController < ApplicationController
 
   def checkout_digital_put
     @karnevalist = Karnevalist.find params[:id]
-    @karnevalist.update_if_password_valid params[:karnevalist]
+    @karnevalist.update_attributes! params[:karnevalist]
 
     @karnevalist.reload
     @karnevalist.utcheckad = true
