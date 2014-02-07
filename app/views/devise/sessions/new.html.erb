@@ -1,10 +1,4 @@
-<% if !(browser.iphone? && browser.version == "0") %>
-<div class="header">
-	<div class="container">
-		<h1>Sign in</h1>
-	</div>
-</div>
-<% end %>
+<%= render partial: "shared/header", locals: {title: "Sign in"} %>
 
 <div class="container">
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
