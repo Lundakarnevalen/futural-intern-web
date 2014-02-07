@@ -13,6 +13,7 @@ class Karnevalist < ActiveRecord::Base
   mount_uploader :foto, FotoUploader
 
   validates :email, :presence => true
+  validates_uniqueness_of :email
 
   UTCHECKAD = 3
 
@@ -81,15 +82,6 @@ class Karnevalist < ActiveRecord::Base
   # In memory only
   def password
     @pass
-  end
-
-  def update_if_password_valid attr
-    if true # user.valid_password? attr[:token]
-      update_attributes! attr.except('token')
-    else
-      message = I18n.t 'devise.failure.invalid_token'
-      fail StandardError, message
-    end
   end
 
   def as_json(options={})
