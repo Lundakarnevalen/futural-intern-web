@@ -273,6 +273,7 @@ class KarnevalisterController < ApplicationController
       registration_id.push @karnevalist.google_token
       options = {
         'data' => {
+          'id' => '1337',
           'title' => 'Utcheckad!',
           'message' => 'Nu är du utcheckad och klar, så nu kan du gå hem och sova.',
           'message_type' => '0',
