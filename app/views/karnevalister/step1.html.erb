@@ -52,7 +52,13 @@
 	</div>
 
 	<div class="form-group">
-		<%= f.label :email, 'Email' %>
+		<%= f.label :email, 'E-post' %>
+		<span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
+    	<%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
+	</div>
+
+	<div class="form-group"> <!-- TODO: Check email -->
+		<%= f.label :email2, 'E-post igen, tack!' %>
 		<span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
     	<%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
 	</div>
@@ -76,7 +82,7 @@
 	</div>
 
 	<div class="form-group">
-		<%= f.label :storlek_id, 'Klädstorlek' %>
+		<%= f.label :storlek_id, 'Tröjstorlek' %>
 		<div>
 			<%= f.select :storlek_id, Storlek.all.collect{ |s| [s.name, s.id] } %>
 		</div>
@@ -94,16 +100,15 @@
 		</div>
 	</div>
 
-	<h2>Tidigare engagemang</h2>
+	<h2>Jag har varit engagerad i en:</h2>
 
-	<h3>Jag har tidigare engagerat mig i</h3>
 	<div class="form-group">
-		<%= f.label :engagerad_kar, 'En studentkår, vilken och hur?' %>
+		<%= f.label :engagerad_kar, 'Studentkår, vilken och hur?' %>
 
 		<%= f.text_field :engagerad_kar %>
 	</div>
 	<div class="form-group">
-		<%= f.label :engagerad_nation, 'En nation, vilken och hur?' %>
+		<%= f.label :engagerad_nation, 'Studentnation, vilken och hur?' %>
 
 		<%= f.text_field :engagerad_nation %>
 	</div>
@@ -118,7 +123,7 @@
 		<%= f.text_field :engagerad_etc %>
 	</div>
 
-	<h3>Jag har tidigare varit aktiv inom kår/nation/förening som</h3>
+	<h3>Jag har varit aktiv inom kår/nation/förening som</h3>
 	<div class="form-group">
 		<div>
 			<%= f.check_box :jobbat_heltid %>
@@ -130,7 +135,7 @@
 		</div>
 		<div>
 			<%= f.check_box :jobbat_forman %>
-			<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
+			<%= f.label :jobbat_forman, 'Förman/Utskottsordförande' %>
 		</div>
 		<div>
 			<%= f.check_box :jobbat_aktiv %>
@@ -141,12 +146,12 @@
 		<div class="form-group">
 			<%= check_box :karnevalist, :karnevalist_2010 %>
 			<%= f.label :karnevalist_2010,
-			'Jag var karnevalist under Lundakarnevalen 2010' %>
+			'Jag var karnevalist 2010' %>
 		</div>
 
 	    <div class=form-group>
 	      <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept', :required => true, :name => "pul" %>
-	      <%= label_tag 'pul', 'Jag accepterar att mina personuppgifter lagras enligt PUL' %><span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
+	      <%= label_tag 'pul', 'Genom detta formulär ger du Lundakarnevalen tillåtelse att använda fotot på dig samt behandla dina personuppgifter i datorsystemet och för egna utskick i enlighet med Personuppgiftslagen (1998:204).' %><span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
 	    </div>
 
 		<div class="form-controls">
