@@ -26,6 +26,8 @@ Futural::Application.routes.draw do
     end
   end
 
+  get '/home', to: 'home#index'
+
   devise_for :users
 
   root to: 'karnevalister#step1'
