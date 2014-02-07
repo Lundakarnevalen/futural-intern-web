@@ -34,7 +34,6 @@ class Ability
     # Karnevalist
     can [:step2, :enter_pwd, :step3, :step3_put, :step4, :update, :show], Karnevalist, :user_id => user.id
     can [:create, :step1, :step1_post], Karnevalist
-    cannot [:step3_put, :update], Karnevalist, :utcheckad => true
 
     # Notification
     can :read, Notification
