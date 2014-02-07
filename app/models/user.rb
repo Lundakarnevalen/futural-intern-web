@@ -14,6 +14,10 @@ class User < ActiveRecord::Base
     end
   end
 
+  def is?(role)
+    self.roles.any? {|r| r.name == role.to_s}
+  end
+
   private
 
   def generate_authentication_token
