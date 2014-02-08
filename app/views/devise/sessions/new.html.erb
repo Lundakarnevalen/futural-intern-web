@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Sign in"} %>
 
-<div class="container">
+<div class="container" id="content">
 	<%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
 
 	<div class="form-group">

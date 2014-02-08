@@ -4,7 +4,7 @@
 
 <%= render partial: "shared/header", locals: {title: "Registrering"} %>
 
-<div class="container">
+<div class="container" id="content">
   <%= render partial: "shared/logo", locals: {percent: "1", text: "Vi behöver bara veta vem du är."} %>
 
   <%= form_for @karnevalist, :method => @method do |f| %>
