@@ -10,10 +10,11 @@ class KarnevalisterController < ApplicationController
   before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new, :step2, :step3, :step4]
 
   def index
-    @karnevalister = Karnevalist.all.order("efternamn ASC")
+    @karnevalister = nil
     respond_to do |format|
       format.html{ render }
       format.json do
+        @karnevalister = Karnevalist.all.order("efternamn ASC")
         render :json =>
           { :status => :success,
             :records => @karnevalister.length,
@@ -235,6 +236,8 @@ class KarnevalisterController < ApplicationController
     @id = params[:id]
     if !params[:q].blank?
       @karnevalister = Karnevalist.search params[:q]
+    else
+      @karnevalister = nil
     end
   end
 
@@ -292,6 +295,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def uppdelning
+    @karnevalister = nil 
   end
 
   def show_modal
