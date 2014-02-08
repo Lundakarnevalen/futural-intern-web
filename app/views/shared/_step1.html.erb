@@ -3,7 +3,7 @@
 	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
 		<span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
-		<%= f.text_field :personnummer, { :pattern => '[0-9-]*', :placeholder => "ÅÅMMDDNNNN", :required => true }  %>
+		<%= f.text_field :personnummer, { :pattern => '[0-9]*', :placeholder => "ÅÅMMDDNNNN", :required => true }  %>
 	</div>
 
 	<div class="form-group">
@@ -139,6 +139,6 @@
 		</div>
 
 	    <div class=form-group>
-	      <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept', :required => true, :name => "pul" %>
+	      <%= check_box_tag nil, nil, false, :id => 'pul', :class => 'must-accept', :required => true, :name => "pul", :checked => (checked) %>
 	      <%= label_tag 'pul', 'Genom detta formulär ger du Lundakarnevalen tillåtelse att använda fotot på dig samt behandla dina personuppgifter i datorsystemet och för egna utskick i enlighet med Personuppgiftslagen (1998:204).' %><span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
 	    </div>

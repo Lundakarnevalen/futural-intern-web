@@ -1,0 +1,19 @@
+<% content_for :head do %>
+  <%= javascript_include_tag :camera %>
+<% end %>
+<div class="form-group">
+  <div style="display: none;">
+      <%= f.hidden_field :image_data %>
+  </div>
+  <div>
+    <%= f.label :foto %>
+    <div id="camera-placeholder"></div>
+    <script type="text/javascript">
+      $(document).ready(function(){
+        var camera_nbr = $.cookie('camera-nbr') || '90';
+        var camera = new Camera("http://192.168.0." + camera_nbr + "/");
+        $("#camera-placeholder").html(camera.view());
+      });
+    </script>
+  </div>
+</div>
