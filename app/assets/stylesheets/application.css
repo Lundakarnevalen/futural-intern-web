@@ -79,7 +79,7 @@ h3 + p {
 	font-family: "Helvetica Neue", sans-serif;
 }
 
-#content {
+#content, #uppdelning_search {
 	padding-top: 30px;
 }
 
@@ -296,6 +296,10 @@ td select, #uppdelning_search select {
 #uppdelning input[type='checkbox'] {
     display: inline;
     text-align: left;
+    clip: auto;
+    position: relative !important;
+    height: auto;
+    width: auto;
 }
 
 .form-group {
@@ -347,7 +351,8 @@ div.error-message {
 }
 
 .photo {
-	width: 80%;
+	max-height: 400px;
+	max-width: 80%;
 	border: 1em solid white;
 	transform: rotate(7deg);
 	-ms-transform: rotate(7deg);
