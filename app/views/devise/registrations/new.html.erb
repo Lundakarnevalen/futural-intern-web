@@ -1,12 +1,6 @@
-<% if !(browser.iphone? && browser.version == "0") %>
-<div class="header">
-	<div class="container">
-		<h1>Sign up</h1>
-	</div>
-</div>
-<% end %>
+<%= render partial: "shared/header", locals: {title: "Sign up"} %>
 
-<div class="container">
+<div class="container" id="content">
 	<%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
 	  <%= devise_error_messages! %>
 

@@ -28,7 +28,7 @@ class Karnevalist < ActiveRecord::Base
     end
 
     if self.avklarat_steg.nil?
-      self.avklarat_steg = 1
+      self.avklarat_steg = 0
     end
 
     if utcheckad && utcheckad_at.nil?

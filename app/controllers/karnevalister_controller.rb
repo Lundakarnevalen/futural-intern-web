@@ -8,6 +8,7 @@ class KarnevalisterController < ApplicationController
   load_and_authorize_resource
 
   before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new, :step2, :step3, :step4]
+  before_filter :stop_utcheckad, :only => [:update, :step3_put]
 
   def index
     @karnevalister = nil
@@ -199,7 +200,7 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     if (params[:password] == "futural")
-      @karnevalist.avklarat_steg = 2
+      @karnevalist.avklarat_steg = 1
       @karnevalist.save
       redirect_to step3_karnevalist_path(@karnevalist)
     else
@@ -210,18 +211,14 @@ class KarnevalisterController < ApplicationController
 
   def step3
     @karnevalist = Karnevalist.find params[:id]
-
-    # if (@karnevalist.avklarat_steg < 2)
-    #   redirect_to step2_karnevalist_path(@karnevalist)
-    # else
-      put_base
-      render :step3
-    # end
+    put_base
+    render :step3
   end
 
   def step3_put
     @karnevalist = Karnevalist.find params[:id]
     @karnevalist.update_attributes! params[:karnevalist]
+    @karnevalist.avklarat_steg = 2
     @karnevalist.save
     redirect_to step4_karnevalist_path(@karnevalist)
   end
@@ -323,12 +320,29 @@ class KarnevalisterController < ApplicationController
         return
       end
 
-      if @karnevalist.avklarat_steg == 1
+      if @karnevalist.avklarat_steg == 0
         redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
-      elsif @karnevalist.avklarat_steg == 2
+      elsif @karnevalist.avklarat_steg == 1
         redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
-      elsif @karnevalist.avklarat_steg == 3
-        # Karnevalist utcheckad och kan inte redigeras
+      elsif @karnevalist.avklarat_steg == 2
+        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+      elsif @karnevalist.utcheckad
+        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+      end
+    end
+  end
+
+  def stop_utcheckad
+    karnevalist = Karnevalist.find params[:id]
+    if not karnevalist.nil? and karnevalist.utcheckad and karnevalist.user == current_user
+      karnevalist.errors.add :base, "Du får tyvärr inte ändra något efter att du checkat ut."
+      respond_to do |format|
+        format.html{ redirect_to karnevalist }
+        format.json do
+          render :json =>
+            { :status => :failure,
+              :message => karnevalist.errors.full_messages.join('; ') }
+        end
       end
     end
   end

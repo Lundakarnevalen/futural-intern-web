@@ -2,11 +2,7 @@
 <%= stylesheet_link_tag    :karnevalister, :media => :all %>
 <% end %>
 
-<div class="header">
-  <div class="container">
-    <h1>Uppdelning av karnevalister</h1>
-  </div>
-</div>
+<%= render partial: "shared/header", locals: {title: "Uppdelning av karnevalister"} %>
 
 <div class="container" id="uppdelning_search">
   <%= render 'search_filter_form' %>
