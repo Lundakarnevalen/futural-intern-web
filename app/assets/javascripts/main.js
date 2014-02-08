@@ -9,7 +9,11 @@ $(function() {
 				if(element.is('input[type=radio]')) {
 					error.appendTo(element.parents('.radio-group'));
 				} else if (element.is('input[type=checkbox]') ) {
-					error.prependTo(element.parents('.form-group'));
+					if (element.attr("id") == "pul") {
+						error.appendTo(element.parents('.form-group'));
+					} else {
+						error.prependTo(element.parents('.form-group'));
+					}
 				} else {
 					error.insertAfter(element);
 				}
