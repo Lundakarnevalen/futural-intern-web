@@ -28,7 +28,8 @@
         <div id="camera-placeholder"></div>
         <script type="text/javascript">
           $(document).ready(function(){
-            var camera = new Camera("http://192.168.0.90/");
+            var camera_nbr = $.cookie('camera-nbr') || '90';
+            var camera = new Camera("http://192.168.0." + camera_nbr + "/");
             $("#camera-placeholder").html(camera.view());
           });
         </script>
