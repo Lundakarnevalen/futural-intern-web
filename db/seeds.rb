@@ -134,40 +134,9 @@ end }
 Role.delete_all
 {
   1 => 'admin',
+  2 => 'utcheckare',
 }.each{ |k, v| Role.new do |i|
   i.id = k
   i.name = v
   i.save
 end }
-
-# Add J. Random Hacker
-Karnevalist.create({
-  :personnummer => '9110251817',
-  :fornamn => 'Johan',
-  :efternamn => 'Förberg',
-  :kon_id => Kon.where(:name => 'Man').first.id(),
-  :gatuadress => 'Möllevångsvägen 14B',
-  :postnr => '222 40',
-  :postort => 'Lund',
-  :email => 'johan@forberg.se',
-  :telnr => '0709-690 424',
-  :nation_id => Nation.where(:name => 'Blekingska').first.id(),
-  :matpref => 'Äter det mesta',
-  :storlek_id => 0,
-  :terminer => 7,
-  :engagerad_kar => 'Harvat heltid på TLTH',
-  :engagerad_nation => 'Blandat drinkar på Blekingska',
-  :engagerad_studentikos => 'Spelat falskt i Bleckhornen',
-  :engagerad_etc => 'Spelat rent i flottans ungdomsmusikkår',
-  :jobbat_heltid => true,
-  :jobbat_styrelse => true,
-  :jobbat_forman => true,
-  :jobbat_aktiv => true,
-  :karnevalist_2010 => false,
-  :intressen => Intresse.where(:name => 'Allt! Jag kan göra vad som helst, jag vill bara vara med.'),
-  :sektioner => Sektion.where(:name => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.'),
-  :medlem_af => false,
-  :medlem_kar => true,
-  :medlem_nation => false,
-  :karneveljsbiljett => false,
-})

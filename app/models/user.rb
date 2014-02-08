@@ -18,6 +18,10 @@ class User < ActiveRecord::Base
     self.roles.any? {|r| r.name == role.to_s}
   end
 
+  def remember_me
+    true
+  end
+
   private
 
   def generate_authentication_token
