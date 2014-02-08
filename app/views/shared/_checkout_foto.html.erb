@@ -13,6 +13,10 @@
       $(document).ready(function(){
         var camera_nbr = $.cookie('camera-nbr') || '90';
         camera = new Camera("http://192.168.0." + camera_nbr + "/");
+
+        /* Check for CORS policy */
+        console.log(camera.checkCors('http://www.google.com'));
+
         $("#camera-placeholder").html(camera.view());
 
         $('form').submit(function(e){
