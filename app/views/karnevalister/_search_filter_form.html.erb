@@ -1,7 +1,7 @@
 <%= form_tag '/karnevalister/search_filter', :method => :get do %>
   <div class="form-group">
-    <%= label_tag :q, 'Sök (namn, personnummer, e-post):' %>
-    <%= text_field_tag :q %>
+    <%= label_tag :q, 'Sök:' %>
+    <%= text_field_tag :q, nil, :placeholder => 'Namn, personnummer, e-post' %>
   </div>
   <div class="form-group">
     <%= label_tag :tilldelad_sektion, 'Filtrera på tilldelad sektion:' %>
