@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
-<div class="container">
+<div class="container" id="content">
 	<%= form_for @karnevalist, :method => @method do |f| %>
 	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
@@ -27,7 +27,7 @@
 		<%= f.text_field :postort, :placeholder => "Ort", :disabled => true %>
 	</div>
 	<div class="form-group">
-		<%= f.label :email, 'Email' %>
+		<%= f.label :email, 'E-post' %>
 		<%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :disabled => true %>
 	</div>
 	<div class="form-group">
@@ -35,7 +35,7 @@
 		<%= f.telephone_field :telnr, :disabled => true %>
 	</div>
 	<div class="form-group">
-		<%= f.label :nation_id, 'Nation' %>
+		<%= f.label :nation_id, 'Studentnation' %>
 		<div>
 			<%= f.select :nation_id, Nation.all.collect{ |n| [n.name, n.id] }, {}, {:disabled => true} %>
 		</div>
@@ -45,13 +45,13 @@
 		<%= f.text_field :matpref, :disabled => true %>
 	</div>
 	<div class="form-group">
-		<%= f.label :storlek_id, 'Klädstorlek' %>
+		<%= f.label :storlek_id, 'Tröjstorlek' %>
 		<div>
 			<%= f.select :storlek_id, Storlek.all.collect{ |s| [s.name, s.id] }, {}, {:disabled => true} %>
 		</div>
 	</div>
 	<div class="form-group">
-		<%= f.label :terminer, 'Terminer i Lund' %>
+		<%= f.label :terminer, 'Antal studieterminer i Lund' %>
 		<%= f.number_field :terminer, :pattern => '[0-9]*', :disabled => true %>
 	</div>
 	<div class="form-group">
@@ -61,14 +61,13 @@
 		</div>
 	</div>
 
-	<h2>Tidigare engagemang</h2>
-	<h3>Jag har tidigare engagerat mig i</h3>
+	<h3>Jag har varit engagerad i en:</h3>
 	<div class="form-group">
-		<%= f.label :engagerad_kar, 'En studentkår, vilken och hur?' %>
+		<%= f.label :engagerad_kar, 'Studentkår, vilken och hur?' %>
 		<%= f.text_field :engagerad_kar, :disabled => true %>
 	</div>
 	<div class="form-group">
-		<%= f.label :engagerad_nation, 'En nation, vilken och hur?' %>
+		<%= f.label :engagerad_nation, 'Studentnation, vilken och hur?' %>
 		<%= f.text_field :engagerad_nation, :disabled => true %>
 	</div>
 	<div class="form-group">
@@ -80,7 +79,7 @@
 		<%= f.text_field :engagerad_etc, :disabled => true %>
 	</div>
 
-	<h3>Jag har tidigare varit aktiv som</h3>
+	<h3>Jag har varit aktiv inom kår/nation/förening som</h3>
 	<div class="form-group">
 		<div>
 			<%= f.check_box :jobbat_heltid, :disabled => true %>
@@ -92,7 +91,7 @@
 		</div>
 		<div>
 			<%= f.check_box :jobbat_forman, :disabled => true %>
-			<%= f.label :jobbat_forman, 'Förman eller utskottsordförande' %>
+			<%= f.label :jobbat_forman, 'Förman/Utskottsordförande' %>
 		</div>
 		<div>
 			<%= f.check_box :jobbat_aktiv, :disabled => true %>
@@ -103,11 +102,10 @@
 		<div class="form-group">
 			<%= check_box :karnevalist, :karnevalist_2010, :disabled => true %>
 			<%= f.label :karnevalist_2010,
-			'Jag var karnevalist under Lundakarnevalen 2010' %>
+			'Jag var karnevalist 2010' %>
 		</div>
 
 		<h3>Intressen</h3>
-		<p>Bocka för det du är intresserad av. Sjärnmarkera det du är mest intresserad av.</p>
 		<div class="form-group">
 			<%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
 			<% Intresse.all.each do |i| %>
@@ -137,6 +135,10 @@
 			<% end %>
 		</div>
 		<h3>Övrigt</h3>
+	    <div class="form-group">
+	        <%= f.check_box :vill_ansvara, :disabled => true %>
+		    <%= f.label :vill_ansvara, 'Jag vill ha ansvar' %>
+	    </div>
 		<div class="form-group">
 			<%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
 
