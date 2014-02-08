@@ -208,7 +208,7 @@ class KarnevalisterController < ApplicationController
   def enter_pwd
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    if (params[:password] == "futural")
+    if (params[:password].downcase == "futural")
       @karnevalist.avklarat_steg = 1
       @karnevalist.save
       redirect_to step3_karnevalist_path(@karnevalist)
