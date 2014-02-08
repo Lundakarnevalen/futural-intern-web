@@ -29,7 +29,12 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     respond_to do |format|
-      format.html{ returning_karnevalist }
+      format.html do
+        if not returning_karnevalist
+          @karnevalist = Karnevalist.find params[:id]
+          render :edit
+        end
+      end
       format.json do
         render :json =>
           { :status => :success,
@@ -318,7 +323,7 @@ class KarnevalisterController < ApplicationController
       @karnevalist = Karnevalist.find_by_user_id current_user.id
 
       if @karnevalist.nil?
-        return
+        return false
       end
 
       if @karnevalist.avklarat_steg == 0
@@ -330,6 +335,8 @@ class KarnevalisterController < ApplicationController
       elsif @karnevalist.utcheckad
         redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
       end
+    else
+      return false
     end
   end
 
