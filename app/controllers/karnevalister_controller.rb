@@ -186,7 +186,8 @@ class KarnevalisterController < ApplicationController
   def step1_post
     @karnevalist = Karnevalist.create params[:karnevalist]
 
-    sign_in(@karnevalist.user)
+    sign_in @karnevalist.user
+    remember_me @karnevalist.user
 
     redirect_to action: 'step2', id: @karnevalist.id
   end
@@ -326,7 +327,7 @@ class KarnevalisterController < ApplicationController
       elsif @karnevalist.avklarat_steg == 1
         redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
       elsif @karnevalist.avklarat_steg == 2
-        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
       elsif @karnevalist.utcheckad
         redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
       end
