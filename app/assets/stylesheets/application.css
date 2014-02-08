@@ -7,7 +7,7 @@
  */
 .structural {
 	position: absolute !important;
-	height: 1px; width: 1px; 
+	height: 1px; width: 1px;
 	overflow: hidden;
 	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
 	clip: rect(1px, 1px, 1px, 1px);
@@ -89,8 +89,8 @@ h3 + p {
 		background-size: auto 60px;
 	}
 
-   .header h1 { 
-		font-size: 16px; 
+   .header h1 {
+		font-size: 16px;
 		padding: 31px 0 10px 0;
 	}
 
@@ -144,7 +144,7 @@ input, textarea {
 
 input[type="radio"] + label.radio_snalla {
 	color: transparent;
-	padding: 10px 0 10px 5px; 
+	padding: 10px 0 10px 5px;
 }
 .radio-group {
 	margin-top: 10px;
@@ -154,16 +154,16 @@ input[type="radio"] + label.radio_snalla {
 }
 input[type="checkbox"] + label, input[type="radio"] + label.kon_radio{
 	display: inline-block;
-	padding: 10px 0 10px 35px;   
+	padding: 10px 0 10px 35px;
 }
 
-input[type="checkbox"] + label, input[type="radio"] + label.radio_snalla, input[type="radio"] + label.kon_radio  {  
-    cursor: pointer;  
-    position: relative;  
-     
-    margin-right: 10px;  
+input[type="checkbox"] + label, input[type="radio"] + label.radio_snalla, input[type="radio"] + label.kon_radio  {
+    cursor: pointer;
+    position: relative;
+
+    margin-right: 10px;
     font-size: 0.75em;
-    max-width: 70%;  
+    max-width: 70%;
 }
 
 input[type="radio"] + label.radio_snalla:before {
@@ -178,11 +178,11 @@ input[type="radio"] + label.radio_snalla:before {
 	color: rgba(255,255,255,0.4);
 }
 
-input[type="radio"]:checked + label.radio_snalla:before {  
+input[type="radio"]:checked + label.radio_snalla:before {
     color: rgba(238,104,95,1);
-} 
+}
 
-input[type="checkbox"] + label:before, input[type="radio"].kon_radio + label:before {  
+input[type="checkbox"] + label:before, input[type="radio"].kon_radio + label:before {
 	content: "";
 	display: inline-block;
 
@@ -199,19 +199,19 @@ input[type="checkbox"] + label:before, input[type="radio"].kon_radio + label:bef
 	border-radius: 2px;
 }
 
-input[type="checkbox"]:checked + label:before, input[type="radio"].kon_radio:checked + label:before {  
-    content: "\2713";   
-    font-size: 24px;  
+input[type="checkbox"]:checked + label:before, input[type="radio"].kon_radio:checked + label:before {
+    content: "\2713";
+    font-size: 24px;
     color: rgba(238,104,95,1);
-    text-align: center;  
-    line-height: 28px;  
-} 
+    text-align: center;
+    line-height: 28px;
+}
 
-input[type='checkbox'], 
-input[type="radio"].radio_snalla, 
+input[type='checkbox'],
+input[type="radio"].radio_snalla,
 input[type="radio"].kon_radio  {
 	position: absolute !important;
-	height: 1px; width: 1px; 
+	height: 1px; width: 1px;
 	overflow: hidden;
 	clip: rect(1px 1px 1px 1px); /* IE6, IE7 */
 	clip: rect(1px, 1px, 1px, 1px);
@@ -357,7 +357,22 @@ div.error-message {
 	transform: rotate(7deg);
 	-ms-transform: rotate(7deg);
 	-webkit-transform: rotate(7deg);
-	margin: 3em 0 0 1em;
+	margin: 3em 0 40px 1em;
+}
+
+.capture-photo {
+  border: 1em solid white;
+  display: block;
+  margin: 0 auto;
+}
+
+.capture-photo ~ a {
+  display: inline-block;
+  margin: 1em;
+  padding: 0.5em;
+  color: #fff;
+  border: 1px solid rgba(238,104,95,1);
+  border-radius: 5px;
 }
 
 table {

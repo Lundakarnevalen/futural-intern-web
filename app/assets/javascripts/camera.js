@@ -5,9 +5,9 @@ Camera.prototype = {
     var width = 640
 
     var output = '<img SRC="' + imagepath + '"width="' + width + '"height="' + height +'" width="' + width;
-    output += '" border=0 ALT="If no image is displayed, there might be too many viewers, or the browser configuration may have to be changed. See help for detailed instructions on how to do this." width=' + width + ' height=' + height +' width=' + width + ' class="photo" id="camera_photo">';
-    output += '<a href="javascript:camera.snapshot();">Snapshot</a>';
-    output += '<a href="javascript:camera.video();">Reset</a>';
+    output += '" border=0 ALT="If no image is displayed, there might be too many viewers, or the browser configuration may have to be changed. See help for detailed instructions on how to do this." width=' + width + ' height=' + height +' width=' + width + ' class="capture-photo" id="camera_photo">';
+    output += '<a href="javascript:camera.snapshot();">Avtryckare</a>';
+    output += '<a href="javascript:camera.video();">Ångra</a>';
 
     return output;
   },
