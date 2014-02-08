@@ -12,6 +12,16 @@ Camera.prototype = {
     return output;
   },
 
+  checkCors: function(testUrl) {
+
+    var ajaxRequest = $.ajax({
+      url: testUrl,
+      async: false
+    });
+
+    return ajaxRequest.isRejected() && ajaxRequest.status === 0;
+  },
+
   snapshot: function() {
     var img = document.getElementById('camera_photo');
     var self = this;
