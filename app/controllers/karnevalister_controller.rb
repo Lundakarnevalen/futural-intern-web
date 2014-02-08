@@ -33,6 +33,7 @@ class KarnevalisterController < ApplicationController
       format.json do
         render :json =>
           { :status => :success,
+            :token => current_user.authentication_token,
             :karnevalist => @karnevalist }
       end
     end
@@ -292,7 +293,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def uppdelning
-    @karnevalister = nil 
+    @karnevalister = nil
   end
 
   def show_modal
@@ -325,7 +326,7 @@ class KarnevalisterController < ApplicationController
       elsif @karnevalist.avklarat_steg == 1
         redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
       elsif @karnevalist.avklarat_steg == 2
-        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
       elsif @karnevalist.utcheckad
         redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
       end

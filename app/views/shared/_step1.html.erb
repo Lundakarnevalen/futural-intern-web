@@ -47,9 +47,9 @@
 	</div>
 
 	<div class="form-group"> <!-- TODO: Check email -->
-		<%= f.label :email2, 'E-post igen, tack!' %>
+		<%= label_tag :email2, 'E-post igen, tack!' %>
 		<span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
-    	<%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
+    	<%= text_field_tag :email2, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
 	</div>
 
 	<div class="form-group">
