@@ -7,7 +7,7 @@ class KarnevalisterController < ApplicationController
 
   load_and_authorize_resource
 
-  before_filter :returning_karnevalist, :only => [:step1, :edit, :show, :new, :step2, :step3, :step4]
+  before_filter :returning_karnevalist, :only => [:step1, :edit, :new, :step2, :step3, :step4]
   before_filter :stop_utcheckad, :only => [:update, :step3_put]
 
   def index
@@ -29,10 +29,11 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     respond_to do |format|
-      format.html{ render :edit }
+      format.html{ returning_karnevalist }
       format.json do
         render :json =>
           { :status => :success,
+            :token => current_user.authentication_token,
             :karnevalist => @karnevalist }
       end
     end
@@ -292,7 +293,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def uppdelning
-    @karnevalister = nil 
+    @karnevalister = nil
   end
 
   def show_modal

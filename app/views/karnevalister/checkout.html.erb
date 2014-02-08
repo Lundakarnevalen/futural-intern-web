@@ -11,6 +11,16 @@
     </div>
     <% end %>
 	<h2>Utcheckning av karnevalist</h2>
+  <input type="text" id="camera-nbr" />
+  <script type="text/javascript">
+    $(function(){
+      $('#camera-nbr').val($.cookie('camera-nbr'));
+      $('#camera-nbr').on('input', function(e){
+        $.cookie('camera-nbr', $('#camera-nbr').val());
+      });
+    });
+  </script>
+
     <h3>Pappersansökan</h3>
     <%= link_to "Formulär - Pappersansökan", controller: "karnevalister", action: "checkout_paper" %>
     <h3>Digital ansökan (Android/iPhone)</h3>

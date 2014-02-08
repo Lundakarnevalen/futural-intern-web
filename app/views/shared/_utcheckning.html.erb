@@ -17,12 +17,3 @@
     <%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
   </div>
 </div>
-
-<div class="form-group">
-  <div>
-    <%= f.label :foto %>
-    <%= f.file_field :foto %>
-  </div>
-  <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
-
-</div>

@@ -9,7 +9,7 @@
 
   <%= form_for @karnevalist, :method => @method do |f| %>
 
-  <%= render partial: "shared/step1", locals: {f: f} %>
+  <%= render partial: "shared/step1", locals: {f: f, checked: nil} %>
   <%= render partial: "shared/step3", locals: {f: f} %>
   <%= render partial: "shared/utcheckning", locals: {f: f} %>
 
