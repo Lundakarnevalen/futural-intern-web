@@ -12,23 +12,21 @@ Camera.prototype = {
     return output;
   },
 
-  checkCors: function(testUrl) {
-
-    var ajaxRequest = $.ajax({
-      url: testUrl,
-      async: false
-    });
-
-    return ajaxRequest.isRejected() && ajaxRequest.status === 0;
-  },
-
   snapshot: function() {
     var img = document.getElementById('camera_photo');
     var self = this;
     img.onload = function(e) {
       var b64 = self._getBase64Image(img);
-      document.getElementById('karnevalist_image_data').value = b64;
+      document.getElementById('karnevalist_image_data').value = b64;  
     };
+
+    if(img.addEventListener) {
+        img.addEventListener('error', function (e) {
+            e.preventDefault(); // Prevent error from getting thrown
+            alert("Bilden har inte sparats! Starta om Chrome med rätt flagga. Gibberish? Prata med IT!");
+        });
+    }
+
     img.crossOrigin = '';
     img.src = this.photoUrl;
   },
