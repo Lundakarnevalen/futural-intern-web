@@ -423,6 +423,7 @@ td.center, th.center {
     overflow-y: auto;
     overflow-x: hidden;
     height: 90%;
+    background-color: #faa69c;
 }
 
 .modal a.close-modal {
