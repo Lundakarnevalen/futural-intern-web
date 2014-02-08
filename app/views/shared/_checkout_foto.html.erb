@@ -16,13 +16,6 @@
         camera = new Camera("http://" + camera_nbr + "/");
 
         $("#camera-placeholder").html(camera.view());
-
-        $('form').submit(function(e){
-          if ($('#karnevalist_image_data').val() == '') {
-            e.preventDefault();
-            alert("Du måste ta en bild!");
-          }
-        });
       });
     </script>
   </div>

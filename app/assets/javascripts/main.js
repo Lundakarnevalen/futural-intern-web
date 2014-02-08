@@ -1,5 +1,4 @@
 $(function() {
-
 	var form = $('form');
 	if (form.length) {
 		form.validate({
@@ -47,7 +46,11 @@ $(function() {
         	},
         	submitHandler: function(form) {
         		$(this).find('input[type=submit]').attr('disabled', 'disabled');
-        		form.submit();
+        		if (document.getElementById('karnevalist_image_data').value == '') {
+          			$('.form-controls').prepend('<div class="error-message">Bilden har inte sparats! Starta om Chrome med rätt flagga. Gibberish? Prata med IT!</div>');
+          		} else {
+          			form.submit();
+          		}
         	}
 		});
 	}
