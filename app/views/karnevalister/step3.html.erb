@@ -16,6 +16,8 @@
 		<%= f.submit'Spara' %>
 	</div>
 
+	<%= content_tag(:div, "", :id => 'hr') %>
+
 	<div id="steg1">
 		<%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
 	</div>
