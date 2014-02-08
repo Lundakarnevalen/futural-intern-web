@@ -5,37 +5,13 @@
     <%= form_for @karnevalist, url: {action: "checkout_paper_post"}, :method => @method do |f| %>
 	<h2>Karnevalistens uppgifter</h2>
 
-	<div class="form-group">
-		<%= f.label :id, 'ID' %>
-		<%= f.text_field :id, :disabled => true %>
-	</div>
+  <div class="form-group">
+    <%= f.label :email, 'Email' %>
 
-    <div class="form-group">
-      <%= f.label :email, 'Email' %>
+    <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
+  </div>
 
-      <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
-    </div>
-
-    <%= render partial: "shared/checkout_foto", locals: {f: f} %>
-
-	<div class="form-group">
-		<div>
-			<%= f.check_box :medlem_af %>
-			<%= f.label :medlem_af, 'Jag är medlem i AF' %>
-		</div>
-		<div>
-			<%= f.check_box :medlem_kar %>
-			<%= f.label :medlem_kar, 'Jag är medlem i min kår' %>
-		</div>
-		<div>
-			<%= f.check_box :medlem_nation %>
-			<%= f.label :medlem_nation, 'Jag är medlem i en nation' %>
-		</div>
-		<div>
-			<%= f.check_box :karneveljsbiljett %>
-			<%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
-		</div>
-	</div>
+  <%= render partial: "shared/utcheckning", locals: {f: f} %>
 
 	<div class="form-controls">
 	  <%= submit_tag "Spara" %>
