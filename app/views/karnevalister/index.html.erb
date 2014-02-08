@@ -10,7 +10,7 @@
 
 <div class="container">
   <%= render 'search_form' %>
-
+  <% if !@karnevalister.blank? %>
   <ul>
     <% @karnevalister.each do |k| %>
       <li>
@@ -20,5 +20,6 @@
       </li>
     <% end %>
   </ul>
+  <% end %>
 </div>
 
