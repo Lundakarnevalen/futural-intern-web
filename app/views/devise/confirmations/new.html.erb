@@ -1,7 +1,7 @@
 <% if !(browser.iphone? && browser.version == "0") %>
 <%= render partial: "shared/header", locals: {title: "Resend confirmation instructions"} %>
 
-<div class="container">
+<div class="container" id="content">
 
   <%= form_for(resource, :as => resource_name, :url => confirmation_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
