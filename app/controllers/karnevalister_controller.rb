@@ -187,7 +187,6 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.create params[:karnevalist]
 
     sign_in @karnevalist.user
-    remember_me @karnevalist.user
 
     redirect_to action: 'step2', id: @karnevalist.id
   end
