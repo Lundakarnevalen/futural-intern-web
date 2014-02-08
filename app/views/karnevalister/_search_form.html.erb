@@ -1,7 +1,7 @@
 <%= form_tag '/karnevalister/search', :method => :get do %>
   <div class=form-group>
     <%= label_tag :q, 'Sök:' %>
-    <%= text_field_tag :q, nil, :placeholder => 'Namn, personnummer, e-post' %>
+    <%= text_field_tag :q, nil, :placeholder => 'Namn, personnummer, e-post eller id' %>
     <%= submit_tag 'Sök' %>
   </div>
 <% end %>
