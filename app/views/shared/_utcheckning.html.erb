@@ -17,3 +17,9 @@
     <%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
   </div>
 </div>
+
+<% if @karnevalist.utcheckad %>
+  <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
+<% else %>
+  <%= render partial: "shared/checkout_foto", locals: {f: f} %>
+<% end %>
