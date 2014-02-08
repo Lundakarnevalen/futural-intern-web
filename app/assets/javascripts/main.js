@@ -9,7 +9,11 @@ $(function() {
 				if(element.is('input[type=radio]')) {
 					error.appendTo(element.parents('.radio-group'));
 				} else if (element.is('input[type=checkbox]') ) {
-					error.prependTo(element.parents('.form-group'));
+					if (element.attr("id") == "pul") {
+						error.appendTo(element.parents('.form-group'));
+					} else {
+						error.prependTo(element.parents('.form-group'));
+					}
 				} else {
 					error.insertAfter(element);
 				}
@@ -37,7 +41,14 @@ $(function() {
 				"karnevalist[sektion_ids][]": {
 					minlength: jQuery.format("Ange minst {0} sektioner.")
 				}
-			}
+			},
+			invalidHandler: function(event, validator) {
+      		  	$(this).find('input[type=submit]').removeAttr("disabled");
+        	},
+        	submitHandler: function(form) {
+        		$(this).find('input[type=submit]').attr('disabled', 'disabled');
+        		form.submit();
+        	}
 		});
 	}
 
