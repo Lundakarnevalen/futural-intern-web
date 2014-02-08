@@ -1,0 +1,28 @@
+<h3>Utcheckning</h3>
+<div class="form-group">
+  <div>
+    <%= f.check_box :medlem_af %>
+    <%= f.label :medlem_af, 'Jag är medlem i AF' %>
+  </div>
+  <div>
+    <%= f.check_box :medlem_kar %>
+    <%= f.label :medlem_kar, 'Jag är medlem i min kår' %>
+  </div>
+  <div>
+    <%= f.check_box :medlem_nation %>
+    <%= f.label :medlem_nation, 'Jag är medlem i en nation' %>
+  </div>
+  <div>
+    <%= f.check_box :karneveljsbiljett %>
+    <%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
+  </div>
+</div>
+
+<div class="form-group">
+  <div>
+    <%= f.label :foto %>
+    <%= f.file_field :foto %>
+  </div>
+  <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
+
+</div>

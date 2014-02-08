@@ -1,12 +1,7 @@
-<% if !(browser.iphone? && browser.version == "0") %>
-<div class="header">
-	<div class="container">
-		<h1>Resend unlock instructions</h1>
-	</div>
-</div>
-<% end %>
 
-<div class="container">
+<%= render partial: "shared/header", locals: {title: "Resend unlock instructions"} %>
+
+<div class="container" id="content">
 
 <%= form_for(resource, :as => resource_name, :url => unlock_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
