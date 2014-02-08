@@ -41,7 +41,14 @@ $(function() {
 				"karnevalist[sektion_ids][]": {
 					minlength: jQuery.format("Ange minst {0} sektioner.")
 				}
-			}
+			},
+			invalidHandler: function(event, validator) {
+      		  	$(this).find('input[type=submit]').removeAttr("disabled");
+        	},
+        	submitHandler: function(form) {
+        		$(this).find('input[type=submit]').attr('disabled', 'disabled');
+        		form.submit();
+        	}
 		});
 	}
 
