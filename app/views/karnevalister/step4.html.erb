@@ -9,9 +9,9 @@
   <% if not @karnevalist.utcheckad %>
   <%= render partial: "shared/logo", locals: {percent: "86", text: "Vi behöver bara en bild på dig. Den tar du längst fram vid disken inuti AF-borgen."} %>
 
-    <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
-
   <% end %>
+
+  <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
 
   <div class="message">
     <h2>Dina uppgifter</h2>
