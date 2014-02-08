@@ -7,3 +7,4 @@
 //= require main
 //= require jquery.ui.all
 //= require jquery.modal
+//= require jquery.cookie
