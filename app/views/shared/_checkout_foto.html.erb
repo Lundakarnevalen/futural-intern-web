@@ -11,8 +11,10 @@
     <script type="text/javascript">
       var camera;
       $(document).ready(function(){
+
         var camera_nbr = $.cookie('camera-nbr') || '192.168.0.90';
         camera = new Camera("http://" + camera_nbr + "/");
+
         $("#camera-placeholder").html(camera.view());
 
         $('form').submit(function(e){
