@@ -186,7 +186,8 @@ class KarnevalisterController < ApplicationController
   def step1_post
     @karnevalist = Karnevalist.create params[:karnevalist]
 
-    sign_in(@karnevalist.user)
+    sign_in @karnevalist.user
+    remember_me @karnevalist.user
 
     redirect_to action: 'step2', id: @karnevalist.id
   end
