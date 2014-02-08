@@ -9,9 +9,10 @@
     <%= f.label :foto %>
     <div id="camera-placeholder"></div>
     <script type="text/javascript">
+      var camera;
       $(document).ready(function(){
         var camera_nbr = $.cookie('camera-nbr') || '90';
-        var camera = new Camera("http://192.168.0." + camera_nbr + "/");
+        camera = new Camera("http://192.168.0." + camera_nbr + "/");
         $("#camera-placeholder").html(camera.view());
       });
     </script>
