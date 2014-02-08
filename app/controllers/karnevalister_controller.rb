@@ -33,6 +33,7 @@ class KarnevalisterController < ApplicationController
       format.json do
         render :json =>
           { :status => :success,
+            :token => current_user.authentication_token,
             :karnevalist => @karnevalist }
       end
     end
@@ -292,7 +293,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def uppdelning
-    @karnevalister = nil 
+    @karnevalister = nil
   end
 
   def show_modal
