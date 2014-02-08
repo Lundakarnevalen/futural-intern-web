@@ -292,6 +292,10 @@ td select, #uppdelning_search select {
 #uppdelning input[type='checkbox'] {
     display: inline;
     text-align: left;
+    clip: auto;
+    position: relative !important;
+    height: auto;
+    width: auto;
 }
 
 .form-group {
