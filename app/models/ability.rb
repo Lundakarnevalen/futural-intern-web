@@ -41,6 +41,11 @@ class Ability
     # Phone
     can [:create, :read, :update, :destroy], Phone
 
+    # Checkout
+    if user.is? :utcheckare
+      can [:checkout, :checkout_digital, :checkout_digital_put, :checkout_paper, :checkout_paper_post], Karnevalist
+    end
+
     # Admin
     if user.is? :admin
       can :manage, :all
