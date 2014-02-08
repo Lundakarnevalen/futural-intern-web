@@ -79,7 +79,7 @@ h3 + p {
 	font-family: "Helvetica Neue", sans-serif;
 }
 
-#content {
+#content, #uppdelning_search {
 	padding-top: 30px;
 }
 
