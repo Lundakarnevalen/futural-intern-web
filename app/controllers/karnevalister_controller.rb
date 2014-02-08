@@ -9,6 +9,7 @@ class KarnevalisterController < ApplicationController
 
   before_filter :returning_karnevalist, :only => [:step1, :edit, :new, :step2, :step3, :step4]
   before_filter :stop_utcheckad, :only => [:update, :step3_put]
+  before_filter :new_karnevalist, :only => [:step1, :step1_post]
 
   def index
     @karnevalister = nil
@@ -183,17 +184,19 @@ class KarnevalisterController < ApplicationController
   # Stuff for apps.
 
   def step1
-    @karnevalist = Karnevalist.new
     post_base
     render :step1
   end
 
   def step1_post
-    @karnevalist = Karnevalist.create params[:karnevalist]
+    @karnevalist.attributes = params[:karnevalist]
 
-    sign_in @karnevalist.user
-
-    redirect_to action: 'step2', id: @karnevalist.id
+    if @karnevalist.save
+      sign_in @karnevalist.user
+      redirect_to action: 'step2', id: @karnevalist.id
+    else
+      render :action => :step1
+    end
   end
 
   def step2
@@ -353,5 +356,9 @@ class KarnevalisterController < ApplicationController
         end
       end
     end
+  end
+
+  def new_karnevalist
+    @karnevalist = Karnevalist.new
   end
 end
