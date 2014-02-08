@@ -14,6 +14,7 @@ gem 'fog'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'jquery-modal-rails'
+gem 'jquery-cookie-rails'
 gem 'browser'
 gem 'cancan'
 
