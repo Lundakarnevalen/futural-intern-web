@@ -1,7 +1,4 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
-<% content_for :head do %>
-  <%= javascript_include_tag :camera %>
-<% end %>
 
 <div class="container" id="content">
 	<%= render partial: "shared/logo", locals: {percent: "95", text: "Nu är det dags för utcheckning!"} %>
@@ -19,22 +16,7 @@
       <%= f.text_field :email, :autocorrect => :off, :autocapitalize => :none, :required => true, :type => "email" %>
     </div>
 
-    <div class="form-group">
-      <div style="display: none;">
-          <%= f.hidden_field :image_data %>
-      </div>
-      <div>
-        <%= f.label :foto %>
-        <div id="camera-placeholder"></div>
-        <script type="text/javascript">
-          $(document).ready(function(){
-            var camera_nbr = $.cookie('camera-nbr') || '90';
-            var camera = new Camera("http://192.168.0." + camera_nbr + "/");
-            $("#camera-placeholder").html(camera.view());
-          });
-        </script>
-      </div>
-    </div>
+    <%= render partial: "shared/checkout_foto", locals: {f: f} %>
 
 	<div class="form-group">
 		<div>
