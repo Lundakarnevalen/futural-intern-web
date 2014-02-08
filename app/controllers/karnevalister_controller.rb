@@ -199,7 +199,7 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     if (params[:password] == "futural")
-      @karnevalist.avklarat_steg = 2
+      @karnevalist.avklarat_steg = 1
       @karnevalist.save
       redirect_to step3_karnevalist_path(@karnevalist)
     else
@@ -210,18 +210,14 @@ class KarnevalisterController < ApplicationController
 
   def step3
     @karnevalist = Karnevalist.find params[:id]
-
-    # if (@karnevalist.avklarat_steg < 2)
-    #   redirect_to step2_karnevalist_path(@karnevalist)
-    # else
-      put_base
-      render :step3
-    # end
+    put_base
+    render :step3
   end
 
   def step3_put
     @karnevalist = Karnevalist.find params[:id]
     @karnevalist.update_attributes! params[:karnevalist]
+    @karnevalist.avklarat_steg = 2
     @karnevalist.save
     redirect_to step4_karnevalist_path(@karnevalist)
   end
@@ -320,11 +316,13 @@ class KarnevalisterController < ApplicationController
         return
       end
 
-      if @karnevalist.avklarat_steg == 1
+      if @karnevalist.avklarat_steg == 0
         redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
-      elsif @karnevalist.avklarat_steg == 2
+      elsif @karnevalist.avklarat_steg == 1
         redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
-      elsif @karnevalist.avklarat_steg == 3
+      elsif @karnevalist.avklarat_steg == 2
+        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+      elsif @karnevalist.utcheckad
         redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
       end
     end
