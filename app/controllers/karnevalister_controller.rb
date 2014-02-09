@@ -259,7 +259,12 @@ class KarnevalisterController < ApplicationController
     @karnevalist.utcheckad = true
     @karnevalist.save
 
-    redirect_to action: 'checkout', id: @karnevalist.id
+    if @karnevalist.errors.any?
+      flash[:notice] = 'Karnevalisten finns redan registrerad digitalt! Gör digital utcheckning.'
+      redirect_to :action => :checkout_paper
+    else
+      redirect_to action: 'checkout', id: @karnevalist.id
+    end
   end
 
   def checkout_digital
