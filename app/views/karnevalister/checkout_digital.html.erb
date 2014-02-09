@@ -21,7 +21,8 @@
 	</div>
 	<p>karnevalist.</p>
 </div>
-<%= form_for @karnevalist, url: {action: "checkout_digital_put"}, :method => @method do |f| %>
+<%= form_for @karnevalist, url: {action: "checkout_digital_put"}, :method => @method,
+							html: { :class => 'validate' } do |f| %>
 <div>
 	<span class="title">STEG 1</span>
 </div>

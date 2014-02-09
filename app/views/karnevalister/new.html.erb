@@ -7,7 +7,8 @@
 <div class="container" id="content">
   <%= render partial: "shared/logo", locals: {percent: "1", text: "Vi behöver bara veta vem du är."} %>
 
-  <%= form_for @karnevalist, :method => @method do |f| %>
+  <%= form_for @karnevalist, :method => @method,
+                            :html => { :class => 'validate' } do |f| %>
 
   <%= render partial: "shared/step1", locals: {f: f, checked: nil} %>
   <%= render partial: "shared/step3", locals: {f: f} %>
