@@ -5,11 +5,13 @@
 		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
 		<p><strong>Dags att registrera en karnevalist.</strong></p>
 	</div>
-    <% if !@id.blank? %>
     <div class="info_box">
+    <% if !@id.blank? %>
         <p>Karnevalist sparad med <strong>ID <%= @id %></strong>.</p>
-    </div>
+    <% elsif flash[:fuckedup] %>
+        <p><%= flash[:fuckedup] %></p>
     <% end %>
+    </div>
 	<h2>Utcheckning av karnevalist</h2>
   <input type="text" id="camera-nbr" placeholder="Kamerans IP-adress" />
   <script type="text/javascript">
