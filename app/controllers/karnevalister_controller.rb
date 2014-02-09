@@ -260,8 +260,8 @@ class KarnevalisterController < ApplicationController
     @karnevalist.save
 
     if @karnevalist.errors.any?
-      flash[:notice] = 'Karnevalisten finns redan registrerad digitalt! Gör digital utcheckning.'
-      redirect_to :action => :checkout_paper
+      flash[:fuckedup] = 'Karnevalisten finns redan registrerad digitalt! Gör digital utcheckning.'
+      redirect_to :action => :checkout
     else
       redirect_to action: 'checkout', id: @karnevalist.id
     end
