@@ -1,5 +1,5 @@
 $(function() {
-	var form = $('form');
+	var form = $('form.validate');
 	if (form.length) {
 		form.validate({
 			errorElement: "div",
