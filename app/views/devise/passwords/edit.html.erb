@@ -2,6 +2,8 @@
 
 <%= render partial: "shared/header", locals: {title: "Change your password"} %>
 
+<% end %>
+
 <div class="container" id="content">
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :put }) do |f| %>
   <%= devise_error_messages! %>
