@@ -8,7 +8,8 @@
 
 	<%= render partial: "shared/logo", locals: {percent: "30", text: "Nu ska du välja vilken sektion du gillar."} %>
 
-	<%= form_for @karnevalist, url: {action: "step3_put"}, :method => @method do |f| %>
+	<%= form_for @karnevalist, url: {action: "step3_put"}, :method => @method,
+								:html => { :class => 'validate' } do |f| %>
 	
 	<%= render partial: "shared/step3", locals: {f: f} %>
 
