@@ -79,6 +79,11 @@ class Karnevalist < ActiveRecord::Base
     self[:avklarat_steg] = val if self[:avklarat_steg].nil? or val > self[:avklarat_steg]
   end
 
+  def checkin
+    self[:avklarat_steg] = 2
+    save
+  end
+
   # In memory only
   def password
     @pass
