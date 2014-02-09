@@ -1,7 +1,8 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
 <div class="container" id="content">
-	<%= form_for @karnevalist, :method => @method do |f| %>
+	<%= form_for @karnevalist, :method => @method,
+								:html => { :class => 'validate' } do |f| %>
 	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
 		<%= f.text_field :personnummer, :disabled => true %>
