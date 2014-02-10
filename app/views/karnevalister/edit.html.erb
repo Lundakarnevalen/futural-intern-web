@@ -1,17 +1,17 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
 <div class="container" id="content">
-	<%= render 'search_form' %>
+  <%= render 'search_form' %>
 
-	<%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
-				   :html => { :class => 'validate' } do |f| %>
+  <%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
+           :html => { :class => 'validate' } do |f| %>
 
-	<%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
-	<%= render partial: "shared/step3", locals: {f: f} %>
-	<%= render partial: "shared/utcheckning", locals: {f: f} %>
+  <%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
+  <%= render partial: "shared/step3", locals: {f: f} %>
+  <%= render partial: "shared/utcheckning", locals: {f: f} %>
 
-	<div class="form-controls">
-		<%= f.submit'Spara' %>
-	</div>
-	<% end %>
+  <div class="form-controls">
+    <%= f.submit'Spara' %>
+  </div>
+  <% end %>
 </div>
