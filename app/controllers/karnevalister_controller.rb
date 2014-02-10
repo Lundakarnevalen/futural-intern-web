@@ -158,25 +158,51 @@ class KarnevalisterController < ApplicationController
         @filter1 = @search.where("tilldelad_sektion = ?", params[:tilldelad_sektion])
       end
     end
-    if params[:stjarnmarkerad_sektion] == 'all'
-      @filter2 = @filter1
-    else
-      if params[:stjarnmarkerad_sektion] == 'null'
-        @filter2 = @filter1.where("snalla_sektion IS NULL")
+    if params[:sektion] == 'all'
+      if params[:stjarnmarkerad_sektion] == 'true'
+        @filter2 = @filter1.where("snalla_sektion IS NOT NULL")
       else
-        @filter2 = @filter1.where("snalla_sektion = ?", params[:stjarnmarkerad_sektion])
+        @filter2 = @filter1
+      end
+    else
+      if params[:stjarnmarkerad_sektion] == 'true'
+        @filter2 = @filter1.where("snalla_sektion = ?", params[:sektion])
+      else
+        @filter2 = @filter1.joins(:sektioner).where('sektion_id = ? OR snalla_sektion = ?', params[:sektion], params[:sektion])
       end
     end
-    if params[:stjarnmarkerad_funktion] == 'all'
-      @filter3 = @filter2
-    else
-      if params[:stjarnmarkerad_funktion] == 'null'
-        @filter3 = @filter2.where("snalla_intresse IS NULL")
+    if params[:funktion] == 'all'
+      if params[:stjarnmarkerad_funktion] == 'true'
+        @filter3 = @filter2.where("snalla_intresse IS NOT NULL")
       else
-        @filter3 = @filter2.where("snalla_intresse = ?", params[:stjarnmarkerad_funktion])
+        @filter3 = @filter2
+      end
+    else
+      if params[:stjarnmarkerad_funktion] == 'true'
+        @filter3 = @filter2.where("snalla_intresse = ?", params[:funktion])
+      else
+        @filter3 = @filter2.joins(:intressen).where('intresse_id = ? OR snalla_intresse = ?', params[:funktion], params[:funktion])
       end
     end
-    @karnevalister = @filter3.order("efternamn ASC")
+    if params[:tilldelad_klar] == 'all'
+      @filter4 = @filter3
+    else
+      if params[:tilldelad_klar] == 'true'
+        @filter4 = @filter3.where("tilldelad_klar = 1")
+      else
+        @filter4 = @filter3.where("tilldelad_klar = 0 OR tilldelad_klar IS NULL")
+      end
+    end
+    if params[:vill_ansvara] == 'all'
+      @filter5 = @filter4
+    else
+      if params[:vill_ansvara] == 'true'
+        @filter5 = @filter4.where("vill_ansvara = 1")
+      else
+        @filter5 = @filter4.where("vill_ansvara = 0 OR vill_ansvara IS NULL")
+      end
+    end
+    @karnevalister = @filter5.order("efternamn ASC")
     render :uppdelning
   end
 
