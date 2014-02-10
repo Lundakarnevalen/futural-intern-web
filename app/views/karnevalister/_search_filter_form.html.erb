@@ -28,6 +28,10 @@
     <%= select_tag :vill_ansvara, options_for_select([['Alla', 'all'], ['Ansvar', 'true'], ['Ej ansvar', 'false']]) %>
   </div>
   <div class="form-group inline-block">
+    <%= label_tag :kon, 'Filtrera på kön:' %>
+    <%= select_tag :kon, options_for_select([['Alla', 'all']])+options_from_collection_for_select(Kon.all, :id, :name) %>
+  </div>
+  <div class="form-group inline-block">
     <%= label_tag :tilldelad_klar, 'Filtrera på klarmarkering:' %>
     <%= select_tag :tilldelad_klar, options_for_select([['Alla', 'all'], ['Klar', 'true'], ['Ej klar', 'false']]) %>
   </div>
