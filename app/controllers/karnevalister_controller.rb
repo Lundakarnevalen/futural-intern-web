@@ -31,9 +31,11 @@ class KarnevalisterController < ApplicationController
     put_base
     respond_to do |format|
       format.html do
-        if not returning_karnevalist
+        if current_user.is? :admin
           @karnevalist = Karnevalist.find params[:id]
           render :edit
+        elsif user_signed_in?
+          returning_karnevalist
         end
       end
       format.json do
@@ -359,24 +361,28 @@ class KarnevalisterController < ApplicationController
   end
 
   def returning_karnevalist
-    if user_signed_in?
-      @karnevalist = Karnevalist.find_by_user_id current_user.id
-
-      if @karnevalist.nil? or current_user.is? :admin
-        return false
-      end
-
-      if @karnevalist.avklarat_steg == 0
-        redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
-      elsif @karnevalist.avklarat_steg == 1
-        redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
-      elsif @karnevalist.avklarat_steg == 2
-        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
-      elsif @karnevalist.utcheckad
-        redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
-      end
-    else
+    if not user_signed_in?
       return false
+    end
+
+    if not params[:id].blank? and current_user.is? :admin
+      @karnevalist = Karnevalist.find params[:id]
+    else
+      @karnevalist = Karnevalist.find_by_user_id current_user.id
+    end
+
+    if @karnevalist.nil?
+      return false
+    end
+
+    if @karnevalist.avklarat_steg == 0
+      redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
+    elsif @karnevalist.avklarat_steg == 1
+      redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
+    elsif @karnevalist.avklarat_steg == 2
+      redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
+    elsif @karnevalist.utcheckad
+      redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
     end
   end
 
