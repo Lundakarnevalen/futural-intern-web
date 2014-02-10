@@ -125,6 +125,7 @@ Sektion.delete_all
   499 => 'Tältnöjen - Centralt',
 
   500 => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.',
+  501 => 'Audition',
 }.each{ |k, v| Sektion.new do |i|
   i.id = k
   i.name = v
