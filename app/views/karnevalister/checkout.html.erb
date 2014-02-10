@@ -11,6 +11,9 @@
     <% elsif flash[:fuckedup] %>
         <p><%= flash[:fuckedup] %></p>
     <% end %>
+    <% if flash[:onlynotice] %>
+        <p><%= flash[:onlynotice] %></p>
+    <% end %>
     </div>
 	<h2>Utcheckning av karnevalist</h2>
   <input type="text" id="camera-nbr" placeholder="Kamerans IP-adress" />

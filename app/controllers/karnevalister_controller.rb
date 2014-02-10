@@ -273,8 +273,8 @@ class KarnevalisterController < ApplicationController
     end
     imin = Karnevalist.where('utcheckad_at > ?', 10.minute.ago).count
     tot = Karnevalist.where('avklarat_steg < 3').count
-    unless false #imin == 0
-      t = (tot/imin).minutes.from_now.strftime '%H:%M'
+    unless imin == 0
+      t = ((tot/imin) * 10).minutes.from_now.strftime '%H:%M'
       flash[:onlynotice] = "Bra jobbat! Fortsätter du i det här tempot är vi klara klockan #{t}"
     end
   end
