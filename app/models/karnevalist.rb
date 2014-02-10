@@ -12,8 +12,9 @@ class Karnevalist < ActiveRecord::Base
 
   mount_uploader :foto, FotoUploader
 
-  validates :email, :presence => true
-  validates_uniqueness_of :email
+  before_validation :downcase_email
+
+  validates :email, :presence => true, :uniqueness => true
 
   UTCHECKAD = 3
 
@@ -106,6 +107,10 @@ class Karnevalist < ActiveRecord::Base
 
   def image_data
     ""
+  end
+
+  def downcase_email
+    self.email = self.email.downcase if self.email.present?
   end
 end
 

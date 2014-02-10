@@ -76,27 +76,28 @@ class KarnevalisterController < ApplicationController
   end
 
   def update
-    karnevalist = Karnevalist.find params[:id]
-    karnevalist.update_attributes! params[:karnevalist]
-    karnevalist.save
+    @karnevalist = Karnevalist.find params[:id]
+    put_base
+    @karnevalist.update_attributes params[:karnevalist]
+
     respond_to do |format|
-      format.html{ redirect_to karnevalist }
+      format.html { render :edit }
       format.json do
         render :json =>
-          if karnevalist.errors.any?
+          if @karnevalist.errors.any?
             { :status => :failure,
-              :message => karnevalist.errors.full_messages.join('; ') }
+              :message => @karnevalist.errors.full_messages.join('; ') }
           else
             { :status => :success,
-              :token => karnevalist.user.authentication_token }
+              :token => @karnevalist.user.authentication_token }
           end
       end
     end
-    if !karnevalist.google_token.blank?
+    if !@karnevalist.google_token.blank?
       api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
       gcm = GCM.new(api_key)
       registration_id = Array.new
-      registration_id.push karnevalist.google_token
+      registration_id.push @karnevalist.google_token
       options = {
         'data' => {
           'message_type' => '1'
