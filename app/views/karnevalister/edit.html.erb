@@ -10,6 +10,16 @@
     <%= @karnevalist.fornamn %> <%= @karnevalist.efternamn %>
     (<%= @karnevalist.personnummer %>)
   </h2>
+
+  <% if @karnevalist.errors.any? %>
+    <h3>
+      Formuläret innehåller fel, inget sparades.
+    </h3>
+    <% @karnevalist.errors.full_messages.each do |msg| %>
+      <div class="error-message"><%= msg %></div>
+    <% end %>
+  <% end %>
+
   <div class="form-group">
     <h3>Avklarat steg</h3>
     <%= f.label :avklarat_steg, 'Avklarat steg', :class => "structural" %>
