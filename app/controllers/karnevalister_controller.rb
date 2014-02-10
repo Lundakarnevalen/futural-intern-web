@@ -170,7 +170,7 @@ class KarnevalisterController < ApplicationController
       if params[:stjarnmarkerad_sektion] == 'true'
         @filter2 = @filter1.where("snalla_sektion = ?", params[:sektion])
       else
-        @filter2 = @filter1.joins(:sektioner).where('sektion_id = ? OR snalla_sektion = ?', params[:sektion], params[:sektion])
+        @filter2 = @filter1.joins(:sektioner).group('karnevalister.id').where('sektion_id = ? OR snalla_sektion = ?', params[:sektion], params[:sektion])
       end
     end
     if params[:funktion] == 'all'
@@ -183,7 +183,7 @@ class KarnevalisterController < ApplicationController
       if params[:stjarnmarkerad_funktion] == 'true'
         @filter3 = @filter2.where("snalla_intresse = ?", params[:funktion])
       else
-        @filter3 = @filter2.joins(:intressen).where('intresse_id = ? OR snalla_intresse = ?', params[:funktion], params[:funktion])
+        @filter3 = @filter2.joins(:intressen).group('karnevalister.id').where('intresse_id = ? OR snalla_intresse = ?', params[:funktion], params[:funktion])
       end
     end
     if params[:tilldelad_klar] == 'all'
@@ -204,7 +204,12 @@ class KarnevalisterController < ApplicationController
         @filter5 = @filter4.where("vill_ansvara = 0 OR vill_ansvara IS NULL")
       end
     end
-    @karnevalister = @filter5.order("efternamn ASC")
+    if params[:kon] == 'all'
+      @filter6 = @filter5
+    else
+      @filter6 = @filter5.where("kon_id = ?", params[:kon])
+    end
+    @karnevalister = @filter6.group('karnevalister.id').order("efternamn ASC")
     render :uppdelning
   end
 
