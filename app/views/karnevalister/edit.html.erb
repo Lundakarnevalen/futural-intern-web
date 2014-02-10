@@ -6,6 +6,16 @@
   <%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
            :html => { :class => 'validate' } do |f| %>
 
+  <h2>
+    <%= @karnevalist.fornamn %> <%= @karnevalist.efternamn %>
+    (<%= @karnevalist.personnummer %>)
+  </h2>
+  <div class="form-group">
+    <h3>Avklarat steg</h3>
+    <%= f.label :avklarat_steg, 'Avklarat steg', :class => "structural" %>
+    <%= f.text_field :avklarat_steg, :required => true, :disabled => true %>
+  </div>
+
   <%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
   <%= render partial: "shared/step3", locals: {f: f} %>
   <%= render partial: "shared/utcheckning", locals: {f: f} %>
