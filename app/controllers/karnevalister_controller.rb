@@ -7,7 +7,7 @@ class KarnevalisterController < ApplicationController
 
   load_and_authorize_resource
 
-  before_filter :returning_karnevalist, :only => [:step1, :edit, :new, :step2, :step3, :step4]
+  before_filter :returning_karnevalist, :only => [:step1, :step2, :step3, :step4]
   before_filter :stop_utcheckad, :only => [:update, :step3_put]
   before_filter :new_karnevalist, :only => [:step1, :step1_post]
 
