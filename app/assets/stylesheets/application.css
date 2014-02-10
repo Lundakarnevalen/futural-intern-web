@@ -293,13 +293,18 @@ td select, #uppdelning_search select {
     width: 20%;
 }
 
-#uppdelning input[type='checkbox'] {
+#uppdelning input[type='checkbox'], #uppdelning_search input[type='checkbox'] {
     display: inline;
     text-align: left;
     clip: auto;
     position: relative !important;
     height: auto;
     width: auto;
+}
+
+.inline-block {
+    display: inline-block;
+    padding-right: 30px;
 }
 
 .form-group {

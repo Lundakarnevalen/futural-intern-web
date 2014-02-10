@@ -148,10 +148,6 @@
 
 		<h3>Utcheckning</h3>
     <div class="form-group">
-      <div>
-        <%= f.label :foto %>
-        <%= f.file_field :foto, :disabled => true %>
-      </div>
       <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
     </div>
 

@@ -1,19 +1,35 @@
 <%= form_tag '/karnevalister/search_filter', :method => :get do %>
   <div class="form-group">
     <%= label_tag :q, 'Sök:' %>
-    <%= text_field_tag :q, nil, :placeholder => 'Namn, personnummer, e-post' %>
+    <%= text_field_tag :q, nil, :placeholder => 'Namn, personnummer eller e-post' %>
   </div>
   <div class="form-group">
     <%= label_tag :tilldelad_sektion, 'Filtrera på tilldelad sektion:' %>
     <%= select_tag :tilldelad_sektion, options_for_select([['Alla', 'all'], ['Ej tilldelad', 'null']])+options_from_collection_for_select(Sektion.all, :id, :name) %>
   </div>
-  <div class="form-group">
-    <%= label_tag :stjarnmarkerad_sektion, 'Filtrera på stjärnmarkerad sektion:' %>
-    <%= select_tag :stjarnmarkerad_sektion, options_for_select([['Alla', 'all'], ['Ej valt', 'null']])+options_from_collection_for_select(Sektion.all, :id, :name) %>
+  <div class="form-group inline-block">
+    <%= label_tag :sektion, 'Filtrera på sektion:' %>
+    <%= select_tag :sektion, options_for_select([['Alla', 'all']])+options_from_collection_for_select(Sektion.all, :id, :name) %>
   </div>
-  <div class="form-group">
-    <%= label_tag :stjarnmarkerad_funktion, 'Filtrera på stjärnmarkerad funktion:' %>
-    <%= select_tag :stjarnmarkerad_funktion, options_for_select([['Alla', 'all'], ['Ej valt', 'null']])+options_from_collection_for_select(Intresse.all, :id, :name) %>
+  <div class="form-group inline-block">
+    <%= label_tag :stjarnmarkerad_sektion, 'Endast stjärnmarkerad' %>
+    <%= check_box_tag :stjarnmarkerad_sektion, 'true' %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :funktion, 'Filtrera på funktion:' %>
+    <%= select_tag :funktion, options_for_select([['Alla', 'all']])+options_from_collection_for_select(Intresse.all, :id, :name) %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :stjarnmarkerad_funktion, 'Endast stjärnmarkerad' %>
+    <%= check_box_tag :stjarnmarkerad_funktion, 'true' %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :vill_ansvara, 'Filtrera på "Vill ansvara":' %>
+    <%= select_tag :vill_ansvara, options_for_select([['Alla', 'all'], ['Ansvar', 'true'], ['Ej ansvar', 'false']]) %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :tilldelad_klar, 'Filtrera på klarmarkering:' %>
+    <%= select_tag :tilldelad_klar, options_for_select([['Alla', 'all'], ['Klar', 'true'], ['Ej klar', 'false']]) %>
   </div>
   <div class="form-group">
     <%= submit_tag 'Sök' %>
