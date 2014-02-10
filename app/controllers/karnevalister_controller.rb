@@ -362,7 +362,7 @@ class KarnevalisterController < ApplicationController
     if user_signed_in?
       @karnevalist = Karnevalist.find_by_user_id current_user.id
 
-      if @karnevalist.nil?
+      if @karnevalist.nil? or current_user.is? :admin
         return false
       end
 
