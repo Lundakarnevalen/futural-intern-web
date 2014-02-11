@@ -12,6 +12,7 @@ Futural::Application.routes.draw do
       get 'checkout_paper'
       post 'checkout_paper_post'
       get 'uppdelning'
+      post 'gealla'
       get 'search_filter', :action => 'search_filter'
     end
     member do
@@ -24,6 +25,10 @@ Futural::Application.routes.draw do
       put 'step3_put'
       put 'checkout_digital_put'
     end
+  end
+
+  namespace :admin do
+    get 'dump', :action => :dump
   end
 
   get '/home', to: 'home#index'
