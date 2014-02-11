@@ -214,6 +214,15 @@ class KarnevalisterController < ApplicationController
     render :uppdelning
   end
 
+  def gealla
+    @karnevalister = Karnevalist.where :id => params[:karnevalist_ids]
+    @sektion = Sektion.find params[:sektion_id]
+    @karnevalister.update_all :tilldelad_sektion => @sektion.id, 
+                              :tilldelad_klar => true
+
+    flash[:notice] = "Nu har #{@karnevalister.length} glada karnevalister fått vars en sektion. Det gick väl fort?"
+    redirect_to :action => :uppdelning
+  end
 
   # Stuff for apps.
 

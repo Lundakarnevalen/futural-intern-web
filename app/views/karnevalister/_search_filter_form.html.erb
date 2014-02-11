@@ -39,3 +39,20 @@
     <%= submit_tag 'Sök' %>
   </div>
 <% end %>
+<% if @karnevalister.present? %>
+  <%= form_tag '/karnevalister/gealla', :method => :post do %>
+    <h2>Danger Zone&trade;</h2>
+    <div class="form-group">
+      <%= label_tag nil, 'Ge alla karnevalister i listan samma sektion och klarmarkera' %>
+    </div>
+    <% @karnevalister.each do |k| %>
+      <%= hidden_field_tag :'karnevalist_ids[]', k.id %>
+    <% end %>
+    <div class="form-group">
+      <%= label_tag nil, 'Sektion' %>
+      <%= select_tag :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), 
+                                  :prompt => "-- Välj sektion --" %>
+      <%= submit_tag "Gör't", :style => 'padding: 1px' %>
+    </div>
+  <% end %>
+<% end %>
