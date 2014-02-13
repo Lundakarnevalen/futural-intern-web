@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140207002728) do
+ActiveRecord::Schema.define(version: 20140213194429) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -21,6 +21,9 @@ ActiveRecord::Schema.define(version: 20140207002728) do
     t.integer "intresse_id",    null: false
     t.integer "karnevalist_id", null: false
   end
+
+  add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id"
+  add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id"
 
   create_table "karnevalister", force: true do |t|
     t.string   "personnummer"
@@ -65,10 +68,18 @@ ActiveRecord::Schema.define(version: 20140207002728) do
     t.boolean  "tilldelad_klar"
   end
 
+  add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
+  add_index "karnevalister", ["fornamn"], name: "index_karnevalister_on_fornamn"
+  add_index "karnevalister", ["snalla_intresse"], name: "index_karnevalister_on_snalla_intresse"
+  add_index "karnevalister", ["snalla_sektion"], name: "index_karnevalister_on_snalla_sektion"
+
   create_table "karnevalister_sektioner", force: true do |t|
     t.integer "karnevalist_id", null: false
     t.integer "sektion_id",     null: false
   end
+
+  add_index "karnevalister_sektioner", ["karnevalist_id"], name: "index_karnevalister_sektioner_on_karnevalist_id"
+  add_index "karnevalister_sektioner", ["sektion_id"], name: "index_karnevalister_sektioner_on_sektion_id"
 
   create_table "kon", force: true do |t|
     t.string "name", null: false
@@ -95,13 +106,15 @@ ActiveRecord::Schema.define(version: 20140207002728) do
     t.datetime "updated_at"
   end
 
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
+
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name"
 
   create_table "roles_users", force: true do |t|
     t.integer "user_id"
@@ -132,8 +145,8 @@ ActiveRecord::Schema.define(version: 20140207002728) do
     t.string   "authentication_token"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
