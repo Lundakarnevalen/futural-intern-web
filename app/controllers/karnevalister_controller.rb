@@ -107,10 +107,10 @@ class KarnevalisterController < ApplicationController
     end
   end
 
-  def delete
-    Karnevalist.delete params[:id]
+  def destroy
+    Karnevalist.destroy params[:id]
     respond_to do |format|
-      format.html { redirect_to Karnevalist }
+      format.html { redirect_to karnevalister_url }
       format.json do
         render :json =>
           { :status => :success }
