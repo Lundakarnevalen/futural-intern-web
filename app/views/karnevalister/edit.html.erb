@@ -34,4 +34,5 @@
     <%= f.submit'Spara' %>
   </div>
   <% end %>
+  <p><%= button_to 'Radera', @karnevalist, method: :delete, data: { confirm: 'Vill du verkligen radera personen?' } %></p>
 </div>
