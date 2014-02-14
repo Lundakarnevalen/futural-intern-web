@@ -3,7 +3,6 @@ source 'https://rubygems.org'
 # Main rails dependency
 gem 'rails', '4.0.2'
 
-
 # General dependencies
 gem 'devise'
 gem 'protected_attributes' # Security is overrated.
@@ -17,6 +16,7 @@ gem 'jquery-modal-rails'
 gem 'jquery-cookie-rails'
 gem 'browser'
 gem 'cancan'
+gem 'podio'
 
 # Production dependencies
 group :production do
