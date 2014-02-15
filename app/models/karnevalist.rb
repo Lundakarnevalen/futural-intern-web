@@ -65,7 +65,11 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def personnummer= val
-    self[:personnummer] = val.gsub /[^0-9]/, ''
+    if val.present?
+      val.gsub! /[^0-9]/, ''
+      val = val[2..-1] if val.length == 12
+    end
+    self[:personnummer] = val
   end
 
   def utcheckad= val

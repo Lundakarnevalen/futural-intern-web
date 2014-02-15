@@ -109,6 +109,8 @@ Sektion.delete_all
   24  => 'Säkerhet',
   25  => 'Tombola',
   26  => 'Vieriet',
+  27  => 'Filmen',
+  28  => 'Nöjen',
 
   100 => 'Festmästeriet - Bamba',
   101 => 'Festmästeriet - VIP',
@@ -126,6 +128,8 @@ Sektion.delete_all
 
   500 => 'Jag vill bara vara med! Vilken sektion spelar ingen roll.',
   501 => 'Audition',
+
+  999 => 'General'
 }.each{ |k, v| Sektion.new do |i|
   i.id = k
   i.name = v

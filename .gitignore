@@ -22,3 +22,6 @@
 /public/system
 /public/assets
 /public/uploads
+
+# Ignore Podio login information
+/config/podio_login.yaml

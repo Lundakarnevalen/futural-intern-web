@@ -55,6 +55,7 @@ describe (K = Karnevalist) do
     end
   end
 
+=begin
   describe '#update_if_password_valid' do
     it 'updates if password valid' do
       k = create_some_guy
@@ -73,6 +74,7 @@ describe (K = Karnevalist) do
       k.email.should eq('some@guy.com')
     end
   end
+=end
 
   describe '#search' do
     def create_johan
