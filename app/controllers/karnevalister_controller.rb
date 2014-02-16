@@ -411,7 +411,7 @@ class KarnevalisterController < ApplicationController
   end
   
   def pusseldagen
-    @karnevalister = Karnevalist.group("karnevalister.id").where("tilldelad_sektion = ?", current_user.karnevalist.tilldelad_sektion)
+    @karnevalister = Karnevalist.group("karnevalister.id").where("tilldelad_sektion = ?", current_user.karnevalist.tilldelad_sektion).order("efternamn ASC")
   end
 
   def show_modal
