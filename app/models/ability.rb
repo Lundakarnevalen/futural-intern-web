@@ -50,5 +50,10 @@ class Ability
     if user.is? :admin
       can :manage, :all
     end
+
+    # Sektionsadmin
+    if user.is? :sektionsadmin
+      can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal], Karnevalist
+    end
   end
 end
