@@ -224,6 +224,58 @@ class KarnevalisterController < ApplicationController
     redirect_to :action => :uppdelning
   end
 
+  def search_filter_pusseldag
+    @search = Karnevalist.search params[:q]
+    @search = @search.where("avklarat_steg = ?", 3)
+    if params[:tilldelad_sektion] == 'all'
+      @filter1 = @search
+    else
+      if params[:tilldelad_sektion] == 'null'
+        @filter1 = @search.where("tilldelad_sektion IS NULL")
+      else
+        @filter1 = @search.where("tilldelad_sektion = ?", params[:tilldelad_sektion])
+      end
+    end
+    if params[:funktion] == 'all'
+      if params[:stjarnmarkerad_funktion] == 'true'
+        @filter2 = @filter1.where("snalla_intresse IS NOT NULL")
+      else
+        @filter2 = @filter1
+      end
+    else
+      if params[:stjarnmarkerad_funktion] == 'true'
+        @filter2 = @filter1.where("snalla_intresse = ?", params[:funktion])
+      else
+        @filter2 = @filter1.joins(:intressen).group('karnevalister.id').where('intresse_id = ? OR snalla_intresse = ?', params[:funktion], params[:funktion])
+      end
+    end
+    if params[:pusseldag_keep] == 'all'
+      @filter3 = @filter2
+    else
+      if params[:pusseldag_keep] == 'true'
+        @filter3 = @filter2.where("pusseldag_keep = 1")
+      else
+        @filter3 = @filter2.where("pusseldag_keep = 0 OR pusseldag_keep IS NULL")
+      end
+    end
+    if params[:vill_ansvara] == 'all'
+      @filter4 = @filter3
+    else
+      if params[:vill_ansvara] == 'true'
+        @filter4 = @filter3.where("vill_ansvara = 1")
+      else
+        @filter4 = @filter3.where("vill_ansvara = 0 OR vill_ansvara IS NULL")
+      end
+    end
+    if params[:kon] == 'all'
+      @filter5 = @filter4
+    else
+      @filter5 = @filter4.where("kon_id = ?", params[:kon])
+    end
+    @karnevalister = @filter5.group('karnevalister.id').order("efternamn ASC")
+    render :pusseldagen
+  end
+
   # Stuff for apps.
 
   def step1
@@ -356,6 +408,10 @@ class KarnevalisterController < ApplicationController
 
   def uppdelning
     @karnevalister = nil
+  end
+  
+  def pusseldagen
+    @karnevalister = Karnevalist.group("karnevalister.id").where("tilldelad_sektion = ?", current_user.karnevalist.tilldelad_sektion)
   end
 
   def show_modal

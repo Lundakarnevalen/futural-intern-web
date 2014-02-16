@@ -67,3 +67,22 @@ function tilldelad_klar_submit(karnevalist_id) {
         });
     })(jQuery);
 }
+
+function pusseldag_keep_submit(karnevalist_id) {
+    (function($){
+        $.ajax({
+            url: '/karnevalister/'+karnevalist_id+'.json',
+            type: 'PUT',
+            contentType: 'application/json',
+            data: JSON.stringify({"karnevalist": {"pusseldag_keep": $("#checkbox"+karnevalist_id).prop('checked')}}),
+            dataType: 'json',
+            success: function(data) {
+                if ($("#checkbox"+karnevalist_id).prop('checked')) {
+                    $("tr#"+karnevalist_id).removeClass("green");
+                } else {
+                    $("tr#"+karnevalist_id).addClass("green");
+                }
+            },
+        });
+    })(jQuery);
+}

@@ -4,6 +4,10 @@
 	<%= form_for @karnevalist, :method => @method,
 								:html => { :class => 'validate' } do |f| %>
 	<div class="form-group">
+		<%= label_tag :tilldelad_sektion, 'Tilldelad sektion' %>
+		<%= text_field_tag :tilldelad_sektion, Sektion.find(@karnevalist.tilldelad_sektion).name ,:disabled => true %>
+	</div>
+	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
 		<%= f.text_field :personnummer, :disabled => true %>
 	</div>
