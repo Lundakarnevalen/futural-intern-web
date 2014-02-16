@@ -1,0 +1,73 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag    :karnevalister, :media => :all %>
+<% end %>
+
+<%= render partial: "shared/header", locals: {title: "Pusseldagen"} %>
+
+<div class="container" id="uppdelning_search">
+  <%= render 'search_filter_pusseldag' %>
+</div>
+<div class="wide">
+<% if !@karnevalister.blank? %>
+<h2>Sökresultat (<%= @karnevalister.count.length %> personer)</h2>
+<div class="info_box">
+    <p>Om en person är grönmarkerad innebär det att byte är möjligt.</p>
+</div>
+<table class="table table-condensed" id="uppdelning">
+  <thead>
+    <tr>
+      <th>Namn</th>
+      <th>Personnummer</th>
+      <th>Tilldelad sektion</th>
+      <th>Stjärnmarkerad funktion</th>
+      <th>Övrigt</th>
+      <th class="center">Keep?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @karnevalister.each do |k| %>
+      <% if k.pusseldag_keep %>
+        <tr id="<%= k.id %>">
+      <% else %>
+        <tr id="<%= k.id %>" class="green">
+      <% end %>
+          <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+          <td><%= k.personnummer %></td>
+          <td>
+            <% if !k.tilldelad_sektion.blank? %>
+                <%= Sektion.find(k.tilldelad_sektion).name %>
+            <% end %>
+          </td>
+          <td>
+            <% if !k.snalla_intresse.blank? %>
+                <%= Intresse.find(k.snalla_intresse).name %>
+            <% end %>
+          </td>
+          <td>
+            <% if !k.ovrigt.blank? %>
+                <%= truncate(k.ovrigt, length: 60) %>
+            <% end %>
+          </td>
+          <td class="center">
+            <form>
+            <% if k.tilldelad_sektion == current_user.karnevalist.tilldelad_sektion %>
+              <% if k.pusseldag_keep %>
+                    <%= check_box_tag :pusseldag_keep, "true", true, {:id => "checkbox#{k.id}", :onchange => "pusseldag_keep_submit(#{k.id})"} %>
+              <% else %>
+                    <%= check_box_tag :pusseldag_keep, "true", false, {:id => "checkbox#{k.id}", :onchange => "pusseldag_keep_submit(#{k.id})"} %>
+              <% end %>
+            <% else %>
+              <% if k.pusseldag_keep %>
+                    <%= check_box_tag :pusseldag_keep, "true", true, {:disabled => true, :id => "checkbox#{k.id}"} %>
+              <% else %>
+                    <%= check_box_tag :pusseldag_keep, "true", false, {:disabled => true, :id => "checkbox#{k.id}"} %>
+              <% end %>
+            <% end %>
+            </form>
+          </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+<% end %>

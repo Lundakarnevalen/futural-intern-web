@@ -14,6 +14,8 @@ Futural::Application.routes.draw do
       get 'uppdelning'
       post 'gealla'
       get 'search_filter', :action => 'search_filter'
+      get 'pusseldagen'
+      get 'search_filter_pusseldag', :action => 'search_filter_pusseldag'
     end
     member do
       get 'step2'

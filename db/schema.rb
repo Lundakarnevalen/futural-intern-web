@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140213194429) do
+ActiveRecord::Schema.define(version: 20140216194249) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -66,6 +66,7 @@ ActiveRecord::Schema.define(version: 20140213194429) do
     t.string   "foto"
     t.integer  "tilldelad_sektion"
     t.boolean  "tilldelad_klar"
+    t.boolean  "pusseldag_keep"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"

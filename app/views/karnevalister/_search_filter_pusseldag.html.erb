@@ -1,0 +1,33 @@
+<%= form_tag '/karnevalister/search_filter_pusseldag', :method => :get do %>
+  <div class="form-group">
+    <%= label_tag :q, 'Sök:' %>
+    <%= text_field_tag :q, nil, :placeholder => 'Namn, personnummer eller e-post' %>
+  </div>
+  <div class="form-group">
+    <%= label_tag :tilldelad_sektion, 'Filtrera på tilldelad sektion:' %>
+    <%= select_tag :tilldelad_sektion, options_for_select([['Alla', 'all'], ['Ej tilldelad', 'null']])+options_from_collection_for_select(Sektion.all, :id, :name) %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :funktion, 'Filtrera på funktion:' %>
+    <%= select_tag :funktion, options_for_select([['Alla', 'all']])+options_from_collection_for_select(Intresse.all, :id, :name) %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :stjarnmarkerad_funktion, 'Endast stjärnmarkerad' %>
+    <%= check_box_tag :stjarnmarkerad_funktion, 'true' %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :vill_ansvara, 'Filtrera på "Vill ansvara":' %>
+    <%= select_tag :vill_ansvara, options_for_select([['Alla', 'all'], ['Ansvar', 'true'], ['Ej ansvar', 'false']]) %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :kon, 'Filtrera på kön:' %>
+    <%= select_tag :kon, options_for_select([['Alla', 'all']])+options_from_collection_for_select(Kon.all, :id, :name) %>
+  </div>
+  <div class="form-group inline-block">
+    <%= label_tag :pusseldag_keep, 'Filtrera på "keep-markering":' %>
+    <%= select_tag :pusseldag_keep, options_for_select([['Alla', 'all'], ['Vill behålla', 'true'], ['Byte möjligt', 'false']]) %>
+  </div>
+  <div class="form-group">
+    <%= submit_tag 'Sök' %>
+  </div>
+<% end %>
