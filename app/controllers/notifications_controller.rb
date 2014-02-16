@@ -36,16 +36,16 @@ class NotificationsController < ApplicationController
     if @notification.save
       gcm = GCM.new(api_key)
       registration_ids = Array.new
-      #Karnevalist.all.each do |k|
-      #  if !k.google_token.blank?
-      #    registration_ids.push k.google_token
-      #  end
-      #end
-      Phone.all.each do |p|
-        if !p.google_token.blank?
-          registration_ids.push p.google_token
+      Karnevalist.all.each do |k|
+        if !k.google_token.blank?
+          registration_ids.push k.google_token
         end
       end
+      #Phone.all.each do |p|
+      #  if !p.google_token.blank?
+      #    registration_ids.push p.google_token
+      #  end
+      #end
       registration_ids.each_slice(1000) do |reg_ids|
         options = {
           'data' => {
