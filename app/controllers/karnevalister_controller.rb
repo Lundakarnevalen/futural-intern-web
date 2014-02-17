@@ -459,7 +459,7 @@ class KarnevalisterController < ApplicationController
 
   def stop_utcheckad
     karnevalist = Karnevalist.find params[:id]
-    if not karnevalist.nil? and karnevalist.utcheckad and not current_user.is? :admin
+    if not karnevalist.nil? and karnevalist.utcheckad and not current_user.is? :admin and not current_user.is? :sektionsadmin
       karnevalist.errors.add :base, "Du får tyvärr inte ändra något efter att du checkat ut."
       respond_to do |format|
         format.html{ redirect_to karnevalist }
