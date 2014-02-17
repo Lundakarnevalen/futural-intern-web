@@ -115,6 +115,7 @@ Sektion.delete_all
   100 => 'Festmästeriet - Bamba',
   101 => 'Festmästeriet - VIP',
   102 => 'Festmästeriet - Lager',
+  199 => 'Festmästeriet - Centralt',
 
   202 => 'Smånöjena - Undergången',
   203 => 'Smånöjena - Sketcetera',

@@ -50,7 +50,7 @@
           </td>
           <td class="center">
             <form>
-            <% if k.tilldelad_sektion == current_user.karnevalist.tilldelad_sektion %>
+            <% if k.tilldelad_sektion == current_user.karnevalist.tilldelad_sektion || (k.tilldelad_sektion == 300 && current_user.karnevalist.tilldelad_sektion == 399) || (k.tilldelad_sektion == 400 && current_user.karnevalist.tilldelad_sektion == 499) %>
               <% if k.pusseldag_keep %>
                     <%= check_box_tag :pusseldag_keep, "true", true, {:id => "checkbox#{k.id}", :onchange => "pusseldag_keep_submit(#{k.id})"} %>
               <% else %>

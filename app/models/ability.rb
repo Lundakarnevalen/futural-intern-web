@@ -53,7 +53,7 @@ class Ability
 
     # Sektionsadmin
     if user.is? :sektionsadmin
-      can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal], Karnevalist
+      can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :update], Karnevalist
     end
   end
 end
