@@ -1,19 +1,19 @@
 <h3>Utcheckning</h3>
 <div class="form-group">
   <div>
-    <%= f.check_box :medlem_af %>
+    <%= f.check_box :medlem_af, :disabled => disabled %>
     <%= f.label :medlem_af, 'Jag är medlem i AF' %>
   </div>
   <div>
-    <%= f.check_box :medlem_kar %>
+    <%= f.check_box :medlem_kar, :disabled => disabled %>
     <%= f.label :medlem_kar, 'Jag är medlem i min kår' %>
   </div>
   <div>
-    <%= f.check_box :medlem_nation %>
+    <%= f.check_box :medlem_nation, :disabled => disabled %>
     <%= f.label :medlem_nation, 'Jag är medlem i en nation' %>
   </div>
   <div>
-    <%= f.check_box :karneveljsbiljett %>
+    <%= f.check_box :karneveljsbiljett, :disabled => disabled %>
     <%= f.label :karneveljsbiljett, 'Jag har en biljett till karneveljen' %>
   </div>
 </div>

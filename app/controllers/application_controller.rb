@@ -2,6 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :with => :null_session
   before_filter :mail_default_url
 
+  check_authorization
+
+  def redirect_to(options = {}, response_status = {})
+    ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
+    super(options, response_status)
+  end
+
   private
 
   def mail_default_url
