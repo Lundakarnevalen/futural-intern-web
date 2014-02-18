@@ -17,6 +17,7 @@ gem 'jquery-cookie-rails'
 gem 'browser'
 gem 'cancan'
 gem 'podio'
+gem 'axlsx_rails'
 
 # Production dependencies
 group :production do
