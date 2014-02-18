@@ -22,7 +22,32 @@ class User < ActiveRecord::Base
     true
   end
 
-  private
+  def ability
+    @ability ||= Ability.new(self)
+  end
+  delegate :can?, :cannot?, :to => :ability
+
+  def sektioner
+    if not self.karnevalist?
+      return nil
+    end
+
+    sektion = [self.karnevalist.tilldelad_sektion]
+
+    if sektion.include? 300 or sektion.include? 399
+      sektion = [300, 399]
+    end
+
+    if sektion.include? 400 or sektion.include? 499
+      sektion = [400, 499]
+    end
+
+    return sektion
+  end
+
+  def karnevalist?
+    return (not self.karnevalist.blank? and not self.karnevalist.tilldelad_sektion.blank?)
+  end
 
   def generate_authentication_token
     loop do
