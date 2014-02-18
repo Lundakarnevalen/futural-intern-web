@@ -1,5 +1,5 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
-
+<% disabled = cannot? :update, @karnevalist %>
 <div class="container" id="content">
   <%= render 'search_form' %>
 
@@ -26,13 +26,15 @@
     <%= f.text_field :avklarat_steg, :required => true, :disabled => true %>
   </div>
 
-  <%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
-  <%= render partial: "shared/step3", locals: {f: f} %>
-  <%= render partial: "shared/utcheckning", locals: {f: f} %>
+  <%= render partial: "shared/step1", locals: {f: f, checked: "checked", disabled: disabled} %>
+  <%= render partial: "shared/step3", locals: {f: f, disabled: disabled} %>
+  <%= render partial: "shared/utcheckning", locals: {f: f, disabled: disabled} %>
 
+  <% if not disabled %>
   <div class="form-controls">
     <%= f.submit'Spara' %>
   </div>
-  <% end %>
   <p><%= button_to 'Radera', @karnevalist, method: :delete, data: { confirm: 'Vill du verkligen radera personen?' } %></p>
+  <% end %>
+  <% end %>
 </div>

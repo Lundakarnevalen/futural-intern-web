@@ -2,6 +2,13 @@ class ApplicationController < ActionController::Base
   protect_from_forgery :with => :null_session
   before_filter :mail_default_url
 
+  check_authorization
+
+  def redirect_to(options = {}, response_status = {})
+    ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
+    super(options, response_status)
+  end
+
   private
 
   def mail_default_url
@@ -23,10 +30,5 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
-  end
-
-  def redirect_to(options = {}, response_status = {})
-    ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
-    super(options, response_status)
   end
 end

@@ -31,11 +31,12 @@ class KarnevalisterController < ApplicationController
     put_base
     respond_to do |format|
       format.html do
-        if current_user.is? :admin
-          @karnevalist = Karnevalist.find params[:id]
+        if current_user.can? :read, @karnevalist
           render :edit
         elsif user_signed_in?
           returning_karnevalist
+        else
+          redirect_to root_url
         end
       end
       format.json do
@@ -123,15 +124,27 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html do
         if @results.length == 1
-          @karnevalist = @results[0]
-          put_base
-          if URI(request.referer).path == '/karnevalister/checkout'
-            redirect_to action: 'checkout_digital', id: @karnevalist.id
+          if not current_user.can? :read, @results[0]
+            @karnevalister = []
+            render :index
           else
-            redirect_to action: 'edit', id: @karnevalist.id
+            @karnevalist = @results[0]
+            put_base
+            if URI(request.referer).path == '/karnevalister/checkout'
+              redirect_to action: 'checkout_digital', id: @karnevalist.id
+            else
+              redirect_to action: 'show', id: @karnevalist.id
+            end
           end
         else
-          @karnevalister = @results.order("efternamn ASC")
+          @results = @results.order("efternamn ASC")
+
+          if current_user.is? :sektionsadmin
+            @results = @results.where(:tilldelad_sektion => current_user.sektioner)
+          end
+
+          @karnevalister = @results
+
           if URI(request.referer).path == '/karnevalister/checkout'
             redirect_to action: 'checkout', q: params[:q]
           else
@@ -436,9 +449,13 @@ class KarnevalisterController < ApplicationController
       return false
     end
 
-    if not params[:id].blank? and current_user.is? :admin
+    if not params[:id].blank?
       @karnevalist = Karnevalist.find params[:id]
     else
+      @karnevalist = Karnevalist.find_by_user_id current_user.id
+    end
+
+    if not current_user.can? :read, @karnevalist
       @karnevalist = Karnevalist.find_by_user_id current_user.id
     end
 
