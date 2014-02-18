@@ -50,6 +50,7 @@ class Ability
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       can [:read], Karnevalist, :tilldelad_sektion => user.sektioner
+      can [:export], Sektion, :id => user.sektioner
     end
 
     # Admin
