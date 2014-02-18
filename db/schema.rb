@@ -107,8 +107,6 @@ ActiveRecord::Schema.define(version: 20140216194249) do
     t.datetime "updated_at"
   end
 
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
-
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
