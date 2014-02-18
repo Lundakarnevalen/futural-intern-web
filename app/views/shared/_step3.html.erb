@@ -7,11 +7,11 @@
 		<%= hidden_field_tag 'karnevalist[intresse_ids][]', nil %>
 		<% Intresse.all.each do |i| %>
 		<div>
-			<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla' %>
+			<%= f.radio_button :snalla_intresse, i.id, :class=>'radio_snalla', :disabled => disabled %>
 			<%= f.label "snalla_intresse_#{i.id}", ".", :class=>'radio_snalla' %>
 			<%= check_box_tag 'karnevalist[intresse_ids][]', i.id,
 			@intresse_ids.include?(i.id),
-			:id => "karnevalist_intresse_id_#{i.id}" %>
+			:id => "karnevalist_intresse_id_#{i.id}", :disabled => disabled %>
 			<%= f.label "intresse_id_#{i.id}", i.name %>
 		</div>
 		<% end %>
@@ -26,22 +26,22 @@
 		<%= hidden_field_tag 'karnevalist[sektion_ids][]', nil %>
 		<% Sektion.all.each do |s| %>
 		<div>
-			<%= f.radio_button :snalla_sektion, s.id, :class=>'radio_snalla' %>
+			<%= f.radio_button :snalla_sektion, s.id, :class=>'radio_snalla', :disabled => disabled %>
 			<%= f.label "snalla_sektion_#{s.id}", ".", :class=>'radio_snalla' %>
 			<%= check_box_tag 'karnevalist[sektion_ids][]', s.id,
 			@sektion_ids.include?(s.id),
-			:id => "karnevalist_sektion_id_#{s.id}" %>
+			:id => "karnevalist_sektion_id_#{s.id}", :disabled => disabled %>
 			<%= f.label "sektion_id_#{s.id}", s.name %>
 		</div>
 		<% end %>
 	</div>
 	<h3>Övrigt</h3>
 	<div class="form-group">
-	    <%= f.check_box :vill_ansvara %>
+	    <%= f.check_box :vill_ansvara, :disabled => disabled %>
 		<%= f.label :vill_ansvara, 'Jag vill ha ansvar' %>
 	</div>
 	<div class="form-group">
 		<%= f.label :ovrigt, 'Är det något annat du vill berätta?' %>
 
-		<%= f.text_area :ovrigt, :rows => 6, :cols => 40 %>
+		<%= f.text_area :ovrigt, :rows => 6, :cols => 40, :disabled => disabled %>
 	</div>

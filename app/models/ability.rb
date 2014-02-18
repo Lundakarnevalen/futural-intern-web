@@ -46,14 +46,15 @@ class Ability
       can [:checkout, :checkout_digital, :checkout_digital_put, :checkout_paper, :checkout_paper_post], Karnevalist
     end
 
+    # Sektionsadmin
+    if user.is? :sektionsadmin
+      can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
+      can [:read], Karnevalist, :tilldelad_sektion => user.sektioner
+    end
+
     # Admin
     if user.is? :admin
       can :manage, :all
-    end
-
-    # Sektionsadmin
-    if user.is? :sektionsadmin
-      can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :update], Karnevalist
     end
   end
 end
