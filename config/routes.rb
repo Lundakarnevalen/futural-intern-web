@@ -17,6 +17,7 @@ Futural::Application.routes.draw do
       get 'pusseldagen'
       get 'search_filter_pusseldag', :action => 'search_filter_pusseldag'
     end
+
     member do
       get 'step2'
       get 'step3'
@@ -29,9 +30,7 @@ Futural::Application.routes.draw do
     end
   end
 
-  namespace :admin do
-    get 'dump', :action => :dump
-  end
+  get '/sektioner/:id/export', :to => 'sektioner#export'
 
   get '/home', to: 'home#index'
 

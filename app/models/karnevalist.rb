@@ -116,6 +116,20 @@ class Karnevalist < ActiveRecord::Base
   def downcase_email
     self.email = self.email.downcase if self.email.present?
   end
+  
+  ATTRIBUTES_FOR_EXPORT =
+    [:personnummer, :efternamn, :fornamn, :kon, :telnr, :email, :gatuadress,
+     :postnr, :postort, :nation, :matpref, :storlek, :korkort]
+
+  def self.attributes_for_export_header
+    ATTRIBUTES_FOR_EXPORT.map(&:to_s).map(&:capitalize)
+  end
+
+  def attributes_for_export
+    ATTRIBUTES_FOR_EXPORT.map do |attr|
+      self.send(attr).to_s
+    end
+  end
 end
 
 class CarrierStringIO < StringIO
