@@ -19,26 +19,27 @@ gem 'cancan'
 gem 'podio'
 gem 'axlsx_rails'
 
-# Production dependencies
 group :production do
-  gem 'mysql2'
   gem 'rails_12factor'
+  gem 'unicorn'
 end
 
-# Development dependencies
-group :development do
-  gem 'sqlite3'
+group :production, :development do
   gem 'mysql2'
+end
+
+group :development do
   gem 'thin'
 end
 
-# Test dependencies
 group :test do
-  gem 'sqlite3'
   gem 'rspec-rails'
 end
 
-# Asset compilation dependencies
+group :development, :test do
+  gem 'sqlite3'
+end
+
 group :assets do
   gem 'uglifier'
   gem 'sass-rails'
