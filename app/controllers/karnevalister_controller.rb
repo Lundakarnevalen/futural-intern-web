@@ -59,7 +59,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def create
-    karnevalist = Karnevalist.create params[:karnevalist]
+    karnevalist = Karnevalist.create karnevalist_params
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
@@ -79,7 +79,7 @@ class KarnevalisterController < ApplicationController
   def update
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    @karnevalist.update_attributes params[:karnevalist]
+    @karnevalist.update_attributes karnevalist_params
 
     respond_to do |format|
       format.html { render :edit }
@@ -297,7 +297,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def step1_post
-    @karnevalist.attributes = params[:karnevalist]
+    @karnevalist.attributes = karnevalist_params
 
     if @karnevalist.save
       sign_in @karnevalist.user
@@ -334,7 +334,7 @@ class KarnevalisterController < ApplicationController
 
   def step3_put
     @karnevalist = Karnevalist.find params[:id]
-    @karnevalist.update_attributes! params[:karnevalist]
+    @karnevalist.update_attributes! karnevalist_params
     @karnevalist.avklarat_steg = 2
     @karnevalist.save
     redirect_to step4_karnevalist_path(@karnevalist)
@@ -368,7 +368,7 @@ class KarnevalisterController < ApplicationController
   end
 
   def checkout_paper_post
-    @karnevalist = Karnevalist.create params[:karnevalist]
+    @karnevalist = Karnevalist.create karnevalist_params
 
     @karnevalist.utcheckad = true
     @karnevalist.save
@@ -389,7 +389,7 @@ class KarnevalisterController < ApplicationController
 
   def checkout_digital_put
     @karnevalist = Karnevalist.find params[:id]
-    @karnevalist.update_attributes! params[:karnevalist]
+    @karnevalist.update_attributes! karnevalist_params
 
     @karnevalist.reload
     @karnevalist.utcheckad = true
@@ -491,5 +491,10 @@ class KarnevalisterController < ApplicationController
 
   def new_karnevalist
     @karnevalist = Karnevalist.new
+  end
+
+  private
+  def karnevalist_params
+    params.require(:karnevalist).permit!
   end
 end

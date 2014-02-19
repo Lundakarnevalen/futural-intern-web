@@ -5,7 +5,6 @@ gem 'rails', '4.0.2'
 
 # General dependencies
 gem 'devise'
-gem 'protected_attributes' # Security is overrated.
 gem 'gcm'
 gem 'postmark-rails'
 gem 'carrierwave'
