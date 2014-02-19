@@ -30,7 +30,7 @@ class NotificationsController < ApplicationController
   end
 
   def create
-    @notification = Notification.new(params[:notification])
+    @notification = Notification.new notification_params
     api_key = "***REMOVED***"
 
     if @notification.save
@@ -62,5 +62,10 @@ class NotificationsController < ApplicationController
     else
       render 'new'
     end
+  end
+
+  private
+  def notification_params
+    params.require(:notification).permit!
   end
 end

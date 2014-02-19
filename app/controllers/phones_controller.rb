@@ -9,7 +9,7 @@ class PhonesController < ApplicationController
   end
 
   def create
-    phone = Phone.create params[:phone]
+    phone = Phone.create phone_params
     respond_to do |format|
       format.json do
         render :json =>
@@ -48,5 +48,10 @@ class PhonesController < ApplicationController
           { :status => :success }
       end
     end
+  end
+
+  private
+  def phone_params
+    params.require(:phone).permit!
   end
 end
