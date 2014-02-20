@@ -111,6 +111,7 @@ Sektion.delete_all
   26  => 'Vieriet',
   27  => 'Filmen',
   28  => 'Nöjen',
+  29  => 'Råd',
 
   100 => 'Festmästeriet - Bamba',
   101 => 'Festmästeriet - VIP',

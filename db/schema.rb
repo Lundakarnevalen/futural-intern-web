@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140216194249) do
+ActiveRecord::Schema.define(version: 20140220013421) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -67,6 +67,7 @@ ActiveRecord::Schema.define(version: 20140216194249) do
     t.integer  "tilldelad_sektion"
     t.boolean  "tilldelad_klar"
     t.boolean  "pusseldag_keep"
+    t.integer  "podio_id"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -105,6 +106,10 @@ ActiveRecord::Schema.define(version: 20140216194249) do
     t.text     "google_token"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "podio_syncs", force: true do |t|
+    t.datetime "time"
   end
 
   create_table "roles", force: true do |t|
