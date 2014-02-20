@@ -2,7 +2,6 @@ schema:
     title: text
     sa-har-ser-jag-ut: image
     personnummer-2: text
-    personnummer: number
     sektion-2: category
     category: category
     sektion: text
@@ -54,3 +53,4 @@ sektioner:
     30: 26  # Vieriet
     31: 999 # General
     32: 15  # Krog 5
+    33: 29  # Råd

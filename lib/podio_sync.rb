@@ -18,10 +18,18 @@ module PodioSync
     true
   end
 
-  def self.get_podio_schema
-    unless @login
-      fail PodioSyncError, 'Not logged into podio'
-    end
+  def self.prelims_noschema
+    fail PodioSyncError, 'No connection to Podio' unless @login
+  end
+
+  def self.prelims
+    self.prelims_noschema
+    self.podio_schema unless @podio_schema
+    self.last_sync unless @last_sync
+  end
+
+  def self.podio_schema
+    self.prelims_noschema
     self.log "GET /app/#{@app_id}"
     fields = Podio::Application.find(@app_id).fields
     @podio_schema = fields.map{ |f| [f['external_id'], f['type']] }.to_hash
@@ -34,6 +42,7 @@ module PodioSync
   end
 
   def self.ensure_schemas_match
+    self.prelims
     @expected_schema.each do |name, type|
       podio_type = @podio_schema[name]
       unless podio_type == type
@@ -50,34 +59,62 @@ module PodioSync
     true
   end
 
-  def self.to_karnevalist podio_obj
-    k = Karnevalist.new
-    k.fornamn = self.convert_attribute podio_obj, 'title' do |a|
-      self.separate_names(a).first
+  def self.get_karnevalist local_karnevalist
+    self.prelims
+    if local_karnevalist.podio_id.present?
+      self.log "GET /item/#{local_karnevalist.podio_id}"
+      self.attributes_from_podio \
+        Podio::Item.find_basic local_karnevalist.podio_id
+    else
+      self.log "POST /item/app/#{@app_id}/filter"
+      ks = Podio::Item.find_by_filter_values @app_id, 
+        { 'personnummer-2' => local_karnevalist.personnummer }
+      if ks.count == 0
+        nil 
+      elsif ks.count > 1
+        fail PodioSyncError, 
+          "Multiple matches for personnummer == #{local_karnevalist.personnummer}"
+      else
+        self.attributes_from_podio ks.all.first
+      end
     end
-    k.efternamn = self.convert_attribute podio_obj, 'title' do |a|
-      self.separate_names(a).last
-    end
-    k.personnummer = self.convert_attribute podio_obj, 'personnummer-2' do |a|
-      a
-    end
-    k.tilldelad_sektion = self.convert_attribute podio_obj, 'sektion-2' do |a|
-      self.sektion_to_local a
-    end
-    k
   end
 
-  def self.convert_attribute podio_obj, attribute, &block
-    if podio_obj.has_key? attribute
-      yield podio_obj[attribute]
-    else 
-      nil
-    end
+  def self.get_edited_since time
+    self.prelims
+    self.log "POST /item/app/#{@app_id}/filter"
+    ks = Podio::Item.find_by_filter_values @app_id,
+      { 'last_edit_on' => { 'from' => time.to_s } },
+      { 'limit' => 500 } # Maximum allowed
+    ks.all.map{ |k| self.attributes_from_podio k }
   end
-  
-  def self.separate_names name
-    words = name.split ' '
-    [words.first, words[1..-1]]
+
+  def self.to_karnevalist attributes
+    k = Karnevalist.new
+
+    k.podio_id = attributes['podio-id']
+    k.fornamn = attributes['title']
+    k.efternamn = attributes['efternamn']
+    k.personnummer = attributes['personnummer-2']
+    k.tilldelad_sektion = self.sektion_to_local attributes['sektion-2']
+    return k
+  end
+
+  def self.attributes_from_podio podio_obj
+    a = {}
+    a['podio-id'] = podio_obj.id
+    podio_obj.fields.each do |field|
+      a[field['external_id']] = \
+        case field['type']
+        when 'text'
+          field['values'][0]['value']
+        when 'category'
+          field['values'][0]['value']['id']
+        else
+          fail PodioSyncError, "Can't convert type #{field['type']}"
+        end
+    end
+    a
   end
 
   def self.sektion_to_local id
@@ -85,12 +122,16 @@ module PodioSync
   end
 
   def self.print_podio_schema
-    @podio_schema || self.get_podio_schema
+    self.prelims
     width = @podio_schema.keys.max_by{ |name| name.length }.length
     @podio_schema.each do |name, type|
       printf "%#{width}s : %s\n", name, type
     end
     nil
+  end
+
+  def self.last_sync
+    @last_sync = Sync.last
   end
 
   def self.log str
