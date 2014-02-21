@@ -120,6 +120,13 @@ class KarnevalisterController < ApplicationController
 
   def search
     @results = Karnevalist.search params[:q]
+
+    if not request.referer.blank? and URI(request.referer).path == '/karnevalister/checkout'
+      checkout = true
+    else
+      checkout = false
+    end
+
     respond_to do |format|
       format.html do
         if @results.length == 1
@@ -129,7 +136,7 @@ class KarnevalisterController < ApplicationController
           else
             @karnevalist = @results[0]
             put_base
-            if URI(request.referer).path == '/karnevalister/checkout'
+            if checkout
               redirect_to action: 'checkout_digital', id: @karnevalist.id
             else
               redirect_to action: 'show', id: @karnevalist.id
@@ -144,7 +151,7 @@ class KarnevalisterController < ApplicationController
 
           @karnevalister = @results
 
-          if URI(request.referer).path == '/karnevalister/checkout'
+          if checkout
             redirect_to action: 'checkout', q: params[:q]
           else
             render :index
