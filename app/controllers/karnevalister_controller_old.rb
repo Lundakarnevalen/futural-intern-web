@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class KarnevalisterController < ApplicationController
   # Old stuff that is not maintained.
 
@@ -35,11 +37,13 @@ class KarnevalisterController < ApplicationController
   end
 
   def step1
+    @karnevalist = Karnevalist.new
     post_base
     render :step1
   end
 
   def step1_post
+    @karnevalist = Karnevalist.new
     @karnevalist.attributes = karnevalist_params
 
     if @karnevalist.save
