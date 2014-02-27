@@ -56,15 +56,6 @@ module PodioSync
     true
   end
 
-  def self.print_podio_schema
-    self.prelims
-    width = @podio_schema.keys.max_by{ |name| name.length }.length
-    @podio_schema.each do |name, type|
-      printf "%#{width}s : %s\n", name, type
-    end
-    nil
-  end
-
   def self.last_sync
     @last_sync = Sync.last
   end
@@ -78,8 +69,31 @@ module PodioSync
 
   ### UI methods
   def self.perform_sync
+    self.log "Begin podio sync at #{Time.now}"
     self.prelims
-    to_sync = []
+    to_sync = [] +
+      self.local_edited +
+      self.local_orphans
+    begin
+      to_sync.each do |k|
+        self.sync_karnevalist k
+      end
+    rescue Exception => e
+      self.log "Podio sync aborted at #{Time.now}"
+      self.log "  due to #{e.class} (#{e.message})"
+      fail
+    end
+    Sync.register; self.last_sync
+    self.log "Podio sync completed successfully at #{Time.now}"
+  end
+
+  def self.print_podio_schema
+    self.prelims
+    width = @podio_schema.keys.max_by{ |name| name.length }.length
+    @podio_schema.each do |name, type|
+      printf "%#{width}s : %s\n", name, type
+    end
+    nil
   end
 
   ### Podio read methods
@@ -206,8 +220,12 @@ module PodioSync
   end
 
   ### Local read methods
-  def self.get_local_orphans
+  def self.local_orphans
     Karnevalist.where(:podio_id => nil).includes(:sektioner).to_a
+  end
+
+  def self.local_edited
+    Karnevalist.where('updated_at > ?', @last_sync).includes(:sektioner).to_a
   end
 
   ### Conversion methods
@@ -227,13 +245,13 @@ module PodioSync
   end
 
   def self.to_podio_karnevalist lk
-    { 'title' => lk.fornamn,
-      'efternamn' => lk.efternamn,
-      'personnummer-2' => lk.personnummer,
+    { 'title' => lk.fornamn.present?? lk.fornamn : nil,
+      'efternamn' => lk.efternamn.present?? lk.efternamn : nil,
+      'personnummer-2' => lk.personnummer.present?? lk.personnummer : nil,
       'sektion-2' => self.sektion_to_podio(lk.tilldelad_sektion),
-      'mobilnummer-2' => lk.telnr,
+      'mobilnummer-2' => lk.telnr.present?? lk.telnr : nil,
       'mail' => lk.email,
-      'matpreferenser' => lk.matpref,
+      'matpreferenser' => lk.matpref.present?? lk.matpref : nil,
     }
   end
 
