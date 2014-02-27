@@ -151,18 +151,19 @@ module PodioSync
     if lk.podio_id.present?
       # Already linked
       self.put_karnevalist lk
+      return true
     elsif lk.personnummer.present?
-      # Has matching candidate
+      # Has matching candidate?
       pk = self.get_karnevalist lk
       if pk.present?
         lk.update_attributes :podio_id => pk.podio_id
         self.log "Linked local == #{lk.id} with podio == #{pk.podio_id}"
         self.put_karnevalist lk
+        return pk.podio_id
       end
-    else
-      # New karnevalist
-      self.create_karnevalist lk
     end
+    # New karnevalist
+    self.create_karnevalist lk
   end
 
   def self.create_karnevalist karnevalist
