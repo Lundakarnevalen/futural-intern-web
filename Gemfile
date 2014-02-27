@@ -29,6 +29,8 @@ end
 
 group :development do
   gem 'thin'
+  gem 'pry-rails'
+  gem 'pry-doc'
 end
 
 group :test do
