@@ -138,6 +138,44 @@ Sektion.delete_all
   i.save
 end }
 
+{
+  1 => 1,   # Barnevalen
+  2 => 2,   # Biljetteri
+  3 => 3,   # Blädderi
+  4 => 4,   # Cirkus
+  5 => 5,   # Dansen
+  6 => 6,   # Ekonomi
+  7 => 8,   # Fabriken
+  8 => 100, # Festmästeri
+  9 => 27,  # Filmen
+  10 => 7,  # Kabaré
+  11 => 9,  # Klipperiet
+  12 => 10, # Kommunikation
+  13 => 11, # Krog 1
+  14 => 12, # Krog 2
+  15 => 13, # Krog 3
+  16 => 14, # Krog 4
+  17 => 16, # Område
+  18 => 17, # Musik
+  19 => 28, # Nöjen
+  20 => 18, # Radio
+  21 => 19, # Revy
+  22 => 20, # Shoppen
+  23 => 21, # Show
+  24 => 22, # Snaxeriet
+  25 => 23, # Spexet
+  26 => 24, # Säkerhet
+  27 => 25, # Tombola
+  28 => 300,# Tåget
+  29 => 400,# Tältnöje
+  30 => 26, # Vieriet
+  31 => 999,# General
+  32 => 15, # Krog 5
+  33 => 29, # Råd
+}.each{ |podio, local|
+  Sektion.find(local).update_attributes(:podio_id => podio)
+}
+
 Role.delete_all
 {
   1 => 'admin',
