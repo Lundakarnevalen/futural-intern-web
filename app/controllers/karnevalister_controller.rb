@@ -11,11 +11,10 @@ class KarnevalisterController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @karnevalister = nil
     respond_to do |format|
       format.html{ render }
       format.json do
-        @karnevalister = Karnevalist.all.order("efternamn ASC")
+        @karnevalister = Karnevalist.all.includes [:sektioner, :intressen]
         render :json =>
           { :status => :success,
             :records => @karnevalister.length,
