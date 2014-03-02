@@ -98,6 +98,8 @@ module PodioSync
     synced_records = 0
     current_k = nil
     begin
+      # Hack AR to not update the timestamps
+      ActiveRecord::Base.record_timestamps = false
       to_sync.each do |k|
         current_k = k
         self.sync_karnevalist k
@@ -112,6 +114,8 @@ module PodioSync
     else
       self.log "Sync completed successfully at #{Time.now}"
       success = true
+    ensure
+      ActiveRecord::Base.record_timestamps = true
     end
 
     self.log "Processed #{synced_records} records"
@@ -194,13 +198,7 @@ module PodioSync
       # Has matching candidate?
       pk = self.get_karnevalist lk
       if pk.present?
-        # Hack AR to not update the timestamps
-        Karnevalist.record_timestamps = false
-        begin
-          lk.update_attributes :podio_id => pk.podio_id
-        ensure 
-          Karnevalist.record_timestamps = true
-        end
+        lk.update_attributes :podio_id => pk.podio_id
         self.log "Linked local == #{lk.id} with podio == #{pk.podio_id}"
         self.put_karnevalist lk
         return pk.podio_id
