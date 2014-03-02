@@ -92,7 +92,7 @@ Korkort.delete_all
 end }
 
 Korkort.all.each_with_index do |kk, i|
-  kk.update_attributes :podio_id => i
+  kk.update_attributes :podio_id => (i + 1)
 end
 
 Intresse.delete_all
