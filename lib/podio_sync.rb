@@ -249,7 +249,15 @@ module PodioSync
     end
     k = self.to_podio_karnevalist karnevalist
     self.log "PUT /item/#{karnevalist.podio_id}"
-    Podio::Item.update karnevalist.podio_id, 'fields' => k
+    begin
+      Podio::Item.update karnevalist.podio_id, 'fields' => k
+    rescue Podio::GoneError
+      self.log "Karnevalist was gone (podio_id == #{karnevalist.podio_id}), creating new"
+      karnevalist.podio_id = nil
+      self.create_karnevalist karnevalist
+      return
+    end
+
     self.log "Synced podio_id == #{karnevalist.podio_id} with local == #{karnevalist.id}"
     karnevalist.podio_id
   end
