@@ -1,8 +1,8 @@
 login:
     api_key: futural
     api_secret: amTZbpTfzfpVl5t6xbmbKeOpIbKBdCBiGug6sBL9YqpdAeFd7OQOuuORAaR048mQ
-    app_id: 7194999
-    app_key: 6295c358954b4f75832c87c8172ace98
+    app_id: 6202029
+    app_key: dc59e51b4cdf4687b27154e159c49d8d
 
 schema:
     title: text
