@@ -57,11 +57,26 @@ module PodioSync
   end
 
   def self.last_sync
-    @last_sync = Sync.last
+    @last_sync = Sync.last || Time.at(0)
   end
 
   def self.log str
+    @logger ||= Logger.new('log/podio_sync.log')
     Rails.logger.info "  Podio Sync: #{str}"
+    @logger.info "  Podio Sync: #{str}"
+  end
+
+  def self.log_fail str
+    @logger ||= Logger.new('log/podio_sync.log')
+    Rails.logger.fatal "  Sync Fail: #{str}"
+    @logger.fatal "  Sync Fail: #{str}"
+  end
+
+  def self.reset!
+    instance_variables.reject{ |v| [:@app_id, :@login].include? v }.each do |v|
+      remove_instance_variable v
+    end
+    self.prelims
   end
 
   class PodioSyncError < StandardError
@@ -71,20 +86,38 @@ module PodioSync
   def self.perform_sync
     self.log "Begin podio sync at #{Time.now}"
     self.prelims
-    to_sync = [] +
-      self.local_edited +
-      self.local_orphans
+    # Don't change order!
+    to_sync = Karnevalist.where('updated_at > ?', @last_sync)
+                         .order('updated_at asc').includes(:sektioner)
+    if to_sync.empty?
+      self.log "Already up to date."
+      return true
+    end
+    success = nil
+    this_sync = @last_sync
+    synced_records = 0
     begin
       to_sync.each do |k|
         self.sync_karnevalist k
+        this_sync = k.updated_at
+        synced_records += 1
       end
     rescue Exception => e
-      self.log "Podio sync aborted at #{Time.now}"
-      self.log "  due to #{e.class} (#{e.message})"
-      fail
+      self.log_fail "Sync aborted at #{Time.now}"
+      self.log_fail "  due to #{e.class} (#{e.message})"
+      success = false
+    else
+      self.log "Sync completed successfully at #{Time.now}"
+      success = true
     end
-    Sync.register; self.last_sync
-    self.log "Podio sync completed successfully at #{Time.now}"
+
+    self.log "Processed #{synced_records} records"
+    self.log "Changes synced until #{this_sync}"
+    if this_sync != @last_sync
+      Sync.create :time => this_sync
+      @last_sync = this_sync
+    end
+    return success
   end
 
   def self.print_podio_schema
@@ -125,7 +158,9 @@ module PodioSync
     else
       self.log "POST /item/app/#{@app_id}/filter"
       ks = Podio::Item.find_by_filter_values @app_id, 
-        { 'personnummer-2' => local_karnevalist.personnummer }
+        { 'personnummer-2' => (local_karnevalist.personnummer + ';' +
+                               self.mangle_personnummer(local_karnevalist.personnummer))}
+                               
       if ks.count == 0
         nil 
       elsif ks.count > 1
@@ -156,7 +191,13 @@ module PodioSync
       # Has matching candidate?
       pk = self.get_karnevalist lk
       if pk.present?
-        lk.update_attributes :podio_id => pk.podio_id
+        # Hack AR to not update the timestamps
+        Karnevalist.record_timestamps = false
+        begin
+          lk.update_attributes :podio_id => pk.podio_id
+        ensure 
+          Karnevalist.record_timestamps = true
+        end
         self.log "Linked local == #{lk.id} with podio == #{pk.podio_id}"
         self.put_karnevalist lk
         return pk.podio_id
@@ -225,10 +266,6 @@ module PodioSync
     Karnevalist.where(:podio_id => nil).includes(:sektioner).to_a
   end
 
-  def self.local_edited
-    Karnevalist.where('updated_at > ?', @last_sync).includes(:sektioner).to_a
-  end
-
   ### Conversion methods
   def self.to_karnevalist attributes
     k = Karnevalist.new
@@ -237,10 +274,19 @@ module PodioSync
     k.fornamn = attributes['title']
     k.efternamn = attributes['efternamn']
     k.personnummer = attributes['personnummer-2']
-    k.tilldelad_sektion = self.sektion_to_local attributes['sektion-2']
+    k.kon = self.to_local Kon, attributes['kon']
+    k.tilldelad_sektion = self.to_local Sektion, attributes['sektion-2']
     k.telnr = attributes['mobilnummer-2']
     k.email = attributes['mail']
     k.matpref = attributes['matpreferenser']
+    k.gatuadress = attributes['adress']
+    k.postnr = attributes['postnummer-och-ort']
+    k.postort = attributes['postort']
+    k.nation = self.to_local Nation, attributes['studentnation']
+    k.storlek = self.to_local Storlek, attributes['trojstorlek']
+    k.korkort = self.to_local Korkort, attributes['korkortsbehorighet']
+    k.medlem_af = attributes['medlem-af'] == 1
+    k.medlem_kar = attributes['medlem-kar'] == 1
 
     return k
   end
@@ -249,10 +295,19 @@ module PodioSync
     { 'title' => lk.fornamn.present?? lk.fornamn : nil,
       'efternamn' => lk.efternamn.present?? lk.efternamn : nil,
       'personnummer-2' => lk.personnummer.present?? lk.personnummer : nil,
-      'sektion-2' => self.sektion_to_podio(lk.tilldelad_sektion),
+      'kon' => self.to_podio(Kon, lk.kon_id),
+      'sektion-2' => self.to_podio(Sektion, lk.tilldelad_sektion),
       'mobilnummer-2' => lk.telnr.present?? lk.telnr : nil,
       'mail' => lk.email,
       'matpreferenser' => lk.matpref.present?? lk.matpref : nil,
+      'adress' => lk.gatuadress.present?? lk.gatuadress : nil,
+      'postnummer-och-ort' => lk.postnr.present?? lk.postnr : nil,
+      'postort' => lk.postort.present?? lk.postort : nil,
+      'studentnation' => self.to_podio(Nation, lk.nation_id),
+      'trojstorlek' => self.to_podio(Storlek, lk.storlek_id),
+      'korkortsbehorighet' => self.to_podio(Korkort, lk.korkort_id),
+      'medlem-af' => lk.medlem_af ? 1 : 2,
+      'medlem-kar' => lk.medlem_kar ? 1 : 2,
     }
   end
 
@@ -273,21 +328,29 @@ module PodioSync
     a
   end
 
-  def self.sektion_to_local podio_sektion
-    return nil if podio_sektion.nil?
-    s = Sektion.find_by_podio_id podio_sektion
-    if s.nil?
-      fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_sektion})"
+  def self.to_local model, podio_id
+    @podio_categories ||= {}
+    @podio_categories[model] ||= model.all.map{ |m| [m.podio_id, m.id] }.to_hash
+    return nil if podio_id.nil?
+    x = @podio_categories[model][podio_id]
+    if x.nil?
+      fail PodioSyncError, "Can't find #{model} with (podio_id == #{podio_id})"
     end
-    s.id
+    x.id
   end
 
-  def self.sektion_to_podio local_sektion
-    if local_sektion.nil?
+  def self.to_podio model, local_id
+    @local_categories ||= {}
+    @local_categories[model] ||= model.all.map{ |m| [m.id, m.podio_id] }.to_hash
+    if local_id.nil?
       nil
     else
-      Sektion.find(local_sektion).podio_id
+      @local_categories[model][local_id]
     end
+  end
+
+  def self.mangle_personnummer pnr
+    pnr[0..5] + '-' + pnr[6..-1]
   end
 end
 
