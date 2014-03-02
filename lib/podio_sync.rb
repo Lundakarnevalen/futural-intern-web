@@ -1,7 +1,12 @@
 require 'podio'
 require 'yaml'
 
-# Code to handle Podio/Heroku sync of records.
+### Code to handle Podio/Heroku sync of records.
+#
+# Usage: login should be performed as part of application initialisation.
+# PodioSync.perform_sync is the main interface. Karnevalister are processed
+# in order of oldest change. The last changes synced are stored and used to 
+# resume the sync when it fails.
 
 module PodioSync
   ### General startup and bookkeeping
@@ -60,13 +65,25 @@ module PodioSync
     @last_sync = Sync.last || Time.at(0)
   end
 
+  def self.clear_last_log
+    @last_log = ''
+  end
+
+  def self.last_log
+    @last_log
+  end
+
   def self.log str
+    @last_log ||= ''
+    @last_log << 'Podio Sync: ' << str << '\n'
     @logger ||= Logger.new('log/podio_sync.log')
     Rails.logger.info "  Podio Sync: #{str}"
     @logger.info "  Podio Sync: #{str}"
   end
 
   def self.log_fail str
+    @last_log ||= ''
+    @last_log << 'Podio Fail: ' << str << '\n'
     @logger ||= Logger.new('log/podio_sync.log')
     Rails.logger.fatal "  Sync Fail: #{str}"
     @logger.fatal "  Sync Fail: #{str}"
@@ -101,6 +118,7 @@ module PodioSync
       # Hack AR to not update the timestamps
       ActiveRecord::Base.record_timestamps = false
       to_sync.each do |k|
+        self.clear_last_log
         current_k = k
         self.sync_karnevalist k
         this_sync = k.updated_at
