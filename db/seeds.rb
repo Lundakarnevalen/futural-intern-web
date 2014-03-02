@@ -9,6 +9,13 @@ Kon.delete_all
   i.save
 end }
 
+{ 1 => 3,
+  2 => 2,
+  3 => 1,
+}.each do |podio, local|
+  Kon.find(local).update_attributes :podio_id => podio
+end
+
 Nation.delete_all
 { 1  => 'Vet ej',
   2  => 'Blekingska',
@@ -30,9 +37,25 @@ Nation.delete_all
   i.save
 end }
 
+{ 1 => 2,
+  2 => 3,
+  3 => 4,
+  4 => 5,
+  5 => 6,
+  6 => 7,
+  7 => 8,
+  8 => 9,
+  9 => 14,
+  10 => 10,
+  11 => 11,
+  12 => 12,
+  13 => 13,
+}.each do |podio, local|
+  Nation.find(local).update_attributes :podio_id => podio
+end
+
 Storlek.delete_all
-{
-  1 => 'XS',
+{ 1 => 'XS',
   2 => 'S',
   3 => 'M',
   4 => 'L',
@@ -45,6 +68,17 @@ Storlek.delete_all
   i.save
 end }
 
+{ 1 => 7,
+  2 => 6,
+  3 => 5,
+  4 => 4,
+  5 => 3,
+  6 => 2,
+  7 => 1,
+}.each do |podio, local|
+  Storlek.find(local).update_attributes :podio_id => podio
+end
+
 Korkort.delete_all
 { 1 => 'Inget',
   2 => 'B/BE',
@@ -56,6 +90,10 @@ Korkort.delete_all
   i.name = v
   i.save
 end }
+
+Korkort.all.each_with_index do |kk, i|
+  kk.update_attributes :podio_id => i
+end
 
 Intresse.delete_all
 {
