@@ -96,13 +96,16 @@ module PodioSync
     success = nil
     this_sync = @last_sync
     synced_records = 0
+    current_k = nil
     begin
       to_sync.each do |k|
+        current_k = k
         self.sync_karnevalist k
         this_sync = k.updated_at
         synced_records += 1
       end
     rescue Exception => e
+      self.log_fail "Choked on karnevalist id == #{current_k.id}"
       self.log_fail "Sync aborted at #{Time.now}"
       self.log_fail "  due to #{e.class} (#{e.message})"
       success = false
