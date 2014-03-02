@@ -75,7 +75,7 @@ module PodioSync
 
   def self.log str
     @last_log ||= ''
-    @last_log << 'Podio Sync: ' << str << '\n'
+    @last_log << 'Podio Sync: ' << str << "\n"
     @logger ||= Logger.new('log/podio_sync.log')
     Rails.logger.info "  Podio Sync: #{str}"
     @logger.info "  Podio Sync: #{str}"
@@ -83,7 +83,7 @@ module PodioSync
 
   def self.log_fail str
     @last_log ||= ''
-    @last_log << 'Podio Fail: ' << str << '\n'
+    @last_log << 'Podio Fail: ' << str << "\n"
     @logger ||= Logger.new('log/podio_sync.log')
     Rails.logger.fatal "  Sync Fail: #{str}"
     @logger.fatal "  Sync Fail: #{str}"
