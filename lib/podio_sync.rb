@@ -369,7 +369,11 @@ module PodioSync
   end
 
   def self.mangle_personnummer pnr
-    pnr[0..5] + '-' + pnr[6..-1]
+    if pnr.present?
+      pnr[0..5] + '-' + pnr[6..-1]
+    else
+      ''
+    end
   end
 end
 
