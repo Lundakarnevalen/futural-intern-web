@@ -1,5 +1,5 @@
 class PodioSyncMailer < ActionMailer::Base
-  default :from => 'system@lundakarnevalen.se'
+  default :from => 'it@lundakarnevalen.se'
 
   def sync_fail message
     @message = message
