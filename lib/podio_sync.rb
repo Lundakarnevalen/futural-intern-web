@@ -75,7 +75,7 @@ module PodioSync
 
   def self.log str
     @last_log ||= ''
-    @last_log << 'Podio Sync: ' << str << '\n'
+    @last_log << "Podio Sync: #{str}\n"
     @logger ||= Logger.new('log/podio_sync.log')
     Rails.logger.info "  Podio Sync: #{str}"
     @logger.info "  Podio Sync: #{str}"
@@ -83,10 +83,10 @@ module PodioSync
 
   def self.log_fail str
     @last_log ||= ''
-    @last_log << 'Podio Fail: ' << str << '\n'
+    @last_log << "Sync Fail:  #{str}\n"
     @logger ||= Logger.new('log/podio_sync.log')
-    Rails.logger.fatal "  Sync Fail: #{str}"
-    @logger.fatal "  Sync Fail: #{str}"
+    Rails.logger.fatal "  Sync Fail:  #{str}"
+    @logger.fatal "  Sync Fail:  #{str}"
   end
 
   def self.reset!
@@ -249,7 +249,15 @@ module PodioSync
     end
     k = self.to_podio_karnevalist karnevalist
     self.log "PUT /item/#{karnevalist.podio_id}"
-    Podio::Item.update karnevalist.podio_id, 'fields' => k
+    begin
+      Podio::Item.update karnevalist.podio_id, 'fields' => k
+    rescue Podio::GoneError
+      self.log "Karnevalist was gone (podio_id == #{karnevalist.podio_id}), creating new"
+      karnevalist.podio_id = nil
+      self.create_karnevalist karnevalist
+      return
+    end
+
     self.log "Synced podio_id == #{karnevalist.podio_id} with local == #{karnevalist.id}"
     karnevalist.podio_id
   end
@@ -369,7 +377,11 @@ module PodioSync
   end
 
   def self.mangle_personnummer pnr
-    pnr[0..5] + '-' + pnr[6..-1]
+    if pnr.present?
+      pnr[0..5] + '-' + pnr[6..-1]
+    else
+      ''
+    end
   end
 end
 
