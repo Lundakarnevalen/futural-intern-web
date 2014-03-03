@@ -189,9 +189,9 @@ end }
   10 => 7,  # Kabaré
   11 => 9,  # Klipperiet
   12 => 10, # Kommunikation
-  13 => 11, # Krog 1
-  14 => 12, # Krog 2
-  15 => 13, # Krog 3
+  13 => 13, # Krog 1
+  14 => 15, # Krog 2
+  15 => 11, # Krog 3
   16 => 14, # Krog 4
   17 => 16, # Område
   18 => 17, # Musik
@@ -208,11 +208,12 @@ end }
   29 => 400,# Tältnöje
   30 => 26, # Vieriet
   31 => 999,# General
-  32 => 15, # Krog 5
+  32 => 12, # Krog 5
   33 => 29, # Råd
 }.each{ |podio, local|
   Sektion.find(local).update_attributes(:podio_id => podio)
 }
+Sektion.find(499).update_attributes(:podio_id => 29)
 
 Role.delete_all
 {
