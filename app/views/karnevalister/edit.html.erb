@@ -7,7 +7,7 @@
            :html => { :class => 'validate' } do |f| %>
 
   <h2>
-    <%= @karnevalist %>
+    <%= @karnevalist.to_s %>
   </h2>
 
   <% if @karnevalist.errors.any? %>
