@@ -6,36 +6,42 @@
   <%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
            :html => { :class => 'validate' } do |f| %>
 
-  <h2>
-    <%= @karnevalist.to_s %>
-  </h2>
+    <h2>
+      <%= @karnevalist.to_s %>
+    </h2>
 
-  <% if @karnevalist.errors.any? %>
-    <h3>
-      Formuläret innehåller fel, inget sparades.
-    </h3>
-    <% @karnevalist.errors.full_messages.each do |msg| %>
-      <div class="error-message"><%= msg %></div>
+    <% if @karnevalist.errors.any? %>
+      <h3>
+        Formuläret innehåller fel, inget sparades.
+      </h3>
+      <% @karnevalist.errors.full_messages.each do |msg| %>
+        <div class="error-message"><%= msg %></div>
+      <% end %>
     <% end %>
-  <% end %>
 
-  <div class="form-group">
-    <h3>Avklarat steg</h3>
-    <%= f.label :avklarat_steg, 'Avklarat steg', :class => "structural" %>
-    <%= f.text_field :avklarat_steg, :required => true, :disabled => true %>
-  </div>
+    <div class="form-group">
+      <h3>Avklarat steg</h3>
+      <%= f.label :avklarat_steg, 'Avklarat steg', :class => "structural" %>
+      <%= f.text_field :avklarat_steg, :required => true, :disabled => true %>
+    </div>
 
-  <%= render partial: "shared/step1", locals: {f: f, checked: "checked", disabled: disabled} %>
-  <%= render partial: "shared/step3", locals: {f: f, disabled: disabled} %>
-  <%= render partial: "shared/utcheckning", locals: {f: f, disabled: disabled} %>
+    <%= render partial: "shared/step1", locals: {f: f, checked: "checked", disabled: disabled} %>
+    <%= render partial: "shared/step3", locals: {f: f, disabled: disabled} %>
+    <%= render partial: "shared/utcheckning", locals: {f: f, disabled: disabled} %>
 
-  <% if not disabled %>
-  <div class="form-controls">
-    <%= f.submit'Spara' %>
-  </div>
-  <p><%= 
-    # button_to 'Radera', @karnevalist, method: :delete, data: { confirm: 'Vill du verkligen radera personen?' } 
-  %></p>
-  <% end %>
+    <h3>Utcheckningen utcheckningen</h3>
+    <div class=form-group>
+      <%= f.check_box :utcheckad %>
+      <%= f.label :utcheckad, 'Utcheckad?' %>
+    </div>
+
+    <% if not disabled %>
+      <div class="form-controls">
+        <%= f.submit'Spara' %>
+      </div>
+      <p><%= 
+        # button_to 'Radera', @karnevalist, method: :delete, data: { confirm: 'Vill du verkligen radera personen?' } 
+      %></p>
+    <% end %>
   <% end %>
 </div>
