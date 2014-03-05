@@ -1,5 +1,5 @@
 <% disabled = false unless disabled %>
-<h3>Utcheckning</h3>
+<h3>Utcheckningen</h3>
 <div class="form-group">
   <div>
     <%= f.check_box :medlem_af, :disabled => disabled %>
@@ -21,9 +21,12 @@
 
 <% if @karnevalist.utcheckad %>
   <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
-  <%= f.label :foto, 'Ladda upp ny bild' %>
-  <%= f.file_field :foto %>
-  <%= f.hidden_field :foto_cache %>
+
+  <div class="form-group">
+    <%= f.label :foto, 'Ladda upp ny bild' %>
+    <%= f.file_field :foto %>
+    <%= f.hidden_field :foto_cache %>
+  </div>
 <% else %>
   <%= render partial: "shared/checkout_foto", locals: {f: f} %>
 <% end %>
