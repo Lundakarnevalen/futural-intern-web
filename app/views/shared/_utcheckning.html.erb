@@ -21,6 +21,9 @@
 
 <% if @karnevalist.utcheckad %>
   <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
+  <%= f.label :foto, 'Ladda upp ny bild' %>
+  <%= f.file_field :foto %>
+  <%= f.hidden_field :foto_cache %>
 <% else %>
   <%= render partial: "shared/checkout_foto", locals: {f: f} %>
 <% end %>
