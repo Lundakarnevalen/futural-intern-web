@@ -1,0 +1,8 @@
+<h1>Futuralkarnevalens sektioner</h1>
+
+<ul>
+  <% @sektioner.each do |s| %>
+    <li><%= link_to s.name, s %>
+  <% end %>
+</ul>
+            
