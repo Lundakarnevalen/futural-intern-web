@@ -77,7 +77,14 @@ class KarnevalisterController < ApplicationController
   def update
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    @karnevalist.update_attributes karnevalist_params
+    @karnevalist.attributes = karnevalist_params
+
+    if @karnevalist.tilldelad_sektion_changed?
+      # Fail unless got access.
+      authorize! :change_sektion, @karnevalist
+    end
+
+    @karnevalist.save
 
     respond_to do |format|
       format.html { render :edit, :layout => 'bare' }

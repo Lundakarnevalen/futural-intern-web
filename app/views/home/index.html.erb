@@ -1,11 +1,20 @@
 <h1>Futuralkarnevalens internweb</h1>
 
-<i>
+<p><i>
   Du är inloggad som <%= current_user.email %>.
   <%= sign_out_link 'Logga ut?' %>
-</i>
+</i></p>
+
+<br>
+
+<% unless current_user.roles.empty? %>
+  <p><b>Du är 
+    <%= spell_out_list current_user.roles.map(&:name) %>.
+  </b></p>
+<% end %>
 
 <h2>Du har följande superkrafter:</h2>
+
 <ul>
   <%# Stuff relating to the current karnevalist %>
   <% if (k = current_user.karnevalist) %>
