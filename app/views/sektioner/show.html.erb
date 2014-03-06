@@ -1,0 +1,12 @@
+<h1><%= @sektion.name %></h1>
+<%= link_to 'Exportera personuppgifter som Excel-ark',
+            :action => :export %>
+
+<h2>Medlemmar</h2>
+
+<ul>
+  <% @sektion.members.each do |k| %>
+    <li><%= link_to k.to_s, k %>
+  <% end %>
+</ul>
+            
