@@ -2,10 +2,16 @@
 <%= stylesheet_link_tag    :karnevalister, :media => :all %>
 <% end %>
 
-<%= render partial: "shared/header", locals: {title: "Karnevalistan"} %>
+<%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
 <div class="container" id="content">
   <%= render 'search_form' %>
+
+  <% if current_user.is? :sektionsadmin %>
+    <% current_user.sektioner.each do |s| %>
+      <%= link_to "Exportera sektion", controller: "sektioner", action: "export", id: s %>
+    <% end %>
+  <% end %>
 
   <% if !@karnevalister.blank? %>
   <ul>

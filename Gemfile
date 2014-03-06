@@ -17,8 +17,6 @@ gem 'browser'
 gem 'cancan'
 gem 'podio'
 gem 'axlsx_rails'
-gem 'pry-rails'
-gem 'pry-doc'
 
 group :production do
   gem 'rails_12factor'
@@ -31,6 +29,8 @@ end
 
 group :development do
   gem 'thin'
+  gem 'pry-rails'
+  gem 'pry-doc'
 end
 
 group :test do

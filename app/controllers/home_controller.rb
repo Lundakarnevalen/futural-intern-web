@@ -1,9 +1,5 @@
-class HomeController < ApplicationController
-  skip_authorization_check
-
+class HomeController < ActionController::Base
   def index
-    unless signed_in?
-      redirect_to 'users#sign_in'
-    end
+    render :layout => 'application'
   end
 end

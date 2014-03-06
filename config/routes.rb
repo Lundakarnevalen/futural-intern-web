@@ -1,10 +1,8 @@
 Futural::Application.routes.draw do
-  root :to => 'home#index'
-
   resources :phones, only: [:new, :create]
   resources :notifications, only: [:new, :create, :show, :index]
 
-  resources :karnevalister, :except => [:destroy] do
+  resources :karnevalister do
     collection do
       get 'search/:q', :action => 'search'
       get 'search', :action => 'search'
@@ -32,13 +30,11 @@ Futural::Application.routes.draw do
     end
   end
 
-  resources :sektioner do 
-    collection do
-      get ':id/export', :to => 'sektioner#export'
-    end
-  end
+  get '/sektioner/:id/export', :to => 'sektioner#export'
 
   get '/home', to: 'home#index'
 
   devise_for :users
+
+  root to: 'karnevalister#step1'
 end
