@@ -19,29 +19,25 @@
       <% end %>
     <% end %>
 
-    <div class="form-group">
-      <h3>Avklarat steg</h3>
-      <%= f.label :avklarat_steg, 'Avklarat steg', :class => "structural" %>
-      <%= f.text_field :avklarat_steg, :required => true, :disabled => true %>
-    </div>
-
-    <%= render partial: "shared/step1", locals: {f: f, checked: "checked", disabled: disabled} %>
-    <%= render partial: "shared/step3", locals: {f: f, disabled: disabled} %>
-    <%= render partial: "shared/utcheckning", locals: {f: f, disabled: disabled} %>
-
-    <h3>Utcheckningen utcheckningen</h3>
     <div class=form-group>
-      <%= f.check_box :utcheckad %>
-      <%= f.label :utcheckad, 'Utcheckad?' %>
+      <%= f.label :tilldelad_sektion %>
+      <div>
+        <%= f.select(:tilldelad_sektion, Sektion.all.collect{ |s| [s.name, s.id] },
+                     {}, { :disabled => !can?(:change_sektion, @karnevalist)}) %>
+      </div>
     </div>
 
-    <% if not disabled %>
-      <div class="form-controls">
-        <%= f.submit'Spara' %>
-      </div>
-      <p><%= 
-        # button_to 'Radera', @karnevalist, method: :delete, data: { confirm: 'Vill du verkligen radera personen?' } 
-      %></p>
-    <% end %>
+    <%= render :partial => 'shared/personupg', :locals => {:f => f } %>
+
+    <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
+    <div class="form-group">
+      <%= f.label :foto, 'Ladda upp ny bild' %>
+      <%= f.file_field :foto %>
+      <%= f.hidden_field :foto_cache %>
+    </div>
+
+    <div class="form-controls">
+      <%= f.submit'Spara' %>
+    </div>
   <% end %>
 </div>
