@@ -11,17 +11,7 @@ class KarnevalisterController < ApplicationController
   load_and_authorize_resource
 
   def index
-    respond_to do |format|
-      format.html{ render :layout => 'bare' }
-      format.json do
-        @karnevalister = Karnevalist.all.includes [:sektioner, :intressen]
-        render :json =>
-          { :status => :success,
-            :records => @karnevalister.length,
-            :remaining => false,
-            :karnevalister => @karnevalister }
-      end
-    end
+    render :layout => 'bare'
   end
 
   def show
@@ -125,7 +115,11 @@ class KarnevalisterController < ApplicationController
   end
 
   def search
-    @results = Karnevalist.search params[:q]
+    if params[:q].present?
+      @results = Karnevalist.search params[:q]
+    else
+      @results = []
+    end
 
     if not request.referer.blank? and URI(request.referer).path == '/karnevalister/checkout'
       checkout = true
