@@ -9,7 +9,7 @@
 
 <% unless current_user.roles.empty? %>
   <p><b>Du är 
-    <%= spell_out_list current_user.roles.map(&:name) %>.
+    <%= spell_out_list current_user.roles.map(&:name).uniq %>.
   </b></p>
 <% end %>
 
