@@ -5,4 +5,8 @@ class Sync < ActiveRecord::Base
     sync = self.order('time desc').limit(1).first
     sync.nil?? Time.at(0) : sync.time
   end
+
+  def self.register
+    self.create :time => Time.now
+  end
 end

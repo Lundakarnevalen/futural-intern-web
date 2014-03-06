@@ -9,6 +9,13 @@ Kon.delete_all
   i.save
 end }
 
+{ 1 => 3,
+  2 => 2,
+  3 => 1,
+}.each do |podio, local|
+  Kon.find(local).update_attributes :podio_id => podio
+end
+
 Nation.delete_all
 { 1  => 'Vet ej',
   2  => 'Blekingska',
@@ -30,9 +37,25 @@ Nation.delete_all
   i.save
 end }
 
+{ 1 => 2,
+  2 => 3,
+  3 => 4,
+  4 => 5,
+  5 => 6,
+  6 => 7,
+  7 => 8,
+  8 => 9,
+  9 => 14,
+  10 => 10,
+  11 => 11,
+  12 => 12,
+  13 => 13,
+}.each do |podio, local|
+  Nation.find(local).update_attributes :podio_id => podio
+end
+
 Storlek.delete_all
-{
-  1 => 'XS',
+{ 1 => 'XS',
   2 => 'S',
   3 => 'M',
   4 => 'L',
@@ -45,6 +68,17 @@ Storlek.delete_all
   i.save
 end }
 
+{ 1 => 7,
+  2 => 6,
+  3 => 5,
+  4 => 4,
+  5 => 3,
+  6 => 2,
+  7 => 1,
+}.each do |podio, local|
+  Storlek.find(local).update_attributes :podio_id => podio
+end
+
 Korkort.delete_all
 { 1 => 'Inget',
   2 => 'B/BE',
@@ -56,6 +90,10 @@ Korkort.delete_all
   i.name = v
   i.save
 end }
+
+Korkort.all.each_with_index do |kk, i|
+  kk.update_attributes :podio_id => (i + 1)
+end
 
 Intresse.delete_all
 {
@@ -138,10 +176,50 @@ Sektion.delete_all
   i.save
 end }
 
+{
+  1 => 1,   # Barnevalen
+  2 => 2,   # Biljetteri
+  3 => 3,   # Blädderi
+  4 => 4,   # Cirkus
+  5 => 5,   # Dansen
+  6 => 6,   # Ekonomi
+  7 => 8,   # Fabriken
+  8 => 100, # Festmästeri
+  9 => 27,  # Filmen
+  10 => 7,  # Kabaré
+  11 => 9,  # Klipperiet
+  12 => 10, # Kommunikation
+  13 => 13, # Krog 1
+  14 => 15, # Krog 2
+  15 => 11, # Krog 3
+  16 => 14, # Krog 4
+  17 => 16, # Område
+  18 => 17, # Musik
+  19 => 28, # Nöjen
+  20 => 18, # Radio
+  21 => 19, # Revy
+  22 => 20, # Shoppen
+  23 => 21, # Show
+  24 => 22, # Snaxeriet
+  25 => 23, # Spexet
+  26 => 24, # Säkerhet
+  27 => 25, # Tombola
+  28 => 300,# Tåget
+  29 => 400,# Tältnöje
+  30 => 26, # Vieriet
+  31 => 999,# General
+  32 => 12, # Krog 5
+  33 => 29, # Råd
+}.each{ |podio, local|
+  Sektion.find(local).update_attributes(:podio_id => podio)
+}
+Sektion.find(499).update_attributes(:podio_id => 29)
+
 Role.delete_all
 {
   1 => 'admin',
   2 => 'utcheckare',
+  3 => 'sektionsadmin',
 }.each{ |k, v| Role.new do |i|
   i.id = k
   i.name = v

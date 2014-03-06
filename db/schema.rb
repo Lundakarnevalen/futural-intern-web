@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140220013421) do
+ActiveRecord::Schema.define(version: 20140227110944) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -72,6 +72,7 @@ ActiveRecord::Schema.define(version: 20140220013421) do
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
   add_index "karnevalister", ["fornamn"], name: "index_karnevalister_on_fornamn"
+  add_index "karnevalister", ["podio_id"], name: "index_karnevalister_on_podio_id"
   add_index "karnevalister", ["snalla_intresse"], name: "index_karnevalister_on_snalla_intresse"
   add_index "karnevalister", ["snalla_sektion"], name: "index_karnevalister_on_snalla_sektion"
 
@@ -84,16 +85,25 @@ ActiveRecord::Schema.define(version: 20140220013421) do
   add_index "karnevalister_sektioner", ["sektion_id"], name: "index_karnevalister_sektioner_on_sektion_id"
 
   create_table "kon", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",     null: false
+    t.integer "podio_id"
   end
+
+  add_index "kon", ["podio_id"], name: "index_kon_on_podio_id"
 
   create_table "korkort", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",     null: false
+    t.integer "podio_id"
   end
 
+  add_index "korkort", ["podio_id"], name: "index_korkort_on_podio_id"
+
   create_table "nationer", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",     null: false
+    t.integer "podio_id"
   end
+
+  add_index "nationer", ["podio_id"], name: "index_nationer_on_podio_id"
 
   create_table "notifications", force: true do |t|
     t.datetime "created_at"
@@ -126,12 +136,18 @@ ActiveRecord::Schema.define(version: 20140220013421) do
   end
 
   create_table "sektioner", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",     null: false
+    t.integer "podio_id"
   end
 
+  add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
+
   create_table "storlekar", force: true do |t|
-    t.string "name", null: false
+    t.string  "name",     null: false
+    t.integer "podio_id"
   end
+
+  add_index "storlekar", ["podio_id"], name: "index_storlekar_on_podio_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
