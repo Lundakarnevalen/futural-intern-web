@@ -31,9 +31,6 @@ class Ability
 
     user ||= User.new
 
-    # Can edit own details
-    can [:show, :edit, :update], Karnevalist, :user_id => user.id
-
     # Karnevalist
     can [:create, :step1, :step1_post], Karnevalist
     can [:update, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
@@ -52,10 +49,8 @@ class Ability
     # Sektionsadmin
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
-      if (k = user.karnevalist)
-        can [:read], Karnevalist, :tilldelad_sektion => k.sektion.id
-        can [:read, :export], Sektion, :id => k.sektion.id
-      end
+      can [:read], Karnevalist, :tilldelad_sektion => user.sektioner
+      can [:export], Sektion, :id => user.sektioner
     end
 
     # Admin
