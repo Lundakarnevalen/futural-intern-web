@@ -103,18 +103,17 @@ class KarnevalisterController < ApplicationController
     end
   end
 
-=begin
   def destroy
     Karnevalist.destroy params[:id]
+    flash[:notice] = 'Karnevalisten är eliminerad.'
     respond_to do |format|
-      format.html { redirect_to karnevalister_url }
+      format.html { redirect_to Karnevalist }
       format.json do
         render :json =>
           { :status => :success }
       end
     end
   end
-=end
 
   def search
     if params[:q].present?

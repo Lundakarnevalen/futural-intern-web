@@ -126,7 +126,7 @@ a:hover {
     text-decoration: underline;
 }
 
-input, textarea {
+input, textarea, a.button {
 	padding: 20px;
 	width: 100%;
 	-webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
@@ -140,6 +140,15 @@ input, textarea {
 	-moz-border-radius: 0;
 	border-radius: 0;
 
+}
+
+a.button:hover {
+    color: white;
+    text-decoration: none;
+}
+
+div.confirm-destroy {
+    display: none;
 }
 
 .field_with_errors input {

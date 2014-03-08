@@ -4,7 +4,7 @@ Futural::Application.routes.draw do
   resources :phones, only: [:new, :create]
   resources :notifications, only: [:new, :create, :show, :index]
 
-  resources :karnevalister, :except => [:destroy] do
+  resources :karnevalister do
     collection do
       get 'search/:q', :action => 'search'
       get 'search', :action => 'search'
