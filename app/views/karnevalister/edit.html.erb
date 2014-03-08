@@ -4,11 +4,11 @@
   <%= render 'search_form' %>
 
   <%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
-           :html => { :class => 'validate' } do |f| %>
+           :html => { :class => 'validate check-pul' } do |f| %>
 
-    <h2>
+    <h1>
       <%= @karnevalist.to_s %>
-    </h2>
+    </h1>
 
     <% if @karnevalist.errors.any? %>
       <h3>
@@ -20,12 +20,30 @@
     <% end %>
 
     <div class=form-group>
-      <%= f.label :tilldelad_sektion %>
+      <%= f.label :tilldelad_sektion, 'Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion, Sektion.all.collect{ |s| [s.name, s.id] },
                      {}, { :disabled => !can?(:change_sektion, @karnevalist)}) %>
       </div>
     </div>
+
+    <% if can? :destroy, @karnevalist %>
+      <h2>Ta bort karnevalist</h2>
+      <div class=form-group>
+        <h3>Är du helt säker?</h3>
+      </div>
+      <div class=form-group>
+        <%= link_to 'Jag är helt säker', '#',
+                    :class => 'button confirm-button' %>
+      </div>
+      <div class='form-group confirm-destroy'>
+        <h3>Är du helt, helt säker?</h3>
+      </div>
+      <div class='form-group confirm-destroy'>
+        <%= link_to 'Ja, ta bort ' + gender_specific(@karnevalist), 
+                    @karnevalist, :method => :delete, :class => 'button' %>
+      </div>
+    <% end %>
 
     <%= render :partial => 'shared/personupg', :locals => {:f => f } %>
 
