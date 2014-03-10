@@ -7,11 +7,15 @@
 <div class="container" id="content">
 
   <% if not @karnevalist.utcheckad %>
-  <%= render partial: "shared/logo", locals: {percent: "86", text: "Vi behöver bara en bild på dig. Den tar du längst fram vid disken inuti AF-borgen."} %>
+    <%= render partial: "shared/logo", locals: {percent: "86", text: "Vi behöver bara en bild på dig. Den tar du längst fram vid disken inuti AF-borgen."} %>
   <% else %>
-  <%= render partial: "shared/logo", locals: {percent: "99", text: "Du är nu utcheckad och inom två veckor kommer vi att höra av oss med mer information. Tills dess - ha det bäst!"} %>
+    <% if @karnevalist.sektion.nil? %>
+      <%= render partial: "shared/logo", locals: {percent: "99", text: "Du är nu utcheckad och inom två veckor kommer vi att höra av oss med mer information. Tills dess - ha det bäst!"} %>
+    <% else %>
+      <%= render partial: "shared/logo", locals: {percent: "100", text: "Du är karnevalist i " + @karnevalist.sektion.name + "!" } %>
+    <% end %>
 
-  <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
+    <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
   <% end %>
 
   <div class="message">

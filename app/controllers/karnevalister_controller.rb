@@ -5,23 +5,23 @@ require 'karnevalister_controller_old'
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  before_filter :authenticate_user_from_token!, :except => [:create, :step1, :step1_post]
-  before_filter :authenticate_user!, :except => [:create, :step1, :step1_post]
+  before_filter :authenticate_user_from_token!, :except => [:create, :new, :step1, :step1_post]
+  before_filter :authenticate_user!, :except => [:create, :new, :step1, :step1_post]
 
   load_and_authorize_resource
 
   def index
-    respond_to do |format|
-      format.html{ render }
-      format.json do
-        @karnevalister = Karnevalist.all.includes [:sektioner, :intressen]
-        render :json =>
-          { :status => :success,
-            :records => @karnevalister.length,
-            :remaining => false,
-            :karnevalister => @karnevalister }
-      end
+    c = current_user
+
+    if c.is? :admin
+      @karnevalister = []
+    elsif c.karnevalist? and c.is? :sektionsadmin
+      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.karnevalist.sektion.id)
+    else
+      raise(CanCan::AccessDenied, 'Invalid access request')
     end
+
+    render :layout => 'bare'
   end
 
   def show
@@ -29,8 +29,8 @@ class KarnevalisterController < ApplicationController
     put_base
     respond_to do |format|
       format.html do
-        if current_user.can? :read, @karnevalist
-          render :edit
+        if current_user.can? :edit, @karnevalist
+          render :edit, :layout => 'bare'
         elsif user_signed_in?
           returning_karnevalist
         else
@@ -53,11 +53,20 @@ class KarnevalisterController < ApplicationController
   def new
     @karnevalist = Karnevalist.new
     post_base
-    render :new
+    render :new, :layout => 'bare'
   end
 
   def create
     karnevalist = Karnevalist.create karnevalist_params
+
+    if not karnevalist.errors.any?
+      karnevalist.update_attribute :avklarat_steg, 2
+
+      if not user_signed_in?
+        sign_in karnevalist.user
+      end
+    end
+
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
@@ -77,10 +86,17 @@ class KarnevalisterController < ApplicationController
   def update
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    @karnevalist.update_attributes karnevalist_params
+    @karnevalist.attributes = karnevalist_params
+
+    if @karnevalist.tilldelad_sektion_changed?
+      # Fail unless got access.
+      authorize! :change_sektion, @karnevalist
+    end
+
+    @karnevalist.save
 
     respond_to do |format|
-      format.html { render :edit }
+      format.html { render :edit, :layout => 'bare' }
       format.json do
         render :json =>
           if @karnevalist.errors.any?
@@ -108,8 +124,9 @@ class KarnevalisterController < ApplicationController
 
   def destroy
     Karnevalist.destroy params[:id]
+    flash[:notice] = 'Karnevalisten är eliminerad.'
     respond_to do |format|
-      format.html { redirect_to karnevalister_url }
+      format.html { redirect_to Karnevalist }
       format.json do
         render :json =>
           { :status => :success }
@@ -118,7 +135,11 @@ class KarnevalisterController < ApplicationController
   end
 
   def search
-    @results = Karnevalist.search params[:q]
+    if params[:q].present?
+      @results = Karnevalist.search params[:q]
+    else
+      @results = []
+    end
 
     if not request.referer.blank? and URI(request.referer).path == '/karnevalister/checkout'
       checkout = true
@@ -131,7 +152,7 @@ class KarnevalisterController < ApplicationController
         if @results.length == 1
           if not current_user.can? :read, @results[0]
             @karnevalister = []
-            render :index
+            render :index, :layout => 'bare'
           else
             @karnevalist = @results[0]
             put_base
@@ -153,7 +174,7 @@ class KarnevalisterController < ApplicationController
           if checkout
             redirect_to action: 'checkout', q: params[:q]
           else
-            render :index
+            render :index, :layout => 'bare'
           end
         end
       end
@@ -229,7 +250,7 @@ class KarnevalisterController < ApplicationController
       @filter6 = @filter5.where("kon_id = ?", params[:kon])
     end
     @karnevalister = @filter6.group('karnevalister.id').order("efternamn ASC")
-    render :uppdelning
+    render :uppdelning, :layout => 'bare'
   end
 
   def gealla
@@ -291,7 +312,7 @@ class KarnevalisterController < ApplicationController
       @filter5 = @filter4.where("kon_id = ?", params[:kon])
     end
     @karnevalister = @filter5.group('karnevalister.id').order("efternamn ASC")
-    render :pusseldagen
+    render :pusseldagen, :layout => 'bare'
   end
 
   def pusseldagen

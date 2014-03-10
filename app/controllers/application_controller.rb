@@ -9,6 +9,12 @@ class ApplicationController < ActionController::Base
     super(options, response_status)
   end
 
+  before_filter do
+    resource = controller_name.singularize.to_sym
+    method = "#{resource}_params"
+    params[resource] &&= send(method) if respond_to?(method, true)
+  end
+
   private
 
   def mail_default_url
@@ -30,5 +36,9 @@ class ApplicationController < ActionController::Base
 
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, :alert => exception.message
+  end
+
+  def after_sign_out_path_for _
+    new_user_session_path
   end
 end
