@@ -19,7 +19,7 @@ class KarnevalisterController < ApplicationController
     put_base
     respond_to do |format|
       format.html do
-        if current_user.can? :read, @karnevalist
+        if current_user.can? :edit, @karnevalist
           render :edit, :layout => 'bare'
         elsif user_signed_in?
           returning_karnevalist
