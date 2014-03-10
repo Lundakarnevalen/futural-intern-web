@@ -1,11 +1,56 @@
-<%= render partial: "shared/header", locals: {title: "There is nothing like 127.0.0.1"} %>
+<h1>Futuralkarnevalens internweb</h1>
 
-<div class="container" id="content">
-	<% if user_signed_in? %>
-	<p>Welcome <%= current_user.email %></p>
-	<%= link_to 'Logged In [click to logout]', destroy_user_session_path, :method => :delete %>
-	<% else %>
-	<p>You are not signed in.</p>
-	<%= link_to 'Login', new_user_session_path %>
-	<% end %>
-</div>
+<p><i>
+  Du är inloggad som <%= current_user.email %>.
+  <%= sign_out_link 'Logga ut?' %>
+</i></p>
+
+<br>
+
+<% unless current_user.roles.empty? %>
+  <p><b>Du är 
+    <%= spell_out_list current_user.roles.map(&:name).uniq %>.
+  </b></p>
+<% end %>
+
+<h2>Du har följande superkrafter:</h2>
+
+<ul>
+  <%# Stuff relating to the current karnevalist %>
+  <% if can? :read, current_user.karnevalist %>
+    <li><%= link_to 'Se din registrering', current_user.karnevalist %></li>
+  <% end %>
+
+  <%# General stuff %>
+  <% if can? :read, Notification %>
+    <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+  <% end %>
+  <% if can? :checkout, Karnevalist %>
+    <li><%= link_to 'Checka ut karnevalister', checkout_karnevalister_path %></li>
+  <% end %>
+
+  <%# Sektionsadmin stuff %>
+  <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
+    <% if can? :read, Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+    <% end %>
+    <% s = current_user.karnevalist.sektion %>
+    <% if can? :read, s %>
+      <li><%= link_to 'Se vilka som är med i din sektion', s %></li>
+    <% end %>
+  <% end %>
+
+  <%# Admin stuff %>
+  <% if current_user.is? :admin %>
+    <% if can? :read, Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+    <% end %>
+    <% if can? :read, Sektion %>
+      <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
+    <% end %>
+    <% if can? :create, Notification %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
+    <% end %>
+  <% end %>
+</ul>
+  
