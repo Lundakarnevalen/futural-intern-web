@@ -32,11 +32,11 @@ class Ability
     user ||= User.new
 
     # Can edit own details
-    can [:show, :edit, :update], Karnevalist, :user_id => user.id
+    can [:show], Karnevalist, :user_id => user.id
 
     # Karnevalist
-    can [:create, :step1, :step1_post], Karnevalist
-    can [:update, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
+    can [:create, :new, :step1, :step1_post], Karnevalist
+    can [:step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
 
     # Notification
     can :read, Notification
