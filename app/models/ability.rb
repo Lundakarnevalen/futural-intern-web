@@ -51,7 +51,7 @@ class Ability
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
         k = user.karnevalist
-        can [:read, :edit], Karnevalist, :tilldelad_sektion => k.sektion.id
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => k.sektion.id
         can [:read, :export], Sektion, :id => k.sektion.id
       end
     end
