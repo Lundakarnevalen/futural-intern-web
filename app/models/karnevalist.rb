@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Karnevalist < ActiveRecord::Base
   has_and_belongs_to_many :intressen
   accepts_nested_attributes_for :intressen
