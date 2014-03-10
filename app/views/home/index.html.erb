@@ -23,27 +23,30 @@
 
   <%# General stuff %>
   <% if can? :read, Notification %>
-    <li><%= link_to 'Läsa gamla pushnotiser', Notification %>
+    <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+  <% end %>
+  <% if can? :checkout, Karnevalist %>
+    <li><%= link_to 'Checka ut karnevalister', checkout_karnevalister_path %></li>
   <% end %>
 
   <%# Sektionsadmin stuff %>
   <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
     <% s = current_user.karnevalist.sektion %>
     <% if can? :read, s %>
-      <li><%= link_to 'Se vilka som är med i din sektion', s %>
+      <li><%= link_to 'Se vilka som är med i din sektion', s %></li>
     <% end %>
   <% end %>
 
   <%# Admin stuff %>
   <% if current_user.is? :admin %>
     <% if can? :read, Karnevalist %>
-      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
     <% end %>
     <% if can? :read, Sektion %>
-      <li><%= link_to 'Se listan med alla sektioner', Sektion %>
+      <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
     <% if can? :create, Notification %>
-      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
     <% end %>
   <% end %>
 </ul>
