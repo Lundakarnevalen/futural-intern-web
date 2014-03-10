@@ -5,8 +5,8 @@ require 'karnevalister_controller_old'
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  before_filter :authenticate_user_from_token!, :except => [:create, :step1, :step1_post]
-  before_filter :authenticate_user!, :except => [:create, :step1, :step1_post]
+  before_filter :authenticate_user_from_token!, :except => [:create, :new, :step1, :step1_post]
+  before_filter :authenticate_user!, :except => [:create, :new, :step1, :step1_post]
 
   load_and_authorize_resource
 
