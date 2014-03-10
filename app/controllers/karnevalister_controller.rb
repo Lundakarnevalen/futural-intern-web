@@ -11,6 +11,16 @@ class KarnevalisterController < ApplicationController
   load_and_authorize_resource
 
   def index
+    c = current_user
+
+    if c.is? :admin
+      @karnevalister = []
+    elsif c.karnevalist? and c.is? :sektionsadmin
+      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.karnevalist.sektion.id)
+    else
+      raise(CanCan::AccessDenied, 'Invalid access request')
+    end
+
     render :layout => 'bare'
   end
 

@@ -31,6 +31,9 @@
 
   <%# Sektionsadmin stuff %>
   <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
+    <% if can? :read, Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+    <% end %>
     <% s = current_user.karnevalist.sektion %>
     <% if can? :read, s %>
       <li><%= link_to 'Se vilka som är med i din sektion', s %></li>
