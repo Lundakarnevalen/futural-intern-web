@@ -1,5 +1,9 @@
-class HomeController < ActionController::Base
+class HomeController < ApplicationController
+  skip_authorization_check
+
   def index
-    render :layout => 'application'
+    unless signed_in?
+      redirect_to '/karnevalister/new'
+    end
   end
 end

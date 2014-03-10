@@ -1,3 +1,5 @@
+# encoding: utf-8
+
 class Karnevalist < ActiveRecord::Base
   has_and_belongs_to_many :intressen
   accepts_nested_attributes_for :intressen
@@ -8,6 +10,7 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :storlek
   belongs_to :korkort
   belongs_to :user
+  belongs_to :sektion, :foreign_key => :tilldelad_sektion
   accepts_nested_attributes_for :user
 
   mount_uploader :foto, FotoUploader
@@ -128,6 +131,14 @@ class Karnevalist < ActiveRecord::Base
   def attributes_for_export
     ATTRIBUTES_FOR_EXPORT.map do |attr|
       self.send(attr).to_s
+    end
+  end
+
+  def to_s
+    if self.fornamn.present? || self.efternamn.present?
+      "#{self.fornamn} #{self.efternamn} (#{self.personnummer})"
+    else 
+      "NAMNLÖS KARNEVALIST #{self.hash}"
     end
   end
 end

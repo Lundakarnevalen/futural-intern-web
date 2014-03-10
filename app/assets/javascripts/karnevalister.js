@@ -1,5 +1,5 @@
 $(function() {
-  $('form').filter(function(_) {
+  $('form.check-pul').filter(function(_) {
     return /karnevalist/.test(this.id);
   }).submit(function(e) {
     var that = this;
@@ -23,6 +23,11 @@ $(function() {
       }
     });
   }
+
+  $('.confirm-button').click(function(e) {
+      e.preventDefault();
+      $('.confirm-destroy').show();
+  });
 });
 
 function tilldelad_sektion_submit(karnevalist_id) {
