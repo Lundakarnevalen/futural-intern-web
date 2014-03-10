@@ -48,6 +48,15 @@ class KarnevalisterController < ApplicationController
 
   def create
     karnevalist = Karnevalist.create karnevalist_params
+
+    if not karnevalist.errors.any?
+      karnevalist.update_attribute :avklarat_steg, 2
+
+      if not user_signed_in?
+        sign_in karnevalist.user
+      end
+    end
+
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
