@@ -17,27 +17,34 @@
 
 <ul>
   <%# Stuff relating to the current karnevalist %>
-  <% if (k = current_user.karnevalist) %>
-    <% if can? :edit, k %>
-      <li><%= link_to 'Redigera dina egna personuppgifter', k %>
-    <% end %>
-    <% if can? :read, k.sektion %>
-      <li><%= link_to 'Se vilka som är med i din sektion', k.sektion %>
+  <% if can? :read, current_user.karnevalist %>
+    <li><%= link_to 'Se din registrering', current_user.karnevalist %></li>
+  <% end %>
+
+  <%# General stuff %>
+  <% if can? :read, Notification %>
+    <li><%= link_to 'Läsa gamla pushnotiser', Notification %>
+  <% end %>
+
+  <%# Sektionsadmin stuff %>
+  <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
+    <% s = current_user.karnevalist.sektion %>
+    <% if can? :read, s %>
+      <li><%= link_to 'Se vilka som är med i din sektion', s %>
     <% end %>
   <% end %>
 
-  <%# Stuff relating to the app as a whole %>
-  <% if can? :read, Karnevalist %>
-    <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %>
-  <% end %>
-  <% if can? :read, Sektion %>
-    <li><%= link_to 'Se listan med alla sektioner', Sektion %>
-  <% end %>
-  <% if can? :create, Notification %>
-    <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %>
-  <% end %>
-  <% if can? :read, Notification %>
-    <li><%= link_to 'Läsa gamla pushnotiser', Notification %>
+  <%# Admin stuff %>
+  <% if current_user.is? :admin %>
+    <% if can? :read, Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %>
+    <% end %>
+    <% if can? :read, Sektion %>
+      <li><%= link_to 'Se listan med alla sektioner', Sektion %>
+    <% end %>
+    <% if can? :create, Notification %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %>
+    <% end %>
   <% end %>
 </ul>
   
