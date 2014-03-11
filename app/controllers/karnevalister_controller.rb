@@ -11,6 +11,16 @@ class KarnevalisterController < ApplicationController
   load_and_authorize_resource
 
   def index
+    c = current_user
+
+    if c.is? :admin
+      @karnevalister = []
+    elsif c.karnevalist? and c.is? :sektionsadmin
+      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.karnevalist.sektion.id)
+    else
+      raise(CanCan::AccessDenied, 'Invalid access request')
+    end
+
     render :layout => 'bare'
   end
 
@@ -19,7 +29,7 @@ class KarnevalisterController < ApplicationController
     put_base
     respond_to do |format|
       format.html do
-        if current_user.can? :read, @karnevalist
+        if current_user.can? :edit, @karnevalist
           render :edit, :layout => 'bare'
         elsif user_signed_in?
           returning_karnevalist
@@ -48,6 +58,15 @@ class KarnevalisterController < ApplicationController
 
   def create
     karnevalist = Karnevalist.create karnevalist_params
+
+    if not karnevalist.errors.any?
+      karnevalist.update_attribute :avklarat_steg, 2
+
+      if not user_signed_in?
+        sign_in karnevalist.user
+      end
+    end
+
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
