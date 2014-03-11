@@ -17,27 +17,40 @@
 
 <ul>
   <%# Stuff relating to the current karnevalist %>
-  <% if (k = current_user.karnevalist) %>
-    <% if can? :edit, k %>
-      <li><%= link_to 'Redigera dina egna personuppgifter', k %>
+  <% if can? :read, current_user.karnevalist %>
+    <li><%= link_to 'Se din registrering', current_user.karnevalist %></li>
+  <% end %>
+
+  <%# General stuff %>
+  <% if can? :read, Notification %>
+    <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+  <% end %>
+  <% if can? :checkout, Karnevalist %>
+    <li><%= link_to 'Checka ut karnevalister', checkout_karnevalister_path %></li>
+  <% end %>
+
+  <%# Sektionsadmin stuff %>
+  <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
+    <% if can? :read, Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
     <% end %>
-    <% if can? :read, k.sektion %>
-      <li><%= link_to 'Se vilka som är med i din sektion', k.sektion %>
+    <% s = current_user.karnevalist.sektion %>
+    <% if can? :read, s %>
+      <li><%= link_to 'Se vilka som är med i din sektion', s %></li>
     <% end %>
   <% end %>
 
-  <%# Stuff relating to the app as a whole %>
-  <% if can? :read, Karnevalist %>
-    <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %>
-  <% end %>
-  <% if can? :read, Sektion %>
-    <li><%= link_to 'Se listan med alla sektioner', Sektion %>
-  <% end %>
-  <% if can? :create, Notification %>
-    <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %>
-  <% end %>
-  <% if can? :read, Notification %>
-    <li><%= link_to 'Läsa gamla pushnotiser', Notification %>
+  <%# Admin stuff %>
+  <% if current_user.is? :admin %>
+    <% if can? :read, Karnevalist %>
+      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+    <% end %>
+    <% if can? :read, Sektion %>
+      <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
+    <% end %>
+    <% if can? :create, Notification %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
+    <% end %>
   <% end %>
 </ul>
   
