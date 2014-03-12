@@ -1,5 +1,25 @@
-<h1><%= @sektion.name %></h1>
-<i>Är dina karnevalister medlemmar där de borde vara?</i>
+<h1>Medlemskoll: <%= @sektion.name %></h1>
+<h2>Instruktioner</h2>
+<ul>
+  <li>
+    Det som står här är bara vad dina karnevalister påstod när de skrevs 
+    in i karnevalen. Det finns inga garantier för att något som står här 
+    är sant. Det är upp till dig att kontrollera alla medlemskap och justera 
+    här på sidan.
+  </li>
+  <li>
+    När du kollat så att karnevalistens medlemskap är korrekta så trycker 
+    du på "kollad"-rutan. Detta är till för att göra det lättare för dig.
+  <li>
+    När en karnevalist är markerad som medlem både i AF, nation och 
+    kår samt att detta är kollat av dig, är karnevalisten klar och får 
+    en grön plupp. Hurra!
+  </li>
+  <li>
+    Alla ändringar sparas automatiskt och inget går att ångra.
+    Dvs. gör inte detta när du är full. Ha så kul! /IT.
+  </li>
+</ul>
 
 <table class='full kollamedlem'>
   <thead>
@@ -39,6 +59,8 @@
             <%= f.label :medlem_kar, 'Kår' %>
             <%= f.check_box :medlem_nation %>
             <%= f.label :medlem_nation, 'Nation' %>
+            <%= f.check_box :medlem_kollad %>
+            <%= f.label :medlem_kollad, 'Kollad?' %>
           </td>
         <% end %>
       </tr>
