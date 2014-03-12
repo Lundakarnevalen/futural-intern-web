@@ -1,6 +1,8 @@
 #!/bin/bash
 # MySQL hack by Johan Förberg
 
+CACHEDCMD="$(dirname $0)/.mysql.cmd"
+
 RUBY='
 con = ActiveRecord::Base.connection;
 class << con;
@@ -12,7 +14,37 @@ puts "%#{con.config[:database]} --host=#{con.config[:host]} " +
 exit
 '
 
-echo 'Scraping login details from Heroku...'
+say()
+{
+   echo "$@" >&2
+}
 
-mysql $(heroku run console <<<$RUBY | grep '^%' | sed 's/^%//')
+if [ -e "$CACHEDCMD" ]; then
+    say Trying saved login details...
+    CMD=$(cat "$CACHEDCMD")
+    if mysql $CMD $@; then 
+        exit
+    else
+        echo No go!
+    fi
+fi
+
+# Else
+
+say Scraping login details from Heroku...
+
+if CMD=$(heroku run console --app karnevalist <<<$RUBY | grep '^%' | sed 's/^%//'); then
+    say Got \`$CMD\`
+
+    if mysql $CMD $@; then 
+        say Saving login details
+        printf "$CMD" > "$CACHEDCMD"
+        exit
+    else
+        say Command fails
+    fi
+else
+    say Scrape fails
+    exit 1
+fi
 
