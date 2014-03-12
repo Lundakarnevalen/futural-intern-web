@@ -52,7 +52,7 @@ class Ability
       if user.karnevalist?
         k = user.karnevalist
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => k.sektion.id
-        can [:read, :export], Sektion, :id => k.sektion.id
+        can [:manage], Sektion, :id => k.sektion.id
       end
     end
 
