@@ -84,7 +84,8 @@ class KarnevalisterController < ApplicationController
   end
 
   def update
-    @karnevalist = Karnevalist.find params[:id]
+    @karnevalist = Karnevalist.includes(:sektioner, :intressen)
+                              .find(params[:id])
     put_base
     @karnevalist.attributes = karnevalist_params
 
