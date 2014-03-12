@@ -15,4 +15,10 @@ class SektionerController < ApplicationController
            :filename => "#{@sektion.name.downcase}-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'
   end
+
+  def kollamedlem
+    @sektion = Sektion.find(params[:id])
+    authorize! :read, @sektion
+    @karnevalister = @sektion.members.order('efternamn, fornamn asc')
+  end
 end

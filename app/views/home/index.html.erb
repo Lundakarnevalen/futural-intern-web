@@ -36,7 +36,7 @@
     <% end %>
     <% s = current_user.karnevalist.sektion %>
     <% if can? :read, s %>
-      <li><%= link_to 'Se vilka som är med i din sektion', s %></li>
+      <li><%= link_to 'Administrera din sektion', s %></li>
     <% end %>
   <% end %>
 
