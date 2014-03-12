@@ -90,6 +90,7 @@ class KarnevalisterController < ApplicationController
   def step4
     @karnevalist = Karnevalist.find params[:id]
     put_base
+    authorize! :read, @karnevalist
     render :step4, :layout => 'bare'
   end
 
