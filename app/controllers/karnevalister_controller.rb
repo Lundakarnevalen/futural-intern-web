@@ -14,9 +14,9 @@ class KarnevalisterController < ApplicationController
     c = current_user
 
     if c.is? :admin
-      @karnevalister = []
+      @karnevalister = Karnevalist.order(efternamn: :asc, fornamn: :asc)
     elsif c.karnevalist? and c.is? :sektionsadmin
-      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.karnevalist.sektion.id)
+      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.sektioner).order(efternamn: :asc, fornamn: :asc)
     else
       raise(CanCan::AccessDenied, 'Invalid access request')
     end
@@ -84,7 +84,8 @@ class KarnevalisterController < ApplicationController
   end
 
   def update
-    @karnevalist = Karnevalist.find params[:id]
+    @karnevalist = Karnevalist.includes(:sektioner, :intressen)
+                              .find(params[:id])
     put_base
     @karnevalist.attributes = karnevalist_params
 
