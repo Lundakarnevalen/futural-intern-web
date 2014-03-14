@@ -16,7 +16,7 @@ class KarnevalisterController < ApplicationController
     if c.is? :admin
       @karnevalister = Karnevalist.order(efternamn: :asc, fornamn: :asc)
     elsif c.karnevalist? and c.is? :sektionsadmin
-      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.karnevalist.sektion.id).order(efternamn: :asc, fornamn: :asc)
+      @karnevalister = Karnevalist.where(:tilldelad_sektion => c.sektioner).order(efternamn: :asc, fornamn: :asc)
     else
       raise(CanCan::AccessDenied, 'Invalid access request')
     end
