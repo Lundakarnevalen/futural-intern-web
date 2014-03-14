@@ -35,6 +35,7 @@ Futural::Application.routes.draw do
   resources :sektioner do 
     collection do
       get ':id/export', :to => 'sektioner#export'
+      get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
     end
   end
 
