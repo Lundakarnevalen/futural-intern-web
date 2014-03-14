@@ -1,3 +1,4 @@
+
 class User < ActiveRecord::Base
   # Include default devise modules. Others available are:
   # :confirmable, :lockable, :timeoutable and :omniauthable
@@ -40,6 +41,10 @@ class User < ActiveRecord::Base
 
     if sektion.include? 400 or sektion.include? 499
       sektion = [400, 499]
+    end
+
+    if sektion.include? 199 or sektion.include? 100 or sektion.include? 102
+      sektion = [100, 102, 199]
     end
 
     return sektion

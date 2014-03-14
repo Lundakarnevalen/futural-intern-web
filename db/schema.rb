@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140227110944) do
+ActiveRecord::Schema.define(version: 20140312231646) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -68,6 +68,7 @@ ActiveRecord::Schema.define(version: 20140227110944) do
     t.boolean  "tilldelad_klar"
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
+    t.boolean  "medlem_kollad",         default: false
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn", using: :btree

@@ -1,3 +1,4 @@
+
 class Ability
   include CanCan::Ability
 
@@ -50,9 +51,8 @@ class Ability
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
-        k = user.karnevalist
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => k.sektion.id
-        can [:read, :export], Sektion, :id => k.sektion.id
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
+        can [:manage], Sektion, :id => user.sektioner
       end
     end
 

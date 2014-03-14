@@ -14,6 +14,7 @@
 # Ignore all logfiles and tempfiles.
 /log/*.log
 /tmp
+/etc
 
 # Ignore rspec
 /.rspec
@@ -25,3 +26,5 @@
 
 # Ignore Podio login information
 /config/podio_login.yaml
+
+/bin/.*

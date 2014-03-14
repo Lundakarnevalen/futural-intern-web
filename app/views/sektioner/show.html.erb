@@ -1,6 +1,10 @@
 <h1><%= @sektion.name %></h1>
-<%= link_to 'Exportera personuppgifter som Excel-ark',
-            :action => :export %>
+<ul>
+  <li><%= link_to 'Exportera personuppgifter som Excel-ark',
+                  :action => :export %></li>
+  <li><%= link_to 'Kolla om dina karnevalister är medlemmar i AF, nation och kår',
+                  :action => :kollamedlem %>
+</ul>
 
 <h2>Medlemmar</h2>
 
