@@ -10,13 +10,6 @@ FactoryGirl.define do
     name "testrole"
   end
 
-  factory :user_role do
-    association :role, factory: :role
-    user factory: :user
-  end
-
-
-
   factory :karnevalist do
     personnummer "8008088080"
     sequence(:kon_id) {|n| n}
@@ -56,10 +49,16 @@ FactoryGirl.define do
     medlem_kollad false
   end
 
+  factory :user_role do
+    association :role, factory: :role
+    user factory: :user
+  end
+
   factory :user do
     sequence(:email) {|n| "test_#{n}@test.com"}
     password "testpassword"
     password_confirmation "testpassword"
+    authentication_token nil
     association :karnevalist, factory: :karnevalist
     factory :user_with_role do
       after(:build) do |u|
@@ -67,6 +66,7 @@ FactoryGirl.define do
       end
     end
   end
+
   factory :korkort do
     name "korkort"
   end
@@ -82,10 +82,6 @@ FactoryGirl.define do
 
   factory :phone do
     google_token
-  end
-
-  factory :role do
-    name "admin"
   end
 
   factory :sektion do
