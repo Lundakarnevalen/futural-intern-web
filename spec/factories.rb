@@ -46,24 +46,32 @@ FactoryGirl.define do
   end
 
   factory :korkort do
+    name "korkort"
   end
 
   factory :nation do
+    name "nation"
   end
 
   factory :notification do
+    title "a title"
+    message "this is a message"
   end
 
   factory :phone do
+    google_token
   end
 
   factory :role do
+    name "admin"
   end
 
   factory :sektion do
+    name "kommunikation"
   end
 
   factory :storlek do
+    name "storlek"
   end
 
   factory :sync do
