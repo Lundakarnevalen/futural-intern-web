@@ -7,15 +7,27 @@ describe KarnevalisterController do
 	end
 
 	describe "GET to KarnvealistController" do
-	  it "should be success for an admin" do
+		before :each do
+	  	#sanity check
+			@user.roles = []
+		end
+
+	  it "should assign all karnivalister for an admin" do
+	  	k = FactoryGirl.create(:karnevalist, tilldelad_sektion: 2)
+	  	@user.roles << FactoryGirl.create(:role, name: "admin") 
 	    get :index
 	    assigns(:karnevalister).should_not be_nil
+	    assigns(:karnevalister).should eq([@user.karnevalist, k])
+	    response.should be_success
+	  end
+
+	  it "should only assign those of the same sektion if user is sekadmin" do
+	  	@user.roles << FactoryGirl.create(:role, name: "sektionsadmin") 
+	  	k = FactoryGirl.create(:karnevalist, tilldelad_sektion: 2)
+	  	get :index
+	  	assigns(:karnevalister).should_not be_nil
+	  	assigns(:karnevalister).should eq([@user.karnevalist])
+	    response.should be_success
 	  end
 	end
-
-	describe "GET with :id to KarnvealistController" do
-	  it "should return the karnevalist with id" do
-	  end
-	end
-
 end

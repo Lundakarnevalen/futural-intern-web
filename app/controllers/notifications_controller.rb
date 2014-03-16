@@ -66,6 +66,6 @@ class NotificationsController < ApplicationController
 
   private
   def notification_params
-    params.require(:notification).permit! if params[:notification]
+    params.require(:notification).permit!
   end
 end
