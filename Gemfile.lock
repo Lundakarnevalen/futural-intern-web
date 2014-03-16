@@ -184,8 +184,6 @@ GEM
       railties (>= 4.0.0, < 5.0)
       sass (>= 3.1.10)
       sprockets-rails (~> 2.0.0)
-    schema_to_scaffold (0.5.0)
-      activesupport (>= 3.2.1)
     slop (3.4.7)
     sprockets (2.10.1)
       hike (~> 1.2)
@@ -248,7 +246,6 @@ DEPENDENCIES
   rails_12factor
   rspec-rails
   sass-rails
-  schema_to_scaffold
   sqlite3
   thin
   uglifier
