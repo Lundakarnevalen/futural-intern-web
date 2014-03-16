@@ -9,4 +9,5 @@ describe Notification do
 			FactoryGirl.build(:notification, message: "message", title: nil).should_not be_valid
 		end
 	end
+	
 end
