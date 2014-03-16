@@ -12,7 +12,6 @@ FactoryGirl.define do
 
   factory :karnevalist do
     personnummer "8008088080"
-    sequence(:kon_id) {|n| n}
     fornamn "MyString"
     efternamn "MyString"
     gatuadress "MyString"
@@ -75,13 +74,17 @@ FactoryGirl.define do
     name "nation"
   end
 
+  factory :kon do
+    name "kon"
+  end
+
   factory :notification do
     title "a title"
     message "this is a message"
   end
 
   factory :phone do
-    google_token
+    sequence(:google_token) {|n| "token_#{n}"} 
   end
 
   factory :sektion do
