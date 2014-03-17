@@ -39,6 +39,9 @@ end
 
 group :development, :test do
   gem 'sqlite3'
+  gem 'factory_girl_rails', '4.2.0'
+  gem 'database_cleaner','1.0.1'
+  gem 'json_spec', '1.1.1'
 end
 
 group :assets do

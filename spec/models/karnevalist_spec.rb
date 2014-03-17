@@ -1,39 +1,34 @@
 require 'spec_helper'
 
 describe (K = Karnevalist) do
-  def create_some_guy
-    K.create :email => 'some@guy.com'
-  end
 
   describe '.create' do
     it 'allows k. with only email' do
-      K.create(:email => 'some@guy.com').errors.should be_empty
+      FactoryGirl.build(:karnevalist, email: 'some@guy.com').should be_valid
     end
 
     it 'disallows k. without email' do
-      K.create(:email => nil, :fornamn => 'irrelevant').errors.should_not be_empty
+      FactoryGirl.build(:karnevalist, email: nil, fornamn: 'irrelevant').should_not be_valid 
     end
 
     it 'creates one and only one user with every karnevalist' do
-      k = create_some_guy
+      k = FactoryGirl.create(:karnevalist)
       u = k.user
-      u.should_not be_nil
-      k.save
       k.user.should eq(u)
     end
 
     it 'does not expose the password in obvious ways' do
-      id = create_some_guy().id
+      id = FactoryGirl.create(:karnevalist).id
       K.find(id).password.should be_nil
     end
 
     it 'returns a valid password until it passes out of scope' do
-      k = create_some_guy
+      k = FactoryGirl.create(:karnevalist) 
       k.user.valid_password?(k.password).should be_true
     end
 
     it 'sets `utcheckad_at` if `utcheckad` is set for the first time' do
-      k = create_some_guy
+      k = FactoryGirl.create(:karnevalist) 
       k.utcheckad.should be_false
       k.utcheckad_at.should be_nil
       
@@ -46,7 +41,7 @@ describe (K = Karnevalist) do
 
   describe '#save' do
     it 'syncs the user email and ensures password remains valid' do
-      k = create_some_guy
+      k = FactoryGirl.create(:karnevalist)
       p = k.password
       k.email = 'some.other@guy.com'
       k.save
@@ -77,13 +72,12 @@ describe (K = Karnevalist) do
 =end
 
   describe '#search' do
-    def create_johan
-      K.create :email => 'johan@forberg.se', :fornamn => 'Johan',
-                         :efternamn => 'Förberg', :personnummer => '9110251817'
+    before :each do
+      @k = FactoryGirl.create(:karnevalist, email: "johan@forberg.se", fornamn: "johan",
+        efternamn: "Förberg", personnummer: "9110251817")
     end
 
     it 'performs simple matches' do
-      create_johan
       K.search('johan').should_not be_empty
       K.search('förberg').should_not be_empty
       K.search('johan förberg').should_not be_empty
@@ -91,12 +85,10 @@ describe (K = Karnevalist) do
     end
 
     it 'performs direct matches' do
-      k = create_johan
-      K.search(k.id.to_s).to_a.should eq([k])
+      K.search(@k.id.to_s).to_a.should eq([@k])
     end
 
     it 'does not return false matches' do
-      create_johan
       K.search('apa').should be_empty
       K.search('johann').should be_empty
       K.search('johan förberger').should be_empty
@@ -104,7 +96,6 @@ describe (K = Karnevalist) do
     end
 
     it 'can search for email' do
-      create_johan
       K.search('johan@forberg.se').should_not be_empty
     end
   end

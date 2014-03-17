@@ -2,7 +2,11 @@ class SektionerController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @sektioner = Sektion.all.order 'name asc'
+    if current_user.is? :admin
+      @sektioner = Sektion.all.order 'name asc'
+    elsif current_user.is? :sektionsadmin
+      @sektioner = Sektion.where(:id => current_user.sektioner).order 'name asc'
+    end
   end
 
   def show

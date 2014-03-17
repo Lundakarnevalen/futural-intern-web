@@ -38,6 +38,9 @@
     <% if can? :read, s %>
       <li><%= link_to 'Administrera din sektion', s %></li>
     <% end %>
+    <% if current_user.sektioner.count > 1 %>
+      <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
+    <% end %>
   <% end %>
 
   <%# Admin stuff %>
