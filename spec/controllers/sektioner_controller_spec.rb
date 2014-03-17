@@ -1,20 +1,32 @@
 require 'spec_helper'
 
 describe SektionerController do
-	before :each do
-		@user = FactoryGirl.create(:user)
-		sign_in @user
-	end
+  before :each do
+    @user = FactoryGirl.create(:user)
+    sign_in @user
+  end
 
-	describe "GET to KarnvealistController" do
-	  it "should be successfull" do
-	  	get :index
-	  end
-	end
+  describe "GET to SektionerController" do
+  	before :each do
+  		@sektion = FactoryGirl.create(:sektion) 
+  	end
 
-	describe "GET with :id to KarnvealistController" do
-	  it "should return the karnevalist with id" do
-	  end
-	end
-
+    it "should return all sektioner if the user is admin" do
+    	@user.roles << FactoryGirl.create(:role, name: "admin")
+    	@user.save
+    	s = FactoryGirl.create(:sektion, name: "test")
+      get :index       
+      response.should be_success
+      assigns(:sektioner).should_not be_nil
+      assigns(:sektioner).to_a.should eql([@sektion, s])
+    end 
+=begin
+    it "should return sektions which the current user sektionsadmin " do
+    	@user.roles << FactoryGirl.create(:role, name: "sektionsadmin")
+    	get :index	
+      assigns(:sektioner).should_not be_nil
+      assigns(:sektioner).should eql([@user.sektioner])
+    end
+=end
+  end
 end
