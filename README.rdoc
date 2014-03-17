@@ -1,6 +1,6 @@
 == Futural internweb
 
-== Kvalitetskontroll
+=== Kvalitetskontroll
 
 För repot gäller följande:
 
@@ -14,12 +14,12 @@ master kan man använda pull requests här på github.
 
 Vår huvudserver heroku/karnevalist följer master.
 
-=== develop
+==== develop
 
 Develop är den senaste utvecklingsversionen. Alla utvecklare får skjuta till
 develop, med vissa förbehåll.
 
-*Kod i develop ska klara sina tester*. Undvik att skjuta kod till develop som 
+<em>Kod i develop bör klara sina tester</em>. Undvik att skjuta kod till develop som 
 failar sina tester, håll den koden i en egen bransch eller lokalt tills den 
 lever upp till kraven.
 
@@ -32,7 +32,7 @@ branschen master på den servern. För att skjuta till stage används sålunda:
 
     git push stage develop:master
 
-=== Övriga branscher 
+==== Övriga branscher 
 
 Här råder fri hopp och lek.
 
