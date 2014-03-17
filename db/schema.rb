@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140312231646) do
+ActiveRecord::Schema.define(version: 20140317222551) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -22,8 +22,8 @@ ActiveRecord::Schema.define(version: 20140312231646) do
     t.integer "karnevalist_id", null: false
   end
 
-  add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id", using: :btree
-  add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id", using: :btree
+  add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id"
+  add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id"
 
   create_table "karnevalister", force: true do |t|
     t.string   "personnummer"
@@ -71,40 +71,40 @@ ActiveRecord::Schema.define(version: 20140312231646) do
     t.boolean  "medlem_kollad",         default: false
   end
 
-  add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn", using: :btree
-  add_index "karnevalister", ["fornamn"], name: "index_karnevalister_on_fornamn", using: :btree
-  add_index "karnevalister", ["podio_id"], name: "index_karnevalister_on_podio_id", using: :btree
-  add_index "karnevalister", ["snalla_intresse"], name: "index_karnevalister_on_snalla_intresse", using: :btree
-  add_index "karnevalister", ["snalla_sektion"], name: "index_karnevalister_on_snalla_sektion", using: :btree
+  add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
+  add_index "karnevalister", ["fornamn"], name: "index_karnevalister_on_fornamn"
+  add_index "karnevalister", ["podio_id"], name: "index_karnevalister_on_podio_id"
+  add_index "karnevalister", ["snalla_intresse"], name: "index_karnevalister_on_snalla_intresse"
+  add_index "karnevalister", ["snalla_sektion"], name: "index_karnevalister_on_snalla_sektion"
 
   create_table "karnevalister_sektioner", force: true do |t|
     t.integer "karnevalist_id", null: false
     t.integer "sektion_id",     null: false
   end
 
-  add_index "karnevalister_sektioner", ["karnevalist_id"], name: "index_karnevalister_sektioner_on_karnevalist_id", using: :btree
-  add_index "karnevalister_sektioner", ["sektion_id"], name: "index_karnevalister_sektioner_on_sektion_id", using: :btree
+  add_index "karnevalister_sektioner", ["karnevalist_id"], name: "index_karnevalister_sektioner_on_karnevalist_id"
+  add_index "karnevalister_sektioner", ["sektion_id"], name: "index_karnevalister_sektioner_on_sektion_id"
 
   create_table "kon", force: true do |t|
     t.string  "name",     null: false
     t.integer "podio_id"
   end
 
-  add_index "kon", ["podio_id"], name: "index_kon_on_podio_id", using: :btree
+  add_index "kon", ["podio_id"], name: "index_kon_on_podio_id"
 
   create_table "korkort", force: true do |t|
     t.string  "name",     null: false
     t.integer "podio_id"
   end
 
-  add_index "korkort", ["podio_id"], name: "index_korkort_on_podio_id", using: :btree
+  add_index "korkort", ["podio_id"], name: "index_korkort_on_podio_id"
 
   create_table "nationer", force: true do |t|
     t.string  "name",     null: false
     t.integer "podio_id"
   end
 
-  add_index "nationer", ["podio_id"], name: "index_nationer_on_podio_id", using: :btree
+  add_index "nationer", ["podio_id"], name: "index_nationer_on_podio_id"
 
   create_table "notifications", force: true do |t|
     t.datetime "created_at"
@@ -113,15 +113,61 @@ ActiveRecord::Schema.define(version: 20140312231646) do
     t.text     "message"
   end
 
+  create_table "orders", force: true do |t|
+    t.string   "status"
+    t.datetime "order_date"
+    t.datetime "delivery_date"
+    t.text     "comment"
+    t.integer  "warehouse_code"
+    t.integer  "karnevalist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
+
+  create_table "orders_products", id: false, force: true do |t|
+    t.integer "order_id"
+    t.integer "product_id"
+  end
+
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
 
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
+
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
   end
+
+  create_table "product_categories", force: true do |t|
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "products", force: true do |t|
+    t.integer  "product_type"
+    t.integer  "product_category_id"
+    t.string   "name"
+    t.string   "unit"
+    t.string   "ean"
+    t.string   "supplier"
+    t.text     "info"
+    t.string   "stock_location"
+    t.text     "notes"
+    t.integer  "stock_balance_ordered"
+    t.integer  "stock_balance_not_ordered"
+    t.integer  "stock_balance_stand_by"
+    t.float    "purchase_price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "products", ["product_category_id"], name: "index_products_on_product_category_id"
 
   create_table "roles", force: true do |t|
     t.string   "name"
@@ -129,7 +175,7 @@ ActiveRecord::Schema.define(version: 20140312231646) do
     t.datetime "updated_at"
   end
 
-  add_index "roles", ["name"], name: "index_roles_on_name", using: :btree
+  add_index "roles", ["name"], name: "index_roles_on_name"
 
   create_table "roles_users", force: true do |t|
     t.integer "user_id"
@@ -141,14 +187,14 @@ ActiveRecord::Schema.define(version: 20140312231646) do
     t.integer "podio_id"
   end
 
-  add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id", using: :btree
+  add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
 
   create_table "storlekar", force: true do |t|
     t.string  "name",     null: false
     t.integer "podio_id"
   end
 
-  add_index "storlekar", ["podio_id"], name: "index_storlekar_on_podio_id", using: :btree
+  add_index "storlekar", ["podio_id"], name: "index_storlekar_on_podio_id"
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
@@ -166,8 +212,8 @@ ActiveRecord::Schema.define(version: 20140312231646) do
     t.string   "authentication_token"
   end
 
-  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token", using: :btree
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
+  add_index "users", ["authentication_token"], name: "index_users_on_authentication_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
 
 end
