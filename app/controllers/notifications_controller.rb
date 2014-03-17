@@ -4,7 +4,7 @@ class NotificationsController < ApplicationController
 
   before_filter :authenticate_user_from_token!, :except => [:index, :show]
   before_filter :authenticate_user!, :except => [:index, :show]
-
+  skip_before_filter :can_can_strong, only: [:index, :show]
   load_and_authorize_resource
 
   def index
@@ -32,7 +32,6 @@ class NotificationsController < ApplicationController
   def create
     @notification = Notification.new notification_params
     api_key = "***REMOVED***"
-
     if @notification.save
       gcm = GCM.new(api_key)
       registration_ids = Array.new
