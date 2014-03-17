@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def index
     unless signed_in?
-      redirect_to '/karnevalister/new'
+      redirect_to new_karnevalist_path 
     end
   end
 end
