@@ -42,4 +42,8 @@ Futural::Application.routes.draw do
   get '/home', to: 'home#index'
 
   devise_for :users
+
+  namespace :api do
+    devise_for :users
+  end
 end
