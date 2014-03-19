@@ -1,7 +1,30 @@
-Futural::Application.routes.draw do
+  Futural::Application.routes.draw do
   root :to => 'home#index'
+=begin
+  scope format: true, constraints: { format: 'json'} do
+    post '/phones', to: 'api/phones#create'
+  end
+=end
 
-  resources :phones, only: [:new, :create]
+  devise_for :users
+  scope constraints: { :format => 'json' } do
+    resources :phones, controller: "api/phones", only: [:new, :create] #'/phones' => 'api/phones#create'
+  end
+  #post 'phones' => 'phones#create'
+
+  scope constrains: { format: 'html' } do
+    resources :phones, only: [:new, :create]
+  end
+
+  namespace :api do
+    devise_for :users
+    constraints format: :json do
+      resources :phones, only: [:new, :create]
+    end
+  end
+
+
+
   resources :notifications, only: [:new, :create, :show, :index]
 
   resources :karnevalister do
@@ -32,7 +55,7 @@ Futural::Application.routes.draw do
     end
   end
 
-  resources :sektioner do 
+  resources :sektioner do
     collection do
       get ':id/export', :to => 'sektioner#export'
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
@@ -41,9 +64,4 @@ Futural::Application.routes.draw do
 
   get '/home', to: 'home#index'
 
-  devise_for :users
-
-  namespace :api do
-    devise_for :users
-  end
 end

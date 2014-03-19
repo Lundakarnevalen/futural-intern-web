@@ -14,7 +14,8 @@ describe Api::SessionsController do
         response.code.should eq("200")
         controller.current_user.should_not be_nil
         controller.should be_signed_in
-        response.body['token'].should_not be_nil
+        response.body['auth_token'].should_not be_nil
+        puts response.body
       end
 
       it "should sign in and return the karnevalist for the user" do

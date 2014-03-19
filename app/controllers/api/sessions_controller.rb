@@ -1,9 +1,7 @@
-class Api::SessionsController < Devise::SessionsController
+class Api::SessionsController < Api::AuthenticationController
   prepend_before_filter :require_no_authentication, only: :create
-  skip_before_filter :verify_authenticity_token, if: Proc.new { |c| c.request.format == 'application/json' }
   before_filter :validate_auth_token, except: :create
   include Devise::Controllers::Helpers
-  respond_to :json
 
   def create
     resource = User.find_for_database_authentication(email: params[:user][:email])
