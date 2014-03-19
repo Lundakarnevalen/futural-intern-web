@@ -7,14 +7,12 @@
 =end
 
   devise_for :users
-  scope constraints: { :format => 'json' } do
-    resources :phones, controller: "api/phones", only: [:new, :create] #'/phones' => 'api/phones#create'
-  end
-  #post 'phones' => 'phones#create'
 
-  scope constrains: { format: 'html' } do
-    resources :phones, only: [:new, :create]
+  scope module: "api", constraints: { :format => 'json' } do
+    resources :phones, only: [:new, :create, :index]
   end
+
+  #resources :phones, only: [:new, :create]
 
   namespace :api do
     devise_for :users
