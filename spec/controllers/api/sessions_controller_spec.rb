@@ -14,8 +14,7 @@ describe Api::SessionsController do
         response.code.should eq("200")
         controller.current_user.should_not be_nil
         controller.should be_signed_in
-        response.body['auth_token'].should_not be_nil
-        puts response.body
+        response.body['token'].should_not be_nil
       end
 
       it "should sign in and return the karnevalist for the user" do
@@ -37,7 +36,7 @@ describe Api::SessionsController do
     describe "signout" do
       it "should delete the token and sign out the user successfully" do
         sign_in @user
-        delete :destroy, { auth_token: @user.authentication_token }, format: :json
+        delete :destroy, { token: @user.authentication_token }, format: :json
         controller.current_user.should be_nil
         controller.should_not be_signed_in
         response.code.should eq("200")
@@ -45,7 +44,7 @@ describe Api::SessionsController do
 
       it "should return error message if the token provided is not valid" do
         sign_in @user
-        delete :destroy, {auth_token: "invalid" }, format: :json
+        delete :destroy, {token: "invalid" }, format: :json
         controller.current_user.should_not be_nil
         response.code.should eq("401")
       end

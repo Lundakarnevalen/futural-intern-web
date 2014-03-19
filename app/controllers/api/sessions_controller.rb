@@ -10,7 +10,7 @@ class Api::SessionsController < Api::AuthenticationController
     if resource.valid_password?(params[:user][:password])
       sign_in(:user, resource)
       resource.ensure_authentication_token
-      render json: { success: true, auth_token: resource.authentication_token, karnevalist: resource.karnevalist }
+      render json: { success: true, token: resource.authentication_token, karnevalist: resource.karnevalist }
       return
     end
     invalid_credentials
@@ -19,7 +19,7 @@ class Api::SessionsController < Api::AuthenticationController
   def destroy
     resource.reset_authentication_token!
     Devise.sign_out_all_scopes ? sign_out : sign_out(resource_name)
-    render :status => 200, :json => {}
+    render status: 200, :json => {}
   end
 
   private
@@ -28,7 +28,7 @@ class Api::SessionsController < Api::AuthenticationController
     end
 
     def validate_auth_token
-      self.resource = User.find_by_authentication_token(params[:auth_token])
+      self.resource = User.find_by_authentication_token(params[:token])
       render status: :unauthorized, json: {errors: [t('invalid token')]} if self.resource.nil?
     end
 
