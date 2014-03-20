@@ -12,6 +12,7 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :user
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
   accepts_nested_attributes_for :user
+  has_many :posts
 
   mount_uploader :foto, FotoUploader
 
@@ -119,7 +120,7 @@ class Karnevalist < ActiveRecord::Base
   def downcase_email
     self.email = self.email.downcase if self.email.present?
   end
-  
+
   ATTRIBUTES_FOR_EXPORT =
     [:personnummer, :efternamn, :fornamn, :kon, :telnr, :email, :gatuadress,
      :postnr, :postort, :nation, :matpref, :storlek, :korkort]
@@ -149,7 +150,7 @@ class Karnevalist < ActiveRecord::Base
   def to_s
     if self.fornamn.present? || self.efternamn.present?
       "#{self.fornamn} #{self.efternamn} (#{self.personnummer})"
-    else 
+    else
       "NAMNLÖS KARNEVALIST #{self.hash}"
     end
   end
