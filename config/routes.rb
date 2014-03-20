@@ -8,17 +8,11 @@
 
   devise_for :users
 
-  scope module: "api", constraints: { :format => 'json' } do
-    resources :phones, only: [:new, :create, :index]
-  end
-
-  #resources :phones, only: [:new, :create]
+  resources :phones, only: [:new, :create]
 
   namespace :api do
     devise_for :users
-    constraints format: :json do
-      resources :phones, only: [:new, :create]
-    end
+    get '/tests', to: 'test#index'
   end
 
 
