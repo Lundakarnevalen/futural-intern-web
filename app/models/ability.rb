@@ -47,6 +47,11 @@ class Ability
       can [:checkout, :checkout_digital, :checkout_digital_put, :checkout_paper, :checkout_paper_post], Karnevalist
     end
 
+    # Export
+    if user.is? :exporter
+      can :export_all, Karnevalist
+    end
+
     # Sektionsadmin
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist

@@ -124,12 +124,24 @@ class Karnevalist < ActiveRecord::Base
     [:personnummer, :efternamn, :fornamn, :kon, :telnr, :email, :gatuadress,
      :postnr, :postort, :nation, :matpref, :storlek, :korkort]
 
+  ATTRIBUTES_FOR_EXPORT_ALL = [:id, :sektion] + ATTRIBUTES_FOR_EXPORT
+
   def self.attributes_for_export_header
     ATTRIBUTES_FOR_EXPORT.map(&:to_s).map(&:capitalize)
   end
 
+  def self.attributes_for_export_all_header
+    ATTRIBUTES_FOR_EXPORT_ALL.map(&:to_s).map(&:capitalize)
+  end
+
   def attributes_for_export
     ATTRIBUTES_FOR_EXPORT.map do |attr|
+      self.send(attr).to_s
+    end
+  end
+
+  def attributes_for_export_all
+    ATTRIBUTES_FOR_EXPORT_ALL.map do |attr|
       self.send(attr).to_s
     end
   end

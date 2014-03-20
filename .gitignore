@@ -16,6 +16,9 @@
 /tmp
 /etc
 
+# Ignore rvm
+.rvmrc
+
 # Ignore rspec
 /.rspec
 
