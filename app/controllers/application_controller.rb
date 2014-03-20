@@ -3,13 +3,14 @@ class ApplicationController < ActionController::Base
   before_filter :mail_default_url
 
   check_authorization :unless => :devise_controller?
+  before_filter :can_can_strong
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
     super(options, response_status)
   end
 
-  before_filter do
+  def can_can_strong
     resource = controller_name.singularize.to_sym
     method = "#{resource}_params"
     params[resource] &&= send(method) if respond_to?(method, true)

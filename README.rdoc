@@ -1,28 +1,38 @@
-== README
+== Futural internweb
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+=== Kvalitetskontroll
 
-Things you may want to cover:
+För repot gäller följande:
 
-* Ruby version
+==== master
 
-* System dependencies
+Master är den senaste släppta versionen. Release manager ansvarar för att 
+skjuta till master, andra utvecklare lämnar master ifred.
 
-* Configuration
+Om man vill uppmärksamma release mgr. på att kod behöver skjutas till
+master kan man använda pull requests här på github.
 
-* Database creation
+Vår huvudserver heroku/karnevalist följer master.
 
-* Database initialization
+==== develop
 
-* How to run the test suite
+Develop är den senaste utvecklingsversionen. Alla utvecklare får skjuta till
+develop, med vissa förbehåll.
 
-* Services (job queues, cache servers, search engines, etc.)
+<em>Kod i develop bör klara sina tester</em>. Undvik att skjuta kod till develop som 
+failar sina tester, håll den koden i en egen bransch eller lokalt tills den 
+lever upp till kraven.
 
-* Deployment instructions
+Om du skriver ny kod till appen så ansvarar du för att skriva tester för att 
+dokumentera förväntat beteende. Om du hittar en bugg i någon annans kod så
+hjälper det att skriva tester som den failar pga. av ovan sagda bugg.
 
-* ...
+Vår utvecklingsserver heroku/karnevalist-stage följer develop. Dock heter 
+branschen master på den servern. För att skjuta till stage används sålunda:
 
+    git push stage develop:master
 
-Please feel free to use a different markup language if you do not plan to run
-<tt>rake doc:app</tt>.
+==== Övriga branscher 
+
+Här råder fri hopp och lek.
+
