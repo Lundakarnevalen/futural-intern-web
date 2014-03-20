@@ -18,6 +18,7 @@ Futural::Application.routes.draw do
       get 'search_filter', :action => 'search_filter'
       get 'pusseldagen'
       get 'search_filter_pusseldag', :action => 'search_filter_pusseldag'
+      get 'export_all', :action => 'export_all'
     end
 
     member do

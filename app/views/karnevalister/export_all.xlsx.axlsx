@@ -1,0 +1,9 @@
+ws_name = "Karnevalister, #{Time.now.strftime '%Y%m%d'}"[0..30]
+
+xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
+  sheet.add_row(Karnevalist.attributes_for_export_all_header)
+  @karnevalister.each do |k|
+    sheet.add_row(k.attributes_for_export_all)
+  end
+end
+

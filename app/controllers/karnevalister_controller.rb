@@ -5,8 +5,8 @@ require 'karnevalister_controller_old'
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  before_filter :authenticate_user_from_token!, :except => [:create, :new, :step1, :step1_post]
-  before_filter :authenticate_user!, :except => [:create, :new, :step1, :step1_post]
+  before_filter :authenticate_user_from_token!, :except => [:create, :new, :step1, :step1_post, :export_all]
+  before_filter :authenticate_user!, :except => [:create, :new, :step1, :step1_post, :export_all]
 
   load_and_authorize_resource
 
@@ -318,6 +318,14 @@ class KarnevalisterController < ApplicationController
 
   def pusseldagen
     @karnevalister = Karnevalist.group("karnevalister.id").where("tilldelad_sektion = ?", current_user.karnevalist.tilldelad_sektion).order("efternamn ASC")
+  end
+
+  def export_all
+    authorize! :export_all, Karnevalist
+    @karnevalister = Karnevalist.includes(:sektion).all
+    render :xlsx => 'export_all',
+           :filename => "karnevalister-#{Time.now.strftime '%Y%m%d'}.xlsx",
+           :disposition => 'attachment'
   end
 
   private
