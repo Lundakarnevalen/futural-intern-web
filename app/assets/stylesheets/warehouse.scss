@@ -1,0 +1,9 @@
+/*
+ * Base structure
+/*
+ *= require_self
+ *= require warehouse_general.scss
+ */
+@import 'bootstrap';
+
+/* Move down content because we have a fixed navbar that is 50px tall */
