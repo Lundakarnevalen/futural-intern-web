@@ -32,11 +32,17 @@ Futural::Application.routes.draw do
     end
   end
 
-  resources :sektioner do 
+  resources :sektioner do
     collection do
       get ':id/export', :to => 'sektioner#export'
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
     end
+  end
+
+  namespace :warehouse do
+    get '/dashboard', to: 'dashboard#home'
+    resources :orders
+    resources :products
   end
 
   get '/home', to: 'home#index'

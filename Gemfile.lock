@@ -35,6 +35,8 @@ GEM
       axlsx
       rails (>= 3.1)
     bcrypt-ruby (3.1.2)
+    bootstrap-sass (3.0.3.0)
+      sass (~> 3.2)
     browser (0.3.2)
     builder (3.1.4)
     cancan (1.6.10)
@@ -224,6 +226,7 @@ PLATFORMS
 
 DEPENDENCIES
   axlsx_rails
+  bootstrap-sass (~> 3.0.3.0)
   browser
   cancan
   carrierwave
