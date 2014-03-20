@@ -4,4 +4,8 @@ class Sektion < ActiveRecord::Base
   def members
     Karnevalist.where :tilldelad_sektion => self.id
   end
+
+  def to_s
+    self.name
+  end
 end
