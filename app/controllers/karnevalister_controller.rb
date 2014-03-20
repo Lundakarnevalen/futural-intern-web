@@ -139,7 +139,7 @@ class KarnevalisterController < ApplicationController
     if params[:q].present?
       @results = Karnevalist.search params[:q]
     else
-      @results = []
+      @results = Karnevalist.all
     end
 
     if not request.referer.blank? and URI(request.referer).path == '/karnevalister/checkout'
@@ -257,7 +257,7 @@ class KarnevalisterController < ApplicationController
   def gealla
     @karnevalister = Karnevalist.where :id => params[:karnevalist_ids]
     @sektion = Sektion.find params[:sektion_id]
-    @karnevalister.update_all :tilldelad_sektion => @sektion.id, 
+    @karnevalister.update_all :tilldelad_sektion => @sektion.id,
                               :tilldelad_klar => true
 
     flash[:notice] = "Nu har #{@karnevalister.length} glada karnevalister fått vars en sektion. Det gick väl fort?"
