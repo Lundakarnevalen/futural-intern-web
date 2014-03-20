@@ -15,7 +15,7 @@ class SektionerController < ApplicationController
 
   def export
     @sektion = Sektion.find params[:id]
-    render :xlsx => 'export_all',
+    render :xlsx => 'export',
            :filename => "#{@sektion.name.downcase}-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'
   end
