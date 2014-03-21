@@ -125,7 +125,6 @@ ActiveRecord::Schema.define(version: 20140320204827) do
 
   create_table "posts", force: true do |t|
     t.string   "content"
-    t.integer  "karnevalist_id"
     t.integer  "sektion_id"
     t.datetime "created_at"
     t.datetime "updated_at"

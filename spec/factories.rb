@@ -100,7 +100,5 @@ FactoryGirl.define do
 
   factory :post do
     content "Lorem Ipsum"
-    karnevalist
-    sektion
   end
 end

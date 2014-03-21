@@ -8,10 +8,21 @@
 <br>
 
 <% unless current_user.roles.empty? %>
-  <p><b>Du är 
+  <p><b>Du är
     <%= spell_out_list current_user.roles.map(&:name).uniq %>.
   </b></p>
 <% end %>
+
+
+<div class="span8">
+    <% if @sektion.posts.any? %>
+      <h3>posts (<%= @sektion.posts.count %>)</h3>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+    <% end %>
+</div>
+
 
 <h2>Du har följande superkrafter:</h2>
 
@@ -60,4 +71,4 @@
     <% end %>
   <% end %>
 </ul>
-  
+

@@ -19,6 +19,7 @@ gem 'podio'
 gem 'axlsx_rails'
 gem 'pry-rails'
 gem 'pry-doc'
+gem 'bootstrap-sass'
 
 group :production do
   gem 'rails_12factor'
