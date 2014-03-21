@@ -1,0 +1,49 @@
+<header class="navbar navbar-fixed-top navbar-inverse">
+  <div class="navbar-inner">
+    <div class="container">
+      <nav>
+        <ul class="nav pull-right">
+          <li><%= link_to "Home", root_path %></li>
+          <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+          <li id="fat-menu" class="dropdown">
+            <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+              Karnevalist
+              <b class="caret"></b>
+            </a>
+            <ul class="dropdown-menu">
+              <% if can? :read, current_user.karnevalist %>
+                <li><%= link_to 'Se din registrering', current_user.karnevalist %></li>
+              <% end %>
+
+              </li>
+            </ul>
+          </li>
+          <% if current_user.is? :admin %>
+            <li id="fat-menu" class="dropdown">
+              <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                Admin
+                <b class="caret"></b>
+              </a>
+              <ul class="dropdown-menu">
+                <li><%= link_to 'Register',Karnevalist %></li>
+                <li><%= link_to 'Sektioner', Sektion %></li>
+                <li><%= link_to 'Skicka pushnotiser', new_notification_path %></li>
+              </ul>
+            </li>
+          <% end %>
+          <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
+            <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+            <li><%= link_to 'Administrera din sektion', current_user.karnevalist.sektion %></li>
+            <% if current_user.sektioner.count > 1 %>
+              <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
+            <% end %>
+          <% end %>
+          <% if current_user.can? :export_all, Karnevalist %>
+            <li><%= link_to 'Exportera alla personuppgifter', export_all_karnevalister_path %></li>
+          <% end %>
+          <li><%= sign_out_link 'Logga ut?' %></li>
+        </ul>
+      </nav>
+    </div>
+  </div>
+</header>
