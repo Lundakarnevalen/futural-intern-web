@@ -1,36 +1,48 @@
 class Warehouse::ProductsController < Warehouse::ApplicationController
-  before_filter :find_order, only: [:show, :update]
+  before_filter :find_product, only: [:show, :update]
   def index
-    @orders = Product.all
+    @products = Product.all
   end
 
   def show
   end
 
   def new
-    @order = Product.new
+    @product = Product.new
   end
 
   def create
-     product = Product.new(order_params)
+     product = Product.new(product_params)
     if product.save
-      redirect_to product
+      redirect_to warehouse_products_path
     else
       render :new
     end
   end
 
-  def update
+  def edit
+    find_product
   end
 
-  def delete
+  def update
+    find_product
+    if @product.update_attributes(product_params)
+      redirect_to warehouse_products_path
+    else
+      render :edit
+    end
+  end
+
+  def destroy
+    Product.destroy params[:id]
+    redirect_to warehouse_products_path
   end
 
   private
-    def find_order
-      @order = Product.find(params[:id])
+    def find_product
+      @product = Product.find(params[:id])
     end
-    def order_params
+    def product_params
       params.require(:product).permit!
     end
 end

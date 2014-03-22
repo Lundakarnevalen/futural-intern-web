@@ -2,7 +2,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <title>Karnevalist<%= Rails.env.development?? ' (Dev)' : '' %></title>
+    <title>Karnevalist - Lagersystem<%= Rails.env.development?? ' (Dev)' : '' %></title>
     <%= stylesheet_link_tag :warehouse, :media => :all %>
     <%= favicon_link_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -24,8 +24,10 @@
   <%= render 'layouts/warehouse/header' %>
   <%= render 'layouts/warehouse/sidebar' %>
   <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-    <h1 class="page-header">Warehouse</h1>
+    <h1 class="page-header">Lagersystem</h1>
+    <div class="container">
     <%= yield %>
+    </div>
   </div>
 </body>
 </html>
