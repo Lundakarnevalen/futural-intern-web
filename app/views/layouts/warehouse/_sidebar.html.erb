@@ -3,19 +3,16 @@
     <div class="col-sm-3 col-md-2 sidebar">
       <ul class="nav nav-sidebar">
         <li class="active"><a href="#">Dashboard</a></li>
-        <li><%= link_to "My Orders",warehouse_orders_path %></li>
-        <li><%= link_to "List Orders", warehouse_orders_path %></li>
-        <li><%= link_to "List Products", warehouse_products_path %></li>
+        <li><%= link_to "Mina ordrar", warehouse_orders_path %></li>
+        <li><%= link_to "Ny order", new_warehouse_order_path %></li>
         <li><a href="#">Export</a></li>
       </ul>
+      <% if current_user.is? :admin %>
       <ul class="nav nav-sidebar">
-        <li><%= link_to "Create Product", new_warehouse_product_path %></li>
-        <li><%= link_to "Create Order", new_warehouse_order_path %></li>
-        <li><a href="">Nav item again</a></li>
-        <li><a href="">One more nav</a></li>
-        <li><a href="">Another nav item</a></li>
-        <li><a href="">More navigation</a></li>
+        <li><%= link_to "Alla varor", warehouse_products_path %></li>
+        <li><%= link_to "Ny vara", new_warehouse_product_path %></li>
       </ul>
+      <% end %>
       <ul class="nav nav-sidebar">
         <li><a href="">Nav item again</a></li>
         <li><a href="">One more nav</a></li>
