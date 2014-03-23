@@ -25,7 +25,6 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
   end
 
   def update
-    find_product
     if @product.update_attributes(product_params)
       redirect_to warehouse_products_path
     else
@@ -42,6 +41,7 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     def find_product
       @product = Product.find(params[:id])
     end
+    
     def product_params
       params.require(:product).permit!
     end
