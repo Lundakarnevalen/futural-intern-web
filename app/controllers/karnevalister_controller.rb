@@ -322,7 +322,7 @@ class KarnevalisterController < ApplicationController
 
   def export_all
     authorize! :export_all, Karnevalist
-    @karnevalister = Karnevalist.includes(:sektion).all
+    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation]).all
     render :xlsx => 'export_all',
            :filename => "karnevalister-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'
