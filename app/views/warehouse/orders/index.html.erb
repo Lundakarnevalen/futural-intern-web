@@ -1,1 +1,52 @@
-<div class="container"><p>This is a order show</div>
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12">
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <h3>Mina ordrar</h3>
+        </div>
+    </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+        	<form action="#" method="post" >
+            <table class="table" id="table">
+                <thead>
+                    <tr>
+                        <th>Vara</th>
+                        <th>EAN</th>
+                        <th>Antal</th>
+                        <th>Styckpris</th>
+                        <th>Totalt pris</th>
+                        <th>Status</th>
+                        <th>Beställningsdatum</th>
+                        <th>Leveransdatum</th>
+                    </tr>
+                </thead>
+                <tbody>
+                	<% @orders.each do |o| %>
+                		
+	                		<% o.products.each do |p| %>
+			                    <tr>
+			                        <td><%= p.name %></td>
+			                        <td><%= p.ean %></td>
+			                        <td>30 st</td>
+			                        <td><%= p.purchase_price %> kr</td>
+			                        <td>900 kr</td>
+			                        <td><%= o.status %></td>
+			                        <td><%= o.order_date %></td>
+			                        <td><%= o.delivery_date %></td>
+			                    </tr>
+		                    <% end %>
+                    	
+                    <% end %>
+
+                </tbody>
+            </table>
+        	</form>
+            <hr>
+        </div>
+    </div>
+</div>

@@ -9,12 +9,13 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def new
     @order = Order.new
+    @products = Product.all
   end
 
   def create
     order = Order.new(order_params)
     if order.save
-      redirect_to order
+      redirect_to warehouse_orders_path
     else
       render :new
     end
