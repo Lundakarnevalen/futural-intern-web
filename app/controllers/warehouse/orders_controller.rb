@@ -9,6 +9,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def new
     @order = Order.new
+    @products = Product.all
   end
 
   def create
