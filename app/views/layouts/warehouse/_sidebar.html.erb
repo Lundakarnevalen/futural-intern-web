@@ -11,6 +11,9 @@
       <ul class="nav nav-sidebar">
         <li><%= link_to "Alla varor", warehouse_products_path %></li>
         <li><%= link_to "Ny vara", new_warehouse_product_path %></li>
+        <li><%= link_to "Alla varukategorier", warehouse_product_categories_path %></li>
+        <li><%= link_to "Ny varukategori", new_warehouse_product_category_path %></li>
+        <li><%= link_to "Inleverans", controller: "products", action: "incoming_deliveries" %></li>
       </ul>
       <% end %>
       <ul class="nav nav-sidebar">

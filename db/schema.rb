@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140317222551) do
+ActiveRecord::Schema.define(version: 20140323171531) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -126,11 +126,6 @@ ActiveRecord::Schema.define(version: 20140317222551) do
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
 
-  create_table "orders_products", id: false, force: true do |t|
-    t.integer "order_id"
-    t.integer "product_id"
-  end
-
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
@@ -159,12 +154,15 @@ ActiveRecord::Schema.define(version: 20140317222551) do
     t.text     "info"
     t.string   "stock_location"
     t.text     "notes"
-    t.integer  "stock_balance_ordered"
-    t.integer  "stock_balance_not_ordered"
-    t.integer  "stock_balance_stand_by"
+    t.integer  "stock_balance_ordered",     default: 0
+    t.integer  "stock_balance_not_ordered", default: 0
+    t.integer  "stock_balance_stand_by",    default: 0
     t.float    "purchase_price"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "warning_limit"
+    t.integer  "warehouse_code"
+    t.float    "sale_price"
   end
 
   add_index "products", ["product_category_id"], name: "index_products_on_product_category_id"

@@ -39,6 +39,10 @@
     <%= f.text_field :stock_location, class: "form-control" %>
   </div>
   <div class="form-group">
+    <%= f.label :warning_limit, "Varningsgräns lagersaldo" %>
+    <%= f.number_field :warning_limit, class: "form-control" %>
+  </div>
+  <div class="form-group">
     <%= f.label :notes, "Anteckningar" %>
     <%= f.text_area :notes, rows: 5, class: "form-control" %>
   </div>

@@ -1,0 +1,19 @@
+<h2>Alla varukategorier</h2>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Kategorinamn</th>
+        <th>Ta bort</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @product_categories.each do |p| %>
+      <tr>
+        <td><%= link_to p.name, edit_warehouse_product_category_path(p) %></td>
+        <td><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

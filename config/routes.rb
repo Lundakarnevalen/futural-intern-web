@@ -42,7 +42,13 @@ Futural::Application.routes.draw do
   namespace :warehouse do
     get '/dashboard', to: 'dashboard#home'
     resources :orders
-    resources :products
+    resources :products do
+      collection do
+        get 'incoming_deliveries'
+        put 'update_multiple'
+      end
+    end
+    resources :product_categories
   end
 
   get '/home', to: 'home#index'
