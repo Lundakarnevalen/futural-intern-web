@@ -1,6 +1,7 @@
-<h2>Alla varor</h2>
+<h2>Inleverans</h2>
 <div class="table-responsive">
-  <table class="table table-striped">
+  <%= form_tag update_multiple_warehouse_products_path, :method => :put do %>
+  <table class="table">
     <thead>
       <tr>
         <th>Vara</th>
@@ -10,12 +11,18 @@
         <th>I lager (paxat)</th>
         <th>I lager (standby)</th>
         <th>Enhet</th>
-        <th>Ta bort</th>
+        <th>Lägg till antal</th>
       </tr>
     </thead>
     <tbody>
       <% @products.each do |p| %>
-      <tr>
+      <% if p.warning_limit.blank? %>
+        <tr>
+      <% elsif p.stock_balance_not_ordered < p.warning_limit %>
+        <tr class="danger">
+      <% else %>
+        <tr class="success">
+      <% end %>
         <td><%= p.name %></td>
         <td><%= p.ean %></td>
         <td><%= p.stock_location %></td>
@@ -23,9 +30,11 @@
         <td><%= p.stock_balance_ordered %></td>
         <td><%= p.stock_balance_stand_by %></td>
         <td><%= p.unit %></td>
-        <td><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button></td>
+        <td><%= number_field_tag "new_amount[#{p.id}]", nil, min: 1, class: "form-control" %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
+  <%= submit_tag "Emottaget", class: "btn btn-primary" %>
+  <% end %>
 </div>

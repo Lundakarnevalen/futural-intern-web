@@ -1,0 +1,8 @@
+<h2>Redigera varukategori</h2>
+<%= form_for [:warehouse, @product_category] do |f| %>
+  <div class="form-group">
+    <%= f.label :name, "Namn" %>
+    <%= f.text_field :name, class: "form-control" %>
+  </div>
+  <%= f.submit "Spara", class: "btn btn-primary" %>
+<% end %>
