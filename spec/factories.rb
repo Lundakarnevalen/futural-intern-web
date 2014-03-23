@@ -101,7 +101,7 @@ FactoryGirl.define do
   factory :order do
     status "delivered"
     order_date Date.today
-    deliver_date Date.tomorrow
+    delivery_date Date.tomorrow
     comment "No comment"
     association :karnevalist, factory: :karnevalist
   end
