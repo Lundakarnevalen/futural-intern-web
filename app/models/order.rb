@@ -1,6 +1,6 @@
 class Order < ActiveRecord::Base
   belongs_to :karnevalist
-  has_many :products, :through :order_products
+  has_many :products, :through => :order_products
   validates :karnevalist, presence: true
   before_save :set_order_date
 
