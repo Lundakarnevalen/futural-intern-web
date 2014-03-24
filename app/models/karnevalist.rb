@@ -19,6 +19,14 @@ class Karnevalist < ActiveRecord::Base
 
   validates :email, :presence => true, :uniqueness => true
 
+  validate do # Personnummer
+    if self.personnummer.blank?
+      nil
+    elsif ! Karnevalist.personnummer?(self.personnummer)
+      self.errors.add :personnummer, 'Ogiltigt personnummer'
+    end
+  end
+
   UTCHECKAD = 3
 
   before_save do
@@ -68,11 +76,7 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def personnummer= val
-    if val.present?
-      val.gsub! /[^0-9]/, ''
-      val = val[2..-1] if val.length == 12
-    end
-    self[:personnummer] = val
+    self[:personnummer] = val.blank?? nil : Karnevalist.to_personnummer(val)
   end
 
   def utcheckad= val
@@ -156,6 +160,37 @@ class Karnevalist < ActiveRecord::Base
     else 
       "NAMNLÖS KARNEVALIST #{self.hash}"
     end
+  end
+
+  def self.personnummer? pn
+    return false unless pn.length == 10
+    # Validate year
+    begin # BEWARE: catches invocation errors as well
+      return false unless pn[0..1].to_i.between? 0, 99
+      # Validate month, day
+      Date.parse pn[0..5] # Fail if invalid
+      # Validate last four unless 'international' number
+      unless ['t', 'p'].include? pn[6].downcase
+        # Code's unreadable, deal with it.
+        val = pn[0..8].chars.zip('212121212'.chars).inject 0 do |acc, cs|
+          acc + (cs[0].to_i * cs[1].to_i).to_s.chars.map(&:to_i).sum
+        end
+        chk = (10 - (val % 10)) % 10
+        return false unless chk == pn[-1].to_i
+      end
+    rescue ArgumentError
+      return false
+    end
+    return true
+  end
+
+  def self.to_personnummer pn
+    pn.gsub! /-/, ''
+    if pn.length == 12
+      # Chop off century
+      pn = pn[2..-1]
+    end
+    return pn.upcase
   end
 end
 

@@ -37,6 +37,33 @@ describe (K = Karnevalist) do
       k.utcheckad.should be_true
       k.utcheckad_at.should_not be_nil
     end
+
+    # Personnummer
+    it 'allows missing `personnummer`' do
+      FactoryGirl.build(:karnevalist, :personnummer => nil)
+                 .should be_valid
+    end
+
+    it 'allow proper `personnummer`' do
+      FactoryGirl.build(:karnevalist, :personnummer => '1111111116')
+                 .should be_valid
+    end
+
+    it 'rejects invalid `personnummer` checksum' do
+      FactoryGirl.build(:karnevalist, :personnummer => '1111111111')
+                 .should_not be_valid
+    end
+
+    it 'rejects invalid `personnummer` dates' do
+      # This number's checksum is actually valid!
+      FactoryGirl.build(:karnevalist, :personnummer => '999999-9999')
+                 .should_not be_valid
+    end
+
+    it 'allows "international" `personnummer`' do
+      FactoryGirl.build(:karnevalist, :personnummer => '911025-P123')
+                 .should be_valid
+    end
   end
 
   describe '#save' do
