@@ -11,6 +11,8 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :korkort
   belongs_to :user
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
+  belongs_to :sektion2, :foreign_key => :tilldelad_sektion2, 
+                        :class_name => Sektion
   accepts_nested_attributes_for :user
 
   mount_uploader :foto, FotoUploader
@@ -73,6 +75,33 @@ class Karnevalist < ActiveRecord::Base
       val = val[2..-1] if val.length == 12
     end
     self[:personnummer] = val
+  end
+
+  # About sektioner: naming is severely fucked up. To clarify:
+  # `tilldelad_sektion` and `tilldelad_sektion2` are the IDs of the assigned
+  # sektions. The associations are named `sektion` and `sektion2`. Most clients
+  # should REALLY use `tilldelade_sektioner` which gives the ASSOCIATIONS of as
+  # many sektions as are assigned, in order of precedence. `sektioner` is the
+  # sektions that were originally requested but they are only kept for legacy
+  # purposes. Clear?
+
+  def tilldelade_sektioner= sekts
+    if sekts.blank?
+      self.sektion = nil
+      self.sektion2 = nil
+    elsif sekts.length > 2
+      fail ValueError, 'Number of sektioner must be 0, 1, or 2.'
+    elsif sekts.length == 2
+      self.sektion = sekts[0]
+      self.sektion2 = sekts[1]
+    else # == 1
+      self.sektion = sekts[0]
+      self.sektion2 = nil
+    end
+  end
+
+  def tilldelade_sektioner
+    [self.sektion, self.sektion2].select &:present?
   end
 
   def utcheckad= val
