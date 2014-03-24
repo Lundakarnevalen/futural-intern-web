@@ -116,6 +116,10 @@ class Karnevalist < ActiveRecord::Base
     ""
   end
 
+  def foto_filtyp
+    URI.parse(URI.encode(self.foto.to_s)).path[%r{[^\.]+\z}]
+  end
+
   def downcase_email
     self.email = self.email.downcase if self.email.present?
   end
@@ -124,7 +128,7 @@ class Karnevalist < ActiveRecord::Base
     [:personnummer, :efternamn, :fornamn, :kon, :telnr, :email, :gatuadress,
      :postnr, :postort, :nation, :matpref, :storlek, :korkort]
 
-  ATTRIBUTES_FOR_EXPORT_ALL = [:id, :sektion] + ATTRIBUTES_FOR_EXPORT
+  ATTRIBUTES_FOR_EXPORT_ALL = [:id, :sektion, :foto_filtyp] + ATTRIBUTES_FOR_EXPORT
 
   def self.attributes_for_export_header
     ATTRIBUTES_FOR_EXPORT.map(&:to_s).map(&:capitalize)
