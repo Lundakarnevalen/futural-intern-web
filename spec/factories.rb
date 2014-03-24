@@ -11,7 +11,7 @@ FactoryGirl.define do
   end
 
   factory :karnevalist do
-    personnummer "8008088080"
+    personnummer "1111111116"
     fornamn "MyString"
     efternamn "MyString"
     gatuadress "MyString"
