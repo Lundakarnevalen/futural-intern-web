@@ -220,6 +220,8 @@ Role.delete_all
   1 => 'admin',
   2 => 'utcheckare',
   3 => 'sektionsadmin',
+  4 => 'exporter',
+  5 => 'checker',
 }.each{ |k, v| Role.new do |i|
   i.id = k
   i.name = v

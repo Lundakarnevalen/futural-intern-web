@@ -43,8 +43,14 @@
     <% end %>
   <% end %>
 
+  <% # Exporter %>
   <% if current_user.can? :export_all, Karnevalist %>
     <li><%= link_to 'Exportera alla personuppgifter', export_all_karnevalister_path %></li>
+  <% end %>
+
+  <% # Checker %>
+  <% if can? :check, Karnevalist %>
+    <li><%= link_to 'Kolla om folk är karnevalister', check_karnevalister_path %>
   <% end %>
 
   <%# Admin stuff %>

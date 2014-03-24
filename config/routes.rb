@@ -34,6 +34,7 @@
       get 'pusseldagen'
       get 'search_filter_pusseldag', :action => 'search_filter_pusseldag'
       get 'export_all', :action => 'export_all'
+      get 'check', :action => :check
     end
 
     member do
@@ -56,5 +57,4 @@
   end
 
   get '/home', to: 'home#index'
-
 end

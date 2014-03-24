@@ -47,6 +47,11 @@ class Ability
       can [:checkout, :checkout_digital, :checkout_digital_put, :checkout_paper, :checkout_paper_post], Karnevalist
     end
 
+    # Check karnevalist
+    if user.is? :checker
+      can :check, Karnevalist
+    end
+
     # Export
     if user.is? :exporter
       can :export_all, Karnevalist
