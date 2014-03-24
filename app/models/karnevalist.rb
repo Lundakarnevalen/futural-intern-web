@@ -21,6 +21,13 @@ class Karnevalist < ActiveRecord::Base
 
   validates :email, :presence => true, :uniqueness => true
 
+  validate do # Sektioner not equal
+    if self.sektion.present? && self.sektion2.present? &&
+       self.sektion == self.sektion2
+      self.errors.add :sektion2, 'Välj två olika sektioner'
+    end
+  end
+
   UTCHECKAD = 3
 
   before_save do

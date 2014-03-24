@@ -37,6 +37,18 @@ describe (K = Karnevalist) do
       k.utcheckad.should be_true
       k.utcheckad_at.should_not be_nil
     end
+
+    it 'allows empty sektioner' do 
+      k = FactoryGirl.build :karnevalist
+      k.tilldelade_sektioner = []
+      k.should be_valid
+    end
+
+    it 'rejects if `sektion` == `sektion2`' do
+      s = FactoryGirl.build :sektion
+      k = FactoryGirl.build(:karnevalist, :sektion => s, :sektion2 => s)
+                     .should_not be_valid
+    end
   end
 
   describe '#save' do
