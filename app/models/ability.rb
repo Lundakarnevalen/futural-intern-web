@@ -57,6 +57,7 @@ class Ability
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
         can [:manage], Sektion, :id => user.sektioner
       end
     end
