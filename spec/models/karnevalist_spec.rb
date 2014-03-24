@@ -37,6 +37,18 @@ describe (K = Karnevalist) do
       k.utcheckad.should be_true
       k.utcheckad_at.should_not be_nil
     end
+
+    it 'allows empty sektioner' do 
+      k = FactoryGirl.build :karnevalist
+      k.tilldelade_sektioner = []
+      k.should be_valid
+    end
+
+    it 'rejects if `sektion` == `sektion2`' do
+      s = FactoryGirl.build :sektion
+      k = FactoryGirl.build(:karnevalist, :sektion => s, :sektion2 => s)
+                     .should_not be_valid
+    end
   end
 
   describe '#save' do
@@ -50,28 +62,7 @@ describe (K = Karnevalist) do
     end
   end
 
-=begin
-  describe '#update_if_password_valid' do
-    it 'updates if password valid' do
-      k = create_some_guy
-      p = k.password
-      k.update_if_password_valid({'token' => p, 
-                                  'email' => 'some.other@guy.com'})
-      k.errors.should be_empty
-      k.email.should eq('some.other@guy.com')
-    end
-
-    it 'does not update if password not valid' do
-      k = create_some_guy
-      k.update_if_password_valid({'token' => 'invalid',
-                                  'email' => 'some.other@guy.com'})
-      k.errors.should_not be_empty
-      k.email.should eq('some@guy.com')
-    end
-  end
-=end
-
-  describe '#search' do
+  describe '.search' do
     before :each do
       @k = FactoryGirl.create(:karnevalist, email: "johan@forberg.se", fornamn: "johan",
         efternamn: "Förberg", personnummer: "9110251817")
@@ -97,6 +88,62 @@ describe (K = Karnevalist) do
 
     it 'can search for email' do
       K.search('johan@forberg.se').should_not be_empty
+    end
+  end
+
+  describe '#tilldelade_sektioner' do
+    before :each do 
+      @k = FactoryGirl.build :karnevalist,
+                             :sektion => nil,
+                             :sektion2 => nil
+      @s1 = FactoryGirl.build :sektion, :name => 'Sekt1'
+      @s2 = FactoryGirl.build :sektion, :name => 'Sekt2'
+    end
+
+    it 'handles case of no `sektion`' do
+      @k.tilldelade_sektioner.should be_empty
+    end
+
+    it 'handles case of single primary `sektion`' do
+      @k.sektion = @s1
+      @k.tilldelade_sektioner.should eq [@s1]
+    end
+
+    it 'handles case of two `sektion`' do
+      @k.assign_attributes :sektion => @s1,
+                           :sektion2 => @s2
+      @k.tilldelade_sektioner.should eq [@s1, @s2]
+    end
+  end
+
+  describe '#tilldelade_sektioner=' do
+    before :each do 
+      @k = FactoryGirl.build :karnevalist,
+                             :sektion => nil,
+                             :sektion2 => nil
+      @s1 = FactoryGirl.build :sektion, :name => 'Sekt1'
+      @s2 = FactoryGirl.build :sektion, :name => 'Sekt2'
+    end
+ 
+    it 'handles the empty case' do
+      @k.tilldelade_sektioner = []
+      @k.tilldelade_sektioner.should be_empty
+      @k.sektion.should be_nil
+      @k.sektion2.should be_nil
+    end
+  
+    it 'handles the singular case' do
+      @k.tilldelade_sektioner = [@s1]
+      @k.tilldelade_sektioner.should eq [@s1]
+      @k.sektion.should eq @s1
+      @k.sektion2.should be_nil
+    end
+  
+    it 'handles the general case' do
+      @k.tilldelade_sektioner = [@s2, @s1]
+      @k.tilldelade_sektioner.should eq [@s2, @s1]
+      @k.sektion.should eq @s2
+      @k.sektion2.should eq @s1
     end
   end
 end
