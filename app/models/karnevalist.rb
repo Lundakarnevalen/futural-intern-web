@@ -26,6 +26,8 @@ class Karnevalist < ActiveRecord::Base
       nil
     elsif ! Karnevalist.personnummer?(self.personnummer)
       self.errors.add :personnummer, 'Ogiltigt personnummer'
+    end
+  end
 
   validate do # Sektioner not equal
     if self.sektion.present? && self.sektion2.present? &&
