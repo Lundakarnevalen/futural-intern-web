@@ -32,6 +32,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order = Order.find(params[:id])
     end
     def order_params
+      puts params
       params.require(:order).permit!
     end
 end
