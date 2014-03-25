@@ -1,6 +1,10 @@
 <li>
+  <span class="title"><%= post.title %></span>
   <span class="content"><%= post.content %></span>
   <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> ago.
+    Posted <%= time_ago_in_words(post.created_at) %> sedan
+  </span>
+  <span class="posted_by">
+    av <%= "#{post.karnevalist.fornamn} #{post.karnevalist.efternamn}"%>.
   </span>
 </li>
