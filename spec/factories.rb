@@ -100,5 +100,6 @@ FactoryGirl.define do
 
   factory :post do
     content "Lorem Ipsum"
+    title "Title"
   end
 end
