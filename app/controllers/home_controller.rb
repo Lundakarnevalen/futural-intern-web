@@ -3,8 +3,10 @@ class HomeController < ApplicationController
 
   def index
     if signed_in?
-      @sektion = current_user.karnevalist.sektion
-      @posts = @sektion.posts
+      unless current_user.karnevalist.sektion.nil?
+        @sektion = current_user.karnevalist.sektion
+        @posts = @sektion.posts
+      end
     else
       redirect_to new_karnevalist_path
     end

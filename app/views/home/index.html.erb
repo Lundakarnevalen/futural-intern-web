@@ -18,7 +18,7 @@
 
 <div class="span8">
     <% if @sektion.posts.any? %>
-      <h3>posts (<%= @sektion.posts.count %>)</h3>
+      <h3>Inlägg från <%= @sektion.name %> (<%= @sektion.posts.count %>)</h3>
       <ol class="posts">
         <%= render @posts %>
       </ol>

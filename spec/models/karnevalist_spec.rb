@@ -97,19 +97,4 @@ describe (K = Karnevalist) do
       K.search('johan@forberg.se').should_not be_empty
     end
   end
-
-  describe "post associations" do
-
-    before { @karnevalist.save }
-    let!(:older_post) do
-      FactoryGirl.create(:post, karnevalist: @karnevalist, created_at: 1.day.ago)
-    end
-    let!(:newer_post) do
-      FactoryGirl.create(:post, karnevalist: @karnevalist, created_at: 1.hour.ago)
-    end
-
-    it "should have the right posts in the right order" do
-      expect(@karnevalist.posts.to_a).to eq [newer_post, older_post]
-    end
-  end
 end
