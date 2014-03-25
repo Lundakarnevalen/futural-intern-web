@@ -4,7 +4,7 @@ describe Post do
 
   let(:karnevalist) { FactoryGirl.create(:karnevalist) }
   let(:sektion) { FactoryGirl.create(:sektion) }
-  before { @post = karnevalist.posts.build(content: "Lorem ipsum", :sektion, :karnevalist) }
+  before { @post = sektion.posts.build(content: "Lorem ipsum", sektion_id: '1', karnevalist: :karnevalist) }
 
   subject { @post }
 
