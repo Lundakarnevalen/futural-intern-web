@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140323172120) do
+ActiveRecord::Schema.define(version: 20140324213204) do
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -113,6 +113,14 @@ ActiveRecord::Schema.define(version: 20140323172120) do
     t.text     "message"
   end
 
+  create_table "order_products", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "amount"
+  end
+
   create_table "orders", force: true do |t|
     t.string   "status"
     t.datetime "order_date"
@@ -125,14 +133,6 @@ ActiveRecord::Schema.define(version: 20140323172120) do
   end
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id", using: :btree
-
-  create_table "orders_products", force: true do |t|
-    t.integer  "order_id"
-    t.integer  "product_id"
-    t.integer  "nbr_of_products"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "phones", force: true do |t|
     t.text     "google_token"
