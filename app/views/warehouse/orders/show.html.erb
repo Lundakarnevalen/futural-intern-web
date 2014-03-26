@@ -28,12 +28,13 @@
           </thead>
           <tbody>
             <% @order.products.each do |p| %>
+            <% amount = p.amount(@order.id) %>
             <tr>
               <td><%= p.name %></td>
               <td><%= p.ean %></td>
-              <td>30 st</td>
-              <td><%= p.purchase_price %> kr</td>
-              <td>900 kr</td>
+              <td><%= "#{amount} #{p.unit}" %></td>
+              <td><%= p.sale_price %> kr</td>
+              <td><%= p.total_price(amount, p.sale_price)%> kr</td>
             </tr>
             <% end %>
           </tbody>
