@@ -19,6 +19,7 @@ gem 'podio'
 gem 'axlsx_rails'
 gem 'pry-rails'
 gem 'pry-doc'
+gem 'geokit-rails'
 
 group :production do
   gem 'rails_12factor'
