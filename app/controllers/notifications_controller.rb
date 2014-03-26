@@ -35,7 +35,7 @@ class NotificationsController < ApplicationController
 
     if @notification.save
       gcm = GCM.new(gcm_api_key)
-      pusher = Grocer.pusher(certificate: "/config/certificate.pem", gateway: "gateway.sandbox.push.apple.com")
+      pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.sandbox.push.apple.com")
       registration_ids = Array.new
       ios_notifications = Array.new
       Karnevalist.all.each do |k|
