@@ -8,7 +8,7 @@ describe (K = Karnevalist) do
     end
 
     it 'disallows k. without email' do
-      FactoryGirl.build(:karnevalist, email: nil, fornamn: 'irrelevant').should_not be_valid 
+      FactoryGirl.build(:karnevalist, email: nil, fornamn: 'irrelevant').should_not be_valid
     end
 
     it 'creates one and only one user with every karnevalist' do
@@ -23,15 +23,15 @@ describe (K = Karnevalist) do
     end
 
     it 'returns a valid password until it passes out of scope' do
-      k = FactoryGirl.create(:karnevalist) 
+      k = FactoryGirl.create(:karnevalist)
       k.user.valid_password?(k.password).should be_true
     end
 
     it 'sets `utcheckad_at` if `utcheckad` is set for the first time' do
-      k = FactoryGirl.create(:karnevalist) 
+      k = FactoryGirl.create(:karnevalist)
       k.utcheckad.should be_false
       k.utcheckad_at.should be_nil
-      
+
       k.utcheckad = true
       k.save
       k.utcheckad.should be_true
@@ -63,8 +63,9 @@ describe (K = Karnevalist) do
     it 'allows "international" `personnummer`' do
       FactoryGirl.build(:karnevalist, :personnummer => '911025-P123')
                  .should be_valid
+    end
 
-    it 'allows empty sektioner' do 
+    it 'allows empty sektioner' do
       k = FactoryGirl.build :karnevalist
       k.tilldelade_sektioner = []
       k.should be_valid
@@ -118,7 +119,7 @@ describe (K = Karnevalist) do
   end
 
   describe '#tilldelade_sektioner' do
-    before :each do 
+    before :each do
       @k = FactoryGirl.build :karnevalist,
                              :sektion => nil,
                              :sektion2 => nil
@@ -143,28 +144,28 @@ describe (K = Karnevalist) do
   end
 
   describe '#tilldelade_sektioner=' do
-    before :each do 
+    before :each do
       @k = FactoryGirl.build :karnevalist,
                              :sektion => nil,
                              :sektion2 => nil
       @s1 = FactoryGirl.build :sektion, :name => 'Sekt1'
       @s2 = FactoryGirl.build :sektion, :name => 'Sekt2'
     end
- 
+
     it 'handles the empty case' do
       @k.tilldelade_sektioner = []
       @k.tilldelade_sektioner.should be_empty
       @k.sektion.should be_nil
       @k.sektion2.should be_nil
     end
-  
+
     it 'handles the singular case' do
       @k.tilldelade_sektioner = [@s1]
       @k.tilldelade_sektioner.should eq [@s1]
       @k.sektion.should eq @s1
       @k.sektion2.should be_nil
     end
-  
+
     it 'handles the general case' do
       @k.tilldelade_sektioner = [@s2, @s1]
       @k.tilldelade_sektioner.should eq [@s2, @s1]
