@@ -8,15 +8,18 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def new
-    @order = Order.new
     @products = Product.all
+    @order = current_user.karnevalist.orders.new
+    @order.order_products.build
   end
 
   def create
-    order = Order.new(order_params)
-    if order.save
+    @order = current_user.karnevalist.orders.new(order_params)
+    if @order.save
       redirect_to warehouse_orders_path
     else
+      @products = Product.all
+      @order.order_products.build
       render :new
     end
   end
@@ -32,7 +35,6 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order = Order.find(params[:id])
     end
     def order_params
-      puts params
-      params.require(:order).permit!
+      params.require(:order).permit(:status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
 end

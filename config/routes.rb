@@ -49,6 +49,7 @@ Futural::Application.routes.draw do
       end
     end
     resources :product_categories
+    resources :order_products
   end
 
   get '/home', to: 'home#index'
