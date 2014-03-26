@@ -31,20 +31,26 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new notification_params
-    api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+    gcm_api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+
     if @notification.save
-      gcm = GCM.new(api_key)
+      gcm = GCM.new(gcm_api_key)
+      pusher = Grocer.pusher(certificate: "/config/certificate.pem")
       registration_ids = Array.new
+      ios_notifications = Array.new
       Karnevalist.all.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
+        elsif !k.ios_token.blank?
+          ios_notification = Grocer::Notification.new(
+            device_token: k.ios_token,
+            alert: @notification.title,
+            sound: 'default',
+            badge: 0
+          )
+          ios_notifications.push ios_notification
         end
       end
-      #Phone.all.each do |p|
-      #  if !p.google_token.blank?
-      #    registration_ids.push p.google_token
-      #  end
-      #end
       registration_ids.each_slice(1000) do |reg_ids|
         options = {
           'data' => {
@@ -56,6 +62,9 @@ class NotificationsController < ApplicationController
           }
         }
         @response = gcm.send_notification(reg_ids, options)
+        ios_notifications.each do |notification|
+          pusher.push(notification)
+        end
       end
       redirect_to :action => 'index'
     else
