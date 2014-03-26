@@ -90,6 +90,7 @@ GEM
     geokit-rails (2.0.1)
       geokit (~> 1.5)
       rails (>= 3.0)
+    grocer (0.5.0)
     hike (1.2.3)
     htmlentities (4.3.1)
     httparty (0.13.0)
@@ -245,6 +246,7 @@ DEPENDENCIES
   fog
   gcm
   geokit-rails
+  grocer
   jquery-cookie-rails
   jquery-modal-rails
   jquery-rails
