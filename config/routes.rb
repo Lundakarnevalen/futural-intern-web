@@ -13,6 +13,7 @@
   namespace :api do
     devise_for :users
     get '/tests', to: 'test#index'
+    resources :clusters, only: [:create, :update, :index]
   end
 
 
