@@ -1,5 +1,6 @@
 class Api::ClustersController < Api::ApiController
   before_filter :authenticate_user_from_token!
+  before_filter :check_inclusion, only: [:update, :create]
   MINIMUM_CLUSTER = 10
   INC_DIST = 5
 
@@ -10,15 +11,19 @@ class Api::ClustersController < Api::ApiController
   end
 
   def create
-    clp = cluster_params
-    clusters = Cluster.within(INC_DIST, origin: [clp[:lat], clp[:lng]])
-    c = clusters.blank? ? Cluster.new(clp) : clusters.first
-    success = c.new_record? ? c.save : c.increment!(:quantity)
-    return failure(c.errors.full_messages) unless success
-    render status: 200, json: { success: true, cluster_id: c.id }
+    success = @c.new_record? ? @c.save : @c.increment!(:quantity)
+    render_response(success)
   end
 
   def update
+    previous_cluster = Cluster.find(params[:id])
+    success = true
+    previous_cluster.quantity
+    unless previous_cluster.id == @c.id
+      previous_cluster.quantity == 1 ? previous_cluster.destroy : previous_cluster.decrement!(:quantity)
+      success = @c.new_record? ? @c.save : @c.increment!(:quantity)
+    end
+    render_response(success)
   end
 
   private
@@ -26,7 +31,14 @@ class Api::ClustersController < Api::ApiController
       params.require(:cluster).permit!
     end
 
-    def failure(message)
-      return render json: { success: false, errors: message [t(message)] }, status: 400
+    def check_inclusion
+     clp = cluster_params
+     clusters = Cluster.within(INC_DIST, origin: [clp[:lat], clp[:lng]])
+     @c = clusters.blank? ? Cluster.new(clp) : clusters.first
+    end
+
+    def render_response(success)
+      return render status: 400, json: { success: false, errors: @c.errors.full_messages } unless success
+      render status: 200, json: { success: true, cluster_id: @c.id }
     end
 end
