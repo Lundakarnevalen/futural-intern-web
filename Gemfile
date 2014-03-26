@@ -6,6 +6,7 @@ gem 'rails', '4.0.2'
 # General dependencies
 gem 'devise'
 gem 'gcm'
+gem 'grocer'
 gem 'postmark-rails'
 gem 'carrierwave'
 gem 'fog'

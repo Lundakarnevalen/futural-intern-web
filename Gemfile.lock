@@ -77,6 +77,7 @@ GEM
     gcm (0.0.6)
       httparty
       json
+    grocer (0.5.0)
     hike (1.2.3)
     htmlentities (4.3.1)
     httparty (0.12.0)
@@ -232,6 +233,7 @@ DEPENDENCIES
   factory_girl_rails (= 4.2.0)
   fog
   gcm
+  grocer
   jquery-cookie-rails
   jquery-modal-rails
   jquery-rails
