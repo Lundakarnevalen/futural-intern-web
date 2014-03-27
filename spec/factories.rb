@@ -31,6 +31,7 @@ FactoryGirl.define do
     jobbat_aktiv false
     karnevalist_2010 false
     google_token "MyText"
+    ios_token nil
     vill_ansvara false
     snalla_intresse 1
     snalla_sektion 1
