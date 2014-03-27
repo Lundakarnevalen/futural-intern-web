@@ -34,7 +34,7 @@
               <td><%= p.ean %></td>
               <td><%= "#{amount} #{p.unit}" %></td>
               <td><%= p.sale_price %> kr</td>
-              <td><%= p.total_price(amount, p.sale_price)%> kr</td>
+              <td><%= p.total_price(amount) %> kr</td>
             </tr>
             <% end %>
           </tbody>

@@ -7,7 +7,7 @@ class Product < ActiveRecord::Base
     return self.order_products.find_by_order_id(order_id).amount
   end
 
-  def total_price(amount, unit_price)
-    return amount*unit_price
+  def total_price(amount)
+    return amount*self.sale_price
   end
 end
