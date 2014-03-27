@@ -14,6 +14,7 @@
     devise_for :users
     get '/tests', to: 'test#index'
     resources :clusters, only: [:create, :update, :index]
+    resources :karnevalister, only: [:update]
   end
 
 
