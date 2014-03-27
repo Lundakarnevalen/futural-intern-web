@@ -37,18 +37,12 @@ class NotificationsController < ApplicationController
       gcm = GCM.new(gcm_api_key)
       pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.sandbox.push.apple.com")
       registration_ids = Array.new
-      ios_notifications = Array.new
       Karnevalist.all.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
         elsif !k.ios_token.blank?
-          ios_notification = Grocer::Notification.new(
-            device_token: k.ios_token,
-            alert: @notification.title,
-            sound: 'default',
-            badge: 0
-          )
-          ios_notifications.push ios_notification
+          ios_notification = Grocer::Notification.new(device_token: k.ios_token, alert: @notification.title, sound: 'default', badge: 0)
+          pusher.push(ios_notification)
         end
       end
       registration_ids.each_slice(1000) do |reg_ids|
@@ -62,9 +56,6 @@ class NotificationsController < ApplicationController
           }
         }
         @response = gcm.send_notification(reg_ids, options)
-        ios_notifications.each do |notification|
-          pusher.push(notification)
-        end
       end
       redirect_to :action => 'index'
     else
