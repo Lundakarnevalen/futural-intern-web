@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320204827) do
+ActiveRecord::Schema.define(version: 20140326155652) do
+
+  create_table "clusters", force: true do |t|
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "quantity",   default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -69,6 +79,8 @@ ActiveRecord::Schema.define(version: 20140320204827) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
+    t.integer  "tilldelad_sektion2"
+    t.text     "ios_token"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -113,11 +125,21 @@ ActiveRecord::Schema.define(version: 20140320204827) do
     t.text     "message"
   end
 
+  create_table "order_products", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "product_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "amount"
+  end
+
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"

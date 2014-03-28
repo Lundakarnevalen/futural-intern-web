@@ -11,6 +11,8 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :korkort
   belongs_to :user
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
+  belongs_to :sektion2, :foreign_key => :tilldelad_sektion2, 
+                        :class_name => Sektion
   accepts_nested_attributes_for :user
   has_many :posts, :through => :sektion
 
@@ -19,6 +21,21 @@ class Karnevalist < ActiveRecord::Base
   before_validation :downcase_email
 
   validates :email, :presence => true, :uniqueness => true
+
+  validate do # Personnummer
+    if self.personnummer.blank?
+      nil
+    elsif ! Karnevalist.personnummer?(self.personnummer)
+      self.errors.add :personnummer, 'Ogiltigt personnummer'
+    end
+  end
+
+  validate do # Sektioner not equal
+    if self.sektion.present? && self.sektion2.present? &&
+       self.sektion == self.sektion2
+      self.errors.add :sektion2, 'Välj två olika sektioner'
+    end
+  end
 
   UTCHECKAD = 3
 
@@ -69,11 +86,34 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def personnummer= val
-    if val.present?
-      val.gsub! /[^0-9]/, ''
-      val = val[2..-1] if val.length == 12
+    self[:personnummer] = val.blank?? nil : Karnevalist.to_personnummer(val)
+  end
+
+  # About sektioner: naming is severely fucked up. To clarify:
+  # `tilldelad_sektion` and `tilldelad_sektion2` are the IDs of the assigned
+  # sektions. The associations are named `sektion` and `sektion2`. Most clients
+  # should REALLY use `tilldelade_sektioner` which gives the ASSOCIATIONS of as
+  # many sektions as are assigned, in order of precedence. `sektioner` is the
+  # sektions that were originally requested but they are only kept for legacy
+  # purposes. Clear?
+
+  def tilldelade_sektioner= sekts
+    if sekts.blank?
+      self.sektion = nil
+      self.sektion2 = nil
+    elsif sekts.length > 2
+      fail ValueError, 'Number of sektioner must be 0, 1, or 2.'
+    elsif sekts.length == 2
+      self.sektion = sekts[0]
+      self.sektion2 = sekts[1]
+    else # == 1
+      self.sektion = sekts[0]
+      self.sektion2 = nil
     end
-    self[:personnummer] = val
+  end
+
+  def tilldelade_sektioner
+    [self.sektion, self.sektion2].select &:present?
   end
 
   def utcheckad= val
@@ -117,6 +157,10 @@ class Karnevalist < ActiveRecord::Base
     ""
   end
 
+  def foto_filtyp
+    URI.parse(URI.encode(self.foto.to_s)).path[%r{[^\.]+\z}]
+  end
+
   def downcase_email
     self.email = self.email.downcase if self.email.present?
   end
@@ -125,7 +169,7 @@ class Karnevalist < ActiveRecord::Base
     [:personnummer, :efternamn, :fornamn, :kon, :telnr, :email, :gatuadress,
      :postnr, :postort, :nation, :matpref, :storlek, :korkort]
 
-  ATTRIBUTES_FOR_EXPORT_ALL = [:id, :sektion] + ATTRIBUTES_FOR_EXPORT
+  ATTRIBUTES_FOR_EXPORT_ALL = [:id, :sektion, :foto_filtyp] + ATTRIBUTES_FOR_EXPORT
 
   def self.attributes_for_export_header
     ATTRIBUTES_FOR_EXPORT.map(&:to_s).map(&:capitalize)
@@ -153,6 +197,37 @@ class Karnevalist < ActiveRecord::Base
     else
       "NAMNLÖS KARNEVALIST #{self.hash}"
     end
+  end
+
+  def self.personnummer? pn
+    return false unless pn.length == 10
+    # Validate year
+    begin # BEWARE: catches invocation errors as well
+      return false unless pn[0..1].to_i.between? 0, 99
+      # Validate month, day
+      Date.parse pn[0..5] # Fail if invalid
+      # Validate last four unless 'international' number
+      unless ['t', 'p'].include? pn[6].downcase
+        # Code's unreadable, deal with it.
+        val = pn[0..8].chars.zip('212121212'.chars).inject 0 do |acc, cs|
+          acc + (cs[0].to_i * cs[1].to_i).to_s.chars.map(&:to_i).sum
+        end
+        chk = (10 - (val % 10)) % 10
+        return false unless chk == pn[-1].to_i
+      end
+    rescue ArgumentError
+      return false
+    end
+    return true
+  end
+
+  def self.to_personnummer pn
+    pn.gsub! /-/, ''
+    if pn.length == 12
+      # Chop off century
+      pn = pn[2..-1]
+    end
+    return pn.upcase
   end
 end
 

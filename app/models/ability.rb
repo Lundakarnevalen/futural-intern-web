@@ -47,6 +47,11 @@ class Ability
       can [:checkout, :checkout_digital, :checkout_digital_put, :checkout_paper, :checkout_paper_post], Karnevalist
     end
 
+    # Check karnevalist
+    if user.is? :checker
+      can :check, Karnevalist
+    end
+
     # Export
     if user.is? :exporter
       can :export_all, Karnevalist
@@ -57,6 +62,7 @@ class Ability
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
         can [:manage], Sektion, :id => user.sektioner
       end
     end

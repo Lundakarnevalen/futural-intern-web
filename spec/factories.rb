@@ -11,7 +11,7 @@ FactoryGirl.define do
   end
 
   factory :karnevalist do
-    personnummer "8008088080"
+    personnummer "1111111116"
     fornamn "MyString"
     efternamn "MyString"
     gatuadress "MyString"
@@ -31,6 +31,7 @@ FactoryGirl.define do
     jobbat_aktiv false
     karnevalist_2010 false
     google_token "MyText"
+    ios_token nil
     vill_ansvara false
     snalla_intresse 1
     snalla_sektion 1
@@ -101,5 +102,11 @@ FactoryGirl.define do
   factory :post do
     content "Lorem Ipsum"
     title "Title"
+  end
+
+  factory :cluster do
+    lat ""
+    lng ""
+    quantity 1
   end
 end
