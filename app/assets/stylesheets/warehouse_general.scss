@@ -52,6 +52,10 @@ body {
   background-color: #428bca;
 }
 
+.nav-sidebar > li > a:hover, .nav-sidebar > li > a:hover {
+  color: #fff;
+  background-color: #428bca;
+}
 
 /*
  * Main content
@@ -64,6 +68,11 @@ body {
   .main {
     padding-right: 40px;
     padding-left: 40px;
+  }
+
+  .navbar-collapse {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
   }
 }
 .main .page-header {

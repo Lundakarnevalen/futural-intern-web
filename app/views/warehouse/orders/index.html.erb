@@ -1,31 +1,31 @@
-<div class="container">
-  <div class="row">
-    <div class="col-md-12">
-      <h3>Mina ordrar</h3>
-    </div>
-  </div>
-  <div class="row">
-    <div class="col-md-8">
-      <table class="table" id="table">
-        <thead>
-          <tr>
-            <th>Order #</th>
-            <th>Status</th>
-            <th>Beställningsdatum</th>
-            <th>Leveransdatum</th>
-          </tr>
-        </thead>
-        <tbody>
-        <% @orders.each do |o| %>
-          <tr>
-            <td><%= link_to "#{o.id}", warehouse_order_path(o.id) %></td>
-            <td><%= o.status.blank? ? "Ohanterad" : o.status %></td>
-            <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
-            <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>
-          </tr>
-        <% end %>
-        </tbody>
-      </table>
-    </div>
-  </div>
+<div class="row">  <!-- Ta bort? -->
+<div class="col-md-12">
+  <h3>Mina ordrar</h3>
+</div>
+</div>
+<div class="row">
+<div class="col-md-8">
+  <table class="table" id="table">
+    <thead>
+      <tr>
+        <th>Order #</th>
+        <th>Status</th>
+        <th>Beställningsdatum</th>
+        <th>Hämtdatum</th>
+        <th>Totalsumma</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @orders.each do |o| %>
+      <tr>
+        <td><%= link_to "#{o.id}", warehouse_order_path(o.id) %></td>
+        <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
+        <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
+        <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>
+        <td><%= o.total_sum %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
 </div>

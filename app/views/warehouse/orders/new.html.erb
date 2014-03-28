@@ -1,40 +1,31 @@
 <h3>Skapa en order</h3>
-
 <%= form_for [:warehouse, @order] do |f| %>
 <table class="table" id="table">
-    <thead>
-        <tr>
-            <th>Namn</th>
-            <th>EAN</th>
-            <th>Mängd</th>
-            <th>Enhet</th>
-            <th>Pris/enhet</th>
-            <th>I lager (opaxat)</th>
-            <th>I lager (paxat)</th>
-            <th>I lager (standby)</th>
-            
-        </tr>
-    </thead>
-    <tbody>
-        <% @products.each do |p| %>
-        <tr>
-            <td><%= p.name %></td>
-            <td><%= p.ean %></td>
-            <td>
-              <%= f.fields_for :order_products do |op| %>
-                <%= op.text_field :amount, class: "form-control", placeholder: "Hur många vill du beställa?" %>
-                <%= op.hidden_field :product_id, :value => p.id %>
-              <% end %>
-            </td>
-            <td><%= p.unit %></td>
-            <td><%= p.sale_price %> kr</td>
-            <td><%= p.stock_balance_ordered %></td>
-            <td><%= p.stock_balance_not_ordered %></td>
-            <td><%= p.stock_balance_stand_by %></td>
-        </tr>
+  <thead>
+    <tr>
+      <th>Namn</th>
+      <th>Mängd</th>
+      <th>Enhet</th>
+      <th>Pris/enhet</th>
+      <th>I lager</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |p| %>
+    <tr>
+      <td><%= p.name %></td> <!-- TODO: Modal link to product -->
+      <td>
+        <%= f.fields_for :order_products do |op| %>
+        <%= op.text_field :amount, class: "form-control", placeholder: "Hur många vill du beställa?" %>
+          <%= op.hidden_field :product_id, :value => p.id %>
         <% end %>
-    </tbody>
+      </td>
+      <td><%= p.unit %></td>
+      <td><%= p.sale_price %> kr</td>
+      <td><%= p.stock_balance_not_ordered %></td>
+    </tr>
+    <% end %>
+  </tbody>
 </table>
-<%= f.submit "Beställ", class: "btn btn-primary" %>
+<%= f.submit "Gå vidare", class: "btn btn-primary" %>
 <% end %>
-</div>

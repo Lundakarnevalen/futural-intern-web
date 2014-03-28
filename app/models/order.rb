@@ -12,4 +12,12 @@ class Order < ActiveRecord::Base
     self.order_date = Date.today if self.order_date.blank?
   end
 
+  def total_sum
+    sum = 0;
+    self.products.each do |p|
+      sum += p.total_price(p.amount(self.id))
+    end
+    return sum
+  end
+
 end
