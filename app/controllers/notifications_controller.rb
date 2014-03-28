@@ -31,20 +31,20 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new notification_params
-    api_key = "***REMOVED***"
+    gcm_api_key = "***REMOVED***"
+
     if @notification.save
-      gcm = GCM.new(api_key)
+      gcm = GCM.new(gcm_api_key)
+      pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.sandbox.push.apple.com")
       registration_ids = Array.new
       Karnevalist.all.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
+        elsif !k.ios_token.blank?
+          ios_notification = Grocer::Notification.new(device_token: k.ios_token, alert: @notification.title, sound: 'default', badge: 0)
+          pusher.push(ios_notification)
         end
       end
-      #Phone.all.each do |p|
-      #  if !p.google_token.blank?
-      #    registration_ids.push p.google_token
-      #  end
-      #end
       registration_ids.each_slice(1000) do |reg_ids|
         options = {
           'data' => {

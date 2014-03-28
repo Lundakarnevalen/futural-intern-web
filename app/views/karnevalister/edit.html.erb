@@ -20,10 +20,20 @@
     <% end %>
 
     <div class=form-group>
-      <%= f.label :tilldelad_sektion, 'Sektion' %>
+      <%= f.label :tilldelad_sektion, 'Primär Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion, Sektion.all.collect{ |s| [s.name, s.id] },
-                     {}, { :disabled => !can?(:change_sektion, @karnevalist)}) %>
+                     {:include_blank => 'Ingen'}, 
+                      :disabled => !can?(:change_sektion, @karnevalist)) %>
+      </div>
+    </div>
+
+    <div class=form-group>
+      <%= f.label :tilldelad_sektion2, 'Sektundär Sektion' %>
+      <div>
+        <%= f.select(:tilldelad_sektion2, Sektion.all.collect{ |s| [s.name, s.id] },
+                     {:include_blank => 'Ingen'}, 
+                      :disabled => !can?(:change_sektion, @karnevalist)) %>
       </div>
     </div>
 

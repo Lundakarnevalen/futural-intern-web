@@ -322,10 +322,19 @@ class KarnevalisterController < ApplicationController
 
   def export_all
     authorize! :export_all, Karnevalist
-    @karnevalister = Karnevalist.includes(:sektion).all
+    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation]).all
     render :xlsx => 'export_all',
            :filename => "karnevalister-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'
+  end
+
+  def check
+    authorize! :check, Karnevalist
+    if params[:q]
+      @q = params[:q]
+      @karnevalist = Karnevalist.where('id = ? or personnummer = ?',
+           params[:q], Karnevalist.to_personnummer(params[:q])).limit(1).first
+    end
   end
 
   private
