@@ -11,10 +11,9 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :korkort
   belongs_to :user
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
-  belongs_to :sektion2, :foreign_key => :tilldelad_sektion2, 
+  belongs_to :sektion2, :foreign_key => :tilldelad_sektion2,
                         :class_name => Sektion
   accepts_nested_attributes_for :user
-  has_many :posts, :through => :sektion
 
   mount_uploader :foto, FotoUploader
 
