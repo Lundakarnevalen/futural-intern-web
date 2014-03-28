@@ -5,11 +5,11 @@
     <thead>
       <tr>
         <th>Vara</th>
-        <th>EAN</th>
+        <th>Streckkod</th>
         <th>Lagerplats</th>
-        <th>I lager (opaxat)</th>
-        <th>I lager (paxat)</th>
-        <th>I lager (standby)</th>
+        <th>I lager (obeställd)</th>
+        <th>I lager (beställd)</th>
+        <th>Ej i lager (beställd)</th>
         <th>Enhet</th>
         <th>Lägg till antal</th>
       </tr>
@@ -35,6 +35,7 @@
       <% end %>
     </tbody>
   </table>
-  <%= submit_tag "Emottaget", class: "btn btn-primary" %>
+  <%= submit_tag "Spara och slutför", class: "btn btn-primary" %>
+  <%= submit_tag "Spara och fortsätt senare", class: "btn btn-primary" %>
   <% end %>
 </div>

@@ -1,44 +1,40 @@
-<div class="container">
-    <div class="row">
-      <div class="col-md-6">
-        <div class="panel panel-primary">
-          <div class="panel-heading">
-            <h3 class="panel-title">Order <%= @order.id %></h3>
-          </div>
-          <div class="panel-body">
-            <p><strong>Status: </strong> <% @order.status %></p>
-            <p><strong>Beställningsdatum: </strong> <% @order.order_date %></p>
-            <p><strong>Leveransdatum: </strong> <% @order.delivery_date %></p>
-            <p><strong>Totalpris: </strong> 1 billion dollars</p>
-          </div>
-        </div>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Order <%= @order.id %></h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Status: </strong> <%= @order.status %></p>
+        <p><strong>Beställningsdatum: </strong> <%= @order.order_date %></p>
+        <p><strong>Hämtdatum: </strong> <%= @order.delivery_date %></p>
+        <p><strong>Totalpris: </strong> <%= @order.total_sum %></p>
       </div>
     </div>
-    <div class="row">
-      <div class="col-lg-12">
-        <table class="table" id="table">
-          <thead>
-            <tr>
-              <th>Vara</th>
-              <th>EAN</th>
-              <th>Antal</th>
-              <th>Styckpris</th>
-              <th>Totalt pris</th>
-            </tr>
-          </thead>
-          <tbody>
-            <% @order.products.each do |p| %>
-            <% amount = p.amount(@order.id) %>
-            <tr>
-              <td><%= p.name %></td>
-              <td><%= p.ean %></td>
-              <td><%= "#{amount} #{p.unit}" %></td>
-              <td><%= p.sale_price %> kr</td>
-              <td><%= p.total_price(amount) %> kr</td>
-            </tr>
-            <% end %>
-          </tbody>
-        </table>
-      </div>
-    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <table class="table" id="table">
+      <thead>
+        <tr>
+          <th>Vara</th>
+          <th>Mängd</th>
+          <th>Styckpris</th>
+          <th>Totalpris</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.products.each do |p| %>
+        <% amount = p.amount(@order.id) %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= "#{amount} #{p.unit}" %></td>
+          <td><%= p.sale_price %> kr</td>
+          <td><%= p.total_price(amount) %> kr</td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
 </div>
