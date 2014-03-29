@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe (K = Karnevalist) do
 
+  before { @karnevalist = FactoryGirl.create(:karnevalist) }
+
   describe '.create' do
     it 'allows k. with only email' do
       FactoryGirl.build(:karnevalist, email: 'some@guy.com').should be_valid
@@ -12,30 +14,28 @@ describe (K = Karnevalist) do
     end
 
     it 'creates one and only one user with every karnevalist' do
-      k = FactoryGirl.create(:karnevalist)
-      u = k.user
-      k.user.should eq(u)
+      user = @karnevalist.user
+      @karnevalist.user.should eq(user)
     end
 
     it 'does not expose the password in obvious ways' do
-      id = FactoryGirl.create(:karnevalist).id
+      id = @karnevalist.id
       K.find(id).password.should be_nil
     end
 
     it 'returns a valid password until it passes out of scope' do
-      k = FactoryGirl.create(:karnevalist)
+      k = @karnevalist
       k.user.valid_password?(k.password).should be_true
     end
 
     it 'sets `utcheckad_at` if `utcheckad` is set for the first time' do
-      k = FactoryGirl.create(:karnevalist)
-      k.utcheckad.should be_false
-      k.utcheckad_at.should be_nil
+      @karnevalist.utcheckad.should be_false
+      @karnevalist.utcheckad_at.should be_nil
 
-      k.utcheckad = true
-      k.save
-      k.utcheckad.should be_true
-      k.utcheckad_at.should_not be_nil
+      @karnevalist.utcheckad = true
+      @karnevalist.save
+      @karnevalist.utcheckad.should be_true
+      @karnevalist.utcheckad_at.should_not be_nil
     end
 
     # Personnummer
@@ -80,12 +80,10 @@ describe (K = Karnevalist) do
 
   describe '#save' do
     it 'syncs the user email and ensures password remains valid' do
-      k = FactoryGirl.create(:karnevalist)
-      p = k.password
-      k.email = 'some.other@guy.com'
-      k.save
-      k.user.email.should eq('some.other@guy.com')
-      k.user.valid_password?(p).should be_true
+      @karnevalist.email = 'some.other@guy.com'
+      @karnevalist.save
+      @karnevalist.user.email.should eq('some.other@guy.com')
+      @karnevalist.user.valid_password?(@karnevalist.password).should be_true
     end
   end
 

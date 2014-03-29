@@ -126,6 +126,7 @@ ActiveRecord::Schema.define(version: 20140328220237) do
     t.integer  "recipient_id"
   end
 
+<<<<<<< HEAD
   create_table "order_products", force: true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
@@ -147,13 +148,13 @@ ActiveRecord::Schema.define(version: 20140328220237) do
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
 
+=======
+>>>>>>> feature-home-page
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
@@ -164,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140328220237) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
 
   create_table "products", force: true do |t|
     t.integer  "product_type"
@@ -187,6 +189,17 @@ ActiveRecord::Schema.define(version: 20140328220237) do
   end
 
   add_index "products", ["product_category_id"], name: "index_products_on_product_category_id"
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.string   "content"
+    t.integer  "sektion_id"
+    t.integer  "karnevalist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["sektion_id", "karnevalist_id", "created_at"], name: "index_posts_on_sektion_id_and_karnevalist_id_and_created_at"
 
   create_table "roles", force: true do |t|
     t.string   "name"

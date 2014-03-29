@@ -9,6 +9,7 @@
   devise_for :users
 
   resources :phones, only: [:new, :create]
+  resources :posts, only: [:new, :create, :edit, :update, :destroy]
 
   namespace :api do
     devise_for :users
