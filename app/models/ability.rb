@@ -63,6 +63,7 @@ class Ability
       if user.karnevalist?
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
+        can [:read, :edit, :create, :destroy], Post
         can [:manage], Sektion, :id => user.sektioner
       end
     end
