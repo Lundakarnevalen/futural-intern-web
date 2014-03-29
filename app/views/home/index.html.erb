@@ -73,11 +73,13 @@
   <% end %>
 </ul>
 
-<div class="span8">
-    <% if @posts.any? %>
-      <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
-      <ol class="posts">
-        <%= render @posts %>
-      </ol>
-    <% end %>
-</div>
+<% if current_user.can? :read, Post %>
+  <div class="span8">
+      <% if @posts.any? %>
+        <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
+        <ol class="posts">
+          <%= render @posts %>
+        </ol>
+      <% end %>
+  </div>
+<% end %>

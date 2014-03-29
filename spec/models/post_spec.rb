@@ -32,4 +32,17 @@ describe Post do
     before { @post.content = " "}
     it { should_not be_valid }
   end
+
+  describe "from sektion but not another" do
+    let(:other_karnevalist) { FactoryGirl.create(:karnevalist) }
+    let(:other_sektion)     { FactoryGirl.create(:sektion) }
+
+    let(:sektion_post)        { FactoryGirl.create(:post, sektion: sektion, karnevalist: karnevalist) }
+    let(:not_my_sektion_post) { FactoryGirl.create(:post, sektion: other_sektion, karnevalist: other_karnevalist) }
+
+    subject { karnevalist.sektion.posts }
+
+    it { should include(sektion_post) }
+    it { should_not include(not_my_sektion_post) }
+  end
 end
