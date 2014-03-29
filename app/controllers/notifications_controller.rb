@@ -37,7 +37,12 @@ class NotificationsController < ApplicationController
       gcm = GCM.new(gcm_api_key)
       pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.sandbox.push.apple.com")
       registration_ids = Array.new
-      Karnevalist.all.each do |k|
+      if @notification.recipient_id == 0
+        karnevalister = Karnevalist.where("tilldelad_sektion IS NOT NULL")
+      else
+        karnevalister = Karnevalist.where("tilldelad_sektion = ? OR tilldelad_sektion2 = ?", @notification.recipient_id, @notification.recipient_id)
+      end
+      karnevalister.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
         elsif !k.ios_token.blank?

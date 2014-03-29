@@ -43,6 +43,8 @@
     <% end %>
     <% if can? :create, Post %>
       <li><%= link_to 'Nytt inlägg', new_post_path %></li>
+    <% if can? :create, Notification %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
     <% end %>
   <% end %>
 

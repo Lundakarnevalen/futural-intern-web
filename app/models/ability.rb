@@ -66,6 +66,8 @@ class Ability
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
         can [:read, :edit, :update, :create, :destroy], Post
         can [:manage], Sektion, :id => user.sektioner
+        can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:read, :new], Notification
       end
     end
 
