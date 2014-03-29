@@ -1,5 +1,3 @@
-<%= render partial: "header" %>
-
 <h1>Futuralkarnevalens internweb</h1>
 
 <p><i>
@@ -14,17 +12,6 @@
     <%= spell_out_list current_user.roles.map(&:name).uniq %>.
   </b></p>
 <% end %>
-
-
-<div class="span8">
-    <% if @posts.any? %>
-      <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
-      <ol class="posts">
-        <%= render @posts %>
-      </ol>
-    <% end %>
-</div>
-
 
 <h2>Du har följande superkrafter:</h2>
 
@@ -54,6 +41,9 @@
     <% if current_user.sektioner.count > 1 %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
+    <% if can? :create, Post %>
+      <li><%= link_to 'Nytt inläg', new_post_path %></li>
+    <% end %>
   <% end %>
 
   <% # Exporter %>
@@ -77,6 +67,17 @@
     <% if can? :create, Notification %>
       <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
     <% end %>
+    <% if can? :create, Post %>
+      <li><%= link_to 'Nytt inläg', new_post_path %></li>
+    <% end %>
   <% end %>
 </ul>
 
+<div class="span8">
+    <% if @posts.any? %>
+      <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+    <% end %>
+</div>

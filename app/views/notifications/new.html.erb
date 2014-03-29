@@ -10,22 +10,22 @@
     <% if @notification.errors.any? %>
       <div id="error_explanation">
         <ul>
-        <% @notification.errors.each do |field, msg| %>
-          <li><%= msg %></li>
-        <% end %>
+          <% @notification.errors.each do |field, msg| %>
+            <li><%= msg %></li>
+          <% end %>
         </ul>
       </div>
     <% end %>
 
     <div class="form-group">
       <%= f.label :title, "Rubrik" %>
-      
+
       <%= f.text_field :title %>
     </div>
 
     <div class="form-group">
       <%= f.label :message, "Meddelande" %>
-      
+
       <%= f.text_area :message, :rows => 6, :cols => 40 %>
     </div>
 
