@@ -38,7 +38,7 @@ class Ability
     can [:read], Post
 
     # Notification
-    can :read, Notification
+    can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
 
     # Phone
     can [:create, :read, :update, :destroy], Phone
@@ -67,7 +67,7 @@ class Ability
         can [:read, :edit, :update, :create, :destroy], Post
         can [:manage], Sektion, :id => user.sektioner
         can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
-        can [:read, :new], Notification
+        can [:new], Notification
       end
     end
 
