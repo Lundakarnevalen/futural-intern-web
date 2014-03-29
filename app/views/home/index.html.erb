@@ -41,6 +41,9 @@
     <% if current_user.sektioner.count > 1 %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
+    <% if can? :create, Notification %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
+    <% end %>
   <% end %>
 
   <% # Exporter %>
