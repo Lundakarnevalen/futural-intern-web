@@ -126,7 +126,6 @@ ActiveRecord::Schema.define(version: 20140328220237) do
     t.integer  "recipient_id"
   end
 
-<<<<<<< HEAD
   create_table "order_products", force: true do |t|
     t.integer  "order_id"
     t.integer  "product_id"
@@ -148,8 +147,6 @@ ActiveRecord::Schema.define(version: 20140328220237) do
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
 
-=======
->>>>>>> feature-home-page
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
