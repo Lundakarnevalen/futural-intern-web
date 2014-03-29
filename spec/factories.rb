@@ -99,10 +99,14 @@ FactoryGirl.define do
   factory :sync do
   end
 
+  factory :post do
+    content "Lorem Ipsum"
+    title "Title"
+  end
+
   factory :cluster do
     lat ""
     lng ""
     quantity 1
   end
-
 end
