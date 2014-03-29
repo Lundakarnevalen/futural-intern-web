@@ -43,6 +43,7 @@
     <% end %>
     <% if can? :create, Post %>
       <li><%= link_to 'Nytt inlägg', new_post_path %></li>
+    <% end %>
     <% if can? :create, Notification %>
       <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
     <% end %>
@@ -66,11 +67,11 @@
     <% if can? :read, Sektion %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
+    <% if can? :create, Post %>
+      <li><%= link_to 'Nytt inlägg', new_post_path %></li>
+    <% end %>
     <% if can? :create, Notification %>
       <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
-    <% end %>
-    <% if can? :create, Post %>
-      <li><%= link_to 'Nytt inläg', new_post_path %></li>
     <% end %>
   <% end %>
 </ul>
