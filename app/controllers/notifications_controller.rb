@@ -51,6 +51,7 @@ class NotificationsController < ApplicationController
             'id' => @notification.id,
             'title' => @notification.title,
             'message' => @notification.message,
+            'recipient_id' => @notification.recipient_id,
             'message_type' => '0',
             'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
           }
