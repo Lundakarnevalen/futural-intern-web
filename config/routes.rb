@@ -15,6 +15,7 @@
     get '/tests', to: 'test#index'
     resources :clusters, only: [:create, :update, :index]
     resources :karnevalister, only: [:update]
+    resources :notifications, only: [:index]
   end
 
 

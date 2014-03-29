@@ -7,7 +7,7 @@ class Api::ClustersController < Api::ApiController
   def index
     clusters = Cluster.where("quantity >= ?", MINIMUM_CLUSTER)
     return render status: 204, json: { success: true } if clusters.blank?
-    render status: 200, json: { sucess: true, clusters: clusters.to_json }
+    render status: 200, json: { success: true, clusters: clusters.to_json }
   end
 
   def create
