@@ -1,5 +1,4 @@
 class PostsController < ApplicationController
-    #before_action :sign_in
     skip_authorization_check
 
     def new
@@ -21,6 +20,7 @@ class PostsController < ApplicationController
 
     def edit
       @post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
+      @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
     end
 
     def update
