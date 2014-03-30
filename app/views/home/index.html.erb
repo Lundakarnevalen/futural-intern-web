@@ -41,7 +41,8 @@
     <% if current_user.sektioner.count > 1 %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
-    <% if can? :create, Post %>
+    <% #if can? :create, Post %>
+    <% if false # Add posts later %> 
       <li><%= link_to 'Nytt inlägg', new_post_path %></li>
     <% end %>
     <% if can? :create, Notification %>
@@ -67,7 +68,8 @@
     <% if can? :read, Sektion %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
-    <% if can? :create, Post %>
+    <% #if can? :create, Post %>
+    <% if false # Add posts later %>
       <li><%= link_to 'Nytt inlägg', new_post_path %></li>
     <% end %>
     <% if can? :create, Notification %>
@@ -76,7 +78,8 @@
   <% end %>
 </ul>
 
-<% if current_user.can? :read, Post %>
+<% #if current_user.can? :read, Post %> 
+<% if false # Add posts later %>
   <div class="span8">
       <% if @posts.any? %>
         <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
