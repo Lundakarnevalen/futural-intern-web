@@ -38,7 +38,9 @@ class Ability
     can [:read], Post
 
     # Notification
-    can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
+    if user.karnevalist?
+      can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
+    end
 
     # Phone
     can [:create, :read, :update, :destroy], Phone
