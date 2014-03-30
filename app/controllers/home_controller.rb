@@ -3,10 +3,10 @@ class HomeController < ApplicationController
 
   def index
     if signed_in?
-      unless current_user.karnevalist.sektion.nil?
+      unless current_user.karnevalist.tilldelade_sektioner.blank?
         @sektioner = current_user.karnevalist.tilldelade_sektioner
-        @posts = @sektioner.map { |s| s.posts }.flatten
-        @post = current_user.karnevalist.sektion.posts.build
+        #@posts = @sektioner.map { |s| s.posts }.flatten
+        #@post = current_user.karnevalist.sektion.posts.build
       end
     else
       redirect_to new_karnevalist_path
