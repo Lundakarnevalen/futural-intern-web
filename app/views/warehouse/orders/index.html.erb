@@ -16,6 +16,7 @@
       </tr>
     </thead>
     <tbody>
+    <% if !@orders.nil? %>
     <% @orders.each do |o| %>
       <tr>
         <td><%= link_to "#{o.id}", warehouse_order_path(o.id) %></td>
@@ -24,6 +25,7 @@
         <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>
         <td><%= o.total_sum %></td>
       </tr>
+    <% end %>
     <% end %>
     </tbody>
   </table>
