@@ -8,7 +8,7 @@ Bundler.require(:default, Rails.env)
 
 module Futural
   class Application < Rails::Application
-    config.autoload_paths += ["#{config.root}/lib/**/"]
+    config.autoload_paths += ["#{config.root}/lib/**/", "#{Rails.root}/app/pdfs"]
 
     config.time_zone = 'Stockholm'
     config.active_record.default_timezone = :local

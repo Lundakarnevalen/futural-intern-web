@@ -119,6 +119,7 @@ GEM
     nokogiri (1.6.1)
       mini_portile (~> 0.5.0)
     orm_adapter (0.5.0)
+    pdf-core (0.2.5)
     podio (1.0.0)
       activemodel (>= 3.0)
       activesupport (>= 3.0)
@@ -131,6 +132,9 @@ GEM
     postmark-rails (0.6.0)
       actionmailer (>= 3.0.0)
       postmark (~> 1.1.0)
+    prawn (1.0.0)
+      pdf-core (~> 0.2.2)
+      ttfunk (~> 1.1.1)
     pry (0.9.12.6)
       coderay (~> 1.0)
       method_source (~> 0.8)
@@ -208,6 +212,7 @@ GEM
     treetop (1.4.15)
       polyglot
       polyglot (>= 0.3.1)
+    ttfunk (1.1.1)
     tzinfo (0.3.38)
     uglifier (2.4.0)
       execjs (>= 0.3.0)
@@ -243,6 +248,7 @@ DEPENDENCIES
   mysql2
   podio
   postmark-rails
+  prawn
   pry-doc
   pry-rails
   rails (= 4.0.2)
