@@ -34,7 +34,7 @@ describe User do
   describe "karnevalist" do
     it "should return true if the user has a karnevalist and a sektion" do
       u = FactoryGirl.create(:user)
-      u.karnevalist?.should be_true 
+      u.karnevalist?.should be_true
     end
 
     it "should return false if the user does not have a karnevalist" do

@@ -35,9 +35,12 @@ class Ability
     # Karnevalist
     can [:create, :new, :step1, :step1_post], Karnevalist
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
+    can [:read], Post
 
     # Notification
-    can :read, Notification
+    if user.karnevalist?
+      can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
+    end
 
     # Phone
     can [:create, :read, :update, :destroy], Phone
@@ -45,6 +48,11 @@ class Ability
     # Checkout
     if user.is? :utcheckare
       can [:checkout, :checkout_digital, :checkout_digital_put, :checkout_paper, :checkout_paper_post], Karnevalist
+    end
+
+    # Check karnevalist
+    if user.is? :checker
+      can :check, Karnevalist
     end
 
     # Export
@@ -57,7 +65,11 @@ class Ability
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
+        can [:read, :edit, :update, :create, :destroy], Post
         can [:manage], Sektion, :id => user.sektioner
+        can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:new], Notification
       end
     end
 
