@@ -1,17 +1,17 @@
 FactoryGirl.define do
 
-	factory :ability do
-	end
+  factory :ability do
+  end
 
-	factory :intresse do
-	end
+  factory :intresse do
+  end
 
   factory :role do
     name "testrole"
   end
 
   factory :karnevalist do
-    personnummer "8008088080"
+    personnummer "1111111116"
     fornamn "MyString"
     efternamn "MyString"
     gatuadress "MyString"
@@ -31,6 +31,7 @@ FactoryGirl.define do
     jobbat_aktiv false
     karnevalist_2010 false
     google_token "MyText"
+    ios_token nil
     vill_ansvara false
     snalla_intresse 1
     snalla_sektion 1
@@ -39,7 +40,7 @@ FactoryGirl.define do
     medlem_kar false
     medlem_nation false
     karneveljsbiljett false
-    utcheckad_at nil 
+    utcheckad_at nil
     avklarat_steg 1
     foto "MyString"
     tilldelad_sektion 1
@@ -84,7 +85,7 @@ FactoryGirl.define do
   end
 
   factory :phone do
-    sequence(:google_token) {|n| "token_#{n}"} 
+    sequence(:google_token) {|n| "token_#{n}"}
   end
 
   factory :sektion do
@@ -98,4 +99,14 @@ FactoryGirl.define do
   factory :sync do
   end
 
+  factory :post do
+    content "Lorem Ipsum"
+    title "Title"
+  end
+
+  factory :cluster do
+    lat ""
+    lng ""
+    quantity 1
+  end
 end

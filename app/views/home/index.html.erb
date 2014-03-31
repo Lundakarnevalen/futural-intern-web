@@ -8,7 +8,7 @@
 <br>
 
 <% unless current_user.roles.empty? %>
-  <p><b>Du är 
+  <p><b>Du är
     <%= spell_out_list current_user.roles.map(&:name).uniq %>.
   </b></p>
 <% end %>
@@ -41,10 +41,23 @@
     <% if current_user.sektioner.count > 1 %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
+    <% #if can? :create, Post %>
+    <% if false # Add posts later %> 
+      <li><%= link_to 'Nytt inlägg', new_post_path %></li>
+    <% end %>
+    <% if can? :create, Notification %>
+      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
+    <% end %>
   <% end %>
 
+  <% # Exporter %>
   <% if current_user.can? :export_all, Karnevalist %>
     <li><%= link_to 'Exportera alla personuppgifter', export_all_karnevalister_path %></li>
+  <% end %>
+
+  <% # Checker %>
+  <% if can? :check, Karnevalist %>
+    <li><%= link_to 'Kolla om folk är karnevalister', check_karnevalister_path %>
   <% end %>
 
   <%# Admin stuff %>
@@ -55,9 +68,24 @@
     <% if can? :read, Sektion %>
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
+    <% #if can? :create, Post %>
+    <% if false # Add posts later %>
+      <li><%= link_to 'Nytt inlägg', new_post_path %></li>
+    <% end %>
     <% if can? :create, Notification %>
       <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
     <% end %>
   <% end %>
 </ul>
-  
+
+<% #if current_user.can? :read, Post %> 
+<% if false # Add posts later %>
+  <div class="span8">
+      <% if @posts.any? %>
+        <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
+        <ol class="posts">
+          <%= render @posts %>
+        </ol>
+      <% end %>
+  </div>
+<% end %>

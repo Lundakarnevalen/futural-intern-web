@@ -9,10 +9,14 @@
   devise_for :users
 
   resources :phones, only: [:new, :create]
+  resources :posts, only: [:new, :create, :edit, :update, :destroy]
 
   namespace :api do
     devise_for :users
     get '/tests', to: 'test#index'
+    resources :clusters, only: [:create, :update, :index]
+    resources :karnevalister, only: [:update]
+    resources :notifications, only: [:index]
   end
 
 
@@ -34,6 +38,7 @@
       get 'pusseldagen'
       get 'search_filter_pusseldag', :action => 'search_filter_pusseldag'
       get 'export_all', :action => 'export_all'
+      get 'check', :action => :check
     end
 
     member do
@@ -56,5 +61,4 @@
   end
 
   get '/home', to: 'home#index'
-
 end

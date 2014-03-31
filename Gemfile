@@ -6,6 +6,7 @@ gem 'rails', '4.0.2'
 # General dependencies
 gem 'devise'
 gem 'gcm'
+gem 'grocer'
 gem 'postmark-rails'
 gem 'carrierwave'
 gem 'fog'
@@ -19,6 +20,7 @@ gem 'podio'
 gem 'axlsx_rails'
 gem 'pry-rails'
 gem 'pry-doc'
+gem 'geokit-rails'
 
 group :production do
   gem 'rails_12factor'
