@@ -5,6 +5,16 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def show
+    @order = find_order
+    respond_to do |format|
+      format.html
+      format.pdf do
+        pdf = ReceiptPdf.new(@order, view_context)
+        send_data pdf.render, filename: 
+        "order_#{@order.created_at.strftime("%d/%m/%Y")}.pdf",
+        type: "application/pdf", disposition: "inline"
+      end
+    end
   end
 
   def new

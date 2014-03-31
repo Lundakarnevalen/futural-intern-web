@@ -9,6 +9,7 @@
         <p><strong>Beställningsdatum: </strong> <%= @order.order_date %></p>
         <p><strong>Hämtdatum: </strong> <%= @order.delivery_date %></p>
         <p><strong>Totalpris: </strong> <%= @order.total_sum %></p>
+        <p><%= link_to "Visa Kvitto", warehouse_order_path(@order.id, :format => "pdf") %></p>
       </div>
     </div>
   </div>
