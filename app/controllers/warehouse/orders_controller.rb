@@ -1,7 +1,7 @@
 class Warehouse::OrdersController < Warehouse::ApplicationController
     before_filter :find_order, only: [:show, :update]
   def index
-    @orders = Order.all.order("created_at DESC")
+    @orders = Order.where("karnevalist_id = ?", current_user.karnevalist.id)
   end
 
   def show
