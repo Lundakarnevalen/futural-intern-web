@@ -102,7 +102,7 @@ sv:
       second: Sekund
       year: År
   errors: &errors
-    format: ! '%{attribute} %{message}'
+    format: ! '%{attribute}: %{message}'
     messages:
       accepted: måste vara accepterad
       blank: måste anges
