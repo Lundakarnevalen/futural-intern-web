@@ -1,7 +1,7 @@
 class Warehouse::OrdersController < Warehouse::ApplicationController
     before_filter :find_order, only: [:show, :update]
   def index
-    @orders = Order.where(karnevalist_id: current_user.karnevalist.id)
+    @orders = Order.where(karnevalist_id: current_user.karnevalist.id).order("status DESC")
   end
 
   def show
@@ -50,13 +50,13 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def search
-    @orders = Order.search(params[:search_param])
+    @orders = Order.search(params[:search_param]).order("status DESC")
     render :index
   end  
 
   private
     def find_order
-      @order = Order.find(params[:id])
+      @order = Order.find(params[:id]).order("status DESC")
     end
     def order_params
       params.require(:order).permit(:status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
