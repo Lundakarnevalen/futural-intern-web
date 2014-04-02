@@ -20,6 +20,7 @@ gem 'axlsx_rails'
 gem 'pry-rails'
 gem 'pry-doc'
 gem 'bootstrap-sass', '~> 3.0.3.0'
+gem 'simple_calendar', '~> 0.1.10'
 gem 'prawn'
 
 group :production do

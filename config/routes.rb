@@ -38,16 +38,22 @@ Futural::Application.routes.draw do
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
     end
   end
-
+  # /warehouse/..
   namespace :warehouse do
     get '/dashboard', to: 'dashboard#home'
-    resources :orders
+    resources :orders do
+      collection do
+        get 'calendar'
+      end
+    end
+
     resources :products do
       collection do
         get 'incoming_deliveries'
         put 'update_multiple'
       end
     end
+
     resources :product_categories
     resources :order_products
   end

@@ -1,7 +1,7 @@
 class Warehouse::OrdersController < Warehouse::ApplicationController
     before_filter :find_order, only: [:show, :update]
   def index
-    @orders = Order.where("karnevalist_id = ?", current_user.karnevalist.id)
+    @orders = Order.where(karnevalist_id: current_user.karnevalist.id)
   end
 
   def show
@@ -10,7 +10,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       format.html
       format.pdf do
         pdf = ReceiptPdf.new(@order, view_context)
-        send_data pdf.render, filename: 
+        send_data pdf.render, filename:
         "order_#{@order.created_at.strftime("%d/%m/%Y")}.pdf",
         type: "application/pdf", disposition: "inline"
       end
@@ -32,6 +32,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.order_products.build
       render :new
     end
+  end
+
+  def calendar
+    @orders = Order.where.not(delivery_date: nil)
   end
 
   def update

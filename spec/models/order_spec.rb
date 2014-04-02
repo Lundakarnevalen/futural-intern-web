@@ -14,8 +14,15 @@ describe Order do
     end
 
     it "should not set the order if it is already present" do
-      o = FactoryGirl.create(:order, order_date: Date.tomorrow)
-      o.order_date.should_not eq(Date.today)
+      o = FactoryGirl.create(:order, order_date: DateTime.tomorrow.to_time)
+      o.order_date.should_not eq(Date.today.to_time)
+    end
+  end
+
+  describe "start time" do
+    it "should return the delivery date" do
+      o = FactoryGirl.build(:order, order_date: DateTime.now, delivery_date: Date.tomorrow.to_time)
+      o.start_time.should eq(Date.tomorrow.to_time)
     end
   end
 end
