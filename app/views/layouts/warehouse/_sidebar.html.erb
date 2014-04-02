@@ -8,8 +8,9 @@
 
       <% if current_user.is? :admin %>
       <ul class="nav nav-sidebar">
-        <li><%= link_to "Orderhantering",
-        list_warehouse_orders_path%><li>
+        <li class="nav-header disabled"><a>Orderhantering</a></li>
+        <li><%= link_to "Alla ordrar", list_warehouse_orders_path%><li>
+        <li><%= link_to "Direktförsäljning", list_warehouse_orders_path%><li>
       </ul>
       <% end %>
 
