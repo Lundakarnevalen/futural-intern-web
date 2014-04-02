@@ -56,7 +56,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   private
     def find_order
-      @order = Order.find(params[:id]).order("status DESC")
+      @order = Order.find(params[:id])
     end
     def order_params
       params.require(:order).permit(:status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
