@@ -6,10 +6,18 @@
       </div>
       <div class="panel-body">
         <p><strong>Status: </strong> <%= @order.status %></p>
-        <p><strong>Beställningsdatum: </strong> <%= @order.order_date %></p>
+        <p><strong>Beställningsdatum: </strong> <%= @order.order_date.strftime("%Y-%m-%d %H:%M") %></p>
         <p><strong>Hämtdatum: </strong> <%= @order.delivery_date %></p>
         <p><strong>Totalpris: </strong> <%= @order.total_sum %></p>
         <p><%= link_to "Visa Kvitto", warehouse_order_path(@order.id, :format => "pdf") %></p>
+
+        <% if current_user.is? :admin || :kassor %>
+        <tr>
+          <td><%= link_to "Leverera order", root_url, class: "btn btn-success" %></td>
+          <td><%= link_to "Delleverera order", root_url, class: "btn btn-default" %></td>
+          <td><%= link_to "Makulera order", root_url, class: "btn btn-danger" %></td>
+        </tr>
+        <% end %>
       </div>
     </div>
   </div>
