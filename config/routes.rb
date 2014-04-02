@@ -45,6 +45,8 @@ Futural::Application.routes.draw do
       collection do
         get 'calendar'
         get 'list'
+        get 'search/:search_param', :action => 'search'
+        get 'search', :action => 'search'
       end
     end
 

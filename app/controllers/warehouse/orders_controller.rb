@@ -49,6 +49,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def delete
   end
 
+  def search
+    @orders = Order.search(params[:search_param])
+    render :index
+  end  
+
   private
     def find_order
       @order = Order.find(params[:id])

@@ -1,8 +1,18 @@
 <div class="row">  <!-- Ta bort? -->
 <div class="col-md-12">
   <h3>Mina ordrar</h3>
+      
+      <%= form_tag '/warehouse/orders/search', class: "form-inline", :method => :get do %>
+      <div class="form-group">  
+      <%= label_tag :search_param,  'Sök:', class: "sr-only" %>
+      <%= text_field_tag :search_param, nil, :placeholder => 'Namn på kund', class: "form-control" %>
+      </div>
+      <%= submit_tag 'Sök', class: "btn btn-primary" %>
+    <% end %>
+    </form>
 </div>
 </div>
+
 <div class="row">
 <div class="col-md-8">
   <table class="table" id="table">

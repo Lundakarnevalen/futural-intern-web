@@ -24,4 +24,18 @@ class Order < ActiveRecord::Base
     return sum
   end
 
+  def self.search str
+    q = self.all
+    array = []
+  
+    q.each do |order|
+      sektion = Sektion.find(Karnevalist.find(order.karnevalist_id).tilldelad_sektion).name
+      if str == sektion
+        array.push(order)
+      end
+    end  
+    return array
+  end
+
+
 end
