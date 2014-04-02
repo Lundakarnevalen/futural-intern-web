@@ -31,4 +31,14 @@ describe Warehouse::OrdersController do
       Order.where(comment: "This is a comment").should exist
     end
   end
+
+  describe "GET calendar to OrdersController" do
+    it "should return all events where there is a delivery date" do
+      get :calendar
+      assigns(:orders).should_not be_nil
+      assigns(:orders).should eq([@order])
+      response.should be_success
+    end
+  end
+
 end
