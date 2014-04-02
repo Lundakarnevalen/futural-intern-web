@@ -1,20 +1,29 @@
 <h2>Ny vara</h2>
-<!-- Lägg till fieldset -->
 <%= form_for [:warehouse, @product] do |f| %>
+  <% if current_user.is? :admin_fabriken %> 
   <div class="checkbox">
     <%= f.check_box :product_type %>
     <%= f.label :product_type, "Specialvara Pontus" %>
   </div>
-  <div class="form-group">
-    <%= f.label :product_category_id, "Kategori" %>
-    <%= f.select :product_category_id, options_from_collection_for_select(ProductCategory.all, :id, :name), {}, { class: "form-control"} %>
-  </div>
-  <div class="form-group">
-    <%= f.label :name, "Namn" %>
-    <%= f.text_field :name, class: "form-control" %>
+  <% end %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-group">
+        <%= f.label :product_category_id, "Kategori" %>
+        <%= f.select :product_category_id, options_from_collection_for_select(ProductCategory.all, :id, :name), {}, { class: "form-control"} %>
+      </div>
+    </div>
   </div>
   <div class="row">
-    <div class="col-xs-6 col-sm-6 col-md-2">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-group">
+        <%= f.label :name, "Namn" %>
+        <%= f.text_field :name, class: "form-control" %>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3">
       <div class="form-group">
         <%= f.label :unit, "Enhet" %>
         <%= f.text_field :unit, class: "form-control", placeholder: "T.ex. st, l, kg, box, flaska, rör, frp" %>
@@ -22,38 +31,65 @@
     </div>
     <div class="col-xs-6 col-sm-6 col-md-3">
       <div class="form-group">
-        <%= f.label :ean, "Streckkod #" %>
+        <%= f.label :ean, "Streckkod" %>
         <%= f.text_field :ean, class: "form-control" %>
       </div>
     </div>
   </div>
-  <div class="form-group">
-    <%= f.label :supplier, "Leverantör" %>
-    <%= f.text_field :supplier, class: "form-control" %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-group">
+        <%= f.label :supplier, "Leverantör" %>
+        <%= f.text_field :supplier, class: "form-control" %>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.label :info, "Varuinfo" %>
-    <%= f.text_area :info, rows: 5, class: "form-control" %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-group">
+        <%= f.label :info, "Varuinfo" %>
+        <%= f.text_area :info, rows: 5, class: "form-control" %>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.label :purchase_price, "Inköpspris" %>
-    <%= f.text_field :purchase_price, class: "form-control" %> <!-- Price field? -->
+  <hr>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <div class="form-group">
+        <%= f.label :purchase_price, "Inköpspris (kr)" %>
+        <%= f.text_field :purchase_price, class: "form-control" %>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <div class="form-group">
+        <%= f.label :sale_price, "Försäljningspris (kr)" %>
+        <%= f.text_field :sale_price, class: "form-control" %>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.label :sale_price, "Försäljningspris" %>
-    <%= f.text_field :sale_price, class: "form-control" %> <!-- Price field? -->
+  <hr>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <div class="form-group">
+        <%= f.label :stock_location, "Lagerplats" %>
+        <%= f.text_field :stock_location, class: "form-control" %>
+      </div>
+    </div>
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <div class="form-group">
+        <%= f.label :warning_limit, "Varningsgräns lagersaldo" %>
+        <%= f.number_field :warning_limit, min: 0, class: "form-control" %>
+      </div>
+    </div>
   </div>
-  <div class="form-group">
-    <%= f.label :stock_location, "Lagerplats" %>
-    <%= f.text_field :stock_location, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :warning_limit, "Varningsgräns lagersaldo" %>
-    <%= f.number_field :warning_limit, class: "form-control" %>
-  </div>
-  <div class="form-group">
-    <%= f.label :notes, "Interninfo" %>
-    <%= f.text_area :notes, rows: 5, class: "form-control" %>
-  </div>
+  <hr>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-group">
+        <%= f.label :notes, "Interninfo" %>
+        <%= f.text_area :notes, rows: 5, class: "form-control" %>
+      </div>
+    </div>
+  </div>  
   <%= f.submit "Spara", class: "btn btn-primary" %>
 <% end %>

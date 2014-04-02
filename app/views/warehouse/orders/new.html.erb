@@ -16,7 +16,7 @@
       <td><%= p.name %></td> <!-- TODO: Modal link to product -->
       <td>
         <%= f.fields_for :order_products do |op| %>
-        <%= op.text_field :amount, class: "form-control", placeholder: "Hur många vill du beställa?" %>
+        <%= op.number_field :amount, min: 0, class: "form-control", placeholder: "Hur många vill du beställa?" %>
           <%= op.hidden_field :product_id, :value => p.id %>
         <% end %>
       </td>
