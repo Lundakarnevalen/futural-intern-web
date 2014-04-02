@@ -1,7 +1,7 @@
 <div class="row">  <!-- Ta bort? -->
 <div class="col-md-12">
   <h3>Mina ordrar</h3>
-      
+      <% if current_user.is? :admin || kassor %>
       <%= form_tag '/warehouse/orders/search', class: "form-inline", :method => :get do %>
       <div class="form-group">  
       <%= label_tag :search_param,  'Sök:', class: "sr-only" %>
@@ -10,6 +10,7 @@
       <%= submit_tag 'Sök', class: "btn btn-primary" %>
     <% end %>
     </form>
+    <% end %>
 </div>
 </div>
 

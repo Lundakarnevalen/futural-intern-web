@@ -53,6 +53,7 @@ Futural::Application.routes.draw do
     resources :products do
       collection do
         get 'incoming_deliveries'
+        get 'weekly_overview'
         put 'update_multiple'
       end
     end
