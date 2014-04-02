@@ -183,17 +183,15 @@ module PodioSync
     else
       self.log "POST /item/app/#{@app_id}/filter"
       ks = Podio::Item.find_by_filter_values @app_id, 
-        { 'personnummer-2' => (local_karnevalist.personnummer + ';' +
-                               self.mangle_personnummer(local_karnevalist.personnummer))}
+        { 'personnummer-2' => local_karnevalist.personnummer }
                                
       if ks.count == 0
-        nil 
+        return nil 
       elsif ks.count > 1
-        fail PodioSyncError, 
+        self.log "Warning: " +
           "Multiple matches for personnummer == #{local_karnevalist.personnummer}"
-      else
-        self.to_karnevalist(self.attributes_from_podio ks.all.first)
       end
+      self.to_karnevalist(self.attributes_from_podio ks.all.first)
     end
   end
 
@@ -302,7 +300,8 @@ module PodioSync
     k.efternamn = attributes['efternamn']
     k.personnummer = attributes['personnummer-2']
     k.kon = self.to_local Kon, attributes['kon']
-    k.tilldelad_sektion = self.to_local Sektion, attributes['sektion-2']
+    k.sektion = self.to_local_sektion(attributes['sektion-2'], 
+                                      attributes['category'])
     k.telnr = attributes['mobilnummer-2']
     k.email = attributes['mail']
     k.matpref = attributes['matpreferenser']
@@ -323,7 +322,8 @@ module PodioSync
       'efternamn' => lk.efternamn.present?? lk.efternamn : nil,
       'personnummer-2' => lk.personnummer.present?? lk.personnummer : nil,
       'kon' => self.to_podio(Kon, lk.kon_id),
-      'sektion-2' => self.to_podio(Sektion, lk.tilldelad_sektion),
+      'sektion-2' => self.to_podio_sektion(lk.tilldelad_sektion)[0],
+      'category' => self.to_podio_sektion(lk.tilldelad_sektion)[1],
       'mobilnummer-2' => lk.telnr.present?? lk.telnr : nil,
       'mail' => lk.email,
       'matpreferenser' => lk.matpref.present?? lk.matpref : nil,
@@ -357,13 +357,13 @@ module PodioSync
 
   def self.to_local model, podio_id
     @podio_categories ||= {}
-    @podio_categories[model] ||= model.all.map{ |m| [m.podio_id, m.id] }.to_hash
+    @podio_categories[model] ||= model.all.map{ |m| [m.podio_id, m] }.to_hash
     return nil if podio_id.nil?
     x = @podio_categories[model][podio_id]
     if x.nil?
       fail PodioSyncError, "Can't find #{model} with (podio_id == #{podio_id})"
     end
-    x.id
+    x
   end
 
   def self.to_podio model, local_id
@@ -373,6 +373,38 @@ module PodioSync
       nil
     else
       @local_categories[model][local_id]
+    end
+  end
+
+  def self.to_podio_sektion local_id
+    @local_conv_sektioner ||= Sektion.all.map{ |s| [s.id, s] }.to_hash
+    return nil if local_id.nil?
+    s = @local_conv_sektioner[local_id]
+    return [s.podio_id, s.podio_sub_id]
+  end
+
+  def self.to_local_sektion podio_id, podio_sub_id = nil
+    @podio_conv_sektioner ||= Sektion.all.group_by &:podio_id
+    return nil if podio_id.nil?
+    ss = @podio_conv_sektioner[podio_id]
+    if ss.empty?
+      fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id})"
+    end
+    if podio_sub_id.nil? 
+      if ss.length > 1
+        fail PodioSyncError, "Several sektion satisfy (podio_id == #{podio_id})"
+      else
+        return ss.first
+      end
+    else
+      ss = ss.select{ |s| s.podio_sub_id == podio_sub_id }
+      if ss.empty? 
+        fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
+      elsif ss.length > 1
+        fail PodioSyncError, "Several sektion satisfy (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
+      else
+        return ss.first
+      end
     end
   end
 
