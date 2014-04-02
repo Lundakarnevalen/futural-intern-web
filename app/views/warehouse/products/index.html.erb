@@ -17,7 +17,7 @@
     <tbody>
       <% @products_active.each do |p| %>
       <tr>
-        <td><%= p.name %></td>
+        <td><%= link_to p.name, edit_warehouse_product_path(p.id) %></td>
         <td><%= p.ean %></td>
         <td><%= p.stock_location %></td>
         <td><%= p.stock_balance_not_ordered %></td>
@@ -48,7 +48,7 @@
     <tbody>
       <% @products_inactive.each do |p| %>
       <tr>
-        <td><%= p.name %></td>
+        <td><%= link_to p.name, edit_warehouse_product_path(p.id) %></td>
         <td><%= p.ean %></td>
         <td><%= p.stock_location %></td>
         <td><%= p.stock_balance_not_ordered %></td>
