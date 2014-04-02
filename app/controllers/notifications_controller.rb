@@ -40,7 +40,7 @@ class NotificationsController < ApplicationController
 
     if @notification.save
       gcm = GCM.new(gcm_api_key)
-      pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.sandbox.push.apple.com")
+      pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.push.apple.com")
       registration_ids = Array.new
       if @notification.recipient_id == 0
         karnevalister = Karnevalist.where("tilldelad_sektion IS NOT NULL")
