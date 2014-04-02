@@ -34,6 +34,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     end
   end
 
+  def list
+    @orders = Order.all
+    render :index
+  end
+
   def calendar
     @orders = Order.where.not(delivery_date: nil)
   end

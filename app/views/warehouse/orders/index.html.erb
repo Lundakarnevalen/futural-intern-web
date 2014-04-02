@@ -9,6 +9,7 @@
     <thead>
       <tr>
         <th>Order #</th>
+        <th>Kund</th>
         <th>Status</th>
         <th>Beställningsdatum</th>
         <th>Hämtdatum</th>
@@ -20,6 +21,7 @@
     <% @orders.each do |o| %>
       <tr>
         <td><%= link_to "#{o.id}", warehouse_order_path(o.id) %></td>
+        <td><%= Sektion.find(o.karnevalist.tilldelad_sektion).name %></td>
         <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
         <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
         <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>

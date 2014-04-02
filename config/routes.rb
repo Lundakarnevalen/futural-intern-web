@@ -44,6 +44,7 @@ Futural::Application.routes.draw do
     resources :orders do
       collection do
         get 'calendar'
+        get 'list'
       end
     end
 
