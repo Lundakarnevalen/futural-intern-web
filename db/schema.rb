@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140328220237) do
+ActiveRecord::Schema.define(version: 20140402002610) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -79,8 +79,8 @@ ActiveRecord::Schema.define(version: 20140328220237) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.text     "ios_token"
     t.integer  "tilldelad_sektion2"
+    t.text     "ios_token"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -126,34 +126,11 @@ ActiveRecord::Schema.define(version: 20140328220237) do
     t.integer  "recipient_id"
   end
 
-  create_table "order_products", force: true do |t|
-    t.integer  "order_id"
-    t.integer  "product_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "amount"
-  end
-
-  create_table "orders", force: true do |t|
-    t.string   "status"
-    t.datetime "order_date"
-    t.datetime "delivery_date"
-    t.text     "comment"
-    t.integer  "warehouse_code"
-    t.integer  "karnevalist_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
-
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
@@ -170,35 +147,6 @@ ActiveRecord::Schema.define(version: 20140328220237) do
 
   add_index "posts", ["sektion_id", "karnevalist_id", "created_at"], name: "index_posts_on_sektion_id_and_karnevalist_id_and_created_at"
 
-  create_table "product_categories", force: true do |t|
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  create_table "products", force: true do |t|
-    t.integer  "product_type"
-    t.integer  "product_category_id"
-    t.string   "name"
-    t.string   "unit"
-    t.string   "ean"
-    t.string   "supplier"
-    t.text     "info"
-    t.string   "stock_location"
-    t.text     "notes"
-    t.integer  "stock_balance_ordered",     default: 0
-    t.integer  "stock_balance_not_ordered", default: 0
-    t.integer  "stock_balance_stand_by",    default: 0
-    t.float    "purchase_price"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "warning_limit"
-    t.integer  "warehouse_code"
-    t.float    "sale_price"
-  end
-
-  add_index "products", ["product_category_id"], name: "index_products_on_product_category_id"
-
   create_table "roles", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
@@ -213,8 +161,9 @@ ActiveRecord::Schema.define(version: 20140328220237) do
   end
 
   create_table "sektioner", force: true do |t|
-    t.string  "name",     null: false
+    t.string  "name",         null: false
     t.integer "podio_id"
+    t.integer "podio_sub_id"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
