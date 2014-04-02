@@ -82,6 +82,7 @@ FactoryGirl.define do
   factory :notification do
     title "a title"
     message "this is a message"
+    recipient_id 0
   end
 
   factory :phone do
