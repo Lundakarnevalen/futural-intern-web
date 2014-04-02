@@ -1,7 +1,8 @@
 class Warehouse::ProductsController < Warehouse::ApplicationController
   before_filter :find_product, only: [:show, :edit, :update]
   def index
-    @products = Product.all
+    @products_active = Product.find_all_by_active(true)
+    @products_inactive = Product.find_all_by_active(false)
   end
 
   def show
@@ -62,6 +63,18 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
       end
     end
     redirect_to incoming_deliveries_warehouse_products_path
+  end
+
+  def inactivate
+    find_product
+    @product.update_attributes(active: false)
+    redirect_to warehouse_products_path
+  end
+
+  def activate
+    find_product
+    @product.update_attributes(active: true)
+    redirect_to warehouse_products_path
   end
 
   private

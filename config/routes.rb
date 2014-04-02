@@ -55,6 +55,8 @@ Futural::Application.routes.draw do
         get 'incoming_deliveries'
         get 'weekly_overview'
         put 'update_multiple'
+        get 'inactivate'
+        get 'activate'
       end
     end
 

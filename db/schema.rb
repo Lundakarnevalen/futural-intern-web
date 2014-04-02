@@ -11,7 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140324213204) do
+ActiveRecord::Schema.define(version: 20140402161900) do
+
+  create_table "clusters", force: true do |t|
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "quantity",   default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -69,6 +79,8 @@ ActiveRecord::Schema.define(version: 20140324213204) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
+    t.text     "ios_token"
+    t.integer  "tilldelad_sektion2"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -111,6 +123,7 @@ ActiveRecord::Schema.define(version: 20140324213204) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "message"
+    t.integer  "recipient_id"
   end
 
   create_table "order_products", force: true do |t|
@@ -140,9 +153,22 @@ ActiveRecord::Schema.define(version: 20140324213204) do
     t.datetime "updated_at"
   end
 
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
+
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
   end
+
+  create_table "posts", force: true do |t|
+    t.string   "title"
+    t.string   "content"
+    t.integer  "sektion_id"
+    t.integer  "karnevalist_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "posts", ["sektion_id", "karnevalist_id", "created_at"], name: "index_posts_on_sektion_id_and_karnevalist_id_and_created_at"
 
   create_table "product_categories", force: true do |t|
     t.string   "name"
@@ -169,6 +195,7 @@ ActiveRecord::Schema.define(version: 20140324213204) do
     t.integer  "warning_limit"
     t.integer  "warehouse_code"
     t.float    "sale_price"
+    t.boolean  "active"
   end
 
   add_index "products", ["product_category_id"], name: "index_products_on_product_category_id"
