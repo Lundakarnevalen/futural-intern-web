@@ -37,6 +37,8 @@ class Ability
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
 
+    can :read, Notification, :recipient_id => 0
+
     # Notification
     if user.karnevalist?
       can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
