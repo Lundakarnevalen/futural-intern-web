@@ -54,43 +54,16 @@ Futural::Application.routes.draw do
 
     resources :products, controller: 'warehouse/products' do
       collection do
-        get 'incoming_deliveries', to: 'warehouse/products#incoming_deliveries'
         get 'weekly_overview', to: 'warehouse/products#weekly_overview'
-        put 'update_multiple', to: 'warehouse/products#update_multiple'
         get 'inactivate', to: 'warehouse/products#inactive'
         get 'activate', to: 'warehouse/products#activate'
       end
     end
 
+    resources :incoming_deliveries, controller: 'warehouse/incoming_deliveries'
     resources :product_categories, controller: 'warehouse/product_categories'
     resources :order_products, controller: 'warehouse/order_products'
   end
-
-=begin
-  namespace :warehouse do
-    get '/dashboard', to: 'dashboard#home'
-    resources :orders do
-      collection do
-        get 'calendar'
-        get 'list'
-        get 'search/:search_param', :action => 'search'
-        get 'search', :action => 'search'
-      end
-    end
-
-    resources :products do
-      collection do
-        get 'weekly_overview'
-        get 'inactivate'
-        get 'activate'
-      end
-    end
-
-    resources :product_categories
-    resources :order_products
-    resources :incoming_deliveries
-  end
-=end
 
   scope '/fabriken' do
     concerns :party_factory
