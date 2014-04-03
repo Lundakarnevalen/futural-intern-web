@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403104633) do
+ActiveRecord::Schema.define(version: 20140403152811) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -29,6 +29,11 @@ ActiveRecord::Schema.define(version: 20140403104633) do
     t.boolean  "ongoing"
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "incoming_deliveries_karnevalister", id: false, force: true do |t|
+    t.integer "karnevalist_id"
+    t.integer "incoming_delivery_id"
   end
 
   create_table "incoming_delivery_products", force: true do |t|
@@ -102,11 +107,6 @@ ActiveRecord::Schema.define(version: 20140403104633) do
   add_index "karnevalister", ["podio_id"], name: "index_karnevalister_on_podio_id"
   add_index "karnevalister", ["snalla_intresse"], name: "index_karnevalister_on_snalla_intresse"
   add_index "karnevalister", ["snalla_sektion"], name: "index_karnevalister_on_snalla_sektion"
-
-  create_table "karnevalister_incoming_deliveries", id: false, force: true do |t|
-    t.integer "karnevalist_id"
-    t.integer "incoming_delivery_id"
-  end
 
   create_table "karnevalister_sektioner", force: true do |t|
     t.integer "karnevalist_id", null: false
