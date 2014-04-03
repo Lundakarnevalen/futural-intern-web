@@ -14,7 +14,7 @@
       <% @incoming_deliveries_ongoing.each do |d| %>
         <% k = Karnevalist.find(d.karnevalister.first.id) %>
         <tr>
-          <td><%= link_to d.created_at.strftime("%Y-%m-%d %H:%M"), edit_warehouse_product_path(d.id) %></td>
+          <td><%= link_to d.created_at.strftime("%Y-%m-%d %H:%M"), edit_warehouse_incoming_delivery_path(d.id) %></td>
           <td><%= d.invoice_nbr %></td>
           <td><%= "#{k.fornamn} #{k.efternamn}" %></td>
         </tr>
@@ -37,7 +37,7 @@
       <% @incoming_deliveries_past.each do |d| %>
         <% k = Karnevalist.find(d.karnevalister.first.id) %>
         <tr>
-          <td><%= link_to d.created_at.strftime("%Y-%m-%d %H:%M"), show_warehouse_product_path(d.id) %></td>
+          <td><%= link_to d.created_at.strftime("%Y-%m-%d %H:%M"), warehouse_incoming_delivery_path(d.id) %></td>
           <td><%= d.invoice_nbr %></td>
           <td><%= "#{k.fornamn} #{k.efternamn}" %></td>
         </tr>
