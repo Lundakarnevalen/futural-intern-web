@@ -10,7 +10,7 @@ class NotificationsController < ApplicationController
   def index
     respond_to do |format|
       format.html do
-        if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektion.blank?
+        if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektioner.blank?
           sektioner = current_user.karnevalist.tilldelade_sektioner
           sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
           sektioner.each do |s|
