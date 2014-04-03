@@ -41,6 +41,10 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     @products = Product.all
   end
   
+  def weekly_overview
+    @products = Product.all
+  end
+  
   def inactivate
     find_product
     @product.update_attributes(active: false)

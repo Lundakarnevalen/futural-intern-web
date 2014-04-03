@@ -41,7 +41,6 @@ Futural::Application.routes.draw do
 
   # concern for festmästeriet / fabriken
   concern :party_factory do
-    get '/dashboard', to: 'warehouse/dashboard#home'
     resources :orders, controller: 'warehouse/orders' do
       collection do
         put 'return_products', to: 'warehouse/orders#return_products'
