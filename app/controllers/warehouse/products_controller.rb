@@ -41,30 +41,6 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     @products = Product.all
   end
   
-  def update_multiple
-    params['new_amount'].each do |product_id, new_amount|
-      if !new_amount.blank?
-        product = Product.where(:id => product_id).first
-        stand_by = product.stock_balance_stand_by
-        if stand_by == 0
-          product.update_attributes(:stock_balance_not_ordered => new_amount)
-        elsif stand_by >= new_amount.to_i
-          stock_balance_ordered = product.stock_balance_ordered + new_amount.to_i
-          stand_by -= new_amount.to_i
-          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          product.update_attributes(:stock_balance_stand_by => stand_by)
-        else
-          stock_balance_ordered = product.stock_balance_ordered + stand_by
-          stock_balance_not_ordered = new_amount.to_i - stand_by
-          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-          product.update_attributes(:stock_balance_stand_by => 0)
-        end  
-      end
-    end
-    redirect_to incoming_deliveries_warehouse_products_path
-  end
-
   def inactivate
     find_product
     @product.update_attributes(active: false)
