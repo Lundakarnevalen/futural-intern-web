@@ -4,8 +4,8 @@ class Warehouse::ApplicationController < ApplicationController
   skip_authorization_check
 
   def w_code
-    return @warhouse_code = 0  if /fabriken/.match(request.fullpath)
-    return @Warehouse_code = 1 if /festmasteriet/.match(request.fullpath)
-    @Warehouse_code = -1
+    return @warehouse_code = 0 if /fabriken/.match(request.fullpath)
+    return @warehouse_code = 1 if /festmasteriet/.match(request.fullpath)
+    @warehouse_code = -1
   end
 end

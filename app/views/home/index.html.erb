@@ -55,5 +55,13 @@
       <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
     <% end %>
   <% end %>
+
+  <%# Warehouse stuff %>
+  <% if (current_user.is? :admin_fabriken) || (current_user.is? :bestallare_fabriken) || (current_user.is? :admin) %>
+    <li><%= link_to 'Lagersystem Fabriken', new_order_path %></li>
+  <% end %>
+  <% if (current_user.is? :admin_festmasteriet) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :kassor_festmasteriet) || (current_user.is? :admin) %>
+    <li><%= link_to 'Lagersystem Festmästeriet', new_order_path %></li>  <!-- TODO: Fix path -->
+  <% end %>
 </ul>
   

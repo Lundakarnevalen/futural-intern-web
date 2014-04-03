@@ -1,12 +1,15 @@
 class Warehouse::OrdersController < Warehouse::ApplicationController
-    before_filter :find_order, only: [:show, :update]
+  before_filter :find_order, only: [:show, :update]
+
   def index
-    @orders = Order.where(karnevalist_id: current_user.karnevalist.id)
-    @orders = @orders.order("status DESC") if !@orders.blank?
+    @orders = Order.where(karnevalist_id: current_user.karnevalist.id).order("id DESC")
+    @bestallare = true
+    @search = false
   end
 
   def show
     @order = find_order
+    @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
     @makulerad = false
     @part_delivered = false
@@ -36,6 +39,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def new
+    @bestallare = true
     @products = Product.all
     @order = current_user.karnevalist.orders.new
     @order.order_products.build
@@ -44,9 +48,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def create
     @order = current_user.karnevalist.orders.new(order_params)
     @order.status = "Bearbetas"
+    @order.warehouse_code = @warehouse_code
     if @order.save
       redirect_to orders_path
     else
+      @bestallare = true
       @products = Product.all
       @order.order_products.build
       render :new
@@ -55,6 +61,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def list
     @orders = Order.all
+    @search = true
     render :index
   end
 
@@ -111,7 +118,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order = Order.find(params[:id])
     end
     def order_params
-      params.require(:order).permit(:status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
+      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
     def update_warehouse order_id
       order_products = OrderProduct.where(:order_id => order_id)

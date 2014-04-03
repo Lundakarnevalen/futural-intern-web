@@ -6,6 +6,7 @@
       </div>
       <div class="panel-body">
         <p><strong>Status: </strong> <%= @order.status %></p>
+        <p><strong>Beställare: </strong> <%= "#{@order.karnevalist.fornamn} #{@order.karnevalist.efternamn}" %></p>
         <p><strong>Beställningsdatum: </strong> <%= @order.order_date.strftime("%Y-%m-%d %H:%M") %></p>
         <p><strong>Hämtdatum: </strong> <%= !@order.delivery_date.blank? ? @order.delivery_date.strftime("%Y-%m-%d %H:%M") : "" %></p>
         <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>

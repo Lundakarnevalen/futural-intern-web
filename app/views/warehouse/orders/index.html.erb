@@ -1,7 +1,7 @@
 <div class="row">
 <div class="col-md-12">
   <h3>Mina ordrar</h3>
-      <% if current_user.is? :admin || :kassor %>
+      <% if @search && ((current_user.is? :admin) || (current_user.is? :kassor)) %>
       <%= form_tag '/warehouse/orders/search', class: "form-inline", :method => :get do %>
       <div class="form-group">
       <%= label_tag :search_param,  'Sök:', class: "sr-only" %>

@@ -11,11 +11,7 @@ class Order < ActiveRecord::Base
   def set_order_date
     self.order_date = DateTime.now if self.order_date.blank?
   end
-
-  def start_time
-    self.delivery_date
-  end
-
+  
   def total_sum
     sum = 0;
     self.products.each do |p|

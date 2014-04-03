@@ -21,7 +21,7 @@
         <% end %>
       </td>
       <td><%= p.unit %></td>
-      <td><%= p.sale_price %> kr</td>
+      <td><%= number_to_currency(p.sale_price) %></td>
       <td><%= p.stock_balance_not_ordered %></td>
     </tr>
     <% end %>
