@@ -1,4 +1,5 @@
 <%= link_to "Ny inleverans", new_warehouse_incoming_delivery_path, class: "btn btn-primary"  %>
+<% if !@incoming_deliveries_ongoing.blank? %>
 <h2>Pågående inleveranser</h2>
 <div class="table-responsive">
   <table class="table table-striped">
@@ -21,6 +22,7 @@
     </tbody>
   </table>
 </div>
+<% end %>
 <h2>Avslutade inleveranser</h2>
 <div class="table-responsive">
   <table class="table table-striped">
