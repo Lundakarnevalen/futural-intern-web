@@ -1,7 +1,8 @@
 class Warehouse::OrdersController < Warehouse::ApplicationController
     before_filter :find_order, only: [:show, :update]
   def index
-    @orders = Order.where(karnevalist_id: current_user.karnevalist.id).order("status DESC")
+    @orders = Order.where(karnevalist_id: current_user.karnevalist.id)
+    @orders = @orders.order("status DESC") if !@orders.blank?
   end
 
   def show
@@ -97,7 +98,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def search
-    @orders = Order.search(params[:search_param]).order("status DESC")
+    @orders = Order.search(params[:search_param])
+    @orders = @orders.order("status DESC") if !@orders.blank?
     render :index
   end
 

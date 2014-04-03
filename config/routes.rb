@@ -90,6 +90,7 @@ Futural::Application.routes.draw do
 
     resources :product_categories
     resources :order_products
+    resources :incoming_deliveries
   end
 =end
 

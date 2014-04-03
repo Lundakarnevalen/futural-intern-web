@@ -11,7 +11,33 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140402161900) do
+ActiveRecord::Schema.define(version: 20140403104633) do
+
+  create_table "clusters", force: true do |t|
+    t.float    "lat"
+    t.float    "lng"
+    t.integer  "quantity",   default: 1
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
+
+  create_table "incoming_deliveries", force: true do |t|
+    t.string   "invoice_nbr"
+    t.integer  "warehouse_code"
+    t.boolean  "ongoing"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "incoming_delivery_products", force: true do |t|
+    t.integer  "incoming_delivery_id"
+    t.integer  "product_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "intressen", force: true do |t|
     t.string "name", null: false
@@ -76,6 +102,11 @@ ActiveRecord::Schema.define(version: 20140402161900) do
   add_index "karnevalister", ["podio_id"], name: "index_karnevalister_on_podio_id"
   add_index "karnevalister", ["snalla_intresse"], name: "index_karnevalister_on_snalla_intresse"
   add_index "karnevalister", ["snalla_sektion"], name: "index_karnevalister_on_snalla_sektion"
+
+  create_table "karnevalister_incoming_deliveries", id: false, force: true do |t|
+    t.integer "karnevalist_id"
+    t.integer "incoming_delivery_id"
+  end
 
   create_table "karnevalister_sektioner", force: true do |t|
     t.integer "karnevalist_id", null: false
@@ -188,8 +219,9 @@ ActiveRecord::Schema.define(version: 20140402161900) do
   end
 
   create_table "sektioner", force: true do |t|
-    t.string  "name",     null: false
+    t.string  "name",         null: false
     t.integer "podio_id"
+    t.integer "podio_sub_id"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"

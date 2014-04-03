@@ -13,6 +13,7 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
   accepts_nested_attributes_for :user
   has_many :orders
+  has_and_belongs_to_many :incoming_deliveries
 
   mount_uploader :foto, FotoUploader
 
