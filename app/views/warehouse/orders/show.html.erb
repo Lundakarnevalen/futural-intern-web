@@ -13,9 +13,11 @@
 
         <% if current_user.is? :admin || :kassor %>
         <tr>
-          <td><%= link_to "Leverera order", root_url, class: "btn btn-success" %></td>
-          <td><%= link_to "Delleverera order", root_url, class: "btn btn-default" %></td>
-          <td><%= link_to "Makulera order", root_url, class: "btn btn-danger" %></td>
+          <% if @levererad == false && @makulerad == false && @part_delivered == false %>
+          <td><%= link_to "Leverera", params.merge(:status => "Levererad"), :class => "btn btn-success"%></td>
+          <td><%= link_to "Delleverera order", params.merge(:status => "Dellevererad"), class: "btn btn-default" %></td>
+          <td><%= link_to "Makulera order", params.merge(:status => "Makulerad"), class: "btn btn-danger" %></td>
+          <% end %>
         </tr>
         <% end %>
       </div>

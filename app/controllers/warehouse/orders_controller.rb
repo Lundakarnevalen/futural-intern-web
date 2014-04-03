@@ -6,6 +6,20 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def show
     @order = find_order
+    @levererad = false
+    @makulerad = false
+    @part_delivered = false
+    if !params[:status].blank?
+      @order.update_attributes(status: params[:status])
+    end
+
+    if @order.status == "Levererad"
+        @levererad = true;
+    elsif @order.status == "Makulerad"
+        @makulerad = true
+    elsif @order.status == "Dellevererad"
+        @part_delivered = true
+    end
     respond_to do |format|
       format.html
       format.pdf do
@@ -25,6 +39,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def create
     @order = current_user.karnevalist.orders.new(order_params)
+    @order.status = "Bearbetas"
     if @order.save
       redirect_to orders_path
     else
