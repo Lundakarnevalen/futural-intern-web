@@ -44,6 +44,7 @@ Futural::Application.routes.draw do
     get '/dashboard', to: 'warehouse/dashboard#home'
     resources :orders, controller: 'warehouse/orders' do
       collection do
+        put 'return_products', to: 'warehouse/orders#return_products'
         get 'calendar', to: 'warehouse/orders#calendar'
         get 'list', to: 'warehouse/orders#list'
         get 'search/:search_param', to: 'warehouse/orders#search'

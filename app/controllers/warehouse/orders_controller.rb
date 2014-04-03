@@ -58,6 +58,38 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @orders = Order.where.not(delivery_date: nil)
   end
 
+  def return_products
+    params['return_amount'].each do |product_id, return_amount|
+      if !return_amount.blank?
+        product = Product.where(:id => product_id).first
+        stand_by = product.stock_balance_stand_by
+        order_products = OrderProduct.where(:order_id => params['order_id'], :product_id => product_id)
+        order_products.each do |order_product|
+          if (product.amount(params['order_id']) >= return_amount.to_i)
+            if stand_by == 0
+              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
+              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
+            elsif stand_by >= new_amount.to_i
+              stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
+              stand_by -= return_amount.to_i
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+              product.update_attributes(:stock_balance_stand_by => stand_by)
+            else
+              stock_balance_ordered = product.stock_balance_ordered + stand_by
+              stock_balance_not_ordered = return_amount.to_i - stand_by
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
+              product.update_attributes(:stock_balance_stand_by => 0)
+            end
+            order_product.amount = order_product.amount - return_amount.to_i
+            order_product.update_attributes(:amount => order_product.amount)
+          end
+        end  
+      end
+    end
+    redirect_to orders_path
+  end
+
   def update
   end
 
