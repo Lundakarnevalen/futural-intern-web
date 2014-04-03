@@ -1,4 +1,4 @@
-<%= link_to "Lägg till ny varukategori", new_warehouse_product_category_path, class: "btn btn-primary"  %>
+<%= link_to "Lägg till ny varukategori", new_product_category_path, class: "btn btn-primary"  %>
 <h2>Alla varukategorier</h2>
 <div class="table-responsive">
   <table class="table table-striped">
@@ -11,7 +11,7 @@
     <tbody>
       <% @product_categories.each do |p| %>
       <tr>
-        <td><%= link_to p.name, edit_warehouse_product_category_path(p) %></td>
+        <td><%= link_to p.name, edit_product_category_path(p) %></td>
         <td><button type="button" class="btn btn-default btn-xs"><span class="glyphicon glyphicon-remove"></span></button></td>
       </tr>
       <% end %>
