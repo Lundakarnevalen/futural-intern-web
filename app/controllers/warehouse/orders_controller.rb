@@ -26,7 +26,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def create
     @order = current_user.karnevalist.orders.new(order_params)
     if @order.save
-      redirect_to warehouse_orders_path
+      redirect_to orders_path
     else
       @products = Product.all
       @order.order_products.build
@@ -52,7 +52,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def search
     @orders = Order.search(params[:search_param]).order("status DESC")
     render :index
-  end  
+  end
 
   private
     def find_order

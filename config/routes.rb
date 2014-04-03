@@ -38,7 +38,34 @@ Futural::Application.routes.draw do
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
     end
   end
-  # /warehouse/..
+
+  # concern for festmästeriet / fabriken
+  concern :party_factory do
+    get '/dashboard', to: 'warehouse/dashboard#home'
+    resources :orders, controller: 'warehouse/orders' do
+      collection do
+        get 'calendar', to: 'warehouse/orders#calendar'
+        get 'list', to: 'warehouse/orders#list'
+        get 'search/:search_param', to: 'warehouse/orders#search'
+        get 'search', to:'warehouse/orders#search'
+      end
+    end
+
+    resources :products, controller: 'warehouse/products' do
+      collection do
+        get 'incoming_deliveries', to: 'warehouse/products#incoming_deliveries'
+        get 'weekly_overview', to: 'warehouse/products#weekly_overview'
+        put 'update_multiple', to: 'warehouse/products#update_multiple'
+        get 'inactivate', to: 'warehouse/products#inactive'
+        get 'activate', to: 'warehouse/products#activate'
+      end
+    end
+
+    resources :product_categories, controller: 'warehouse/product_categories'
+    resources :order_products, controller: 'warehouse/order_products'
+  end
+
+=begin
   namespace :warehouse do
     get '/dashboard', to: 'dashboard#home'
     resources :orders do
@@ -63,7 +90,15 @@ Futural::Application.routes.draw do
     resources :product_categories
     resources :order_products
   end
+=end
 
+  scope '/fabriken' do
+    concerns :party_factory
+  end
+
+  scope '/festmasteriet' do
+    concerns :party_factory
+  end
   get '/home', to: 'home#index'
 
   devise_for :users
