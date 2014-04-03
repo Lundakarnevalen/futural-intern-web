@@ -1,5 +1,5 @@
 <div class="table-responsive">
   <%= calendar @orders do |order| %>
-    <div><%= link_to "#{order.karnevalist.fornamn} #{order.karnevalist.efternamn}", warehouse_order_path(order) %></div>
+    <div><%= link_to "#{order.karnevalist.fornamn} #{order.karnevalist.efternamn}", order_path(order) %></div>
   <% end %>
   </div>

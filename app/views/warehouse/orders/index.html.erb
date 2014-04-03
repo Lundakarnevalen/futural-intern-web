@@ -3,7 +3,7 @@
   <h3>Mina ordrar</h3>
       <% if current_user.is? :admin || :kassor %>
       <%= form_tag '/warehouse/orders/search', class: "form-inline", :method => :get do %>
-      <div class="form-group">  
+      <div class="form-group">
       <%= label_tag :search_param,  'Sök:', class: "sr-only" %>
       <%= text_field_tag :search_param, nil, :placeholder => 'Namn på kund', class: "form-control" %>
       </div>
@@ -30,7 +30,7 @@
     <% if !@orders.nil? %>
     <% @orders.each do |o| %>
       <tr>
-        <td><%= link_to "#{o.id}", warehouse_order_path(o.id) %></td>
+        <td><%= link_to "#{o.id}", order_path(o.id) %></td>
         <td><%= Sektion.find(o.karnevalist.tilldelad_sektion).name %></td>
         <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
         <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
