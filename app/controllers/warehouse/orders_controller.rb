@@ -12,6 +12,9 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @part_delivered = false
     if !params[:status].blank?
       @order.update_attributes(status: params[:status])
+      if @order.status == "Makulerad"
+        update_warehouse(@order.id)
+      end
     end
 
     if @order.status == "Levererad"
@@ -109,5 +112,33 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     end
     def order_params
       params.require(:order).permit(:status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
+    end
+    def update_warehouse order_id
+      order_products = OrderProduct.where(:order_id => order_id)
+      order_products.each do |o|
+        product = Product.where(:id => o.product_id).first
+        stand_by = product.stock_balance_stand_by
+        return_amount = o.amount
+        if (product.amount(order_id) >= return_amount.to_i)
+            if stand_by == 0
+              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
+              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
+            elsif stand_by >= new_amount.to_i
+              stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
+              stand_by -= return_amount.to_i
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+              product.update_attributes(:stock_balance_stand_by => stand_by)
+            else
+              stock_balance_ordered = product.stock_balance_ordered + stand_by
+              stock_balance_not_ordered = return_amount.to_i - stand_by
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
+              product.update_attributes(:stock_balance_stand_by => 0)
+            end
+            o.amount = o.amount - return_amount.to_i
+            o.update_attributes(:amount => o.amount)
+          end
+      end
+
     end
 end
