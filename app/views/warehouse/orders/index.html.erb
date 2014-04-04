@@ -31,7 +31,7 @@
     <% @orders.each do |o| %>
       <tr>
         <td><%= link_to "#{o.id}", order_path(o.id) %></td>
-        <td><%= Sektion.find(o.karnevalist.tilldelad_sektion).name %></td>
+        <td><%= o.sektion.name %></td>
         <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
         <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
         <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>

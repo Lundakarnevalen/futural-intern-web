@@ -1,5 +1,5 @@
-<h2>Redigera vara</h2>
-<%= form_for [:warehouse, @product] do |f| %>
+<h3>Redigera vara</h3>
+<%= form_for [@product] do |f| %>
   <% if current_user.is? :admin_fabriken %> 
   <div class="checkbox">
     <%= f.check_box :product_type %>

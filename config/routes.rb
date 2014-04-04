@@ -43,18 +43,24 @@ Futural::Application.routes.draw do
   concern :party_factory do
     resources :orders, controller: 'warehouse/orders' do
       collection do
-        put 'return_products', to: 'warehouse/orders#return_products'
         get 'calendar', to: 'warehouse/orders#calendar'
         get 'list', to: 'warehouse/orders#list'
         get 'search/:search_param', to: 'warehouse/orders#search'
         get 'search', to:'warehouse/orders#search'
+      end
+      member do
+        put 'return_products', to: 'warehouse/orders#return_products'
+        get 'confirm', to: 'warehouse/orders#confirm'
+        put 'confirm_put', to: 'warehouse/orders#confirm_put'
       end
     end
 
     resources :products, controller: 'warehouse/products' do
       collection do
         get 'weekly_overview', to: 'warehouse/products#weekly_overview'
-        get 'inactivate', to: 'warehouse/products#inactive'
+      end
+      member do
+        get 'inactivate', to: 'warehouse/products#inactivate'
         get 'activate', to: 'warehouse/products#activate'
       end
     end

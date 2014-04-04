@@ -1,14 +1,13 @@
 class Warehouse::OrdersController < Warehouse::ApplicationController
-  before_filter :find_order, only: [:show, :update]
+  before_filter :find_order, only: [:show, :update, :confirm, :confirm_put]
 
   def index
-    @orders = Order.where(karnevalist_id: current_user.karnevalist.id).order("id DESC")
+    @orders = Order.where("status IS NOT NULL").where(karnevalist_id: current_user.karnevalist.id, warehouse_code: @warehouse_code).order("id DESC")
     @bestallare = true
     @search = false
   end
 
   def show
-    @order = find_order
     @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
     @makulerad = false
@@ -32,7 +31,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       format.pdf do
         pdf = ReceiptPdf.new(@order, view_context)
         send_data pdf.render, filename:
-        "order_#{@order.created_at.strftime("%d/%m/%Y")}.pdf",
+        "order_#{@order.created_at.strftime("%Y-%m-%d")}.pdf",
         type: "application/pdf", disposition: "inline"
       end
     end
@@ -40,27 +39,43 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def new
     @bestallare = true
-    @products = Product.all
+    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
     @order = current_user.karnevalist.orders.new
     @order.order_products.build
   end
 
   def create
     @order = current_user.karnevalist.orders.new(order_params)
-    @order.status = "Bearbetas"
+    @order.sektion = Sektion.find(current_user.karnevalist.tilldelad_sektion)
     @order.warehouse_code = @warehouse_code
     if @order.save
-      redirect_to orders_path
+      redirect_to confirm_order_path(@order)
     else
       @bestallare = true
-      @products = Product.all
+      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
       @order.order_products.build
       render :new
     end
   end
 
+  def confirm
+  end
+
+  def confirm_put
+    if params[:confirm]
+      @order.status = "Bearbetas"
+    end
+    if @order.update_attributes(order_params)
+      redirect_to order_path(@order)
+    else
+      render :confirm_order
+    end
+  end
+
   def list
-    @orders = Order.all
+    @orders = Order.where("status IS NOT NULL").where(warehouse_code: @warehouse_code).order("id DESC")
     @search = true
     render :index
   end
@@ -101,6 +116,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     redirect_to orders_path
   end
 
+  def edit
+    redirect_to order_path(params[:id])
+  end
+
   def update
   end
 
@@ -108,7 +127,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def search
-    @orders = Order.search(params[:search_param])
+    @orders = Order.where(warehouse_code: @warehouse_code).search(params[:search_param])
     @orders = @orders.order("status DESC") if !@orders.blank?
     render :index
   end

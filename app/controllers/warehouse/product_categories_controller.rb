@@ -1,7 +1,7 @@
 class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
   before_filter :find_product_category, only: [:show, :edit, :update]
   def index
-    @product_categories = ProductCategory.all
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
 
   def show
@@ -13,9 +13,10 @@ class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
   end
 
   def create
-     product_category = ProductCategory.new(product_category_params)
+    product_category = ProductCategory.new(product_category_params)
+    product_category.warehouse_code = @warehouse_code
     if product_category.save
-      redirect_to warehouse_product_categories_path
+      redirect_to product_categories_path
     else
       render :new
     end
@@ -26,7 +27,7 @@ class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
 
   def update
     if @product_category.update_attributes(product_category_params)
-      redirect_to warehouse_product_categories_path
+      redirect_to product_categories_path
     else
       render :edit
     end
@@ -34,7 +35,7 @@ class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
 
   def destroy
     ProductCategory.destroy params[:id]
-    redirect_to warehouse_product_categories_path
+    redirect_to product_categories_path
   end
 
   private

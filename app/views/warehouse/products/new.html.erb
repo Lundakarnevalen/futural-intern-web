@@ -1,6 +1,6 @@
-<h2>Ny vara</h2>
-<%= form_for [:warehouse, @product] do |f| %>
-  <% if current_user.is? :admin_fabriken %> 
+<h3>Ny vara</h3>
+<%= form_for [@product] do |f| %>
+  <% if (current_user.is? :admin_fabriken) || (current_user.is? :admin) %> 
   <div class="checkbox">
     <%= f.check_box :product_type %>
     <%= f.label :product_type, "Specialvara Pontus" %>
@@ -10,7 +10,7 @@
     <div class="col-xs-12 col-sm-12 col-md-6">
       <div class="form-group">
         <%= f.label :product_category_id, "Kategori" %>
-        <%= f.select :product_category_id, options_from_collection_for_select(ProductCategory.all, :id, :name), {}, { class: "form-control"} %>
+        <%= f.select :product_category_id, options_from_collection_for_select(@product_categories, :id, :name), {}, { class: "form-control"} %>
       </div>
     </div>
   </div>

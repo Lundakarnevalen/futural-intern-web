@@ -1,5 +1,5 @@
 <%= link_to "Lägg till ny vara", new_product_path, class: "btn btn-primary"  %>
-<h2>Aktiva varor</h2>
+<h3>Aktiva varor</h3>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -24,13 +24,14 @@
         <td><%= p.stock_balance_ordered %></td>
         <td><%= p.stock_balance_stand_by %></td>
         <td><%= p.unit %></td>
-        <td><%= link_to icon("remove"), inactivate_products_path(id: p.id), class: "btn btn-default btn-xs" %></td>
+        <td><%= link_to icon("remove"), inactivate_product_path(p), class: "btn btn-default btn-xs" %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
 </div>
-<h2>Inaktiva varor</h2>
+<% if !@products_inactive.blank? %>
+<h3>Inaktiva varor</h3>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -55,9 +56,10 @@
         <td><%= p.stock_balance_ordered %></td>
         <td><%= p.stock_balance_stand_by %></td>
         <td><%= p.unit %></td>
-        <td><%= link_to icon("ok"), activate_products_path(id: p.id), class: "btn btn-default btn-xs" %></td>
+        <td><%= link_to icon("ok"), activate_product_path(id: p.id), class: "btn btn-default btn-xs" %></td>
       </tr>
       <% end %>
     </tbody>
   </table>
 </div>
+<% end %>

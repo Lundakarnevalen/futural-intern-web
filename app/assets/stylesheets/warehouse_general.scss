@@ -1,3 +1,7 @@
+/*
+ *= require bootstrap-datepicker
+ */
+
 body {
   padding-top: 50px;
 }
@@ -103,9 +107,16 @@ body {
 
   .navbar-collapse {
     max-height: none;
-    width: 16.6666666667%;
+    width: 25%;
   }
 }
+
+@media (min-width: 992px) {
+  .navbar-collapse {
+    max-height: none;
+    width: 16.6666666667%;
+  }
+}  
 
 /*
  * Main content

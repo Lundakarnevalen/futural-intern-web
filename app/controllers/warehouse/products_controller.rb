@@ -1,8 +1,9 @@
 class Warehouse::ProductsController < Warehouse::ApplicationController
-  before_filter :find_product, only: [:show, :edit, :update]
+  before_filter :find_product, only: [:show, :edit, :update, :inactivate, :activate]
   def index
-    @products_active = Product.find_all_by_active(true)
-    @products_inactive = Product.find_all_by_active(false)
+    @products_active = Product.where(warehouse_code: @warehouse_code, active: true).order("name DESC")
+    @products_inactive = Product.where(warehouse_code: @warehouse_code, active: false).order("name DESC")
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
 
   def show
@@ -10,12 +11,15 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def new
     @product = Product.new
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
 
   def create
-     product = Product.new(product_params)
+    product = Product.new(product_params)
+    product.active = true
+    product.warehouse_code = @warehouse_code
     if product.save
-      redirect_to warehouse_products_path
+      redirect_to products_path
     else
       render :new
     end
@@ -26,7 +30,7 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def update
     if @product.update_attributes(product_params)
-      redirect_to warehouse_products_path
+      redirect_to products_path
     else
       render :edit
     end
@@ -34,27 +38,25 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def destroy
     Product.destroy params[:id]
-    redirect_to warehouse_products_path
+    redirect_to products_path
   end
 
   def incoming_deliveries
-    @products = Product.all
+    @products = Product.where(warehouse_code: @warehouse_code)
   end
   
   def weekly_overview
-    @products = Product.all
+    @products = Product.where(warehouse_code: @warehouse_code)
   end
   
   def inactivate
-    find_product
     @product.update_attributes(active: false)
-    redirect_to warehouse_products_path
+    redirect_to products_path
   end
 
   def activate
-    find_product
     @product.update_attributes(active: true)
-    redirect_to warehouse_products_path
+    redirect_to products_path
   end
 
   private

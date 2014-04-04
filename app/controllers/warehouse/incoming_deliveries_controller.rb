@@ -1,29 +1,28 @@
 class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
-  before_filter :find_incoming_delivery, only: [:show, :update]
+  before_filter :find_incoming_delivery, only: [:show, :edit, :update]
 
   def index
-    @incoming_deliveries_ongoing = IncomingDelivery.find_all_by_ongoing(true, :order => "created_at DESC")
-    @incoming_deliveries_past = IncomingDelivery.find_all_by_ongoing(false, :order => "created_at DESC")
+    @incoming_deliveries_ongoing = IncomingDelivery.where(ongoing: true, warehouse_code: @warehouse_code).order("created_at DESC")
+    @incoming_deliveries_past = IncomingDelivery.where(ongoing: false, warehouse_code: @warehouse_code).order("created_at DESC")
   end
 
   def show
-    @incoming_delivery = find_incoming_delivery
   end
   
   def edit
-    @incoming_delivery = find_incoming_delivery
-    @products = Product.all
+    @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
   end
 
   def new
     @incoming_delivery = IncomingDelivery.new
-    @products = Product.all
+    @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
     @incoming_delivery.incoming_delivery_products.build
   end
 
   def create
     @incoming_delivery = IncomingDelivery.new(incoming_delivery_params)
     @incoming_delivery.karnevalister.push current_user.karnevalist
+    @incoming_delivery.warehouse_code = @warehouse_code
     if params[:finished]
       @incoming_delivery.ongoing = false
     else
@@ -50,9 +49,9 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
         #end  
      # end
     #end
-      redirect_to warehouse_incoming_deliveries_path
+      redirect_to incoming_deliveries_path
     else
-      @products = Product.all
+      @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
       @incoming_delivery.incoming_delivery_products.build
       render :new
     end
@@ -64,10 +63,10 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
     else
       @incoming_delivery.ongoing = true
     end
-    if @incoming_delivery.update_attributes(params[:incoming_delivery])
-      redirect_to warehouse_incoming_deliveries_path
+    if @incoming_delivery.update_attributes(incoming_delivery_params)
+      redirect_to incoming_deliveries_path
     else
-      @products = Product.all
+      @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
       render :edit
     end
   end
