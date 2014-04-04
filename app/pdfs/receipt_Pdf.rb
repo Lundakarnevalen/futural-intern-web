@@ -15,12 +15,14 @@ class ReceiptPdf < Prawn::Document
     text "Order nr #{@order.id},"
     text "Beställare: #{@order.karnevalist.fornamn} #{@order.karnevalist.efternamn}"
     text "Status: #{@order.status}"
-    text "Beställningsdatum: #{@order.order_date}"
-    text "Hämtdatum: #{@order.delivery_date}"
+    order_date = @order.order_date.strftime("%Y-%m-%d %H:%M")
+    text "Beställningsdatum: #{order_date}"
+    !@order.delivery_date.blank? ? collect_date = @order.delivery_date.strftime("%Y-%m-%d") : collect_date = ""
+    text "Hämtdatum: #{collect_date}"
     text "Totalpris: #{@order.total_sum} kr"
 
-    if warehouse_code == 0
-      image @image_path, :position => :center, :scale => 0.7
-    end
+    image @image_path, :position => :center, :scale => 0.7
+
+    
   end
 end
