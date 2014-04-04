@@ -130,6 +130,17 @@ a:hover {
     text-decoration: underline;
 }
 
+a.sign_in_link {
+    font-size: 23px;
+    font-weight: bold;
+    color: #ee685f;
+    line-height: 40px;
+}
+
+a.sign_in_link:hover {
+    text-decoration: underline;
+}
+
 input, textarea, a.button {
 	padding: 20px;
 	width: 100%;
