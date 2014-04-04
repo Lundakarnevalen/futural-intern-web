@@ -51,6 +51,26 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @order.warehouse_code = @warehouse_code
     if @order.save
       redirect_to confirm_order_path(@order)
+
+      @order.products.each do |p|
+        @order_product = OrderProduct.where(order_id: @order.id, product_id: p.id).first
+        amount = @order_product.amount
+        if amount > 0
+          if p.stock_balance_not_ordered >= amount
+            p.stock_balance_not_ordered -= amount
+            p.stock_balance_ordered += amount
+            p.save
+          elsif (p.stock_balance_not_ordered > 0)
+            stand_by = amount - p.stock_balance_not_ordered
+            p.stock_balance_ordered += p.stock_balance_not_ordered
+            p.stock_balance_stand_by += stand_by
+            p.save
+          end
+        end
+      end
+
+
+
     else
       @bestallare = true
       @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
@@ -165,20 +185,24 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         stand_by = product.stock_balance_stand_by
         return_amount = o.amount
         if (product.amount(order_id) >= return_amount.to_i)
-            if stand_by == 0
+            if (stand_by == 0) && (product.stock_balance_ordered == 0)
               stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
               product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
-            elsif stand_by >= new_amount.to_i
+            elsif stand_by >= return_amount.to_i
               stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
               stand_by -= return_amount.to_i
               product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
               product.update_attributes(:stock_balance_stand_by => stand_by)
             else
-              stock_balance_ordered = product.stock_balance_ordered + stand_by
-              stock_balance_not_ordered = return_amount.to_i - stand_by
+
+              temp = return_amount - product.stock_balance_stand_by
+              stand_by = 0
+              stock_balance_ordered = product.stock_balance_ordered - temp
+              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount
+
               product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
               product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-              product.update_attributes(:stock_balance_stand_by => 0)
+              product.update_attributes(:stock_balance_stand_by => stand_by)
             end
             o.amount = o.amount - return_amount.to_i
             o.update_attributes(:amount => o.amount)
