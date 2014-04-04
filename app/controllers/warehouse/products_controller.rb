@@ -10,12 +10,15 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def new
     @product = Product.new
+    @product_categories = ProductCategory.all
   end
 
   def create
      product = Product.new(product_params)
+     product.active = true
+     product.warehouse_code = @warehouse_code
     if product.save
-      redirect_to warehouse_products_path
+      redirect_to products_path
     else
       render :new
     end
