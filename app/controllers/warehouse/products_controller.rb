@@ -1,8 +1,9 @@
 class Warehouse::ProductsController < Warehouse::ApplicationController
-  before_filter :find_product, only: [:show, :edit, :update]
+  before_filter :find_product, only: [:show, :edit, :update, :inactivate, :activate]
   def index
-    @products_active = Product.find_all_by_active(true)
-    @products_inactive = Product.find_all_by_active(false)
+    @products_active = Product.where(warehouse_code: @warehouse_code, active: true).order("name DESC")
+    @products_inactive = Product.where(warehouse_code: @warehouse_code, active: false).order("name DESC")
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
 
   def show
@@ -10,13 +11,13 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def new
     @product = Product.new
-    @product_categories = ProductCategory.all
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
 
   def create
-     product = Product.new(product_params)
-     product.active = true
-     product.warehouse_code = @warehouse_code
+    product = Product.new(product_params)
+    product.active = true
+    product.warehouse_code = @warehouse_code
     if product.save
       redirect_to products_path
     else
@@ -29,7 +30,7 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def update
     if @product.update_attributes(product_params)
-      redirect_to warehouse_products_path
+      redirect_to products_path
     else
       render :edit
     end
@@ -37,48 +38,25 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def destroy
     Product.destroy params[:id]
-    redirect_to warehouse_products_path
+    redirect_to products_path
   end
 
   def incoming_deliveries
-    @products = Product.all
-  end
-  
-  def update_multiple
-    params['new_amount'].each do |product_id, new_amount|
-      if !new_amount.blank?
-        product = Product.where(:id => product_id).first
-        stand_by = product.stock_balance_stand_by
-        if stand_by == 0
-          stock_balance_not_ordered = product.stock_balance_not_ordered + new_amount.to_i
-          product.update_attributes(:stock_balance_not_ordered + stock_balance_not_ordered)
-        elsif stand_by >= new_amount.to_i
-          stock_balance_ordered = product.stock_balance_ordered + new_amount.to_i
-          stand_by -= new_amount.to_i
-          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          product.update_attributes(:stock_balance_stand_by => stand_by)
-        else
-          stock_balance_ordered = product.stock_balance_ordered + stand_by
-          stock_balance_not_ordered = new_amount.to_i - stand_by
-          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-          product.update_attributes(:stock_balance_stand_by => 0)
-        end  
-      end
-    end
-    redirect_to incoming_deliveries_warehouse_products_path
+    @products = Product.where(warehouse_code: @warehouse_code)
   end
 
+  def weekly_overview
+    @products = Product.where(warehouse_code: @warehouse_code)
+  end
+  
   def inactivate
-    find_product
     @product.update_attributes(active: false)
-    redirect_to warehouse_products_path
+    redirect_to products_path
   end
 
   def activate
-    find_product
     @product.update_attributes(active: true)
-    redirect_to warehouse_products_path
+    redirect_to products_path
   end
 
   private
