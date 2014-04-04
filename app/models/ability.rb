@@ -66,7 +66,7 @@ class Ability
     
     # Lagersystem - beställare
     if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
-      can [:create, :read], Order, :karnevalist_id => user.karnevalist.id
+      can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
     end
     

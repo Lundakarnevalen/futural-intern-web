@@ -22,6 +22,7 @@ gem 'pry-doc'
 gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'simple_calendar', '~> 0.1.10'
 gem 'prawn'
+gem 'bootstrap-datepicker-rails'
 
 group :production do
   gem 'rails_12factor'

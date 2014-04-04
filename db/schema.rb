@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140403152811) do
+ActiveRecord::Schema.define(version: 20140404013529) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -164,9 +164,11 @@ ActiveRecord::Schema.define(version: 20140403152811) do
     t.integer  "karnevalist_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "sektion_id"
   end
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
+  add_index "orders", ["sektion_id"], name: "index_orders_on_sektion_id"
 
   create_table "phones", force: true do |t|
     t.text     "google_token"
@@ -195,6 +197,7 @@ ActiveRecord::Schema.define(version: 20140403152811) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "warehouse_code"
   end
 
   create_table "products", force: true do |t|

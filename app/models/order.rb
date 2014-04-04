@@ -1,5 +1,6 @@
 class Order < ActiveRecord::Base
   belongs_to :karnevalist
+  belongs_to :sektion
   has_many :order_products
   has_many :products, through: :order_products
   validates :karnevalist, presence: true
