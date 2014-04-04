@@ -29,7 +29,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     respond_to do |format|
       format.html
       format.pdf do
-        pdf = ReceiptPdf.new(@order, view_context)
+        pdf = ReceiptPdf.new(@order, view_context, @warehouse_code)
         send_data pdf.render, filename:
         "order_#{@order.created_at.strftime("%Y-%m-%d")}.pdf",
         type: "application/pdf", disposition: "inline"
