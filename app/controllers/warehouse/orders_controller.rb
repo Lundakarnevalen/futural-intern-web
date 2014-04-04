@@ -68,6 +68,25 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.status = "Bearbetas"
     end
     if @order.update_attributes(order_params)
+        @order.order_products.each do |order_product|
+          product = Product.find(order_product.product_id)
+          in_stock = product.stock_balance_not_ordered
+          if in_stock == 0
+            stock_balance_stand_by = product.stock_balance_stand_by + order_product.amount.to_i
+            product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)   
+          elsif in_stock >= order_product.amount.to_i
+            stock_balance_ordered = product.stock_balance_ordered + order_product.amount.to_i
+            in_stock -= order_product.amount.to_i
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+            product.update_attributes(:stock_balance_not_ordered => in_stock)
+          else
+            stock_balance_ordered = product.stock_balance_ordered + in_stock
+            stock_balance_stand_by = order_product.amount.to_i - in_stock
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+            product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
+            product.update_attributes(:stock_balance_not_ordered => 0)
+          end
+        end  
       redirect_to order_path(@order)
     else
       render :confirm_order

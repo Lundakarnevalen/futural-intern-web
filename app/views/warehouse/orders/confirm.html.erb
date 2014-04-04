@@ -56,5 +56,19 @@
   </div>
 </div>
 </div>
+<hr>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6">
+ 
+  <% if @warehouse_code == 0 %>
+    <p><strong>Information:</strong><br>Räkna med att varor i rest tar ca 1 vecka att få hem från och med idag. När dessa fyllts på i lagret kommer du att få ett mail som säger att du kan hämta ut varorna. Varor i rest räknas alltså som en del av din beställning.</p>
+  <% else %>
+    <p><strong>Information:</strong><br>Beställning sker senast måndagen kl 15:00(..) den vecka leveransen ska hämtas ut</p>
+    <p>Uthämtning sker på onsdagar 11:00 till 13:00 samt fredagar 12:00 till14:00, i AF-borgens källare.</p>
+    <p>Vid större arrangemang där leveranser önskas direkt till plats bör kontakt tas senast två veckor innan för att vi ska kunna administrera. Tänk även på att ha alkoholtillståndet färdigt i god tid, inget tillstånd betyder ingen leverans!</p>
+    <p>Vi tar gärna emot returer, men enbart föranmälda under våra öppettider. Vi tar endast emot hela förpackningar, flaskor och flak!</p>
+  <% end %>
+</div>
+</div>
 <%= f.submit "Bekräfta order", class: "btn btn-primary", name: "confirm" %>
 <% end %>

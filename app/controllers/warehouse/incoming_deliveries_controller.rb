@@ -10,7 +10,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
   end
   
   def edit
-    @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
+    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
   end
 
   def new
@@ -29,29 +29,28 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
       @incoming_delivery.ongoing = true
     end
     if @incoming_delivery.save
-      #params['new_amount'].each do |product_id, new_amount|
-      #if !new_amount.blank?
-       # product = Product.where(:id => product_id).first
-        #stand_by = product.stock_balance_stand_by
-        #if stand_by == 0
-         # product.update_attributes(:stock_balance_not_ordered => new_amount)
-        #elsif stand_by >= new_amount.to_i
-         # stock_balance_ordered = product.stock_balance_ordered + new_amount.to_i
-          #stand_by -= new_amount.to_i
-          #product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-         # product.update_attributes(:stock_balance_stand_by => stand_by)
-        #else
-          #stock_balance_ordered = product.stock_balance_ordered + stand_by
-          #stock_balance_not_ordered = new_amount.to_i - stand_by
-          #product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          #product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-         # product.update_attributes(:stock_balance_stand_by => 0)
-        #end  
-     # end
-    #end
-      redirect_to incoming_deliveries_path
+        @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
+          product = Product.find(incoming_delivery.product_id)
+          stand_by = product.stock_balance_stand_by
+          if stand_by == 0
+            stock_balance_not_ordered = product.stock_balance_not_ordered + incoming_delivery.amount.to_i
+            product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
+          elsif stand_by >= new_amount.to_i
+            stock_balance_ordered = product.stock_balance_ordered + incoming_delivery.amount.to_i
+            stand_by -= incoming_delivery.amount.to_i
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+            product.update_attributes(:stock_balance_stand_by => stand_by)
+          else
+            stock_balance_ordered = product.stock_balance_ordered + stand_by
+            stock_balance_not_ordered = incoming_delivery.amount.to_i - stand_by
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+            product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
+            product.update_attributes(:stock_balance_stand_by => 0)
+          end
+        end  
+      redirect_to products_path
     else
-      @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
+      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
       @incoming_delivery.incoming_delivery_products.build
       render :new
     end
