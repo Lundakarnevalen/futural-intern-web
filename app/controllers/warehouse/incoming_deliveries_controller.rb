@@ -48,7 +48,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_stand_by => 0)
           end
         end  
-      redirect_to products_path
+      redirect_to incoming_delivery_path
     else
       @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
       @incoming_delivery.incoming_delivery_products.build
