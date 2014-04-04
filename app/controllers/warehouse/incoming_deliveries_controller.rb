@@ -15,7 +15,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
 
   def new
     @incoming_delivery = IncomingDelivery.new
-    @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
+    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
     @incoming_delivery.incoming_delivery_products.build
   end
 

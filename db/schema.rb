@@ -13,16 +13,6 @@
 
 ActiveRecord::Schema.define(version: 20140404013529) do
 
-  create_table "clusters", force: true do |t|
-    t.float    "lat"
-    t.float    "lng"
-    t.integer  "quantity",   default: 1
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
-
   create_table "incoming_deliveries", force: true do |t|
     t.string   "invoice_nbr"
     t.integer  "warehouse_code"
@@ -100,8 +90,6 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.text     "ios_token"
-    t.integer  "tilldelad_sektion2"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -144,7 +132,6 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "updated_at"
     t.string   "title"
     t.text     "message"
-    t.integer  "recipient_id"
   end
 
   create_table "order_products", force: true do |t|
@@ -176,22 +163,9 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "updated_at"
   end
 
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
-
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
   end
-
-  create_table "posts", force: true do |t|
-    t.string   "title"
-    t.string   "content"
-    t.integer  "sektion_id"
-    t.integer  "karnevalist_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "posts", ["sektion_id", "karnevalist_id", "created_at"], name: "index_posts_on_sektion_id_and_karnevalist_id_and_created_at"
 
   create_table "product_categories", force: true do |t|
     t.string   "name"
@@ -238,9 +212,8 @@ ActiveRecord::Schema.define(version: 20140404013529) do
   end
 
   create_table "sektioner", force: true do |t|
-    t.string  "name",         null: false
+    t.string  "name",     null: false
     t.integer "podio_id"
-    t.integer "podio_sub_id"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
