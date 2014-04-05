@@ -73,7 +73,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
           in_stock = product.stock_balance_not_ordered
           if in_stock == 0
             stock_balance_stand_by = product.stock_balance_stand_by + order_product.amount.to_i
-            product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)   
+            product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
           elsif in_stock >= order_product.amount.to_i
             stock_balance_ordered = product.stock_balance_ordered + order_product.amount.to_i
             in_stock -= order_product.amount.to_i
@@ -86,7 +86,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
             product.update_attributes(:stock_balance_not_ordered => 0)
           end
-        end  
+        end
       redirect_to order_path(@order)
     else
       render :confirm_order
@@ -100,7 +100,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def calendar
-    @orders = Order.where.not(delivery_date: nil)
+    @orders = Order.where("delivery_date IS NOT NULL AND warehouse_code = ?", @warehouse_code)
   end
 
   def return_products
@@ -113,7 +113,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
           if (product.amount(params['order_id']) >= return_amount.to_i)
             if stand_by == 0
               stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
+              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             elsif stand_by >= new_amount.to_i
               stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
               stand_by -= return_amount.to_i
@@ -129,7 +129,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
             order_product.amount = order_product.amount - return_amount.to_i
             order_product.update_attributes(:amount => order_product.amount)
           end
-        end  
+        end
       end
     end
     redirect_to orders_path
@@ -167,7 +167,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         if (product.amount(order_id) >= return_amount.to_i)
             if (stand_by == 0) && (product.stock_balance_ordered == 0)
               stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
+              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             elsif stand_by >= return_amount.to_i
               stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
               stand_by -= return_amount.to_i
