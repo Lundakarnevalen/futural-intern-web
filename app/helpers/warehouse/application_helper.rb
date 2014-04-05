@@ -22,6 +22,14 @@
   def new_order_path
     @warehouse_code == 0 ? new_fabriken_order_path : new_fest_order_path
   end
+  
+  def confirm_order_path(o)
+    @warehouse_code == 0 ? confirm_fabriken_order_path(o) : confirm_fest_order_path(o)
+  end
+  
+  def confirm_put_order_path(o)
+    @warehouse_code == 0 ? confirm_put_fabriken_order_path(o) : confirm_put_fest_order_path(o)
+  end
 
   def list_orders_path
     @warehouse_code == 0 ? list_fabriken_orders_path : list_fest_orders_path
@@ -30,14 +38,30 @@
   def return_products_order_path
     @warehouse_code == 0 ? return_products_fabriken_order_path : return_products_fest_order_path
   end
+  
+  def direct_selling_orders_path
+    @warehouse_code == 0 ? direct_selling_fabriken_orders_path : direct_selling_fest_orders_path
+  end
+
+  def direct_selling_post_orders_path
+    @warehouse_code == 0 ? direct_selling_post_fabriken_orders_path : direct_selling_post_fest_orders_path
+  end
 
   #deliveries
   def incoming_deliveries_path
     @warehouse_code == 0 ? fabriken_incoming_deliveries_path : fest_incoming_deliveries_path
   end
+  
+  def incoming_delivery_path(i, format = :html)
+    @warehouse_code == 0 ? fabriken_incoming_delivery_path(i, format) : fest_incoming_delivery_path(i, format)
+  end
 
   def new_incoming_delivery_path
     @warehouse_code == 0 ? new_fabriken_incoming_delivery_path : new_fest_incoming_delivery_path
+  end
+  
+  def edit_incoming_delivery_path(i)
+    @warehouse_code == 0 ? edit_fabriken_incoming_delivery_path(i) : edit_fest_incoming_delivery_path(i)
   end
   # products
   def weekly_overview_products_path
@@ -54,6 +78,10 @@
 
   def edit_product_path(p)
     @warehouse_code == 0 ? edit_fabriken_product_path(p) : edit_fest_product_path(p)
+  end
+  
+  def activate_product_path(p)
+    @warehouse_code == 0 ? activate_fabriken_product_path(p) : activate_fest_product_path(p)
   end
 
   def inactivate_product_path(p)

@@ -47,12 +47,15 @@
 </div>
 <hr>
 <% end %>
-<%= form_for @order, url: {action: "confirm_put"}, method: "put" do |f| %>
+<%= form_for @order, url: confirm_put_order_path(@order), method: "put" do |f| %>
 <div class="row">
 <div class="col-xs-12 col-sm-12 col-md-6">
   <div class="form-group">
     <%= f.label :delivery_date, "Hämtdatum" %>
     <%= f.text_field :delivery_date, class: "form-control", data: { behaviour: "datepicker" } %>
+    <% if @warehouse_code == 1 %>
+      <p class="help-block help-block-red">Uthämtning kan ske endast på onsdagar och fredagar.</p>
+    <% end %>
   </div>
 </div>
 </div>
