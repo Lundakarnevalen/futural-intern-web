@@ -1,6 +1,6 @@
 <h3>Redigera vara</h3>
-<%= form_for [@product] do |f| %>
-  <% if current_user.is? :admin_fabriken %> 
+<%= form_for [form_prefix, @product] do |f| %>
+  <% if current_user.is? :admin_fabriken %>
   <div class="checkbox">
     <%= f.check_box :product_type %>
     <%= f.label :product_type, "Specialvara Pontus" %>
@@ -90,6 +90,6 @@
         <%= f.text_area :notes, rows: 5, class: "form-control" %>
       </div>
     </div>
-  </div>  
+  </div>
   <%= f.submit "Spara", class: "btn btn-primary" %>
 <% end %>
