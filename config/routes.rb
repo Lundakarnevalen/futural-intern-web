@@ -38,10 +38,10 @@ Futural::Application.routes.draw do
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
     end
   end
-
+=begin
   # concern for festmästeriet / fabriken
   concern :party_factory do
-    resources :orders, controller: 'warehouse/orders' do
+    resources :orders, controller: 'warehouse/products' do
       collection do
         get 'calendar', to: 'warehouse/orders#calendar'
         get 'list', to: 'warehouse/orders#list'
@@ -73,10 +73,48 @@ Futural::Application.routes.draw do
   scope '/fabriken' do
     concerns :party_factory
   end
-
   scope '/festmasteriet' do
     concerns :party_factory
   end
+=end
+  concern :party_factory do
+    resources :orders do
+      collection do
+        get 'calendar', to: 'orders#calendar'
+        get 'list', to: 'orders#list'
+        get 'search/:search_param', to: 'orders#search'
+        get 'search', to:'orders#search'
+      end
+      member do
+        put 'return_products', to: 'orders#return_products'
+        get 'confirm', to: 'orders#confirm'
+        put 'confirm_put', to: 'orders#confirm_put'
+      end
+    end
+
+    resources :products do
+      collection do
+        get 'weekly_overview', to: 'products#weekly_overview'
+      end
+      member do
+        get 'inactivate', to: 'products#inactivate'
+        get 'activate', to: 'products#activate'
+      end
+    end
+
+    resources :incoming_deliveries
+    resources :product_categories
+    resources :order_products
+  end
+
+  namespace :warehouse, path: 'fabriken', as: 'fabriken' do
+    concerns :party_factory
+  end
+
+  namespace :warehouse, path: 'festmasteriet', as: 'fest' do
+    concerns :party_factory
+  end
+
   get '/home', to: 'home#index'
 
   devise_for :users
