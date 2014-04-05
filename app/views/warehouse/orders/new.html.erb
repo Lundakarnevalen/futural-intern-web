@@ -1,5 +1,5 @@
 <h3>Skapa en order</h3>
-<%= form_for [@order] do |f| %>
+<%= form_for [form_prefix, @order] do |f| %>
 <div class="row">
 <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-9">
 <table class="table table-striped" id="table">
@@ -38,6 +38,6 @@
     <%= f.text_area :comment, rows: 5, class: "form-control" %>
   </div>
 </div>
-</div>  
+</div>
 <%= f.submit "Gå vidare", class: "btn btn-primary" %>
 <% end %>
