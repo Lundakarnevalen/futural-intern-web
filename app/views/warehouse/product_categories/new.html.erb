@@ -1,5 +1,5 @@
 <h3>Ny varukategori</h3>
-<%= form_for [@product_category] do |f| %>
+<%= form_for [form_prefix, @product_category] do |f| %>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6">
       <div class="form-group">
@@ -7,6 +7,6 @@
         <%= f.text_field :name, class: "form-control" %>
       </div>
     </div>
-  </div>  
+  </div>
   <%= f.submit "Spara", class: "btn btn-primary" %>
 <% end %>

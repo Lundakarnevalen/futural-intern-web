@@ -11,6 +11,10 @@
     @warehouse_code == 0 ? calendar_fabriken_orders_path : calendar_fest_orders_path
   end
 
+  def order_path(o, format = :html)
+    @warehouse_code == 0 ? fabriken_order_path(o, format) : fest_order_path(o, format)
+  end
+
   def orders_path
     @warehouse_code == 0 ? fabriken_orders_path : fest_orders_path
   end
@@ -21,6 +25,10 @@
 
   def list_orders_path
     @warehouse_code == 0 ? list_fabriken_orders_path : list_fest_orders_path
+  end
+
+  def return_products_order_path
+    @warehouse_code == 0 ? return_products_fabriken_order_path : return_products_fest_order_path
   end
 
   #deliveries
@@ -40,6 +48,14 @@
     @warehouse_code == 0 ? fabriken_products_path : fest_products_path
   end
 
+  def product_path(p, format = :html)
+    @warehouse_code == 0 ? fabriken_product_path(p, format) : fest_product_path(p, format)
+  end
+
+  def edit_product_path(p)
+    @warehouse_code == 0 ? edit_fabriken_product_path(p) : edit_fest_product_path(p)
+  end
+
   def inactivate_product_path(p)
     @warehouse_code == 0 ? inactivate_fabriken_product_path(p) : inactivate_fest_product_path(p)
   end
@@ -48,17 +64,21 @@
     @warehouse_code == 0 ? new_fabriken_product_path : new_fest_product_path
   end
 
+  # categories
   def product_categories_path
     @warehouse_code == 0 ? fabriken_product_categories_path : fest_product_categories_path
+  end
+
+  def product_category_path(p, format = :html)
+    @warehouse_code == 0 ? fabriken_product_category_path(p, format) : fest_product_category_path(p, format)
   end
 
   def new_product_category_path
     @warehouse_code == 0 ? new_fabriken_product_category_path : new_fest_product_category_path
   end
 
-  def edit_product_path(p)
-    @warehouse_code == 0 ? edit_fabriken_product_path(p) : edit_fest_product_path(p)
+  def edit_product_category_path(p)
+    @warehouse_code == 0 ? edit_fabriken_product_category_path(p) : edit_fest_product_category_path(p)
   end
-
 
 end
