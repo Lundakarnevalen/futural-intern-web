@@ -94,6 +94,10 @@ class Karnevalist < ActiveRecord::Base
     save
   end
 
+  def name
+    "#{fornamn} #{efternamn}"
+  end
+
   # In memory only
   def password
     @pass

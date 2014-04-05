@@ -9,8 +9,8 @@
       <% if !(current_user.is? :bestallare_fabriken) && !(current_user.is? :bestallare_festmasteriet) %>
       <ul class="nav nav-sidebar">
         <li class="nav-header disabled"><a>Orderhantering</a></li>
-        <li><%= link_to "Alla ordrar", list_orders_path%><li>
-        <li><%= link_to "Direktförsäljning", list_orders_path%><li>
+        <li class="<%= 'active' if current_page?(list_orders_path) %>"><%= link_to "Alla ordrar", list_orders_path %><li>
+        <li class="<%= 'active' if current_page?(direct_selling_orders_path) %>"><%= link_to "Direktförsäljning", direct_selling_orders_path %><li>
       </ul>
 
       <ul class="nav nav-sidebar">

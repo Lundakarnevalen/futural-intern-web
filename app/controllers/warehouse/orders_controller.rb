@@ -12,6 +12,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @levererad = false
     @makulerad = false
     @part_delivered = false
+    # TODO: flytta till update:
     if !params[:status].blank?
       @order.update_attributes(status: params[:status])
       if @order.status == "Makulerad"
@@ -93,6 +94,48 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     end
   end
 
+  def direct_selling
+    if @warehouse_code == 0
+      @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken", "admin"])
+    else
+      @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
+    end
+    @kunder = Array.new
+    @roles.each do |r|
+      r.users.each do |u|
+        @kunder.push u.karnevalist if !u.karnevalist.blank?
+      end
+    end
+    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+    @order = Order.new
+    @order.order_products.build
+  end
+
+  def direct_selling_post
+    @order = Order.new(order_params)
+    @order.warehouse_code = @warehouse_code
+    if @order.save
+      redirect_to order_path(@order)
+    else
+      if @warehouse_code == 0
+        @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken", "admin"])
+      else
+        @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
+      end
+      @kunder = Array.new
+      @roles.each do |r|
+        r.users.each do |u|
+          @kunder.push u.karnevalist if !u.karnevalist.blank?
+        end
+      end
+      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+      @order.order_products.build
+      render :direct_selling
+    end
+  end
+
   def list
     @orders = Order.where("status IS NOT NULL").where(warehouse_code: @warehouse_code).order("id DESC")
     @search = true
@@ -156,7 +199,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order = Order.find(params[:id])
     end
     def order_params
-      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :comment, order_products_attributes: [:id, :_destroy, :amount, :product_id])
+      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :comment, :sektion_id, :karnevalist_id, order_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
     def update_warehouse order_id # TODO: Fixa makulering och delleverans/makulering
       order_products = OrderProduct.where(:order_id => order_id)
