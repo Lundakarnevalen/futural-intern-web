@@ -96,7 +96,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def direct_selling
     if @warehouse_code == 0
-      @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken", "admin"])
+      @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken"])
     else
       @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
     end

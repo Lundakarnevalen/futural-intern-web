@@ -83,7 +83,9 @@ Futural::Application.routes.draw do
         get 'calendar', to: 'orders#calendar'
         get 'list', to: 'orders#list'
         get 'search/:search_param', to: 'orders#search'
-        get 'search', to:'orders#search'
+        get 'search', to: 'orders#search'
+        get 'direct_selling', to: 'orders#direct_selling'
+        post 'direct_selling_post', to: 'orders#direct_selling_post'
       end
       member do
         put 'return_products', to: 'orders#return_products'

@@ -1,6 +1,6 @@
 <h3>Ny vara</h3>
-<%= form_for [@product] do |f| %>
-  <% if (current_user.is? :admin_fabriken) || (current_user.is? :admin) %> 
+<%= form_for [form_prefix, @product] do |f| %>
+  <% if @warehouse_code == 0 %> 
   <div class="checkbox">
     <%= f.check_box :product_type %>
     <%= f.label :product_type, "Specialvara Pontus" %>
