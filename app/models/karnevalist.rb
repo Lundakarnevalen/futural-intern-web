@@ -14,6 +14,8 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :sektion2, :foreign_key => :tilldelad_sektion2,
                         :class_name => Sektion
   accepts_nested_attributes_for :user
+  has_many :orders
+  has_and_belongs_to_many :incoming_deliveries
 
   mount_uploader :foto, FotoUploader
 
@@ -130,6 +132,10 @@ class Karnevalist < ActiveRecord::Base
   def checkin
     self[:avklarat_steg] = 2
     save
+  end
+
+  def name
+    "#{fornamn} #{efternamn}"
   end
 
   # In memory only

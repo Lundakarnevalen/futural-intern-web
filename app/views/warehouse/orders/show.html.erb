@@ -1,0 +1,79 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Order <%= @order.id %></h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Status: </strong> <%= @order.status %></p>
+        <p><strong>Beställare: </strong> <%= "#{@order.karnevalist.fornamn} #{@order.karnevalist.efternamn}" %></p>
+        <p><strong>Sektion: </strong> <%= @order.sektion.name %></p>
+        <p><strong>Beställningsdatum: </strong> <%= @order.order_date.strftime("%Y-%m-%d %H:%M") %></p>
+        <p><strong>Hämtdatum: </strong> <%= !@order.delivery_date.blank? ? @order.delivery_date.strftime("%Y-%m-%d") : "" %></p>
+        <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>
+        <p><%= link_to "Visa Kvitto", order_path(@order.id, :format => "pdf") %></p>
+
+        <% if (current_user.is? :admin) || (current_user.is? :kassor) %>
+        <tr>
+          <% if @levererad == false && @makulerad == false && @part_delivered == false %>
+          <td><%= link_to "Leverera", params.merge(:status => "Levererad"), :class => "btn btn-success"%></td>
+          <td><%= link_to "Delleverera order", params.merge(:status => "Dellevererad"), class: "btn btn-default" %></td>
+          <td><%= link_to "Makulera order", params.merge(:status => "Makulerad"), class: "btn btn-danger" %></td>
+          <% end %>
+        </tr>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<% if ((current_user.is? :admin) || (current_user.is? :kassor)) && (@order.status == "Levererad")
+    @show_return = true
+  else
+    @show_return = false
+  end %> 
+<div class="row">
+  <div class="col-lg-12">
+    <table class="table table-striped" id="table">
+      <thead>
+        <tr>
+          <th>Vara</th>
+          <th>Mängd</th>
+          <th>Styckpris</th>
+          <th>Totalpris</th>
+          <% if @show_return %>
+          <th>Returnera antal<th>
+          <% end %>
+        </tr>
+      </thead>
+      <tbody>
+        <%= form_tag return_products_order_path, :method => :put do |f| %>
+        <% @order.products.each do |p| %>
+        <% amount = p.amount(@order.id) %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= "#{amount} #{p.unit}" %></td>
+          <td><%= number_to_currency(p.sale_price) %></td>
+          <td><%= number_to_currency(p.total_price(amount)) %></td>
+          <% if @show_return %>
+          <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 1, class: "form-control" %><td>
+          <% end %>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+    <% end %>
+  </div>
+</div>
+<% if !@order.comment.blank? %>
+<hr>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <p><strong>Kommentar:</strong><br><%= @order.comment %></p>
+  </div>
+</div>
+<hr>
+<% end %>
+<% if @show_return %>
+  <%= hidden_field_tag 'order_id', @order.id %>
+  <%= submit_tag "Returnera varor", class: "btn btn-primary" %>
+<% end %>

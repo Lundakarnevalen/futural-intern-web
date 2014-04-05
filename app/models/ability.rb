@@ -75,6 +75,27 @@ class Ability
       end
     end
 
+    # Lagersystem - admin
+    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet)
+      can :manage, Order
+      can :manage, Product
+      can :manage, IncomingDelivery
+      can :manage, ProductCategory
+    end
+    
+    # Lagersystem - beställare
+    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
+      can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
+      can :read, Product
+    end
+    
+    # Lagersystem - kassör
+    if user.is? :kassor_festmasteriet
+      can :manage, Order
+      can :read, :weekly_overview, Product
+      can :manage, IncomingDelivery
+    end
+
     # Admin
     if user.is? :admin
       can :manage, :all

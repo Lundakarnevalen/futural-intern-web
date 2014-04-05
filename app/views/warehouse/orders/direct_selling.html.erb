@@ -1,0 +1,61 @@
+<h3>Direktförsäljning</h3>
+<%= form_for @order, url: direct_selling_post_orders_path, method: "post" do |f| %>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <div class="form-group">
+      <%= f.label :sektion_id, "Sektion" %>
+      <%= f.select :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), {prompt: "-- Välj sektion --"}, {class: "form-control"} %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <div class="form-group">
+      <!-- TODO: Show only customers from chosen section --> 
+      <%= f.label :karnevalist_id, "Kund" %>
+      <%= f.select :karnevalist_id, options_from_collection_for_select(@kunder, :id, :name), {prompt: "-- Välj kund --"}, {class: "form-control"} %>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+<div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-9">
+<table class="table table-striped" id="table">
+  <thead>
+    <tr>
+      <th>Namn</th>
+      <th>Mängd</th>
+      <th>Enhet</th>
+      <th>Pris/enhet</th>
+      <th>I lager</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @products.each do |p| %>
+    <tr>
+      <td><%= p.name %></td> <!-- TODO: Modal link to product -->
+      <td>
+        <%= f.fields_for :order_products do |op| %>
+        <%= op.number_field :amount, min: 0, class: "form-control" %>
+          <%= op.hidden_field :product_id, :value => p.id %>
+        <% end %>
+      </td>
+      <td><%= p.unit %></td>
+      <td><%= number_to_currency(p.sale_price) %></td>
+      <td><%= p.stock_balance_not_ordered %></td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6">
+  <div class="form-group">
+    <%= f.label :comment, "Kommentar" %>
+    <%= f.text_area :comment, rows: 5, class: "form-control" %>
+  </div>
+</div>
+</div>  
+<%= f.submit "Gå vidare", class: "btn btn-primary" %>
+<% end %>
