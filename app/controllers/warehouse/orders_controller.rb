@@ -40,7 +40,12 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def new
     @bestallare = true
-    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
+    if (current_user.is? :bestallare_fabriken)
+      @products = Product.where(active: true, warehouse_code: @warehouse_code, product_type: 0).order("name ASC")
+    else
+      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
+    end
+
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
     @order = current_user.karnevalist.orders.new
     @order.order_products.build

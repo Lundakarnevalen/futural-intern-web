@@ -13,9 +13,9 @@ class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
   end
 
   def create
-    product_category = ProductCategory.new(product_category_params)
-    product_category.warehouse_code = @warehouse_code
-    if product_category.save
+    @product_category = ProductCategory.new(product_category_params)
+    @product_category.warehouse_code = @warehouse_code
+    if @product_category.save
       redirect_to product_categories_path
     else
       render :new
