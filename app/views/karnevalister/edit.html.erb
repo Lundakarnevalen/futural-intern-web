@@ -29,7 +29,7 @@
     </div>
 
     <div class=form-group>
-      <%= f.label :tilldelad_sektion2, 'Sektundär Sektion' %>
+      <%= f.label :tilldelad_sektion2, 'Sekundär Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion2, Sektion.all.collect{ |s| [s.name, s.id] },
                      {:include_blank => 'Ingen'}, 
