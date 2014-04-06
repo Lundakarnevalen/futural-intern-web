@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404013529) do
+ActiveRecord::Schema.define(version: 20140406212744) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sektion_id"
+    t.integer  "order_number"
   end
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"

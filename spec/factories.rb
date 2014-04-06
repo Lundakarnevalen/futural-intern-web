@@ -118,6 +118,7 @@ FactoryGirl.define do
     comment "No comment"
     association :karnevalist, factory: :karnevalist
     warehouse_code 0
+    order_number 0
   end
 
   factory :product_category do
