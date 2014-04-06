@@ -2,3 +2,21 @@
 	*= require bootstrap/bootstrap.min.css
 	*= require karnevalist.css
 */
+
+@font-face {
+
+  font-family: 'Futura';
+  src: font-url('futura-bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+  
+}
+
+@font-face {
+
+  font-family: 'Robot!head';
+  src: font-url('robothead.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  
+}
