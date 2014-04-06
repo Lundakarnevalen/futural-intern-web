@@ -42,7 +42,7 @@
       <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
     <% end %>
     <% #if can? :create, Post %>
-    <% if false # Add posts later %> 
+    <% if false # Add posts later %>
       <li><%= link_to 'Nytt inlägg', new_post_path %></li>
     <% end %>
     <% if can? :create, Notification %>
@@ -86,7 +86,7 @@
   <% end %>
 </ul>
 
-<% #if current_user.can? :read, Post %> 
+<% #if current_user.can? :read, Post %>
 <% if false # Add posts later %>
   <div class="span8">
       <% if @posts.any? %>
