@@ -7,7 +7,7 @@
 	background-color: white;
 	padding: 0.8em 1em 1.2em 1em;
 	border-radius: 0.25em;
-	
+
 	list-style: none;
 	margin-bottom: 0.3em;
 
@@ -54,7 +54,7 @@
 	color: rgba(238,104,95,0.5);
 }
 
-.date {
+.notification_date {
 	position: absolute;
 	color: rgba(238,104,95,0.6);;
 

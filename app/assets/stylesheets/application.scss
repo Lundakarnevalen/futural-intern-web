@@ -1,6 +1,7 @@
 /*
 	*= require bootstrap/bootstrap.min.css
 	*= require karnevalist.css
+  *= require application_old.scss
 */
 
 @font-face {
@@ -9,7 +10,7 @@
   src: font-url('futura-bold.ttf') format('truetype');
   font-weight: bold;
   font-style: normal;
-  
+
 }
 
 @font-face {
@@ -18,5 +19,5 @@
   src: font-url('robothead.ttf') format('truetype');
   font-weight: normal;
   font-style: normal;
-  
+
 }

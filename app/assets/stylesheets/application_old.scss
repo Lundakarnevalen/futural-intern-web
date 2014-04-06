@@ -1,7 +1,6 @@
 /*
  *= require jquery.ui.all
  *= require jquery.modal
- *= require karnevalister.css
  *= require notifications.css
  *= require sektioner.scss
  */
@@ -66,14 +65,14 @@ h3 + p {
 	font-weight: bold;
 }
 
-.header {
+.old_header {
 	width: auto;
 	margin: 0;
 	background: #ee685f url('/images/header_bg.png') right bottom no-repeat;
 	background-size: auto;
 }
 
-.header h1 {
+.old_header h1 {
 	color: white;
 	font-size: 30px;
 	font-weight: 500;
@@ -89,11 +88,11 @@ h3 + p {
 
 @media only screen and (max-width: 640px) {
 
-	.header {
+	.old_header {
 		background-size: auto 60px;
 	}
 
-   .header h1 {
+   .old_header h1 {
 		font-size: 16px;
 		padding: 31px 0 10px 0;
 	}
