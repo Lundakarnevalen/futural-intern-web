@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "updated_at"
   end
 
+  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
+
   create_table "incoming_deliveries", force: true do |t|
     t.string   "invoice_nbr"
     t.integer  "warehouse_code"
@@ -29,8 +31,6 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "updated_at"
   end
 
-  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
-  
   create_table "incoming_deliveries_karnevalister", id: false, force: true do |t|
     t.integer "karnevalist_id"
     t.integer "incoming_delivery_id"
@@ -190,7 +190,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
   end
 
   add_index "posts", ["sektion_id", "karnevalist_id", "created_at"], name: "index_posts_on_sektion_id_and_karnevalist_id_and_created_at"
-  
+
   create_table "product_categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"
