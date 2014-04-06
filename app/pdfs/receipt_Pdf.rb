@@ -13,7 +13,7 @@ class ReceiptPdf < Prawn::Document
     end
     image "app/pdfs/logo.png", :at => [430, cursor], :width => 100, :height => 100
     text "Kvitto från #{@warehouse}", :align => :center, :size => 18
-    text "Order nr #{@order.id},"
+    text "Ordernr #{@order.order_number},"
     text "Beställare: #{@order.karnevalist.fornamn} #{@order.karnevalist.efternamn}"
     text "Status: #{@order.status}"
     order_date = @order.order_date.strftime("%Y-%m-%d %H:%M")
