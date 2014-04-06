@@ -85,6 +85,15 @@ describe (K = Karnevalist) do
       @karnevalist.user.email.should eq('some.other@guy.com')
       @karnevalist.user.valid_password?(@karnevalist.password).should be_true
     end
+
+    it 'sets utcheckad if tilldelade_sektioner.any?' do
+      k = FactoryGirl.build(:karnevalist)
+      s = FactoryGirl.create :sektion
+      k.tilldelade_sektioner << s
+      k.save
+      k.tilldelade_sektioner.should_not be_empty
+      k.utcheckad.should be_true
+    end
   end
 
   describe '.search' do
