@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404013529) do
+ActiveRecord::Schema.define(version: 20140406212744) do
 
   create_table "incoming_deliveries", force: true do |t|
     t.string   "invoice_nbr"
@@ -152,6 +152,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sektion_id"
+    t.integer  "order_number"
   end
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
@@ -212,7 +213,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
   end
 
   create_table "sektioner", force: true do |t|
-    t.string  "name",     null: false
+    t.string  "name",         null: false
     t.integer "podio_id"
   end
 

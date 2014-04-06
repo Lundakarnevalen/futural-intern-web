@@ -19,7 +19,9 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         update_warehouse(@order.id)
       end
     end
+    ##
 
+    # TODO Detta borde vara en metod i modelen.
     if @order.status == "Levererad"
         @levererad = true;
     elsif @order.status == "Makulerad"
@@ -27,6 +29,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     elsif @order.status == "Dellevererad"
         @part_delivered = true
     end
+    ##
     respond_to do |format|
       format.html
       format.pdf do

@@ -19,6 +19,20 @@ describe Order do
     end
   end
 
+  describe "order_number" do
+    it "should set the order_number to Order.count + 1 for orders with warehouse_code on save" do
+      o = FactoryGirl.create(:order)
+      o.order_number.should eq(1)
+    end
+
+    it "should only change for orders with same warehouse_code" do
+      o = FactoryGirl.create(:order, warehouse_code: 1)
+      o2 = FactoryGirl.create(:order, warehouse_code: 0)
+      o2.order_number.should_not eq(2)
+      o2.order_number.should eq(1)
+    end
+  end
+
   describe "start time" do
     it "should return the delivery date" do
       o = FactoryGirl.build(:order, order_date: DateTime.now, delivery_date: Date.tomorrow.to_time)
