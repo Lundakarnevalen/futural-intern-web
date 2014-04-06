@@ -30,7 +30,7 @@
     <% if !@orders.nil? %>
     <% @orders.each do |o| %>
       <tr>
-        <td><%= link_to "#{o.id}", order_path(o.id) %></td>
+        <td><%= link_to "#{o.order_number}", order_path(o.id) %></td>
         <td><%= o.sektion.name %></td>
         <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
         <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
