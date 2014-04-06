@@ -11,7 +11,7 @@ describe NotificationsController do
 	end
 
 	describe "GET to NotificationsController" do
-	  it "should assign all notifications" do
+	  it "should assign notifications where recipient_id = 0" do
 	    get :index
 	    assigns(:notifications).should_not be_nil
 	    assigns(:notifications).should eq([@note])
@@ -44,7 +44,7 @@ describe NotificationsController do
   describe "POST to NotificationsController" do
     it "should create a new notification" do
       post :create, notification: {title: "abc123", message: "hello"}
-      response.should redirect_to(notifications_path)  
+      response.should redirect_to(notifications_path)
       Notification.where(title: "abc123").should exist
     end
     it "should throw err if there are invalid params" do
