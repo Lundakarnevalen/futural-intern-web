@@ -6,7 +6,6 @@
 .message {
 	background-color: white;
 	padding: 0.8em 1em 1.2em 1em;
-	border-radius: 0.25em;
 
 	list-style: none;
 	margin-bottom: 0.3em;
@@ -80,7 +79,6 @@
 	border: none;
 	color: white;
 	font-size: 15px;
-	border-radius: 0.25em;
 }
 
 .button:hover {

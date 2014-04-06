@@ -8,19 +8,18 @@ html body .navbar {
   height: 75px;
   border: none;
   background-color: #5c627e;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 8px 0 rgba(0, 0, 0, 0.25);
 }
 html body .navbar ul.nav > li {
   font-weight: bold;
   font-size: 15px;
-  height: 75px;
 }
 html body .navbar ul.nav > li a {
   padding: 10px;
   margin: 15px 10px 0 0;
   background-color: #ffffff;
   color: #e65537;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 html body .navbar ul.nav > li a:active {
   background-color: #cccccc !important;
@@ -42,6 +41,10 @@ html body .header {
 a img {
   border: none;
 }
+.posts {
+  margin: 0 auto;
+}
+
 #profile-image-container {
   text-align: right;
 }
@@ -49,7 +52,7 @@ a img {
   width: 48px;
   height: 48px;
   margin-top: 13.5px;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 #profile-information-container h5 {
   font-weight: normal;
@@ -63,9 +66,9 @@ a img {
   color: #ffffff;
 }
 #logotype img {
-  height: 36px;
+  height: 45px;
   width: auto;
-  margin: 19.5px 40px 0 40px;
+  margin: 15px 40px 0 40px;
 }
 #sektion > .header {
   font-size: 30px;
@@ -91,7 +94,7 @@ a img {
   line-height: normal;
   color: #e65537;
   background-color: #ffffff;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 #sektion.toggled > ul.nav li a:active {
   background-color: #cccccc !important;
@@ -123,7 +126,7 @@ a img {
   margin: 10px auto;
   background-color: white;
   color: #e65537;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 #inviter ul .block .date,
 #evenemang ul .block .date {
@@ -136,7 +139,7 @@ a img {
   margin: 0 0 0 0;
   padding: 0 0 0 0;
   background-color: #ecf0f1;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 #inviter button.more,
 #evenemang button.more {
@@ -146,7 +149,7 @@ a img {
   background-color: #7bcaad;
   color: #ffffff;
   border: none;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
   outline: none;
 }
 #inviter button.more:active,
@@ -159,12 +162,12 @@ a img {
   background-color: #8dd1b8;
 }
 #sektion {
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 #sektion,
 #inviter,
 #evenemang {
-  margin-bottom: 10px;
+  margin-bottom: 15px;
 }
 #left {
   background-color: #ecf0f1;
@@ -185,7 +188,7 @@ a img {
   margin-top: 10px;
   background-color: white;
   color: #e65537;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
 }
 #left .message-information h1 {
   width: 100%;
@@ -203,20 +206,16 @@ a img {
 }
 #left .message-image {
   text-align: center;
-  padding: 0 0 0 0;
 }
 #left .message-image img {
-  max-height: 85px;
-  max-width: 85px;
+  max-height: 150px;
+  max-width: 130px;
   height: 100%;
   width: 100%;
-  margin-top: 20px;
-}
-#left,
-#right {
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
 }
 #right {
+  float: right;
+  max-width: 400px;
   padding-top: 25px;
   background-color: #5c627e;
 }
@@ -301,7 +300,7 @@ a img {
 
 	text-align: center;
 
-	box-shadow: 0 5px 0 rgba(0,0,0,0.25);
+	box-shadow: 0 6px 0 rgba(0,0,0,0.25);
 
 }
 
