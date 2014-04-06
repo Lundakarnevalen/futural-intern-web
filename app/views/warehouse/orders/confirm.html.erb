@@ -1,0 +1,76 @@
+<h3>Kontrollera din order och välj hämtdag</h3>
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Orderinformation</h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Beställare: </strong> <%= "#{@order.karnevalist.fornamn} #{@order.karnevalist.efternamn}" %></p>
+        <p><strong>Sektion: </strong> <%= @order.sektion.name %></p>
+        <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-lg-12">
+    <table class="table table-striped" id="table">
+      <thead>
+        <tr>
+          <th>Vara</th>
+          <th>Mängd</th>
+          <th>Styckpris</th>
+          <th>Totalpris</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% @order.products.each do |p| %>
+        <% amount = p.amount(@order.id) %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= "#{amount} #{p.unit}" %></td>
+          <td><%= number_to_currency(p.sale_price) %></td>
+          <td><%= number_to_currency(p.total_price(amount)) %></td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+<% if !@order.comment.blank? %>
+<hr>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <p><strong>Kommentar:</strong><br><%= @order.comment %></p>
+  </div>
+</div>
+<hr>
+<% end %>
+<%= form_for @order, url: confirm_put_order_path(@order), method: "put" do |f| %>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6">
+  <div class="form-group">
+    <%= f.label :delivery_date, "Hämtdatum" %>
+    <%= f.text_field :delivery_date, class: "form-control", data: { behaviour: "datepicker" } %>
+    <% if @warehouse_code == 1 %>
+      <p class="help-block help-block-red">Uthämtning kan ske endast på onsdagar och fredagar.</p>
+    <% end %>
+  </div>
+</div>
+</div>
+<div class="row">
+<div class="col-xs-12 col-sm-12 col-md-6">
+ 
+  <% if @warehouse_code == 0 %>
+    <p><strong>Information:</strong><br>Räkna med att varor i rest tar ca 1 vecka att få hem från och med idag. När dessa fyllts på i lagret kommer du att få ett mail som säger att du kan hämta ut varorna. Varor i rest räknas alltså som en del av din beställning.</p>
+  <% else %>
+    <p><strong>Information:</strong><br>Beställning sker senast måndagar kl 15:00(..) den vecka leveransen ska hämtas ut.</p>
+    <p>Uthämtning sker på onsdagar 11:00 till 13:00 samt fredagar 12:00 till 14:00 i AF-borgens källare.</p>
+    <p>Vid större arrangemang där leveranser önskas direkt till plats bör kontakt tas senast två veckor innan för att vi ska kunna administrera. Tänk även på att ha alkoholtillståndet färdigt i god tid, inget tillstånd betyder ingen leverans!</p>
+    <p>Vi tar gärna emot returer, men enbart föranmälda under våra öppettider. Vi tar endast emot hela förpackningar, flaskor och flak!</p>
+  <% end %>
+</div>
+</div>
+<%= f.submit "Bekräfta order", class: "btn btn-primary", name: "confirm" %>
+<% end %>

@@ -37,6 +37,8 @@ class Ability
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
 
+    can :read, Notification, :recipient_id => 0
+
     # Notification
     if user.karnevalist?
       can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
@@ -71,6 +73,27 @@ class Ability
         can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
         can [:new], Notification
       end
+    end
+
+    # Lagersystem - admin
+    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet)
+      can :manage, Order
+      can :manage, Product
+      can :manage, IncomingDelivery
+      can :manage, ProductCategory
+    end
+    
+    # Lagersystem - beställare
+    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
+      can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
+      can :read, Product
+    end
+    
+    # Lagersystem - kassör
+    if user.is? :kassor_festmasteriet
+      can :manage, Order
+      can :read, :weekly_overview, Product
+      can :manage, IncomingDelivery
     end
 
     # Admin

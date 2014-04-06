@@ -9,3 +9,13 @@
 //= require jquery.ui.all
 //= require jquery.modal
 //= require jquery.cookie
+//= require bootstrap
+//= require bootstrap-datepicker
+//= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
+
+$(document).ready(function(){
+  $('[data-behaviour~=datepicker]').datepicker({
+    language: "sv",
+    autoclose: true
+  });
+})

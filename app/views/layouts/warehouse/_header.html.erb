@@ -1,0 +1,28 @@
+<div class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <a class="navbar-brand" href="">
+        <% if (current_user.is? :bestallare_fabriken) || (current_user.is? :bestallare_festmasteriet) || @bestallare %>
+          <span>Beställare: </span>
+        <% elsif current_user.is? :kassor_festmasteriet %>
+          <span>Kassör: </span>
+        <% else %>
+          <span>Administratör: </span>
+        <% end %>
+        <%= "#{current_user.karnevalist.fornamn}  #{current_user.karnevalist.efternamn}" %>
+      </a>
+    </div>
+    <div>
+      <ul class="nav navbar-nav navbar-right">
+        <li><%= link_to icon("calendar") + " Kalender", calendar_orders_path %></li>
+        <li><%= link_to icon("home") + " karnevalist.se", root_url %></li>
+      </ul>
+    </div>
+  </div>
+</div>
