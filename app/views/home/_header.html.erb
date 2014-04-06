@@ -1,0 +1,43 @@
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
+      <div id="logotype" class="navbar-left">
+    <img src="images/karnevalist-logotyp@2x.png" />
+  </div>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <%# General stuff %>
+        <% if can? :read, Notification %>
+          <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+        <% end %>
+        <%# Warehouse stuff %>
+        <% if (current_user.is? :admin_fabriken) || (current_user.is? :bestallare_fabriken) || (current_user.is? :admin) %>
+          <li><%= link_to 'Lagersystem Fabriken', fabriken_orders_path %></li>
+        <% end %>
+        <% if (current_user.is? :admin_festmasteriet) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :kassor_festmasteriet) || (current_user.is? :admin) %>
+          <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path %></li>
+        <% end %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
+        <div id="profile-image-container" class="col-xs-4">
+          <img src="images/profile_picture.png" />
+        </div>
+        <div id="profile-information-container" class="col-xs-8">
+          <h5>Hej, <%= link_to current_user.karnevalist.name, current_user.karnevalist %></h5>
+          <a href="#"><%= sign_out_link 'Logga ut?' %></a>
+        </div>
+      </ul>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+
+
