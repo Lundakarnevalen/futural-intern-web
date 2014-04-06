@@ -37,6 +37,8 @@ end
 
 group :development do
   gem 'thin'
+  gem 'better_errors'
+  gem 'binding_of_caller'
 end
 
 group :test do
@@ -52,5 +54,6 @@ end
 
 group :assets do
   gem 'uglifier'
-  gem 'sass-rails'
+  gem "sass-rails", "4.0.2"
+  gem 'less-rails'
 end
