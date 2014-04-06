@@ -1,15 +1,38 @@
-<%= javascript_include_tag :defaults %>
-<%= csrf_meta_tag %>
+<!--
 <li>
   <span class="title"><%= post.title %></span>
   <span class="content"><%= post.content %></span>
   <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> sedan
+    Posted
+    <%= time_ago_in_words(post.created_at) %>
+    sedan
   </span>
   <span class="posted_by">
-    av <%= "#{post.karnevalist.fornamn} #{post.karnevalist.efternamn}"%>.
+    av
+    <%= "#{post.karnevalist.fornamn} #{post.karnevalist.efternamn}"%>.
   </span>
   <% if current_user.can? :edit, post %>
     <%= link_to "redigera", edit_post_path(post) %>
   <% end %>
+</li>
+-->
+<li>
+  <div class="message col-xs-12">
+    <div class="message-image col-xs-3">
+      <img src="images/kommunikation.png" />
+    </div>
+    <div class="message-information col-xs-8">
+      <div class="row">
+        <h1><%= post.title %></h1>
+      </div>
+      <div class="row">
+        <p><%= post.content %></p>
+      </div>
+      <button type="button" class="btn btn-default btn-sm">
+        <% if current_user.can? :edit, post %>
+          <%= link_to "redigera", edit_post_path(post) %>
+        <% end %>
+      </button>
+    </div>
+  </div>
 </li>
