@@ -1,0 +1,359 @@
+/*you'll have to change these manually if any of the variables above is changed (size and position properties).*/
+html {
+  font-family: 'Helvetica-light', sans-serif;
+}
+html body {
+  background-color: #202020;
+  padding-top: 75px;
+  padding-bottom: 20px;
+}
+html body .navbar {
+  height: 75px;
+  border: none;
+  background-color: #5c627e;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+html body .navbar ul.nav > li {
+  font-family: Futura, railway, serif;
+  font-weight: bold;
+  font-size: 15px;
+  height: 75px;
+}
+html body .navbar ul.nav > li a {
+  padding: 10px;
+  margin: 15px 10px 0 0;
+  background-color: #ffffff;
+  color: #e65537;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+html body .navbar ul.nav > li a:active {
+  background-color: #cccccc !important;
+  color: #a32d14 !important;
+  box-shadow: none;
+}
+html body .navbar ul.nav > li a:hover {
+  background-color: #e6e6e6;
+  color: #d0391a;
+}
+html body .header {
+  font-family: Futura, railway, serif;
+  font-weight: bold;
+  font-size: 20px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  box-shadow: 0px 5px 0px rgba(0, 0, 0, 0.25);
+}
+a img {
+  border: none;
+}
+#profile-image-container {
+  text-align: right;
+}
+#profile-image-container img {
+  width: 48px;
+  height: 48px;
+  margin-top: 13.5px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#profile-information-container h5 {
+  font-weight: normal;
+  padding-top: 20px;
+  margin: 0 0 0 0;
+  color: #ffffff;
+}
+#profile-information-container a {
+  font-size: 10px;
+  text-decoration: underline;
+  color: #ffffff;
+}
+#logotype img {
+  height: 36px;
+  width: auto;
+  margin: 19.5px 40px 0 40px;
+}
+#sektion.toggled > ul.nav {
+  display: block;
+  background-color: #eccd3c;
+}
+#sektion.toggled > ul.nav li {
+  height: 50px;
+  font-family: Futura, railway, serif;
+  font-size: 0;
+  line-height: 50px;
+  text-align: center;
+  margin-bottom: 10px;
+}
+#sektion.toggled > ul.nav li a {
+  display: inline-block;
+  width: 300px;
+  font-size: 20px;
+  line-height: normal;
+  color: #e65537;
+  background-color: #ffffff;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#sektion.toggled > ul.nav li a:active {
+  background-color: #cccccc !important;
+  color: #a32d14 !important;
+  box-shadow: none;
+}
+#sektion.toggled > ul.nav li a:hover {
+  background-color: #e6e6e6;
+  color: #d0391a;
+}
+#sektion > .header {
+  background-color: #eccd3c;
+  color: #5c627e;
+  box-shadow: none;
+}
+#sektion > ul.nav {
+  display: none;
+}
+#inviter,
+#evenemang {
+  text-align: center;
+}
+#inviter > .header,
+#evenemang > .header {
+  background-color: #747a99;
+  color: white;
+}
+#inviter ul .block,
+#evenemang ul .block {
+  font-family: Futura, railway, serif;
+  height: 50px;
+  width: 300px;
+  text-align: left;
+  line-height: 50px;
+  margin: 10px auto;
+  background-color: white;
+  color: #e65537;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#inviter ul .block .date,
+#evenemang ul .block .date {
+  text-align: center;
+  line-height: 30px;
+  margin-top: 7.5px;
+}
+#inviter ul .block .date p,
+#evenemang ul .block .date p {
+  margin: 0 0 0 0;
+  padding: 0 0 0 0;
+  background-color: #ecf0f1;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#inviter button.more,
+#evenemang button.more {
+  height: 40px;
+  font-family: Futura, railway, serif;
+  padding: 10px;
+  margin: 0 0 10px 0;
+  background-color: #7bcaad;
+  color: #ffffff;
+  border: none;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+  outline: none;
+}
+#inviter button.more:active,
+#evenemang button.more:active {
+  background-color: #57bb96 !important;
+  box-shadow: none;
+}
+#inviter button.more:hover,
+#evenemang button.more:hover {
+  background-color: #8dd1b8;
+}
+#sektion,
+#inviter,
+#evenemang {
+  margin-bottom: 10px;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#left {
+  background-color: #ecf0f1;
+}
+#left > .header {
+  margin-top: 15px;
+  background-color: white;
+  color: #e65537;
+}
+#left .row:last-child {
+  margin-bottom: 10px;
+}
+#left .row:last-child .message {
+  margin-bottom: 10px;
+}
+#left .message {
+  height: 125px;
+  margin-top: 10px;
+  background-color: white;
+  color: #e65537;
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#left .message-information h1 {
+  width: 100%;
+  height: 40px;
+  font-family: Futura, railway, serif;
+  overflow: hidden;
+  word-break: break-all;
+  text-transform: uppercase;
+}
+#left .message-information p {
+  font-family: 'Helvetica-light', sans-serif !important;
+  overflow: hidden;
+  word-wrap: break-word;
+  word-break: break-all;
+  display: block;
+  height: 40px;
+}
+#left .message-image {
+  text-align: center;
+  padding: 0 0 0 0;
+}
+#left .message-image img {
+  max-height: 85px;
+  max-width: 85px;
+  height: 100%;
+  width: 100%;
+  margin-top: 20px;
+}
+#left,
+#right {
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
+#right {
+  background-color: #5c627e;
+}
+/*
+
+#top-row {
+	
+	padding: 75px 0 0 0;
+	
+}
+
+#user-information-container {
+	
+	height: 75px;
+	margin-top: 20px;
+	
+}
+
+#profile-container {
+	
+	text-align: right;
+	line-height: 75px;
+	
+}
+
+#profile-container > img {
+	
+	max-width: 64px;
+	max-height: 64px;
+	
+	margin-top: 5px;
+	
+}
+
+.navbar {
+	
+	opacity: 1;
+	
+	z-index: 10;
+	height: 75px;
+	
+	background-color: #5C627E;
+	border: none;
+	
+	box-shadow: 0px 5px 0px rgba(0,0,0,0.5);
+	
+}
+
+.nav > li {
+	
+	padding: 20px;
+	
+}
+
+.nav > li > a {
+
+	font-family: 'Futura';
+	
+	background-color: white;
+	color: red !important;
+	
+	padding: 7px;
+	
+	box-shadow: 0px 5px 0px red;
+	
+}
+
+.nav > li > a:hover {
+	
+	background-color: silver !important;
+	
+}
+
+.header {
+	
+	height: 50px;
+	line-height: 50px;
+	
+	font-family: 'Futura';
+	font-weight: bold;
+	font-size: 24px;
+	
+	text-align: center;
+	
+	box-shadow: 0 5px 0 rgba(0,0,0,0.25);
+	
+}
+
+#sektion,
+#evenemang,
+#inviter {
+	
+	margin-bottom: 10px;
+	
+}
+
+#sektion .nav {
+	
+	
+	
+}
+
+#evenemang .header,
+#inviter .header {
+	
+	color: white;
+	background-color: rgba(255,255,255,0.2);
+	
+}
+
+#sektion .header {
+	
+	background-color: yellow;
+	color: blue;
+	
+}
+
+#left .header {
+	
+	background-color: white;
+	color: red;
+	
+	margin-top: 25px;
+	
+}
+
+#logotype > img {
+
+	height: 75px;
+	width: 200px;
+	
+	border: 1px solid black;
+	
+}*/
