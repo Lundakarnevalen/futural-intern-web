@@ -3,17 +3,6 @@
 
 CACHEDCMD="$(dirname $0)/.mysql.cmd"
 
-RUBY='
-con = ActiveRecord::Base.connection;
-class << con;
-  attr_reader :config;
-end;
-
-puts "%#{con.config[:database]} --host=#{con.config[:host]} " + 
-     "--user=#{con.config[:username]} --pass=#{con.config[:password]}";
-exit
-'
-
 say()
 {
    echo "$@" >&2
@@ -31,20 +20,22 @@ fi
 
 # Else
 
-say Scraping login details from Heroku...
+say Fetching login details from Heroku...
 
-if CMD=$(heroku run console --app karnevalist <<<$RUBY | grep '^%' | sed 's/^%//'); then
-    say Got \`$CMD\`
+URL=$(heroku config:get DATABASE_URL --app karnevalist)
+USER=$(echo `expr "$URL" : '^.*//\(.*\):'`)
+PASS=$(echo `expr "$URL" : '^.*:\(.*\)@'`)
+HOST=$(echo `expr "$URL" : '^.*@\(.*\)/'`)
+DB=$(echo `expr "$URL" : '^.*//.*/\(.*\)?'`)
 
-    if mysql $CMD $@; then 
-        say Saving login details
-        printf "$CMD" > "$CACHEDCMD"
-        exit
-    else
-        say Command fails
-    fi
+CMD="${DB} --host=${HOST} --user=${USER} --pass=${PASS}"
+
+say Got \`$CMD\`
+
+if mysql $CMD $@; then
+    say Saving login details
+    printf "$CMD" > "$CACHEDCMD"
+    exit
 else
-    say Scrape fails
-    exit 1
+    say Command fails
 fi
-

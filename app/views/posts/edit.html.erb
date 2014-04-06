@@ -1,0 +1,48 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag :posts, :media => :all %>
+<% end %>
+
+<%= render partial: "shared/header", locals: {title: "Redigera Inlägg"} %>
+
+<div class="container" id="content">
+<%= form_for @post do |f| %>
+    <h2>Redigera inlägg</h2>
+      <% if @post.errors.any? %>
+        <div id="error_explanation">
+          <ul>
+          <% @post.errors.each do |field, msg| %>
+            <li><%= msg %></li>
+          <% end %>
+          </ul>
+        </div>
+      <% end %>
+    <div class="selection_box">
+      <%= f.label :sektion, "Ändra sektion till " %>
+      <% if current_user.is? :admin %>
+        <%= f.collection_select :sektion, Sektion.all, :id, :name, :selected => @post_sektion %>
+      <% end %>
+      <% if current_user.is? :sektionsadmin %>
+        <%= f.collection_select :sektion, @tilldelade_sektioner, :id, :name, :selected => @post_sektion %>
+      <% end %>
+    </div>
+
+    <div class="form_group">
+      <%= f.label :title, "Rubrik" %>
+      <%= f.text_area :title, placeholder: "Skriv en jättefin rubrik här..." %>
+    </div>
+
+    <div class="form_group">
+      <%= f.label :title, "Text" %>
+      <%= f.text_area :content, placeholder: "Skriv vacker text här..." %>
+    </div>
+
+    <div class="form-controls">
+    <%= f.submit "Klar", class: "btn btn-large btn-primary" %>
+    </div>
+  <% end %>
+  <% if current_user.can? :destroy, @post %>
+    <%= link_to "Radera Inlägget", @post, method: :delete,
+                                     data: { confirm: "Är du verkligen helt säker på att du vill radera inlägget?" },
+                                     title: @post.title %>
+  <% end %>
+</div>

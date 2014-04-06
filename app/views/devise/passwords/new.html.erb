@@ -1,12 +1,17 @@
 <% if !(browser.iphone? && browser.version == "0") %>
 
-<%= render partial: "shared/header", locals: {title: "Forgot your password?"} %>
+<%= render 'shared/header', :title => 'Vad är mitt lösenord?' %>
 
 <% end %>
 
 <div class="container" id="content">
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
+  <div class="message">
+    <p>I samband med registreringen under uppropet skapades konton på karnevalist.se för alla karnevalister.</p>
+    <p>Fyll i mailadressen som du registrerade dig med på uppropet. Då får du ett mail med en länk där du får välja lösenord.</p>
+  </div>
+  <br>
 
   <div class="form-group">
   	<%= f.label :email %>
@@ -14,7 +19,7 @@
   </div>
 
   <div class="form-group">
-  	<%= f.submit "Send me reset password instructions" %>
+  	<%= f.submit "Skicka länk för val av lösenord" %>
   </div>
 <% end %>
 

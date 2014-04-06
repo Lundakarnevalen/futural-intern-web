@@ -10,22 +10,30 @@
     <% if @notification.errors.any? %>
       <div id="error_explanation">
         <ul>
-        <% @notification.errors.each do |field, msg| %>
-          <li><%= msg %></li>
-        <% end %>
+          <% @notification.errors.each do |field, msg| %>
+            <li><%= msg %></li>
+          <% end %>
         </ul>
       </div>
     <% end %>
-
+    
+    <% if current_user.is? :admin and current_user.karnevalist? %>
+      <div class="form-group">
+        <%= f.label :recipient_id, "Mottagare" %>
+        <%= f.select :recipient_id, options_for_select([['Alla', 0]])+options_from_collection_for_select(current_user.karnevalist.tilldelade_sektioner, :id, :name) %>
+      </div>
+    <% elsif current_user.is? :sektionsadmin and current_user.karnevalist? %>
+        <%= f.label :recipient_id, "Mottagare" %>
+        <%= f.select :recipient_id, options_from_collection_for_select(current_user.karnevalist.tilldelade_sektioner, :id, :name) %>
+    <% end %>
+    
     <div class="form-group">
       <%= f.label :title, "Rubrik" %>
-      
       <%= f.text_field :title %>
     </div>
 
     <div class="form-group">
       <%= f.label :message, "Meddelande" %>
-      
       <%= f.text_area :message, :rows => 6, :cols => 40 %>
     </div>
 

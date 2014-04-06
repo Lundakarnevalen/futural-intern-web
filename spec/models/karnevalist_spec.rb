@@ -2,76 +2,101 @@ require 'spec_helper'
 
 describe (K = Karnevalist) do
 
+  before { @karnevalist = FactoryGirl.create(:karnevalist) }
+
   describe '.create' do
     it 'allows k. with only email' do
       FactoryGirl.build(:karnevalist, email: 'some@guy.com').should be_valid
     end
 
     it 'disallows k. without email' do
-      FactoryGirl.build(:karnevalist, email: nil, fornamn: 'irrelevant').should_not be_valid 
+      FactoryGirl.build(:karnevalist, email: nil, fornamn: 'irrelevant').should_not be_valid
     end
 
     it 'creates one and only one user with every karnevalist' do
-      k = FactoryGirl.create(:karnevalist)
-      u = k.user
-      k.user.should eq(u)
+      user = @karnevalist.user
+      @karnevalist.user.should eq(user)
     end
 
     it 'does not expose the password in obvious ways' do
-      id = FactoryGirl.create(:karnevalist).id
+      id = @karnevalist.id
       K.find(id).password.should be_nil
     end
 
     it 'returns a valid password until it passes out of scope' do
-      k = FactoryGirl.create(:karnevalist) 
+      k = @karnevalist
       k.user.valid_password?(k.password).should be_true
     end
 
     it 'sets `utcheckad_at` if `utcheckad` is set for the first time' do
-      k = FactoryGirl.create(:karnevalist) 
-      k.utcheckad.should be_false
-      k.utcheckad_at.should be_nil
-      
-      k.utcheckad = true
-      k.save
-      k.utcheckad.should be_true
-      k.utcheckad_at.should_not be_nil
+      @karnevalist.utcheckad.should be_false
+      @karnevalist.utcheckad_at.should be_nil
+
+      @karnevalist.utcheckad = true
+      @karnevalist.save
+      @karnevalist.utcheckad.should be_true
+      @karnevalist.utcheckad_at.should_not be_nil
+    end
+
+    # Personnummer
+    it 'allows missing `personnummer`' do
+      FactoryGirl.build(:karnevalist, :personnummer => nil)
+                 .should be_valid
+    end
+
+    it 'allow proper `personnummer`' do
+      FactoryGirl.build(:karnevalist, :personnummer => '1111111116')
+                 .should be_valid
+    end
+
+    it 'rejects invalid `personnummer` checksum' do
+      FactoryGirl.build(:karnevalist, :personnummer => '1111111111')
+                 .should_not be_valid
+    end
+
+    it 'rejects invalid `personnummer` dates' do
+      # This number's checksum is actually valid!
+      FactoryGirl.build(:karnevalist, :personnummer => '999999-9999')
+                 .should_not be_valid
+    end
+
+    it 'allows "international" `personnummer`' do
+      FactoryGirl.build(:karnevalist, :personnummer => '911025-P123')
+                 .should be_valid
+    end
+
+    it 'allows empty sektioner' do
+      k = FactoryGirl.build :karnevalist
+      k.tilldelade_sektioner = []
+      k.should be_valid
+    end
+
+    it 'rejects if `sektion` == `sektion2`' do
+      s = FactoryGirl.build :sektion
+      k = FactoryGirl.build(:karnevalist, :sektion => s, :sektion2 => s)
+                     .should_not be_valid
     end
   end
 
   describe '#save' do
     it 'syncs the user email and ensures password remains valid' do
-      k = FactoryGirl.create(:karnevalist)
-      p = k.password
-      k.email = 'some.other@guy.com'
+      @karnevalist.email = 'some.other@guy.com'
+      @karnevalist.save
+      @karnevalist.user.email.should eq('some.other@guy.com')
+      @karnevalist.user.valid_password?(@karnevalist.password).should be_true
+    end
+
+    it 'sets utcheckad if tilldelade_sektioner.any?' do
+      k = FactoryGirl.build(:karnevalist)
+      s = FactoryGirl.create :sektion
+      k.tilldelade_sektioner << s
       k.save
-      k.user.email.should eq('some.other@guy.com')
-      k.user.valid_password?(p).should be_true
+      k.tilldelade_sektioner.should_not be_empty
+      k.utcheckad.should be_true
     end
   end
 
-=begin
-  describe '#update_if_password_valid' do
-    it 'updates if password valid' do
-      k = create_some_guy
-      p = k.password
-      k.update_if_password_valid({'token' => p, 
-                                  'email' => 'some.other@guy.com'})
-      k.errors.should be_empty
-      k.email.should eq('some.other@guy.com')
-    end
-
-    it 'does not update if password not valid' do
-      k = create_some_guy
-      k.update_if_password_valid({'token' => 'invalid',
-                                  'email' => 'some.other@guy.com'})
-      k.errors.should_not be_empty
-      k.email.should eq('some@guy.com')
-    end
-  end
-=end
-
-  describe '#search' do
+  describe '.search' do
     before :each do
       @k = FactoryGirl.create(:karnevalist, email: "johan@forberg.se", fornamn: "johan",
         efternamn: "Förberg", personnummer: "9110251817")
@@ -97,6 +122,62 @@ describe (K = Karnevalist) do
 
     it 'can search for email' do
       K.search('johan@forberg.se').should_not be_empty
+    end
+  end
+
+  describe '#tilldelade_sektioner' do
+    before :each do
+      @k = FactoryGirl.build :karnevalist,
+                             :sektion => nil,
+                             :sektion2 => nil
+      @s1 = FactoryGirl.build :sektion, :name => 'Sekt1'
+      @s2 = FactoryGirl.build :sektion, :name => 'Sekt2'
+    end
+
+    it 'handles case of no `sektion`' do
+      @k.tilldelade_sektioner.should be_empty
+    end
+
+    it 'handles case of single primary `sektion`' do
+      @k.sektion = @s1
+      @k.tilldelade_sektioner.should eq [@s1]
+    end
+
+    it 'handles case of two `sektion`' do
+      @k.assign_attributes :sektion => @s1,
+                           :sektion2 => @s2
+      @k.tilldelade_sektioner.should eq [@s1, @s2]
+    end
+  end
+
+  describe '#tilldelade_sektioner=' do
+    before :each do
+      @k = FactoryGirl.build :karnevalist,
+                             :sektion => nil,
+                             :sektion2 => nil
+      @s1 = FactoryGirl.build :sektion, :name => 'Sekt1'
+      @s2 = FactoryGirl.build :sektion, :name => 'Sekt2'
+    end
+
+    it 'handles the empty case' do
+      @k.tilldelade_sektioner = []
+      @k.tilldelade_sektioner.should be_empty
+      @k.sektion.should be_nil
+      @k.sektion2.should be_nil
+    end
+
+    it 'handles the singular case' do
+      @k.tilldelade_sektioner = [@s1]
+      @k.tilldelade_sektioner.should eq [@s1]
+      @k.sektion.should eq @s1
+      @k.sektion2.should be_nil
+    end
+
+    it 'handles the general case' do
+      @k.tilldelade_sektioner = [@s2, @s1]
+      @k.tilldelade_sektioner.should eq [@s2, @s1]
+      @k.sektion.should eq @s2
+      @k.sektion2.should eq @s1
     end
   end
 end

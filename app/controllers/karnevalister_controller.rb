@@ -5,8 +5,8 @@ require 'karnevalister_controller_old'
 class KarnevalisterController < ApplicationController
   require 'gcm'
 
-  before_filter :authenticate_user_from_token!, :except => [:create, :new, :step1, :step1_post]
-  before_filter :authenticate_user!, :except => [:create, :new, :step1, :step1_post]
+  before_filter :authenticate_user_from_token!, :except => [:create, :new, :step1, :step1_post, :export_all]
+  before_filter :authenticate_user!, :except => [:create, :new, :step1, :step1_post, :export_all]
 
   load_and_authorize_resource
 
@@ -139,7 +139,7 @@ class KarnevalisterController < ApplicationController
     if params[:q].present?
       @results = Karnevalist.search params[:q]
     else
-      @results = []
+      @results = Karnevalist.all
     end
 
     if not request.referer.blank? and URI(request.referer).path == '/karnevalister/checkout'
@@ -257,7 +257,7 @@ class KarnevalisterController < ApplicationController
   def gealla
     @karnevalister = Karnevalist.where :id => params[:karnevalist_ids]
     @sektion = Sektion.find params[:sektion_id]
-    @karnevalister.update_all :tilldelad_sektion => @sektion.id, 
+    @karnevalister.update_all :tilldelad_sektion => @sektion.id,
                               :tilldelad_klar => true
 
     flash[:notice] = "Nu har #{@karnevalister.length} glada karnevalister fått vars en sektion. Det gick väl fort?"
@@ -318,6 +318,23 @@ class KarnevalisterController < ApplicationController
 
   def pusseldagen
     @karnevalister = Karnevalist.group("karnevalister.id").where("tilldelad_sektion = ?", current_user.karnevalist.tilldelad_sektion).order("efternamn ASC")
+  end
+
+  def export_all
+    authorize! :export_all, Karnevalist
+    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation]).all
+    render :xlsx => 'export_all',
+           :filename => "karnevalister-#{Time.now.strftime '%Y%m%d'}.xlsx",
+           :disposition => 'attachment'
+  end
+
+  def check
+    authorize! :check, Karnevalist
+    if params[:q]
+      @q = params[:q]
+      @karnevalist = Karnevalist.where('id = ? or personnummer = ?',
+           params[:q], Karnevalist.to_personnummer(params[:q])).limit(1).first
+    end
   end
 
   private

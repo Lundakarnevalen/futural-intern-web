@@ -8,10 +8,20 @@ class NotificationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    @notifications = Notification.all.order("created_at DESC")
     respond_to do |format|
-      format.html{ render }
+      format.html do
+        if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektioner.blank?
+          sektioner = current_user.karnevalist.tilldelade_sektioner
+          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
+          sektioner.each do |s|
+            sektioner_ids.push s.id
+          end
+          @notifications = Notification.where(recipient_id: sektioner_ids).order("created_at DESC")
+          render
+        end
+      end
       format.json do
+        @notifications = Notification.where(recipient_id: 0).order("created_at DESC")
         render :json =>
           { :status => :success,
             :records => @notifications.length,
@@ -31,26 +41,32 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new notification_params
-    api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+    gcm_api_key = "AIzaSyCLMSbP2XW1dChD90iRXNbvdmHC9B7zavI"
+
     if @notification.save
-      gcm = GCM.new(api_key)
+      gcm = GCM.new(gcm_api_key)
+      pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.push.apple.com")
       registration_ids = Array.new
-      Karnevalist.all.each do |k|
+      if @notification.recipient_id == 0
+        karnevalister = Karnevalist.where("tilldelad_sektion IS NOT NULL")
+      else
+        karnevalister = Karnevalist.where("tilldelad_sektion = ? OR tilldelad_sektion2 = ?", @notification.recipient_id, @notification.recipient_id)
+      end
+      karnevalister.each do |k|
         if !k.google_token.blank?
           registration_ids.push k.google_token
+        elsif !k.ios_token.blank?
+          ios_notification = Grocer::Notification.new(device_token: k.ios_token, alert: @notification.title, sound: 'default', badge: 0)
+          pusher.push(ios_notification)
         end
       end
-      #Phone.all.each do |p|
-      #  if !p.google_token.blank?
-      #    registration_ids.push p.google_token
-      #  end
-      #end
       registration_ids.each_slice(1000) do |reg_ids|
         options = {
           'data' => {
             'id' => @notification.id,
             'title' => @notification.title,
             'message' => @notification.message,
+            'recipient_id' => @notification.recipient_id,
             'message_type' => '0',
             'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
           }
