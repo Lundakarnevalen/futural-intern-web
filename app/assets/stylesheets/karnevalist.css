@@ -1,10 +1,7 @@
 /*you'll have to change these manually if any of the variables above is changed (size and position properties).*/
-html {
-  font-family: 'Helvetica-light', sans-serif;
-}
 html body {
-  background-color: #202020;
-  padding-top: 75px;
+  background-color: #ecf0f1;
+  padding-top: 10px;
   padding-bottom: 20px;
 }
 html body .navbar {
@@ -14,7 +11,6 @@ html body .navbar {
   box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
 }
 html body .navbar ul.nav > li {
-  font-family: Futura, railway, serif;
   font-weight: bold;
   font-size: 15px;
   height: 75px;
@@ -36,7 +32,6 @@ html body .navbar ul.nav > li a:hover {
   color: #d0391a;
 }
 html body .header {
-  font-family: Futura, railway, serif;
   font-weight: bold;
   font-size: 20px;
   height: 50px;
@@ -72,13 +67,18 @@ a img {
   width: auto;
   margin: 19.5px 40px 0 40px;
 }
+#sektion > .header {
+  font-size: 30px;
+  background-color: #eccd3c;
+  color: #5c627e;
+  box-shadow: none;
+}
 #sektion.toggled > ul.nav {
   display: block;
   background-color: #eccd3c;
 }
 #sektion.toggled > ul.nav li {
   height: 50px;
-  font-family: Futura, railway, serif;
   font-size: 0;
   line-height: 50px;
   text-align: center;
@@ -102,11 +102,6 @@ a img {
   background-color: #e6e6e6;
   color: #d0391a;
 }
-#sektion > .header {
-  background-color: #eccd3c;
-  color: #5c627e;
-  box-shadow: none;
-}
 #sektion > ul.nav {
   display: none;
 }
@@ -121,7 +116,6 @@ a img {
 }
 #inviter ul .block,
 #evenemang ul .block {
-  font-family: Futura, railway, serif;
   height: 50px;
   width: 300px;
   text-align: left;
@@ -147,7 +141,6 @@ a img {
 #inviter button.more,
 #evenemang button.more {
   height: 40px;
-  font-family: Futura, railway, serif;
   padding: 10px;
   margin: 0 0 10px 0;
   background-color: #7bcaad;
@@ -165,17 +158,20 @@ a img {
 #evenemang button.more:hover {
   background-color: #8dd1b8;
 }
+#sektion {
+  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
+}
 #sektion,
 #inviter,
 #evenemang {
   margin-bottom: 10px;
-  box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
 }
 #left {
   background-color: #ecf0f1;
 }
 #left > .header {
-  margin-top: 15px;
+  margin-top: 40px;
+  margin-bottom: 20px;
   background-color: white;
   color: #e65537;
 }
@@ -186,7 +182,6 @@ a img {
   margin-bottom: 10px;
 }
 #left .message {
-  height: 125px;
   margin-top: 10px;
   background-color: white;
   color: #e65537;
@@ -195,13 +190,11 @@ a img {
 #left .message-information h1 {
   width: 100%;
   height: 40px;
-  font-family: Futura, railway, serif;
   overflow: hidden;
   word-break: break-all;
   text-transform: uppercase;
 }
 #left .message-information p {
-  font-family: 'Helvetica-light', sans-serif !important;
   overflow: hidden;
   word-wrap: break-word;
   word-break: break-all;
@@ -224,136 +217,137 @@ a img {
   box-shadow: 0 5px 0 rgba(0, 0, 0, 0.25);
 }
 #right {
+  padding-top: 25px;
   background-color: #5c627e;
 }
 /*
 
 #top-row {
-	
+
 	padding: 75px 0 0 0;
-	
+
 }
 
 #user-information-container {
-	
+
 	height: 75px;
 	margin-top: 20px;
-	
+
 }
 
 #profile-container {
-	
+
 	text-align: right;
 	line-height: 75px;
-	
+
 }
 
 #profile-container > img {
-	
+
 	max-width: 64px;
 	max-height: 64px;
-	
+
 	margin-top: 5px;
-	
+
 }
 
 .navbar {
-	
+
 	opacity: 1;
-	
+
 	z-index: 10;
 	height: 75px;
-	
+
 	background-color: #5C627E;
 	border: none;
-	
+
 	box-shadow: 0px 5px 0px rgba(0,0,0,0.5);
-	
+
 }
 
 .nav > li {
-	
+
 	padding: 20px;
-	
+
 }
 
 .nav > li > a {
 
 	font-family: 'Futura';
-	
+
 	background-color: white;
 	color: red !important;
-	
+
 	padding: 7px;
-	
+
 	box-shadow: 0px 5px 0px red;
-	
+
 }
 
 .nav > li > a:hover {
-	
+
 	background-color: silver !important;
-	
+
 }
 
 .header {
-	
+
 	height: 50px;
 	line-height: 50px;
-	
+
 	font-family: 'Futura';
 	font-weight: bold;
 	font-size: 24px;
-	
+
 	text-align: center;
-	
+
 	box-shadow: 0 5px 0 rgba(0,0,0,0.25);
-	
+
 }
 
 #sektion,
 #evenemang,
 #inviter {
-	
+
 	margin-bottom: 10px;
-	
+
 }
 
 #sektion .nav {
-	
-	
-	
+
+
+
 }
 
 #evenemang .header,
 #inviter .header {
-	
+
 	color: white;
 	background-color: rgba(255,255,255,0.2);
-	
+
 }
 
 #sektion .header {
-	
+
 	background-color: yellow;
 	color: blue;
-	
+
 }
 
 #left .header {
-	
+
 	background-color: white;
 	color: red;
-	
+
 	margin-top: 25px;
-	
+
 }
 
 #logotype > img {
 
 	height: 75px;
 	width: 200px;
-	
+
 	border: 1px solid black;
-	
+
 }*/

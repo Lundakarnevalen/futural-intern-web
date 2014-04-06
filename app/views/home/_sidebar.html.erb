@@ -35,14 +35,14 @@
         <%# Sektionsadmin stuff %>
         <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
           <% if can? :read, Karnevalist %>
-            <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+            <li><%= link_to 'Karnelistan', Karnevalist %></li>
           <% end %>
           <% s = current_user.karnevalist.sektion %>
           <% if can? :read, s %>
             <li><%= link_to 'Administrera din sektion', s %></li>
           <% end %>
           <% if current_user.sektioner.count > 1 %>
-            <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
+            <li><%= link_to 'Sektionslistan', Sektion %></li>
           <% end %>
           <% #if can? :create, Post %>
           <% if false # Add posts later %>
@@ -63,10 +63,10 @@
         <%# Admin stuff %>
         <% if current_user.is? :admin %>
           <% if can? :read, Karnevalist %>
-            <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
+            <li><%= link_to 'Karnelistan', Karnevalist %></li>
           <% end %>
           <% if can? :read, Sektion %>
-            <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
+            <li><%= link_to 'Sektionslistan', Sektion %></li>
           <% end %>
           <% #if can? :create, Post %>
           <% if false # Add posts later %>

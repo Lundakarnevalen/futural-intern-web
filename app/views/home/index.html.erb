@@ -1,7 +1,8 @@
+<!DOCTYPE html>
 <div id="left" class="col-md-8">
   <div class="header col-xs-12">INKORG</div>
   <div>
-      <% if @posts.any? and not @post.nil? %>
+      <% if not @post.nil? and @posts.any? %>
         <ol class="posts">
           <%= render @posts %>
         </ol>
@@ -14,55 +15,10 @@
       </div>
       <div class="message-information col-xs-8">
         <div class="row">
-          <h1>Vieriet kör laserdome!</h1>
+          <h1>Välkomna!</h1>
         </div>
         <div class="row">
-          <p>Vieriet kör laserdome ikväll klockan 18:00, kom och kötta för fän.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="message col-xs-12">
-      <div class="message-image col-xs-3">
-        <img src="images/kommunikation.png" />
-      </div>
-      <div class="message-information col-xs-8">
-        <div class="row">
-          <h1>Vieriet kör laserdome!</h1>
-        </div>
-        <div class="row">
-          <p>Vieriet kör laserdome ikväll klockan 18:00, kom och kötta för fän.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="message col-xs-12">
-      <div class="message-image col-xs-3">
-        <img src="images/kommunikation.png" />
-      </div>
-      <div class="message-information col-xs-8">
-        <div class="row">
-          <h1>Vieriet kör laserdome!</h1>
-        </div>
-        <div class="row">
-          <p>Vieriet kör laserdome ikväll klockan 18:00, kom och kötta för fän.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-  <div class="row">
-    <div class="message col-xs-12">
-      <div class="message-image col-xs-3">
-        <img src="images/kommunikation.png" />
-      </div>
-      <div class="message-information col-xs-8">
-        <div class="row">
-          <h1>Vieriet kör laserdome!</h1>
-        </div>
-        <div class="row">
-          <p>Vieriet kör laserdome ikväll klockan 18:00, kom och kötta för fän.</p>
+          <p>Detta är internwebben, besök den ofta!.</p>
         </div>
       </div>
     </div>
