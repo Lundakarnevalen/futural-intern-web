@@ -31,7 +31,7 @@ FactoryGirl.define do
     jobbat_aktiv false
     karnevalist_2010 false
     google_token "MyText"
-    ios_token nil
+    ios_token "123456"
     vill_ansvara false
     snalla_intresse 1
     snalla_sektion 1
@@ -109,7 +109,8 @@ FactoryGirl.define do
     lat ""
     lng ""
     quantity 1
-  
+  end
+
   factory :order do
     status "delivered"
     order_date Date.today
@@ -117,6 +118,7 @@ FactoryGirl.define do
     comment "No comment"
     association :karnevalist, factory: :karnevalist
     warehouse_code 0
+    order_number 0
   end
 
   factory :product_category do

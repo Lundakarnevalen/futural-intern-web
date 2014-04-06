@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404013529) do
+ActiveRecord::Schema.define(version: 20140406212744) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -21,6 +21,8 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "updated_at"
   end
 
+  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
+
   create_table "incoming_deliveries", force: true do |t|
     t.string   "invoice_nbr"
     t.integer  "warehouse_code"
@@ -29,8 +31,6 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "updated_at"
   end
 
-  add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
-  
   create_table "incoming_deliveries_karnevalister", id: false, force: true do |t|
     t.integer "karnevalist_id"
     t.integer "incoming_delivery_id"
@@ -100,8 +100,8 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.integer  "tilldelad_sektion2"
     t.text     "ios_token"
+    t.integer  "tilldelad_sektion2"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -165,6 +165,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sektion_id"
+    t.integer  "order_number"
   end
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
@@ -175,6 +176,8 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
@@ -190,7 +193,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
   end
 
   add_index "posts", ["sektion_id", "karnevalist_id", "created_at"], name: "index_posts_on_sektion_id_and_karnevalist_id_and_created_at"
-  
+
   create_table "product_categories", force: true do |t|
     t.string   "name"
     t.datetime "created_at"

@@ -1,5 +1,15 @@
 <h3>Ny varukategori</h3>
 <%= form_for [form_prefix, @product_category] do |f| %>
+  <% if @product_category.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+      <% @product_category.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <div class="row">
     <div class="col-xs-12 col-sm-12 col-md-6">
       <div class="form-group">

@@ -25,6 +25,7 @@ gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'simple_calendar', '~> 0.1.10'
 gem 'prawn'
 gem 'bootstrap-datepicker-rails'
+gem 'sprockets', '2.11.0'
 
 group :production do
   gem 'rails_12factor'

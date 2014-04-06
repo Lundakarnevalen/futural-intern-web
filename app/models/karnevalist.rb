@@ -41,6 +41,7 @@ class Karnevalist < ActiveRecord::Base
   UTCHECKAD = 3
 
   before_save do
+    # User 
     if user.nil?
       # In memory only!
       @pass = SecureRandom.base64
@@ -50,10 +51,17 @@ class Karnevalist < ActiveRecord::Base
       user.save
     end
 
+    # Utcheckad
     if self.avklarat_steg.nil?
       self.avklarat_steg = 0
     end
 
+    # Set utcheckad if sektioner
+    if self.tilldelade_sektioner.any?
+      self.utcheckad = true
+    end
+
+    # Set utcheckad_at
     if utcheckad && utcheckad_at.nil?
       self.utcheckad_at = Time.now
     end
