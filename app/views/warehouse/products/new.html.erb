@@ -1,5 +1,15 @@
 <h3>Ny vara</h3>
 <%= form_for [form_prefix, @product] do |f| %>
+  <% if @product.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+      <% @product.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
   <% if @warehouse_code == 0 %> 
   <div class="checkbox">
     <%= f.check_box :product_type %>

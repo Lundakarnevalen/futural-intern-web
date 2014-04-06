@@ -15,23 +15,26 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
   end
 
   def create
-    product = Product.new(product_params)
-    product.active = true
-    product.warehouse_code = @warehouse_code
-    if product.save
+    @product = Product.new(product_params)
+    @product.active = true
+    @product.warehouse_code = @warehouse_code
+    if @product.save
       redirect_to products_path
     else
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
       render :new
     end
   end
 
   def edit
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
 
   def update
     if @product.update_attributes(product_params)
       redirect_to products_path
     else
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
       render :edit
     end
   end
