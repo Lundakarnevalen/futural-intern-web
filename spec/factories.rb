@@ -110,4 +110,33 @@ FactoryGirl.define do
     lng ""
     quantity 1
   end
+
+  factory :order do
+    status "delivered"
+    order_date Date.today
+    delivery_date Date.tomorrow
+    comment "No comment"
+    association :karnevalist, factory: :karnevalist
+    warehouse_code 0
+  end
+
+  factory :product_category do
+    name "tools"
+  end
+
+  factory :product do
+    product_type 1
+    association :product_category, factory: :product_category
+    name "hammare"
+    unit "kg"
+    ean "12345678910"
+    supplier "bauhaus"
+    info "information"
+    stock_location "Lund"
+    notes "en bra hammare"
+    stock_balance_ordered 100
+    stock_balance_not_ordered 200
+    stock_balance_stand_by 50
+    purchase_price 25.50
+  end
 end

@@ -1,0 +1,42 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Inleverans</h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Fakturanummer: </strong> <%= @incoming_delivery.invoice_nbr %></p>
+        <p><strong>Påbörjad: </strong> <%= @incoming_delivery.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+        <p><strong>Hanterad av: </strong>
+            <% @incoming_delivery.karnevalister.each do |k|%>
+              <%= "#{k.fornamn} #{k.efternamn}" %>
+            <% end %>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Vara</th>
+        <th>Streckkod</th>
+        <th>Lagerplats</th>
+        <th>Enhet</th>
+        <th>Nytt antal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @incoming_delivery.products.each do |p| %>
+        <tr>
+          <td><%= p.name %></td>
+          <td><%= p.ean %></td>
+          <td><%= p.stock_location %></td>
+          <td><%= p.unit %></td>
+          <td><%= p.new_amount(@incoming_delivery.id) %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

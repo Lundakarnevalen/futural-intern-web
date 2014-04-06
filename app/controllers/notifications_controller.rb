@@ -8,15 +8,20 @@ class NotificationsController < ApplicationController
   load_and_authorize_resource
 
   def index
-    sektioner = current_user.karnevalist.tilldelade_sektioner
-    sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
-    sektioner.each do |s|
-      sektioner_ids.push s.id
-    end
-    @notifications = Notification.where(recipient_id: sektioner_ids).order("created_at DESC")
     respond_to do |format|
-      format.html{ render }
+      format.html do
+        if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektioner.blank?
+          sektioner = current_user.karnevalist.tilldelade_sektioner
+          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
+          sektioner.each do |s|
+            sektioner_ids.push s.id
+          end
+          @notifications = Notification.where(recipient_id: sektioner_ids).order("created_at DESC")
+          render
+        end
+      end
       format.json do
+        @notifications = Notification.where(recipient_id: 0).order("created_at DESC")
         render :json =>
           { :status => :success,
             :records => @notifications.length,

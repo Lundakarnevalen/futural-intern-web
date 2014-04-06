@@ -1,0 +1,44 @@
+<div class="row">
+<div class="col-md-12">
+  <h3>Mina ordrar</h3>
+      <% if @search && ((current_user.is? :admin) || (current_user.is? :kassor)) %>
+      <%= form_tag '/warehouse/orders/search', class: "form-inline", :method => :get do %>
+      <div class="form-group">
+      <%= label_tag :search_param,  'Sök:', class: "sr-only" %>
+      <%= text_field_tag :search_param, nil, :placeholder => 'Namn på kund', class: "form-control" %>
+      </div>
+      <%= submit_tag 'Sök', class: "btn btn-primary" %>
+    <% end %>
+    </form>
+    <% end %>
+</div>
+</div>
+
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Order #</th>
+        <th>Kund</th>
+        <th>Status</th>
+        <th>Beställningsdatum</th>
+        <th>Hämtdatum</th>
+        <th>Totalsumma</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% if !@orders.nil? %>
+    <% @orders.each do |o| %>
+      <tr>
+        <td><%= link_to "#{o.id}", order_path(o.id) %></td>
+        <td><%= o.sektion.name %></td>
+        <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
+        <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
+        <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>
+        <td><%= number_to_currency(o.total_sum) %></td>
+      </tr>
+    <% end %>
+    <% end %>
+    </tbody>
+  </table>
+</div>
