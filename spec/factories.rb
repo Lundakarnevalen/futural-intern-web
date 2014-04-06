@@ -109,7 +109,8 @@ FactoryGirl.define do
     lat ""
     lng ""
     quantity 1
-  
+  end
+
   factory :order do
     status "delivered"
     order_date Date.today
