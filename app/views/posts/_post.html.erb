@@ -2,17 +2,17 @@
 <li>
   <div class="message col-xs-12">
     <div class="message-image col-xs-3">
-      <img alt="Icon" src="/images/logotyper/dansen.png" />
+      <%= image_tag("logotyper/#{post.sektion.name}.png") %>
     </div>
     <div class="message-information col-xs-8">
       <div class="row">
         <h1><%= post.title %></h1>
       </div>
       <div class="row">
-        <p><%= truncate post.content, length: 140 %></p>
+        <p><%= post.content %></p>
       </div>
       <div class="row">
-        <button type="button" class="btn btn-default btn-sm col-md-offset-12">
+        <button type="button" class="btn btn-default btn-sm col-md-offset-12 ">
           <% if current_user.can? :edit, post %>
             <%= link_to "redigera", edit_post_path(post) %>
           <% end %>

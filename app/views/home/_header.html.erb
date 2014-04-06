@@ -29,7 +29,11 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <div id="profile-image-container" class="col-xs-4">
-          <img src="images/profile_picture.png" />
+          <% if current_user.karnevalist.foto_url.nil? %>
+          <img src="profile_picture.png" />
+          <% else %>
+          <%= image_tag(current_user.karnevalist.foto_url.to_s) %>
+          <% end %>
         </div>
         <div id="profile-information-container" class="col-xs-8">
           <h5>Hej, <%= link_to current_user.karnevalist.name, current_user.karnevalist %></h5>
