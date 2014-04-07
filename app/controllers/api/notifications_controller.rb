@@ -9,6 +9,6 @@ class Api::NotificationsController < Api::ApplicationController
     end
     notifications = Notification.where(recipient_id: sektioner_ids).order("created_at DESC")
     return render status: 204, json: { success: true } if notifications.blank?
-    render status: 200, json: { success: true, notifications: notifications }
+    render status: 200, json: { success: true, notifications: notifications.to_json }
   end
 end
