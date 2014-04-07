@@ -8,6 +8,7 @@ $color-blue: #5C627E;
 $color-dark: #202020;
 $color-light: #ECF0F1;
 $color-yellow: #ECCD3C;
+$color-gray: #D8D8D8;
 $color-green: #7BCAAD;
 $color-shadow: rgba(0, 0, 0, 0.25);
 
@@ -40,7 +41,7 @@ html {
 
     body {
     
-    	height: auto;
+    	min-height: 100%;
 
         background-color: $color-light; //the main background.
 
@@ -405,31 +406,45 @@ p {
 	&.alert, 
 	&.notice {
 	
-		display: none;
+		$width: 320px;
+	
+		font-family: $font-header;
+	
+		opacity: 0.9;
+		
+		z-index: 5;
 		
 		position: fixed;
-		top: $height-navbar;
-		left: 0px;
+		top: 0px; 
+		left: 50%;
 		
-		width: 100%;
-		height: $height-flash;
-		line-height: $height-flash;
+		max-width: $width;
+		line-height: $height-flash * 0.75;
+		
+		padding: 0 $padding-main;
+		margin: 0 0 0 (-1 * (($width / 2) - ($padding-main / 2)));
 		
 		text-align: center;
+		font-weight: bold;
+		text-transform: uppercase;
+		word-break: break-all;
 		
-		border-radius: none !important;
+		border: none !important;
+		border-radius: 0 0 5px 5px !important;
 		
 	}
 	
 	&.alert {
 		
 		background-color: $color-red !important;
+		color: white;
 		
 	}
 	
 	&.notice {
 		
 		background-color: $color-yellow !important;
+		color: black !important;
 		
 	}
 	
@@ -522,6 +537,166 @@ p {
 	margin-top: $height-navbar;
 	
 }
+
+/*SIGN IN*/
+#identification {
+
+	position: absolute;
+	top: 0; left: 0;
+
+	min-width:100%; min-height: 100%;
+	
+	text-align: center;
+
+	background-image: url('../assets/clouds.png');
+	background-color: $color-blue;
+	
+	label {
+		
+		color: $color-red;
+		
+	}
+	
+	header {
+		
+		$height: 150px;
+		
+		width: 100%; height: $height;
+		
+		line-height: $height;
+		text-align: center;
+		
+		&>img {
+			
+			max-width: 450px;
+	
+			width: 100%;
+			height: auto;
+			
+		}
+		
+	}
+	
+	.box {
+		
+		text-align: left;
+		
+		background-color: white;
+		max-width: 480px;
+		
+		margin: 0 auto;
+		padding: $padding-main;
+		
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+		
+	}
+	
+	.form-group:last-child {
+		
+		margin-bottom: $margin-main;
+		
+	}
+	
+	.sign {
+		
+		width: 275px;
+		height: 100px;
+		
+		font-family: $font-header;
+		line-height: 50px;
+		text-align: center;
+		
+		color: $color-red;
+		
+		padding: $padding-main;
+		margin: 0 auto $margin-main auto;
+		
+		background-color: white;
+		
+		text-transform: uppercase;
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+		
+		h1 {
+		
+			font-family: inherit;
+			
+			margin: 0 0 0 0;
+			padding: 0 0 0 0;
+			
+		}
+		
+		p {
+		
+			font-family: inherit;
+			
+			margin: 0 0 0 0;
+			padding: 0 0 0 0;
+			
+		}
+		
+	}
+	
+	input {
+	
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+		
+		&[type=email],
+		&[type=password] {
+			
+			background-color: $color-gray;
+			color: white;
+			
+		}
+		
+		&[type=submit] {
+		
+			width: 250px;
+			
+			margin-top: $margin-main;
+		
+			font-family: $font-header;
+			text-transform: uppercase;
+			
+			background-color: $color-green;
+			color: white;
+			
+			border-radius: 0 0 0 0;
+			
+		}
+		
+	}
+	
+	.options {
+	
+		width: 100%;height: 50px;
+	
+		text-align: center;
+		
+		margin: 0 0 $margin-main 0;
+	
+		.request-password {
+			
+			display: inline-block;
+			
+			font-family: $font-header;
+			font-weight: bold;
+			
+			padding: $padding-main;
+			margin: 0 auto $margin-main * 2 auto;
+			
+			background-color: $color-yellow;
+			color: white;
+			
+			text-transform: uppercase;
+			
+			box-shadow: 0 $distance-shadow 0 $color-shadow;
+			
+		}
+		
+	}
+	
+}
+
 
 /*
 
