@@ -9,7 +9,7 @@
 	    <h2><%= @notification.title %></h2>
         <p><strong>Mottagare: </strong> <%= @notification.recipient_id == 0 ? "Alla karnevalister" : Sektion.find(@notification.recipient_id).name %></p><br>
 	    <p><%= @notification.message %></p>
-	    
+
 	    <p class="message-date">Skickat <%= @notification.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 	</div>
 	<a href="<%= notifications_path %>" ><div class="button">
