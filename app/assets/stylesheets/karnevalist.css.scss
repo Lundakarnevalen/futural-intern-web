@@ -11,34 +11,39 @@ $color-yellow: #ECCD3C;
 $color-green: #7BCAAD;
 $color-shadow: rgba(0, 0, 0, 0.25);
 
-$font-header: 'FuturaBT-Bold', bold, sans-serif;
-$font-text: 'Helvetica-light', sans-serif;
+$font-header: Futura, railway, sans-serif;
+$font-text: 'Helvetica-light', 'Arial', sans-serif;
+$font-profile: 'HelveticaNeue-thin', 'Helvetica-light', 'Arial', sans-serif;
 
-$distance-shadow: 5px;
+$distance-shadow: 6px;
 
 $height-navbar: 75px;
 $height-headerbar: 50px;
 $height-rowblocks: $height-headerbar;
 $height-logotype: 36px;
-$height-message: 160px;
+$height-message: 125px; //customized to this size.
 $height-button: 40px;
+$height-flash: 50px;
 
 $size-profile-image: 48px;
 
 $fontsize-headerbar: 20px;
 
-/*you'll have to change these manually if any of the variables above is changed (size and position properties).*/
+//you'll have to change these manually if any of the variables above is changed (size and position properties).
 $margin-navbar: 15px;
 
 html {
 
+	height: 100%;
+
     font-family: $font-text;
 
     body {
+    
+    	height: auto;
 
         background-color: $color-light; //the main background.
 
-        padding-top: $padding-main;
         padding-bottom: $padding-main * 2;
 
         .navbar {
@@ -82,7 +87,7 @@ html {
                         }
 
                         padding: $padding-main;
-                        margin: $margin-navbar $margin-main 0 0;
+                        margin: $margin-navbar $margin-main 0 $margin-main;
 
                         background-color: $background-color;
                         color: $text-color;
@@ -94,6 +99,24 @@ html {
                 }
 
             }
+            
+			.navbar-toggle {
+				
+				line-height: $height-navbar;
+				
+				padding: 0 ($padding-main * 4) 0 0;
+				margin: 0 0 0 0;
+				
+				border: none !important;
+				border-radius: 0 0 0 0 !important;
+				
+				&:hover {
+					
+					background-color: transparent;
+					
+				}
+				
+			}
 
         }
 
@@ -135,17 +158,32 @@ a {
 
 #profile-information-container {
 
-  h5 {
-    font-weight: normal;
-    padding-top: 20px;
-    margin: 0 0 0 0;
-    color: #ffffff;
-  }
-  a {
-    font-size: 10px;
-    text-decoration: underline;
-    color: #ffffff;
-  }
+	$text-color: white;
+
+		h5 {
+		
+			font-family: $font-profile;
+		
+			font-weight: normal;
+			
+			padding-top: 20px;
+			margin: 0 0 0 0;
+			
+			color: $text-color;
+			
+			a { color: inherit; }
+			
+		}
+		
+		&>a {
+			
+			font-size: 10px;
+			text-decoration: underline;
+			
+			color: $text-color;
+			
+		}
+		
 }
 
 #logotype {
@@ -161,6 +199,16 @@ a {
 
     }
 
+}
+
+#bs-example-navbar-collapse-1 {
+	
+	background-color: $color-blue;
+	
+	border-top: none;
+	
+	box-shadow: 0 $distance-shadow 0 $color-shadow;
+	
 }
 
 #sektion {
@@ -304,7 +352,7 @@ a {
         $text-color: white;
         $background-color: $color-green;
 
-        .more {
+        &.more {
 
             &:active {
 
@@ -352,10 +400,45 @@ a {
 
 }
 
+p {
+
+	&.alert, 
+	&.notice {
+	
+		display: none;
+		
+		position: fixed;
+		top: $height-navbar;
+		left: 0px;
+		
+		width: 100%;
+		height: $height-flash;
+		line-height: $height-flash;
+		
+		text-align: center;
+		
+		border-radius: none !important;
+		
+	}
+	
+	&.alert {
+		
+		background-color: $color-red !important;
+		
+	}
+	
+	&.notice {
+		
+		background-color: $color-yellow !important;
+		
+	}
+	
+}
+
 #left {
   background-color: $color-light;
-  > .header {
-      margin-top: 40px;
+  &>.header {
+      margin-top: $margin-main * 2;
       margin-bottom: 20px;
       background-color: white;
       color: $color-red;
@@ -416,16 +499,29 @@ a {
 
             img {
 
-                max-height: 150px;
-                max-width: 130px;
-                height: 100%;
-                width: 100%;
+				$max-size: ($height-message - ($margin-main * 2));
+				
+				//ratio of images is considered and handled.
+                height: $max-size;
+				width: $max-size * 0.75;
+                
             }
         }
     }
 }
 
-#right { background-color: $color-blue; }
+#right { 
+
+	background-color: $color-blue; 
+	
+}
+
+#right,
+#left {
+	
+	margin-top: $height-navbar;
+	
+}
 
 /*
 

@@ -1,14 +1,19 @@
 /*
 	*= require karnevalist.css.scss
-  *= require application_old.scss
+	*= require application_old.scss
 */
 
 @font-face {
-  font-family: 'FuturaBT-Bold';
-  src: url('FuturaBT-Bold.eot?') format('eot'),
-       url('FuturaBT-Bold.woff') format('woff'),
-       url('FuturaBT-Bold.ttf')  format('truetype'),
-       url('FuturaBT-Bold.svg#FuturaBT-Bold') format('svg');
+
+	font-family: 'Futura';
+	src: url('FuturaBT-Bold.eot?') format('eot'),
+	   url('FuturaBT-Bold.woff') format('woff'),
+	   url('FuturaBT-Bold.ttf')  format('truetype'),
+	   url('FuturaBT-Bold.svg#FuturaBT-Bold') format('svg');
+	   
+	font-weight: bold;
+	font-style: normal;
+	   
 }
 
 @font-face {
