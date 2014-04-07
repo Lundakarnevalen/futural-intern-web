@@ -4,9 +4,7 @@
     <div class="navbar-header">
       <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
         <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
+		<img width="16px" src="assets/hamburger-icon-yellow.svg" />
       </button>
       <div id="logotype" class="navbar-left">
     <img src="images/karnevalist-logotyp@2x.png" />
@@ -36,8 +34,12 @@
           <% end %>
         </div>
         <div id="profile-information-container" class="col-xs-8">
-          <h5>Hej, <%= link_to current_user.karnevalist.name, current_user.karnevalist %></h5>
-          <a href="#"><%= sign_out_link 'Logga ut?' %></a>
+        
+        	<% message = "Hej, " + current_user.karnevalist.fornamn %>
+        
+          <h5><%= link_to message, current_user.karnevalist %></h5>
+		  <%= sign_out_link 'Logga ut?' %>
+		  
         </div>
       </ul>
     </div><!-- /.navbar-collapse -->
