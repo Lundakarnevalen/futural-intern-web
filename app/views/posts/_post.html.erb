@@ -7,8 +7,9 @@
     <h1><%= post.title %></h1>
   </div>
     <div class="row">
-    <p><%= truncate post.content, length: 180 %></p>
-  </div>
+      <div class="post-preview"><%=  BlueCloth.new( truncate post.content, length: 180 ).to_html.html_safe %>
+      </div>
+    </div>
     <% unless post.id.nil? %>
       <div class="form-controls">
           <%= link_to "läs mer", post, class: "btn btn-small" %>

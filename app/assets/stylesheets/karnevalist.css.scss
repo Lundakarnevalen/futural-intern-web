@@ -388,6 +388,16 @@ p {
             padding-top: $margin-main;
             padding-right: $max-size + $margin-main;
         }
+        .form-controls {
+          margin-bottom: 10px;
+        }
+
+        .post-preview {
+          height: 60px;
+          margin-bottom: 8px;
+          //max-height: $height-text;
+          overflow:hidden;
+        }
     }
 }
 
