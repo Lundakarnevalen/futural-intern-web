@@ -1,5 +1,13 @@
 <%= link_to "Lägg till ny varukategori", new_product_category_path, class: "btn btn-primary"  %>
 <h3>Alla varukategorier</h3>
+  <% if flash[:error] %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+        <li><%= flash[:error] %></li>
+      </ul>
+    </div>
+  <% end %>
 <div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-9">
   <table class="table table-striped">
     <thead>
