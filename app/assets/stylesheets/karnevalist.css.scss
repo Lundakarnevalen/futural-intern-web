@@ -354,7 +354,7 @@ p {
         }
     }
     .message {
-        height: $height-message;
+        height: $height-message + $margin-main;
         margin-top: $margin-main;
         background-color: white;
         color: $color-red;
@@ -379,12 +379,15 @@ p {
         }
         .message-image {
             text-align: center;
-            img {
                 $max-size: $height-message - $margin-main * 2;
+            img {
+                box-shadow: 0 $distance-shadow 0 $color-shadow;
                 //ratio of images is considered and handled.
                 height: $max-size;
-                width: $max-size * 0.75;
+                width: $max-size;
             }
+            padding-right: $max-size;
+            margin-right: $margin-main;
         }
     }
 }
