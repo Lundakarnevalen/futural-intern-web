@@ -1,9 +1,7 @@
 class Warehouse::ProductsController < Warehouse::ApplicationController
   before_filter :find_product, only: [:show, :edit, :update, :inactivate, :activate]
   def index
-    @products_active = Product.where(warehouse_code: @warehouse_code, active: true).order("name DESC")
-    @products_inactive = Product.where(warehouse_code: @warehouse_code, active: false).order("name DESC")
-    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
   end
 
   def show

@@ -1,7 +1,11 @@
 <%= link_to "Lägg till ny vara", new_product_path, class: "btn btn-primary"  %>
-<h3>Aktiva varor</h3>
+<h2>Aktiva varor</h2>
+<% @product_categories.each do |c| %>
+<% products = c.products.where(warehouse_code: @warehouse_code, active: true).order("name ASC") %>
+<% if !products.blank? %>
+<h4><%= c.name %></h4>
 <div class="table-responsive">
-  <table class="table table-striped">
+  <table class="table">
     <thead>
       <tr>
         <th>Vara</th>
@@ -15,8 +19,14 @@
       </tr>
     </thead>
     <tbody>
-      <% @products_active.each do |p| %>
-      <tr>
+      <% products.each do |p| %>
+      <% if p.warning_limit.blank? %>
+        <tr>
+      <% elsif p.stock_balance_not_ordered <= p.warning_limit %>
+        <tr class="danger">
+      <% else %>
+        <tr class="success">
+      <% end %>
         <td><%= link_to p.name, edit_product_path(p.id) %></td>
         <td><%= p.ean %></td>
         <td><%= p.stock_location %></td>
@@ -30,8 +40,13 @@
     </tbody>
   </table>
 </div>
-<% if !@products_inactive.blank? %>
-<h3>Inaktiva varor</h3>
+<% end %>
+<% end %>
+<h2>Inaktiva varor</h2>
+<% @product_categories.each do |c| %>
+<% products = c.products.where(warehouse_code: @warehouse_code, active: false).order("name ASC") %>
+<% if !products.blank? %>
+<h4><%= c.name %></h4>
 <div class="table-responsive">
   <table class="table table-striped">
     <thead>
@@ -47,7 +62,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @products_inactive.each do |p| %>
+      <% products.each do |p| %>
       <tr>
         <td><%= link_to p.name, edit_product_path(p.id) %></td>
         <td><%= p.ean %></td>
@@ -62,4 +77,5 @@
     </tbody>
   </table>
 </div>
+<% end %>
 <% end %>
