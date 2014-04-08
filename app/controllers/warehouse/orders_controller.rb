@@ -17,6 +17,9 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.update_attributes(status: params[:status])
       if @order.status == "Makulerad"
         update_warehouse(@order.id)
+      elsif @order.status == "Levererad"
+        @order.finished_at = DateTime.now
+        @order.save
       end
     end
     ##
