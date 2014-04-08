@@ -3,18 +3,18 @@
 $padding-main: 10px;
 $margin-main: $padding-main;
 
-$color-red: #E65537;
-$color-blue: #5C627E;
+$color-red: #e65537;
+$color-blue: #5c627e;
 $color-dark: #202020;
-$color-light: #ECF0F1;
-$color-yellow: #ECCD3C;
-$color-gray: #D8D8D8;
-$color-green: #7BCAAD;
+$color-light: #ecf0f1;
+$color-yellow: #eccd3c;
+$color-gray: #d8d8d8;
+$color-green: #7bcaad;
 $color-shadow: rgba(0, 0, 0, 0.25);
 
 $font-header: Futura, railway, sans-serif;
-$font-text: 'Helvetica-light', 'Arial', sans-serif;
-$font-profile: 'HelveticaNeue-thin', 'Helvetica-light', 'Arial', sans-serif;
+$font-text: "Helvetica-light", "Arial", sans-serif;
+$font-profile: "HelveticaNeue-thin", "Helvetica-light", "Arial", sans-serif;
 
 $distance-shadow: 6px;
 
@@ -22,7 +22,9 @@ $height-navbar: 75px;
 $height-headerbar: 50px;
 $height-rowblocks: $height-headerbar;
 $height-logotype: 36px;
-$height-message: 125px; //customized to this size.
+$height-message: 180px;
+
+//customized to this size.
 $height-button: 40px;
 $height-flash: 50px;
 
@@ -34,110 +36,117 @@ $fontsize-headerbar: 20px;
 $margin-navbar: 15px;
 
 html {
-
-	height: 100%;
-
+    height: 100%;
     font-family: $font-text;
-
     body {
-    
-    	min-height: 100%;
-
-        background-color: $color-light; //the main background.
-
+        min-height: 100%;
+        background-color: $color-light;
+        //the main background.
         padding-bottom: $padding-main * 2;
-
+        ol {
+            //Fixar så att posts inte har randompadding till vänster
+            padding: 0;
+            margin: 0;
+        }
         .navbar {
-
             height: $height-navbar;
-
             border: none;
             background-color: $color-blue;
-
             box-shadow: 0 $distance-shadow 0 $color-shadow;
-
             ul.nav {
-
-                li { //navigation buttons.
-
+                li {
+                    //navigation buttons.
                     $text-color: $color-red;
                     $background-color: white;
-
                     font-family: $font-header;
                     font-weight: bold;
-                    font-size: ($fontsize-headerbar * 0.75);
-
+                    font-size: $fontsize-headerbar * 0.75;
                     height: $height-navbar;
-
                     a {
-
                         &:active {
-
                             background-color: darken($background-color, 20%) !important;
                             color: darken($text-color, 20%) !important;
-
                             box-shadow: none;
-
                         }
-
                         &:hover {
-
                             background-color: darken($background-color, 10%);
                             color: darken($text-color, 10%);
-
                         }
-
                         padding: $padding-main;
                         margin: $margin-navbar $margin-main 0 $margin-main;
-
                         background-color: $background-color;
                         color: $text-color;
-
                         box-shadow: 0 $distance-shadow 0 $color-shadow;
-
                     }
-
                 }
-
             }
-            
-			.navbar-toggle {
-				
-				line-height: $height-navbar;
-				
-				padding: 0 ($padding-main * 4) 0 0;
-				margin: 0 0 0 0;
-				
-				border: none !important;
-				border-radius: 0 0 0 0 !important;
-				
-				&:hover {
-					
-					background-color: transparent;
-					
-				}
-				
-			}
-
+            .navbar-toggle {
+                line-height: $height-navbar;
+                padding: 0 $padding-main * 4 0 0;
+                margin: 0 0 0 0;
+                border: none !important;
+                border-radius: 0 0 0 0 !important;
+                &:hover {
+                    background-color: transparent;
+                }
+            }
         }
-
         .header {
-
             font-family: $font-header;
             font-weight: bold;
             font-size: $fontsize-headerbar;
-
             height: $height-headerbar;
-
+            margin-bottom: 20px;
             line-height: $height-headerbar;
             text-align: center;
-
+            background-color: white;
+            color: $color-red;
             box-shadow: 0px $distance-shadow 0px $color-shadow;
-
         }
-
     }
+}
 
+input {
+    padding: 20px;
+    width: 100%;
+    border: none;
+    font-size: 20px;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
+    background-color: $color-gray;
+    color: red;
+    &[type=submit] {
+        width: 250px;
+        margin-top: $margin-main;
+        font-family: $font-header;
+        text-transform: uppercase;
+        background-color: $color-green;
+        color: white;
+        border-radius: 0 0 0 0;
+    }
+}
+
+.btn,button {
+    $background-color: $color-green;
+    $text-color: white;
+    border-radius: 0px;
+    border: none;
+    font-family: $font-header;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
+    background-color: $color-green;
+    color: white;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
+    &[type=edit] {
+        background-color: $color-red;
+    }
+    &.more {
+        &:active {
+            background-color: darken($background-color, 10%) !important;
+            box-shadow: none;
+        }
+        &:hover {
+            background-color: lighten($background-color, 5%);
+        }
+    }
 }
 
 a {
@@ -147,685 +156,339 @@ a {
 }
 
 #profile-image-container {
-  text-align: right;
-  img {
-    width: 48px;
-    height: 48px;
-    margin-top: 13.5px;
-    box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
-  }
+    text-align: right;
+    img {
+        width: 48px;
+        height: 48px;
+        margin-top: 13.5px;
+        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+    }
 }
 
-
 #profile-information-container {
-
-	$text-color: white;
-
-		h5 {
-		
-			font-family: $font-profile;
-		
-			font-weight: normal;
-			
-			padding-top: 20px;
-			margin: 0 0 0 0;
-			
-			color: $text-color;
-			
-			a { color: inherit; }
-			
-		}
-		
-		&>a {
-			
-			font-size: 10px;
-			text-decoration: underline;
-			
-			color: $text-color;
-			
-		}
-		
+    $text-color: white;
+    h5 {
+        font-family: $font-profile;
+        font-weight: normal;
+        padding-top: 20px;
+        margin: 0 0 0 0;
+        color: $text-color;
+        a {
+            color: inherit;
+        }
+    }
+    & > a {
+        font-size: 10px;
+        text-decoration: underline;
+        color: $text-color;
+    }
 }
 
 #logotype {
-
     img {
-
         height: $height-logotype;
         width: auto;
-
         $middle-margin: ($height-navbar - $height-logotype) / 2;
-
         margin: $middle-margin 40px 0 40px;
-
     }
-
 }
 
 #bs-example-navbar-collapse-1 {
-	
-	background-color: $color-blue;
-	
-	border-top: none;
-	
-	box-shadow: 0 $distance-shadow 0 $color-shadow;
-	
+    background-color: $color-blue;
+    border-top: none;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 
 #sektion {
-
-    &.toggled { //if the bar is active.
-
-        &>ul.nav {
-
+    &.toggled {
+        //if the bar is active.
+        & > ul.nav {
             display: block;
-
             background-color: $color-yellow;
-
             li {
-
                 $text-color: $color-red;
                 $background-color: white;
-
                 height: $height-rowblocks;
-
                 font-family: $font-header;
-                font-size: 0; //dirty hack to remove white-space
-
+                font-size: 0;
+                //dirty hack to remove white-space
                 line-height: $height-rowblocks;
                 text-align: center;
-
                 margin-bottom: $margin-main;
-
                 a {
-
                     &:active {
-
                         background-color: darken($background-color, 20%) !important;
                         color: darken($text-color, 20%) !important;
-
                         box-shadow: none;
-
                     }
-
                     &:hover {
-
                         background-color: darken($background-color, 10%);
                         color: darken($text-color, 10%);
-
                     }
-
                     display: inline-block;
-
                     width: 300px;
-
                     font-size: $fontsize-headerbar;
-
                     line-height: normal;
-
                     color: $text-color;
                     background-color: $background-color;
-
                     box-shadow: 0 $distance-shadow 0 $color-shadow;
-
                 }
-
             }
-
         }
-
     }
-
-    &>.header {
-
+    & > .header {
         background-color: $color-yellow;
         color: $color-blue;
-
         box-shadow: none;
-
     }
-
-    &>ul.nav {
-
+    & > ul.nav {
         display: none;
-
     }
-
 }
 
 #inviter,
 #evenemang {
-
     text-align: center;
-
     .header {
-
         background-color: lighten($color-blue, 10%);
         color: white;
-
     }
-
     ul {
-
         .block {
-
             font-family: $font-header;
-
             height: $height-rowblocks;
             width: 300px;
-
             text-align: left;
             line-height: $height-rowblocks;
-
             margin: $margin-main auto;
-
             background-color: white;
             color: $color-red;
-
             box-shadow: 0 $distance-shadow 0 $color-shadow;
-
             .date {
-
                 p {
-
                     margin: 0 0 0 0;
                     padding: 0 0 0 0;
-
                     background-color: $color-light;
-
                     box-shadow: 0 $distance-shadow 0 $color-shadow;
-
                 }
-
                 text-align: center;
-                line-height: $height-rowblocks - ($margin-main * 2);
-
-                margin-top: $margin-main - ($distance-shadow / 2);
-
+                line-height: $height-rowblocks - $margin-main * 2;
+                margin-top: $margin-main - $distance-shadow / 2;
             }
-
         }
-
     }
-
     button {
-
         $text-color: white;
         $background-color: $color-green;
-
         &.more {
-
             &:active {
-
                 background-color: darken($background-color, 10%) !important;
-
                 box-shadow: none;
-
             }
-
             &:hover {
-
                 background-color: lighten($background-color, 5%);
-
             }
-
             height: $height-button;
-
             font-family: $font-header;
-
             padding: $padding-main;
             margin: 0 0 $margin-main 0;
-
             background-color: $background-color;
             color: $text-color;
-
             border: none;
-
             box-shadow: 0 $distance-shadow 0 $color-shadow;
-
             outline: none;
-
         }
-
     }
-
 }
 
 #sektion,
 #inviter,
 #evenemang {
-
     margin-bottom: $margin-main;
-
     box-shadow: 0 $distance-shadow 0 $color-shadow;
-
 }
 
 p {
-
-	&.alert, 
-	&.notice {
-	
-		$width: 320px;
-	
-		font-family: $font-header;
-	
-		opacity: 0.9;
-		
-		z-index: 5;
-		
-		position: fixed;
-		top: 0px; 
-		left: 50%;
-		
-		max-width: $width;
-		line-height: $height-flash * 0.75;
-		
-		padding: 0 $padding-main;
-		margin: 0 0 0 (-1 * (($width / 2) - ($padding-main / 2)));
-		
-		text-align: center;
-		font-weight: bold;
-		text-transform: uppercase;
-		word-break: break-all;
-		
-		border: none !important;
-		border-radius: 0 0 5px 5px !important;
-		
-	}
-	
-	&.alert {
-		
-		background-color: $color-red !important;
-		color: white;
-		
-	}
-	
-	&.notice {
-		
-		background-color: $color-yellow !important;
-		color: black !important;
-		
-	}
-	
+    &.alert,
+    &.notice {
+        $width: 320px;
+        font-family: $font-header;
+        opacity: 0.9;
+        z-index: 5;
+        position: fixed;
+        top: 0px;
+        left: 50%;
+        max-width: $width;
+        line-height: $height-flash * 0.75;
+        padding: 0 $padding-main;
+        margin: 0 0 0 -1 * ($width / 2 - $padding-main / 2);
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        word-break: break-all;
+        border: none !important;
+        border-radius: 0 0 5px 5px !important;
+    }
+    &.alert {
+        background-color: $color-red !important;
+        color: white;
+    }
+    &.notice {
+        background-color: $color-yellow !important;
+        color: black !important;
+    }
 }
 
 #left {
-  background-color: $color-light;
-  &>.header {
-      margin-top: $margin-main * 2;
-      margin-bottom: 20px;
-      background-color: white;
-      color: $color-red;
-  }
-
+    background-color: $color-light;
+    & > .header {
+        margin-top: $margin-main * 2;
+        margin-bottom: 20px;
+        background-color: white;
+        color: $color-red;
+    }
     .row:last-child {
-
         margin-bottom: $margin-main;
         .message {
-
             margin-bottom: $margin-main;
         }
     }
     .message {
-
         height: $height-message;
-
         margin-top: $margin-main;
-
         background-color: white;
         color: $color-red;
-
         box-shadow: 0 $distance-shadow 0 $color-shadow;
-
         .message-information {
-
             h1 {
-
                 width: 100%;
                 height: 40px;
-
                 font-family: $font-header;
-
                 overflow: hidden;
                 word-break: break-all;
                 text-transform: uppercase;
-
             }
-
             p {
-
                 font-family: $font-text !important;
-
                 overflow: hidden;
                 word-wrap: break-word;
                 word-break: break-all;
-
                 display: block;
                 height: 40px;
-
             }
-
         }
-
         .message-image {
-
             text-align: center;
-
             img {
-
-				$max-size: ($height-message - ($margin-main * 2));
-				
-				//ratio of images is considered and handled.
+                $max-size: $height-message - $margin-main * 2;
+                //ratio of images is considered and handled.
                 height: $max-size;
-				width: $max-size * 0.75;
-                
+                width: $max-size * 0.75;
             }
         }
     }
 }
 
-#right { 
-
-	background-color: $color-blue; 
-	
+#right {
+    background-color: $color-blue;
 }
 
 #right,
 #left {
-	
-	margin-top: $height-navbar;
-	
+    margin-top: $height-navbar;
 }
 
 /*SIGN IN*/
 #identification {
-
-	position: absolute;
-	top: 0; left: 0;
-
-	min-width:100%; min-height: 100%;
-	
-	text-align: center;
-
-	background-image: url('../assets/clouds.png');
-	background-color: $color-blue;
-	
-	label {
-		
-		color: $color-red;
-		
-	}
-	
-	header {
-		
-		$height: 150px;
-		
-		width: 100%; height: $height;
-		
-		line-height: $height;
-		text-align: center;
-		
-		&>img {
-			
-			max-width: 450px;
-	
-			width: 100%;
-			height: auto;
-			
-		}
-		
-	}
-	
-	.box {
-		
-		text-align: left;
-		
-		background-color: white;
-		max-width: 480px;
-		
-		margin: 0 auto;
-		padding: $padding-main;
-		
-		box-shadow: 0 $distance-shadow 0 $color-shadow;
-		
-	}
-	
-	.form-group:last-child {
-		
-		margin-bottom: $margin-main;
-		
-	}
-	
-	.sign {
-		
-		width: 275px;
-		height: 100px;
-		
-		font-family: $font-header;
-		line-height: 50px;
-		text-align: center;
-		
-		color: $color-red;
-		
-		padding: $padding-main;
-		margin: 0 auto $margin-main auto;
-		
-		background-color: white;
-		
-		text-transform: uppercase;
-		box-shadow: 0 $distance-shadow 0 $color-shadow;
-		
-		h1 {
-		
-			font-family: inherit;
-			
-			margin: 0 0 0 0;
-			padding: 0 0 0 0;
-			
-		}
-		
-		p {
-		
-			font-family: inherit;
-			
-			margin: 0 0 0 0;
-			padding: 0 0 0 0;
-			
-		}
-		
-	}
-	
-	input {
-	
-		box-shadow: 0 $distance-shadow 0 $color-shadow;
-		
-		&[type=email],
-		&[type=password] {
-			
-			background-color: $color-gray;
-			color: white;
-			
-		}
-		
-		&[type=submit] {
-		
-			width: 250px;
-			
-			margin-top: $margin-main;
-		
-			font-family: $font-header;
-			text-transform: uppercase;
-			
-			background-color: $color-green;
-			color: white;
-			
-			border-radius: 0 0 0 0;
-			
-		}
-		
-	}
-	
-	.options {
-	
-		width: 100%;height: 50px;
-	
-		text-align: center;
-		
-		margin: 0 0 $margin-main 0;
-	
-		.request-password {
-			
-			display: inline-block;
-			
-			font-family: $font-header;
-			font-weight: bold;
-			
-			padding: $padding-main;
-			margin: 0 auto $margin-main * 2 auto;
-			
-			background-color: $color-yellow;
-			color: white;
-			
-			text-transform: uppercase;
-			
-			box-shadow: 0 $distance-shadow 0 $color-shadow;
-			
-		}
-		
-	}
-	
-}
-
-
-/*
-
-#top-row {
-
-    padding: 75px 0 0 0;
-
-}
-
-#user-information-container {
-
-    height: 75px;
-    margin-top: 20px;
-
-}
-
-#profile-container {
-
-    text-align: right;
-    line-height: 75px;
-
-}
-
-#profile-container > img {
-
-    max-width: 64px;
-    max-height: 64px;
-
-    margin-top: 5px;
-
-}
-
-.navbar {
-
-    opacity: 1;
-
-    z-index: 10;
-    height: 75px;
-
-    background-color: #5C627E;
-    border: none;
-
-    box-shadow: 0px 5px 0px rgba(0,0,0,0.5);
-
-}
-
-.nav > li {
-
-    padding: 20px;
-
-}
-
-.nav > li > a {
-
-    font-family: 'Futura';
-
-    background-color: white;
-    color: red !important;
-
-    padding: 7px;
-
-    box-shadow: 0px 5px 0px red;
-
-}
-
-.nav > li > a:hover {
-
-    background-color: silver !important;
-
-}
-
-.header {
-
-    height: 50px;
-    line-height: 50px;
-
-    font-family: 'Futura';
-    font-weight: bold;
-    font-size: 24px;
-
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100%;
+    min-height: 100%;
     text-align: center;
-
-    box-shadow: 0 5px 0 rgba(0,0,0,0.25);
-
+    background-image: url("../assets/clouds.png");
+    background-color: $color-blue;
+    label {
+        color: $color-red;
+    }
+    header {
+        $height: 150px;
+        width: 100%;
+        height: $height;
+        line-height: $height;
+        text-align: center;
+        & > img {
+            max-width: 450px;
+            width: 100%;
+            height: auto;
+        }
+    }
+    .box {
+        text-align: left;
+        background-color: white;
+        max-width: 480px;
+        margin: 0 auto;
+        padding: $padding-main;
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
+    }
+    .form-group:last-child {
+        margin-bottom: $margin-main;
+    }
+    .sign {
+        width: 275px;
+        height: 100px;
+        font-family: $font-header;
+        line-height: 50px;
+        text-align: center;
+        color: $color-red;
+        padding: $padding-main;
+        margin: 0 auto $margin-main auto;
+        background-color: white;
+        text-transform: uppercase;
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
+        h1 {
+            font-family: inherit;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
+        p {
+            font-family: inherit;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
+    }
+    input {
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
+        &[type=email],
+        &[type=password] {
+            background-color: $color-gray;
+            color: white;
+        }
+        &[type=submit] {
+            width: 250px;
+            margin-top: $margin-main;
+            font-family: $font-header;
+            text-transform: uppercase;
+            background-color: $color-green;
+            color: white;
+            border-radius: 0 0 0 0;
+        }
+    }
+    .options {
+        width: 100%;
+        height: 50px;
+        text-align: center;
+        margin: 0 0 $margin-main 0;
+        .request-password {
+            display: inline-block;
+            font-family: $font-header;
+            font-weight: bold;
+            padding: $padding-main;
+            margin: 0 auto $margin-main * 2 auto;
+            background-color: $color-yellow;
+            color: white;
+            text-transform: uppercase;
+            box-shadow: 0 $distance-shadow 0 $color-shadow;
+        }
+    }
 }
-
-#sektion,
-#evenemang,
-#inviter {
-
-    margin-bottom: 10px;
-
-}
-
-#sektion .nav {
-
-
-
-}
-
-#evenemang .header,
-#inviter .header {
-
-    color: white;
-    background-color: rgba(255,255,255,0.2);
-
-}
-
-#sektion .header {
-
-    background-color: yellow;
-    color: blue;
-
-}
-
-#left .header {
-
-    background-color: white;
-    color: red;
-
-    margin-top: 25px;
-
-}
-
-#logotype > img {
-
-    height: 75px;
-    width: 200px;
-
-    border: 1px solid black;
-
-}*/
