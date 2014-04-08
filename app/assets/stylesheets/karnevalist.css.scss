@@ -431,18 +431,16 @@ p {
 }
 
 .cloud-container {
-    position: absolute;
+    position: static;
     min-width: 100%;
     min-height: 100%;
     overflow: hidden;
+    top: 0;
+    left: 0;
 }
 
 .cloud-bg {
-    z-index: -2;
     background-color: $color-blue;
-    position: absolute;
-    min-width: 100%;
-    min-height: 100%;
 }
 
 .one-cloud {

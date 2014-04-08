@@ -16,7 +16,8 @@
     var cloud_swag = function(div) {
         update_bounds();
         div.removeClass('clouds');
-        div.prepend(cont);
+        $('body').addClass('cloud-bg');
+        div.append(cont);
         for(var i = 0; i < N_CLOUDS; i++) {
             gen_cloud(cont);
         }
@@ -31,7 +32,7 @@
         });
         clouds.each(function() {
             var pos = $(this).offset().left;
-            if(pos > w_width || pos < 0) {
+            if(pos > w_width - $(this).width() || pos < 0) {
                 $(this).remove();
                 clouds = $('.one-cloud');
             }
@@ -43,7 +44,7 @@
             factor = Math.random() / 2 + 0.5;
         cloud.css({ height: 144 * CLOUD_SIZE * factor,
                     width: 304 * CLOUD_SIZE * factor,
-                    top: random(0, w_height),
+                    top: random(0, w_height - 144 * CLOUD_SIZE),
                     left: random(0, w_width),
         });
         if(Math.random() > 0.5) {
