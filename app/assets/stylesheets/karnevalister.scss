@@ -1,3 +1,5 @@
+@import "karnevalist.css.scss";
+
 .container {
   width: auto;
 }
@@ -14,7 +16,7 @@
 }
 
 .logo p {
-    color: white;
+    color: $color-red;
     text-align: center;
     font-size: 1.5em;
 }
@@ -47,5 +49,12 @@
 
 .check-fail {
     background: #f33;
+}
+
+.photo {
+  max-height: 400px;
+  max-width: 80%;
+  border: 1em solid white;
+  margin: 3em 0 40px 1em;
 }
 
