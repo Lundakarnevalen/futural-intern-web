@@ -1,13 +1,9 @@
-<div id="left" class="col-md-8">
 <%= render partial: "shared/header", locals: {title: @sektion.name} %>
   <li><%= link_to 'Exportera personuppgifter som Excel-ark', :action => :export %></li>
   <li><%= link_to 'Kolla om dina karnevalister är medlemmar i AF, nation och kår', :action => :kollamedlem %></li>
 
 <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
 
-  <% @sektion.members.each do |k| %>
-    <li><%= link_to k.to_s, k %></li>
-  <% end %>
-
-
-</div>
+<% @sektion.members.each do |k| %>
+  <li><%= link_to k.to_s, k %></li>
+<% end %>
