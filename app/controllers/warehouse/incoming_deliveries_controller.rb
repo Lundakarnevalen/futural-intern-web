@@ -35,9 +35,9 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
           if stand_by == 0
             stock_balance_not_ordered = product.stock_balance_not_ordered + incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
-          elsif stand_by >= new_amount.to_i
+          elsif stand_by >= incoming_delivery.amount.to_i
             stock_balance_ordered = product.stock_balance_ordered + incoming_delivery.amount.to_i
-            stand_by -= incoming_delivery.amount.amount.to_i
+            stand_by -= incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_stand_by => stand_by)
           else
