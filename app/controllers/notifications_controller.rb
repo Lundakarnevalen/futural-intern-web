@@ -1,7 +1,6 @@
 # encoding: utf-8
 class NotificationsController < ApplicationController
   require 'gcm'
-  layout 'home/application'
 
   before_filter :authenticate_user_from_token!, :except => [:index, :show]
   before_filter :authenticate_user!, :except => [:index, :show]

@@ -1,5 +1,5 @@
-<h1>Karnevalistkollen</h1>
-
+<div id="left" class="col-md-8">
+<%= render partial: "shared/header", locals: {title: "Karnevalistkollen"} %>
 <%= form_tag check_karnevalister_path, :method => :get do %>
   <div class=form-group>
     <%= label_tag :q, 'Personnummer eller karnevalist-id' %>
@@ -24,3 +24,4 @@
     </div>
   <% end %>
 <% end %>
+</div>

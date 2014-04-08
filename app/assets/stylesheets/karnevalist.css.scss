@@ -115,7 +115,7 @@ input {
     background-color: $color-gray;
     color: red;
     &[type=submit] {
-        width: 250px;
+        width: auto;
         margin-top: $margin-main;
         font-family: $font-header;
         text-transform: uppercase;

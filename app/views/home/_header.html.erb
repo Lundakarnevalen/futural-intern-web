@@ -28,7 +28,7 @@
       <ul class="nav navbar-nav navbar-right">
         <div id="profile-image-container" class="col-xs-4">
           <% if current_user.karnevalist.foto_url.nil? %>
-          <img src="profile_picture.png" />
+            <%= image_tag "picture_default.jpg" %>
           <% else %>
           <%= image_tag(current_user.karnevalist.foto_url.to_s) %>
           <% end %>

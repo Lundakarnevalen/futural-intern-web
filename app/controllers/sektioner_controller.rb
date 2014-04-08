@@ -1,6 +1,5 @@
 class SektionerController < ApplicationController
   load_and_authorize_resource
-  layout 'home/application'
 
   def index
     if current_user.is? :admin
