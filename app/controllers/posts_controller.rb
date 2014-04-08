@@ -1,6 +1,5 @@
 class PostsController < ApplicationController
   skip_authorization_check
-  layout 'home/application'
 
   def new
     @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner

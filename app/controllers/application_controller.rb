@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
   check_authorization :unless => :devise_controller?
   before_filter :can_can_strong
 
+  layout :layout
+
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
     super(options, response_status)
@@ -41,5 +43,10 @@ class ApplicationController < ActionController::Base
 
   def after_sign_out_path_for _
     new_user_session_path
+  end
+
+  def layout
+    # turn layout off for every devise controller:
+    "login" if devise_controller?
   end
 end

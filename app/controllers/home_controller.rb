@@ -1,6 +1,5 @@
 class HomeController < ApplicationController
   skip_authorization_check
-  layout 'home/application'
 
   def index
     if signed_in?
