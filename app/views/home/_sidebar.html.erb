@@ -28,6 +28,10 @@
         <% if can? :checkout, Karnevalist %>
           <li><%= link_to 'Checka ut karnevalister', checkout_karnevalister_path %></li>
         <% end %>
+        <%# General stuff %>
+        <% if can? :read, Notification %>
+            <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+        <% end %>
         <%# Sektionsadmin stuff %>
         <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
           <% if can? :read, Karnevalist %>
