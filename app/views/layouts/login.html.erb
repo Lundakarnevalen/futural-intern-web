@@ -11,17 +11,11 @@
     <%= csrf_meta_tags %>
   </head>
   <body>
-    <%= render "home/header" %>
-    <div>
-      <div id="page-content" class=".col-md-8">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
-        <%= yield %>
-      </div>
-      <div id="sidebar" class=".col-md-4">
-        <%= render "home/sidebar" %>
-      </div>
-    </div>
+    <p class="notice"><%= notice %></p>
+    <p class="alert"><%= alert %></p>
+
+    <%= yield %>
+
     <%= render "shared/footer" %>
   </body>
 </html>
