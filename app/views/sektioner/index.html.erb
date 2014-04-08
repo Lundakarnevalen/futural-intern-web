@@ -1,8 +1,6 @@
-<h1>Futuralkarnevalens sektioner</h1>
-
-<ul>
-  <% @sektioner.each do |s| %>
-    <li><%= link_to s.name, s %>
-  <% end %>
-</ul>
-            
+<div id="left" class="col-md-8">
+  <%= render partial: "shared/header", locals: {title: "Fututalkarnevalens sektioner"} %>
+    <% @sektioner.each do |s| %>
+        <li><%= link_to s.name, s %></li>
+    <% end %>
+  </div>

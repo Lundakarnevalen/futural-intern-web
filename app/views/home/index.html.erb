@@ -1,25 +1,10 @@
 <div id="left" class="col-md-8">
-  <div class="header col-xs-12">INKORG</div>
+  <%= render partial: "shared/header", locals: {title: "INKORG"} %>
   <div>
-      <% if not @post.nil? and @posts.any? %>
-        <ol class="posts">
-          <%= render @posts %>
-        </ol>
-      <% end %>
-  </div>
-  <div class="row">
-    <div class="message col-xs-12">
-      <div class="message-image col-xs-3">
-		  <img src="./assets/logotyper/kommunikation.png" />
-      </div>
-      <div class="message-information col-xs-8">
-        <div class="row">
-          <h1>Välkomna!</h1>
-        </div>
-        <div class="row">
-          <p>Detta är internwebben, besök den ofta!.</p>
-        </div>
-      </div>
-    </div>
+    <% if not @post.nil? and @posts.any? %>
+      <ol class="posts">
+        <%= render @posts %>
+      </ol>
+    <% end %>
   </div>
 </div>

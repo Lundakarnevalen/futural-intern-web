@@ -1,12 +1,6 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag :posts, :media => :all %>
-<% end %>
-
+<div id="left" class="col-md-8">
 <%= render partial: "shared/header", locals: {title: "Redigera Inlägg"} %>
-
-<div class="container" id="content">
 <%= form_for @post do |f| %>
-    <h2>Redigera inlägg</h2>
       <% if @post.errors.any? %>
         <div id="error_explanation">
           <ul>

@@ -1,6 +1,7 @@
 # encoding: utf-8
 class NotificationsController < ApplicationController
   require 'gcm'
+  layout 'home/application'
 
   before_filter :authenticate_user_from_token!, :except => [:index, :show]
   before_filter :authenticate_user!, :except => [:index, :show]
@@ -12,7 +13,7 @@ class NotificationsController < ApplicationController
       format.html do
         if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektioner.blank?
           sektioner = current_user.karnevalist.tilldelade_sektioner
-          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
+          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist
           sektioner.each do |s|
             sektioner_ids.push s.id
           end
