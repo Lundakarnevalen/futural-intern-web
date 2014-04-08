@@ -12,6 +12,7 @@
 //= require bootstrap
 //= require bootstrap-datepicker
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
+//= require bootstrap/modal
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
