@@ -1,7 +1,6 @@
 class Warehouse::ApplicationController < ApplicationController
-  # TODO only for dev
   before_filter :w_code
-  skip_authorization_check
+  load_and_authorize_resource
   include Warehouse::ApplicationHelper
 
   def w_code

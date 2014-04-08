@@ -1,9 +1,20 @@
 <h3>Inleverans</h3>
 <div class="table-responsive">
   <%= form_for [form_prefix, @incoming_delivery] do |f| %>
-  <table class="table table-striped">
+  <% if @incoming_delivery.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+      <% @incoming_delivery.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <table class="table">
     <thead>
       <tr>
+        <th>Lägg till antal</th>
         <th>Vara</th>
         <th>Streckkod</th>
         <th>Lagerplats</th>
@@ -11,18 +22,24 @@
         <th>I lager (beställd)</th>
         <th>Ej i lager (beställd)</th>
         <th>Enhet</th>
-        <th>Lägg till antal</th>
       </tr>
     </thead>
     <tbody>
       <% @products.each do |p| %>
       <% if p.warning_limit.blank? %>
         <tr>
-      <% elsif p.stock_balance_not_ordered < p.warning_limit %>
+      <% elsif p.stock_balance_not_ordered <= p.warning_limit %>
         <tr class="danger">
       <% else %>
         <tr class="success">
       <% end %>
+        <td>
+          <% in_delivery_product = p.incoming_delivery_products.where(incoming_delivery_id: @incoming_delivery.id) %>
+          <%= f.fields_for :incoming_delivery_products, in_delivery_product.blank? ? p.incoming_delivery_products.build : in_delivery_product do |op| %>
+            <%= op.number_field :amount, min: 0, class: "form-control", style: "width: 110px;" %>
+            <%= op.hidden_field :product_id, :value => p.id %>
+          <% end %>
+        </td>
         <td><%= p.name %></td>
         <td><%= p.ean %></td>
         <td><%= p.stock_location %></td>
@@ -30,15 +47,11 @@
         <td><%= p.stock_balance_ordered %></td>
         <td><%= p.stock_balance_stand_by %></td>
         <td><%= p.unit %></td>
-        <td>
-          <%= f.fields_for :incoming_delivery_products do |op| %>
-            <%= op.number_field :amount, min: 0, class: "form-control" %>
-            <%= op.hidden_field :product_id, :value => p.id %>
-          <% end %>
       </tr>
       <% end %>
     </tbody>
   </table>
+</div>
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-3">
       <div class="form-group">
@@ -47,7 +60,14 @@
       </div>
     </div>
   </div>
+  <div class="row">
+    <div class="col-xs-6 col-sm-6 col-md-3">
+      <div class="form-group">
+        <%= f.label :delivery_cost, "Leveranskostnad (kr)" %>
+        <%= f.text_field :delivery_cost, class: "form-control" %>
+      </div>
+    </div>
+  </div>
   <%= f.submit "Spara och slutför", class: "btn btn-primary", name: "finished" %>
   <%= f.submit "Spara och fortsätt senare", class: "btn btn-primary", name: "ongoing" %>
   <% end %>
-</div>

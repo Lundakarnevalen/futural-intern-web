@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140406212744) do
+ActiveRecord::Schema.define(version: 20140407233535) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140406212744) do
     t.boolean  "ongoing"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "delivery_cost"
   end
 
   create_table "incoming_deliveries_karnevalister", id: false, force: true do |t|
