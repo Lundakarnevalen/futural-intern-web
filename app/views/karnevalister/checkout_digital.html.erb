@@ -1,7 +1,7 @@
 <% content_for :head do %>
 <%= stylesheet_link_tag    :karnevalister, :media => :all %>
 <% end %>
-
+<div id="left" class="col-md-8">
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
 <div class="container">
@@ -37,4 +37,5 @@
 
 	<% end %>
 	<% end %>
+</div>
 </div>
