@@ -25,6 +25,7 @@ gem 'bootstrap-sass', '~> 3.0.3.0'
 gem 'simple_calendar', '~> 0.1.10'
 gem 'prawn'
 gem 'bootstrap-datepicker-rails'
+gem 'bluecloth'
 
 group :production do
   gem 'rails_12factor'
@@ -39,6 +40,7 @@ group :development do
   gem 'thin'
   gem 'better_errors'
   gem 'binding_of_caller'
+  gem 'htmlbeautifier'
 end
 
 group :test do

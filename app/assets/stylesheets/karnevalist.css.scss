@@ -343,7 +343,7 @@ p {
     background-color: $color-light;
     & > .header {
         margin-top: $margin-main * 2;
-        margin-bottom: 20px;
+        margin-bottom: $margin-main * 3;
         background-color: white;
         color: $color-red;
     }
@@ -354,8 +354,8 @@ p {
         }
     }
     .message {
-        height: $height-message + $margin-main;
-        margin-top: $margin-main;
+        height: $height-message;
+        margin-bottom: $margin-main * 2;
         background-color: white;
         color: $color-red;
         box-shadow: 0 $distance-shadow 0 $color-shadow;
@@ -374,20 +374,19 @@ p {
                 word-wrap: break-word;
                 word-break: break-all;
                 display: block;
-                height: 40px;
             }
         }
         .message-image {
             text-align: center;
-                $max-size: $height-message - $margin-main * 2;
+            $max-size: $height-message - $margin-main * 2;
             img {
-                box-shadow: 0 $distance-shadow 0 $color-shadow;
                 //ratio of images is considered and handled.
                 height: $max-size;
                 width: $max-size;
+                box-shadow: 0 $distance-shadow 0 $color-shadow;
             }
-            padding-right: $max-size;
-            margin-right: $margin-main;
+            padding-top: $margin-main;
+            padding-right: $max-size + $margin-main;
         }
     }
 }

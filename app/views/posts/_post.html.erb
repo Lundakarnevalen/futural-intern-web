@@ -7,12 +7,15 @@
     <h1><%= post.title %></h1>
   </div>
     <div class="row">
-    <p><%= post.content %></p>
+    <p><%= truncate post.content, length: 180 %></p>
   </div>
-    <div class="form-controls">
-        <% if current_user.can? :edit, post %>
-          <%= link_to "redigera", edit_post_path(post), class: "btn btn-small", type: "edit" %>
-        <% end %>
-    </div>
+    <% unless post.id.nil? %>
+      <div class="form-controls">
+          <%= link_to "läs mer", post, class: "btn btn-small" %>
+          <% if (current_user.can? :edit, post) %>
+            <%= link_to "redigera", edit_post_path(post), class: "btn btn-small", type: "edit" %>
+          <% end %>
+      </div>
+    <% end %>
   </div>
 </div>
