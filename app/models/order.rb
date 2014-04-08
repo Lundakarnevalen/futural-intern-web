@@ -22,9 +22,17 @@ class Order < ActiveRecord::Base
   end
 
   def total_sum
-    sum = 0;
+    sum = 0
     self.products.each do |p|
       sum += p.total_price(p.amount(self.id))
+    end
+    return sum
+  end
+
+  def self.my_orders_total_sum(karnevalist_id, warehouse_code)
+    sum = 0
+    Order.where(warehouse_code: warehouse_code, karnevalist_id: karnevalist_id).each do |o|
+      sum += o.total_sum
     end
     return sum
   end

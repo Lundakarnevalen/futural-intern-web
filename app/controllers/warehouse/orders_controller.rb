@@ -4,7 +4,6 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def index
     @orders = Order.where("status IS NOT NULL").where(karnevalist_id: current_user.karnevalist.id, warehouse_code: @warehouse_code).order("id DESC")
     @bestallare = true
-    @search = false
   end
 
   def show
@@ -140,7 +139,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def list
     @orders = Order.where("status IS NOT NULL").where(warehouse_code: @warehouse_code).order("id DESC")
-    @search = true
+    @bestallare = false
     render :index
   end
 

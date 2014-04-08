@@ -1,5 +1,4 @@
 <h3>Inleverans</h3>
-<div class="table-responsive">
   <%= form_for [form_prefix, @incoming_delivery] do |f| %>
   <% if @incoming_delivery.errors.any? %>
     <div class="alert alert-danger alert-dismissable">
@@ -11,6 +10,11 @@
       </ul>
     </div>
   <% end %>
+<% @product_categories.each do |c| %>
+<% products = c.products.where(warehouse_code: @warehouse_code, active: true).order("name ASC") %>
+<% if !products.blank? %>
+<h4><%= c.name %></h4>
+<div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
@@ -25,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @products.each do |p| %>
+      <% products.each do |p| %>
       <% if p.warning_limit.blank? %>
         <tr>
       <% elsif p.stock_balance_not_ordered <= p.warning_limit %>
@@ -52,6 +56,8 @@
     </tbody>
   </table>
 </div>
+<% end %>
+<% end %>
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-3">
       <div class="form-group">
