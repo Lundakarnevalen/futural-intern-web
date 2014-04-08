@@ -5,9 +5,18 @@ class Order < ActiveRecord::Base
   has_many :products, through: :order_products
   validates :karnevalist, presence: true
   before_create :set_order_date, :set_order_number
+  validates :delivery_date, presence: true, on: :update
 
   accepts_nested_attributes_for :order_products, :reject_if => proc { |a| a['amount'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :products
+  
+  HUMANIZED_ATTRIBUTES = {
+    :delivery_date => "Hämtdatum"
+  }
+
+  def self.human_attribute_name(attr, options = {})
+    HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
 
   def set_order_date
     self.order_date = DateTime.now if self.order_date.blank?
@@ -49,6 +58,7 @@ class Order < ActiveRecord::Base
     end
     return array
   end
+
   def find_week_number weeks
     weeks.each do |w|
       #hash[k.to_sym]
@@ -60,10 +70,12 @@ class Order < ActiveRecord::Base
       end
     end
   end
+
   def self.find_orders_in_week week, warehouse_code
     orders = Order.where("finished_at >= ?", week[:day_1]).where("finished_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code)
     return orders
   end
+
   def self.has_week week, warehouse_code
     orders = Order.where("finished_at >= ?", week[:day_1]).where("finished_at <= ?", week[:day_7]).where(warehouse_code: warehouse_code)
     if orders.count >= 1

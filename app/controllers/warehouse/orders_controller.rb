@@ -93,7 +93,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         end
       redirect_to order_path(@order)
     else
-      render :confirm_order
+      render :confirm
     end
   end
 
