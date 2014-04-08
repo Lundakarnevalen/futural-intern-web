@@ -50,11 +50,11 @@
         <% end %>
         <% # Exporter %>
         <% if current_user.can? :export_all, Karnevalist %>
-          <li><%= link_to 'Exportera alla personuppgifter', export_all_karnevalister_path %></li>
+          <li><%= link_to 'Exportera personuppgifter', export_all_karnevalister_path %></li>
         <% end %>
         <% # Checker %>
         <% if can? :check, Karnevalist %>
-          <li><%= link_to 'Kolla om folk är karnevalister', check_karnevalister_path %></li>
+          <li><%= link_to 'Karnevalistkoll', check_karnevalister_path %></li>
         <% end %>
         <%# Admin stuff %>
         <% if current_user.is? :admin %>
@@ -74,9 +74,6 @@
         <% end %>
         <% if can? :create, Post %>
           <li><%= link_to 'Nytt inlägg', new_post_path %></li>
-        <% end %>
-        <% if can? :create, Notification %>
-          <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
         <% end %>
       </ul>
     </div>
