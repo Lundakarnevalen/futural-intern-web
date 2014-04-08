@@ -9,9 +9,17 @@
         <p><strong>Påbörjad: </strong> <%= @incoming_delivery.created_at.strftime("%Y-%m-%d %H:%M") %></p>
         <p><strong>Hanterad av: </strong>
             <% @incoming_delivery.karnevalister.each do |k|%>
-              <%= "#{k.fornamn} #{k.efternamn}" %>
+              <% if !@incoming_delivery.karnevalister.last %>
+                <%= "#{k.fornamn} #{k.efternamn}, " %>
+              <% else %>
+                <%= "#{k.fornamn} #{k.efternamn}" %>
+              <% end %>
             <% end %>
         </p>
+        <p><strong>Status: </strong><%= @incoming_delivery.ongoing ? "Pågående" : "Avslutad" %></p>
+        <% if !@incoming_delivery.delivery_cost.blank? %>
+          <p><strong>Leveranskostnad: </strong><%= number_to_currency(@incoming_delivery.delivery_cost) %></p>
+        <% end %>
       </div>
     </div>
   </div>

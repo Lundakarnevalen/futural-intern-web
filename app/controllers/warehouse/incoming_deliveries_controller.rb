@@ -78,6 +78,6 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
       @incoming_delivery = IncomingDelivery.find(params[:id])
     end
     def incoming_delivery_params
-      params.require(:incoming_delivery).permit(:invoice_nbr, :ongoing, incoming_delivery_products_attributes: [:id, :_destroy, :amount, :product_id])
+      params.require(:incoming_delivery).permit(:invoice_nbr, :ongoing, :delivery_cost, incoming_delivery_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
 end
