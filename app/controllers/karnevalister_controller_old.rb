@@ -39,7 +39,7 @@ class KarnevalisterController < ApplicationController
   def step1
     @karnevalist = Karnevalist.new
     post_base
-    render :step1, :layout => 'bare'
+    render :step1
   end
 
   def step1_post
@@ -50,14 +50,14 @@ class KarnevalisterController < ApplicationController
       sign_in @karnevalist.user
       redirect_to action: 'step2', id: @karnevalist.id
     else
-      render :action => :step1, :layout => 'bare'
+      render :action => :step1
     end
   end
 
   def step2
     @karnevalist = Karnevalist.find params[:id]
     post_base
-    render :step2, :layout => 'bare'
+    render :step2
   end
 
   def enter_pwd
@@ -76,7 +76,7 @@ class KarnevalisterController < ApplicationController
   def step3
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    render :step3, :layout => 'bare'
+    render :step3
   end
 
   def step3_put
@@ -91,7 +91,7 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     authorize! :read, @karnevalist
-    render :step4, :layout => 'bare'
+    render :step4
   end
 
   def checkout
