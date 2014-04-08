@@ -1,3 +1,15 @@
+// control the screen sizes
+$screen-xs-min: 300px;
+$screen-sm-min: 400px;
+$screen-md-min: 800px;
+$screen-lg-min: 1200px;
+$screen-custom-min: 900px;
+
+// this tells which screen size to use to start breaking on
+// will tell navbar when to collapse
+$grid-float-breakpoint: $screen-custom-min;
+
+
 @import "bootstrap";
 
 $padding-main: 10px;
@@ -61,7 +73,6 @@ html {
                     font-family: $font-header;
                     font-weight: bold;
                     font-size: $fontsize-headerbar * 0.75;
-                    height: $height-navbar;
                     a {
                         &:active {
                             background-color: darken($background-color, 20%) !important;
@@ -89,6 +100,10 @@ html {
                 &:hover {
                     background-color: transparent;
                 }
+            }
+            .container-fluid {
+              //padding-bottom: 14px;
+              //box-shadow: 0 $distance-shadow 0 $color-shadow;
             }
         }
         .header {
@@ -196,7 +211,7 @@ a {
 #bs-example-navbar-collapse-1 {
     background-color: $color-blue;
     border-top: none;
-    box-shadow: 0 $distance-shadow 0 $color-shadow;
+    //box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 
 #sektion {
@@ -393,8 +408,8 @@ p {
         }
 
         .post-preview {
-          height: 60px;
-          margin-bottom: 8px;
+          height: 55px;
+          margin-bottom: 13px;
           //max-height: $height-text;
           overflow:hidden;
         }
