@@ -411,6 +411,41 @@ p {
 }
 
 /*SIGN IN*/
+.clouds {
+    background-image: url("../assets/clouds.png");
+}
+
+.cloud-container {
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+    overflow: hidden;
+}
+
+.cloud-bg {
+    z-index: -2;
+    background-color: $color-blue;
+    position: absolute;
+    min-width: 100%;
+    min-height: 100%;
+}
+
+.one-cloud {
+    z-index: -1;
+    position: absolute;
+    background-image: url("../assets/one-cloud.png");
+    background-size: 100%;
+}
+
+.cloud-flipped {
+    -moz-transform: scaleX(-1);
+    -o-transform: scaleX(-1);
+    -webkit-transform: scaleX(-1);
+    transform: scaleX(-1);
+    filter: FlipH;
+    -ms-filter: "FlipH";
+}
+
 #identification {
     position: absolute;
     top: 0;
@@ -418,8 +453,7 @@ p {
     min-width: 100%;
     min-height: 100%;
     text-align: center;
-    background-image: url("../assets/clouds.png");
-    background-color: $color-blue;
+    padding: 0;
     label {
         color: $color-red;
     }
