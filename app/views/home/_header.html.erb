@@ -23,16 +23,18 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <div id="profile-image-container" class="col-xs-4">
-          <% if current_user.karnevalist.foto_url.nil? %>
+          <% if current_user.karnevalist.nil? || current_user.foto_url.nil? %>
             <%= image_tag "picture_default.jpg" %>
           <% else %>
-          <%= image_tag(current_user.karnevalist.foto_url.to_s) %>
+            <%= image_tag(current_user.karnevalist.foto_url.to_s) %>
           <% end %>
         </div>
         <div id="profile-information-container" class="col-xs-8">
-
-        	<% message = "Hej, " + current_user.karnevalist.fornamn %>
-
+          <% if current_user.karnevalist.nil? %>
+            <% message = "Hej!" %>
+          <% else %>
+            <% message = "Hej, " + current_user.karnevalist.fornamn %>
+          <% end %>
           <h5><%= link_to message, current_user.karnevalist %></h5>
 		  <%= sign_out_link 'Logga ut?' %>
 
