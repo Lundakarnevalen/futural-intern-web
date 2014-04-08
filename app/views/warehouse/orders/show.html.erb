@@ -50,7 +50,26 @@
         <% @order.products.each do |p| %>
         <% amount = p.amount(@order.id) %>
         <tr>
-          <td><%= p.name %></td>
+          <td>
+            <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+<!-- Modal -->
+<div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+          </td>
           <td><%= "#{amount} #{p.unit}" %></td>
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>

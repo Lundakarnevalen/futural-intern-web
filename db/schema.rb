@@ -101,8 +101,8 @@ ActiveRecord::Schema.define(version: 20140408140902) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.integer  "tilldelad_sektion2"
     t.text     "ios_token"
+    t.integer  "tilldelad_sektion2"
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -178,6 +178,8 @@ ActiveRecord::Schema.define(version: 20140408140902) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"

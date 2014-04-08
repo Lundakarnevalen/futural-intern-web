@@ -58,8 +58,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       redirect_to confirm_order_path(@order)
     else
       @bestallare = true
-      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
-      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @order.order_products.build
       render :new
     end
@@ -110,8 +109,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         @kunder.push u.karnevalist if !u.karnevalist.blank?
       end
     end
-    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
-    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     @order = Order.new
     @order.order_products.build
   end
@@ -133,8 +131,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
           @kunder.push u.karnevalist if !u.karnevalist.blank?
         end
       end
-      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
-      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @order.order_products.build
       render :direct_selling
     end
