@@ -13,10 +13,6 @@
     <!-- Collect the nav links, forms, and other content for toggling -->
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav">
-        <%# General stuff %>
-        <% if can? :read, Notification %>
-          <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
-        <% end %>
         <%# Warehouse stuff %>
         <% if (current_user.is? :admin_fabriken) || (current_user.is? :bestallare_fabriken) || (current_user.is? :admin) %>
           <li><%= link_to 'Lagersystem Fabriken', fabriken_orders_path %></li>
@@ -27,7 +23,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <div id="profile-image-container" class="col-xs-4">
-          <% if current_user.karnevalist.nil? || current_user.foto_url.nil? %>
+          <% if current_user.karnevalist.nil? || current_user.karnevalist.foto_url.nil? %>
             <%= image_tag "picture_default.jpg" %>
           <% else %>
             <%= image_tag(current_user.karnevalist.foto_url.to_s) %>

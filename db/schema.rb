@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140404013529) do
+ActiveRecord::Schema.define(version: 20140408144515) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.boolean  "ongoing"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.float    "delivery_cost"
   end
 
   create_table "incoming_deliveries_karnevalister", id: false, force: true do |t|
@@ -40,6 +41,13 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.integer  "incoming_delivery_id"
     t.integer  "product_id"
     t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "info_pages", force: true do |t|
+    t.string   "content"
+    t.integer  "sektion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -165,6 +173,7 @@ ActiveRecord::Schema.define(version: 20140404013529) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "sektion_id"
+    t.integer  "order_number"
   end
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
