@@ -1,1 +1,71 @@
 <h3>Veckoöversikt</h3>
+<% @weeks.each do |w| %>
+  <% if Order.has_week(w, @warehouse_code) %>
+  <% week = w[:week] %>
+    <h3> Vecka <%= week %></h3>
+    <div class="row-fluid">
+          <div class="col-md-6"> 
+              <h3>Försäljning</h3>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Order #</th>
+                        <th>Summa orderintäkt</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% sum_all_orders = 0 %>
+                      <% Order.find_orders_in_week(w, @warehouse_code).each do |o| %>
+                        <tr>
+                          <td><%= link_to "#{o.order_number}", order_path(o.id) %></td>
+                          <td><%= o.total_sum %> kr</td>
+                          <% sum_all_orders += o.total_sum %>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <p><%= "Intäkt vecka #{week}: #{sum_all_orders} kr" %></p>
+                </div>
+          </div>
+          
+
+          
+          <div class="col-md-6"> 
+              <h3>Inköp</h3>
+                <div class="table-responsive">
+                  <table class="table table-striped">
+                    <thead>
+                      <tr>
+                        <th>Fakturanr #</th>
+                        <th>Summa produktkostnad</th>
+                        <th>Fraktkostnad</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <% sum_all_deliveries = 0 %>
+                      <% IncomingDelivery.find_incoming_deliveries_in_week(w, @warehouse_code).each do |i| %>
+                        <tr>
+                          <td><%= link_to "#{i.invoice_nbr}", incoming_delivery_path(i.id) %></td>
+                          <% incoming_delivery_products = i.incoming_delivery_products %>
+                          <% total_price = 0 %>
+                          <% incoming_delivery_products.each do |p| %>
+                            <% total_price += p.product.total_price(p.amount) %>
+                          <% end %>
+                          <td><%= "#{total_price}" %></td>
+                          <% sum_all_deliveries += total_price %>
+                          <td><%= "#{i.delivery_cost}"%></td>
+                          <% sum_all_deliveries += i.delivery_cost %>
+                        </tr>
+                      <% end %>
+                    </tbody>
+                  </table>
+                  <p><%= "Totala utgifter vecka #{week}: #{sum_all_deliveries} kr" %></p>
+                </div>
+          </div>
+    </div>
+
+  <% end %>
+<% end %>
+
+
