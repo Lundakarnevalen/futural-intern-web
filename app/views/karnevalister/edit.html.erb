@@ -2,8 +2,6 @@
 <%= stylesheet_link_tag :karnevalister, :media => :all %>
 <% end %>
 
-
-<div id="left" class="col-md-8">
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 <% disabled = cannot? :update, @karnevalist %>
 <div class="container" id="content">
@@ -74,5 +72,4 @@
       <%= f.submit'Spara' %>
     </div>
   <% end %>
-</div>
 </div>

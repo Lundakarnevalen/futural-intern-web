@@ -13,12 +13,12 @@
   <body>
     <%= render "home/header" %>
     <div>
-      <div id="page-content" class=".col-md-8">
-        <p class="notice"><%= notice %></p>
-        <p class="alert"><%= alert %></p>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <div id="left" class="col-md-8">
         <%= yield %>
       </div>
-      <div id="sidebar" class=".col-md-4">
+      <div id="right" class="col-md-4">
         <%= render "home/sidebar" %>
       </div>
     </div>

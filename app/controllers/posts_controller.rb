@@ -43,7 +43,11 @@ class PostsController < ApplicationController
   end
 
   def show
-    @post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
+    @sektioner = current_user.karnevalist.tilldelade_sektioner
+    @sektioner.each do |s|
+      p = s.posts.find_by(id: params[:id])
+      @post = p unless p.nil?
+    end
     @post_html = markdown @post.content
   end
 
