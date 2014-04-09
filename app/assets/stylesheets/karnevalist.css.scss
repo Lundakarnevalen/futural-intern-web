@@ -1,9 +1,10 @@
 // control the screen sizes
 $screen-xs-min: 300px;
 $screen-sm-min: 400px;
-$screen-md-min: 800px;
+$screen-sm-max: 960px;
+$screen-md-min: 960px;
 $screen-lg-min: 1200px;
-$screen-custom-min: 900px;
+$screen-custom-min: 960px;
 
 // this tells which screen size to use to start breaking on
 // will tell navbar when to collapse
@@ -385,9 +386,22 @@ p {
         color: $color-red;
         box-shadow: 0 $distance-shadow 0 $color-shadow;
         .message-information {
+            width: 80%;
+            @media (max-width: 600px) {
+                h1 {
+                  height: 30px;
+                  padding-bottom: 5px;
+                  font-size: 1.5em;
+                }
+            }
+            @media (min-width: 600px) {
+                h1 {
+                  height: 40px;
+                  font-size: 2.5em;
+                }
+            }
             h1 {
                 width: 100%;
-                height: 40px;
                 padding-top: 3px;
                 font-family: $font-header;
                 overflow: hidden;
@@ -403,16 +417,13 @@ p {
             }
         }
         .message-image {
-            text-align: center;
-            $max-size: $height-message - $margin-main * 2;
-            img {
-                //ratio of images is considered and handled.
-                height: $max-size;
-                width: $max-size;
-                box-shadow: 0 $distance-shadow 0 $color-shadow;
-            }
-            padding-top: $margin-main;
-            padding-right: $max-size + $margin-main;
+            max-height: 160px;
+            max-width: 160px;
+            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+            padding-right: 0px;
+            padding-left: 0px;
+            margin-right: 10px;
+            margin-top: 10px;
         }
         .form-controls {
           margin-bottom: 10px;

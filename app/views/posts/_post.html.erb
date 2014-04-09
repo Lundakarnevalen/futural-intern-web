@@ -1,7 +1,5 @@
 <div class="message col-xs-12">
-  <div class="message-image col-xs-2">
-    <%= image_tag("logotyper/#{post.sektion.name}.png") %>
-  </div>
+  <%= image_tag("logotyper/#{post.sektion.name}.png", class: "img-responsive message-image col-xs-2") %>
   <div class="message-information col-xs-8">
     <div class="row">
     <h1><%= post.title %></h1>
