@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   has_many :order_products
   has_many :products, through: :order_products
   validates :karnevalist, presence: true
+  validates :sektion, presence: true
   before_create :set_order_date, :set_order_number
   validates :delivery_date, presence: true, on: :update
 
@@ -11,7 +12,9 @@ class Order < ActiveRecord::Base
   accepts_nested_attributes_for :products
   
   HUMANIZED_ATTRIBUTES = {
-    :delivery_date => "Hämtdatum"
+    :delivery_date => "Hämtdatum",
+    :sektion => "Sektion",
+    :karnevalist => "Kund"
   }
 
   def self.human_attribute_name(attr, options = {})
