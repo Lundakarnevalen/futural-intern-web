@@ -1,8 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "INKORG"} %>
-<div>
-  <% if not @post.nil? and @posts.any? %>
-    <ol class="posts">
-      <%= render @posts %>
-    </ol>
-  <% end %>
-</div>
+<% if not @post.nil? and @posts.any? %>
+<ol class="posts">
+  <%= render @posts %>
+</ol>
+<% end %>
