@@ -21,7 +21,7 @@
           <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path %></li>
         <% end %>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
+      <div class="nav navbar-nav navbar-right">
         <div id="profile-image-container" class="col-xs-4">
           <% if current_user.karnevalist.nil? || current_user.karnevalist.foto_url.nil? %>
             <%= image_tag "picture_default.jpg" %>
@@ -38,7 +38,7 @@
           <h5><%= link_to message, current_user.karnevalist %></h5>
           <%= sign_out_link 'Logga ut?' %>
         </div>
-      </ul>
+      </div>
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>

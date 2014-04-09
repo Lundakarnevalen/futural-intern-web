@@ -214,7 +214,13 @@ a {
     //box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 
-#sektion {
+.dropdown {
+
+	cursor: pointer;
+	
+	-webkit-user-select: none; //the header will be selected as text otherwise.
+	user-select: none;
+	
     &.toggled {
         //if the bar is active.
         & > ul.nav {
@@ -255,10 +261,12 @@ a {
         background-color: $color-yellow;
         color: $color-blue;
         box-shadow: none;
+        margin-bottom: 0;
     }
     & > ul.nav {
         display: none;
     }
+	
 }
 
 #inviter,
@@ -318,7 +326,8 @@ a {
 
 #sektion,
 #inviter,
-#evenemang {
+#evenemang,
+#admin {
     margin-bottom: $margin-main;
     box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
@@ -359,6 +368,7 @@ p {
     & > .header {
         margin-top: $margin-main * 2;
         margin-bottom: $margin-main * 3;
+        padding-bottom: $padding-main * 3;
         background-color: white;
         color: $color-red;
     }
@@ -418,11 +428,14 @@ p {
 
 #right {
     background-color: $color-blue;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 
 #right,
 #left {
-    margin-top: $height-navbar;
+
+    margin-top: $height-navbar !important;
+
 }
 
 /*SIGN IN*/
@@ -444,11 +457,31 @@ p {
 }
 
 .one-cloud {
+	position:relative;
     z-index: -1;
     position: absolute;
     background-image: url("../assets/one-cloud.png");
     background-size: 100%;
 }
+
+/*.one-cloud:after {
+
+	$height-shadow: 10px;
+	
+	content: '';
+	
+	position: absolute;
+	bottom: -1 * $height-shadow - ($height-shadow / 2);
+	
+	display: block;
+	width: inherit;
+	height: $height-shadow;
+	
+	background-color: $color-shadow;
+	
+	border-radius: $height-shadow / 2;
+	
+}*/ //looks, weird. To be continued.
 
 .cloud-flipped {
     -moz-transform: scaleX(-1);
@@ -487,7 +520,7 @@ p {
         background-color: white;
         max-width: 480px;
         margin: 0 auto;
-        padding: $padding-main;
+        padding: $padding-main * 2;
         box-shadow: 0 $distance-shadow 0 $color-shadow;
     }
     .form-group:last-child {

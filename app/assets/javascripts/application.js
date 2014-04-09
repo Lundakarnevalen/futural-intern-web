@@ -6,6 +6,7 @@
 //= require additional-methods
 //= require messages_sv
 //= require cloud-swag
+//= require karnevalist.ui.js
 //= require main
 //= require jquery.ui.all
 //= require jquery.modal

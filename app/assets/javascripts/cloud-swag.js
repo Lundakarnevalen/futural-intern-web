@@ -5,7 +5,8 @@
     var N_CLOUDS = 8,
         CLOUD_SIZE = 1.0,
         CLOUD_SPEED = 1.0, // must be <= 1.0
-        TICK_SLEEP = 1000;  // mseconds between ticks
+        TICK_SLEEP = 50;  // mseconds between ticks
+        FADE_TIME = 10000; //milliseconds until removal.
 
     // System state
     var w_height,
@@ -14,15 +15,17 @@
         cont = $('<div class="cloud-container">');
 
     var cloud_swag = function(div) {
-        update_bounds();
-        div.removeClass('clouds');
-        $('body').addClass('cloud-bg');
-        div.append(cont);
-        for(var i = 0; i < N_CLOUDS; i++) {
-            gen_cloud(cont);
+    	if($(div).length > 0) { //made some mess at "home" if not checked.
+	        update_bounds();
+	        div.removeClass('clouds');
+	        $('body').addClass('cloud-bg');
+	        div.append(cont);
+	        for(var i = 0; i < N_CLOUDS; i++) {
+	            gen_cloud(cont);
+	        }
+	        clouds = $('.one-cloud');
+	        setInterval(cloud_tick, TICK_SLEEP);
         }
-        clouds = $('.one-cloud');
-        setInterval(cloud_tick, TICK_SLEEP);
     };
 
     var cloud_tick = function() {
@@ -33,7 +36,11 @@
         clouds.each(function() {
             var pos = $(this).offset().left;
             if(pos > w_width - $(this).width() || pos < 0) {
-                $(this).remove();
+                $(this).fadeOut(FADE_TIME, function() {
+	                
+	                $(this).remove();
+	                
+                });
                 clouds = $('.one-cloud');
             }
         });
