@@ -46,6 +46,10 @@
   def direct_selling_post_orders_path
     @warehouse_code == 0 ? direct_selling_post_fabriken_orders_path : direct_selling_post_fest_orders_path
   end
+  
+  def update_customers_orders_path
+    @warehouse_code == 0 ? update_customers_fabriken_orders_path : update_customers_fest_orders_path
+  end
 
   #deliveries
   def incoming_deliveries_path

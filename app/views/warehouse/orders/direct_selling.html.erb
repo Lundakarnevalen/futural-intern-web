@@ -1,19 +1,28 @@
 <h3>Direktförsäljning</h3>
 <%= form_for @order, url: direct_selling_post_orders_path, method: "post" do |f| %>
+  <% if @order.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+      <% @order.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-6">
     <div class="form-group">
       <%= f.label :sektion_id, "Sektion" %>
-      <%= f.select :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), {prompt: "-- Välj sektion --"}, {class: "form-control"} %>
+      <%= f.select :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), {prompt: "-- Välj sektion --"}, {class: "form-control", id: "sektion_select"} %>
     </div>
   </div>
 </div>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-6">
     <div class="form-group">
-      <!-- TODO: Show only customers from chosen section --> 
       <%= f.label :karnevalist_id, "Kund" %>
-      <%= f.select :karnevalist_id, options_from_collection_for_select(@kunder, :id, :name), {prompt: "-- Välj kund --"}, {class: "form-control"} %>
+      <%= f.select :karnevalist_id, options_from_collection_for_select(@customers, :id, :name), {prompt: "-- Välj kund --"}, {class: "form-control", id: "customer_select"} %>
     </div>
   </div>
 </div>
@@ -85,3 +94,16 @@
 </div>  
 <%= f.submit "Gå vidare", class: "btn btn-primary" %>
 <% end %>
+<script>
+ $(document).ready(function() {
+   $('#sektion_select').change(function() {
+     $.ajax({
+       url: "<%= update_customers_orders_path %>",
+      data: {
+        sektion_id: $('#sektion_select').val()
+      },
+      dataType: "script"
+    });
+  });
+});
+</script>
