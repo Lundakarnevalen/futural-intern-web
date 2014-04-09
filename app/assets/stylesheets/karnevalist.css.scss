@@ -217,10 +217,10 @@ a {
 .dropdown {
 
 	cursor: pointer;
-	
+
 	-webkit-user-select: none; //the header will be selected as text otherwise.
 	user-select: none;
-	
+
     &.toggled {
         //if the bar is active.
         & > ul.nav {
@@ -266,7 +266,7 @@ a {
     & > ul.nav {
         display: none;
     }
-	
+
 }
 
 #inviter,
@@ -388,6 +388,7 @@ p {
             h1 {
                 width: 100%;
                 height: 40px;
+                padding-top: 3px;
                 font-family: $font-header;
                 overflow: hidden;
                 word-break: break-all;
@@ -467,20 +468,20 @@ p {
 /*.one-cloud:after {
 
 	$height-shadow: 10px;
-	
+
 	content: '';
-	
+
 	position: absolute;
 	bottom: -1 * $height-shadow - ($height-shadow / 2);
-	
+
 	display: block;
 	width: inherit;
 	height: $height-shadow;
-	
+
 	background-color: $color-shadow;
-	
+
 	border-radius: $height-shadow / 2;
-	
+
 }*/ //looks, weird. To be continued.
 
 .cloud-flipped {
