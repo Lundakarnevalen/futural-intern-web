@@ -47,7 +47,20 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
   end
 
   def weekly_overview
-    @products = Product.where(warehouse_code: @warehouse_code)
+    @orders = Order.where(warehouse_code: @warehouse_code, status: "Levererad")
+    @incoming_deliveries = IncomingDelivery.where(warehouse_code: @warehouse_code)
+    first_week_number = 15
+    date_first_day = DateTime.new(2014,4,7,0,0,0,'+1')
+    @weeks = calculate_weeks(date_first_day, first_week_number)
+  end
+
+  def calculate_weeks date_first_day, first_week_number
+    weeks = Array.new
+    for i in first_week_number..52
+      weeks.push({day_1: date_first_day, day_7: date_first_day + 7.days - 1.seconds, week: i})
+      date_first_day = date_first_day + 7.days
+    end
+    return weeks
   end
   
   def inactivate

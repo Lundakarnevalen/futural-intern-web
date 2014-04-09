@@ -1,0 +1,9 @@
+<p><strong>Namn: </strong><%= p.name %></p>
+<p><strong>Kategori: </strong><%= p.product_category.name %></p>
+<hr>
+<p><strong>Enhet: </strong><%= p.unit %></p>
+<p><strong>Pris/enhet: </strong><%= number_to_currency(p.sale_price) %></p>
+<hr>
+<p><strong>I lager: </strong><%= p.stock_balance_not_ordered %></p>
+<hr>
+<p><strong>Varuinfo: </strong><br><%= p.info %></p>

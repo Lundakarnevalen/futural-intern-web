@@ -1,5 +1,6 @@
 class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
-  before_filter :find_product_category, only: [:show, :edit, :update]
+  before_filter :find_product_category, only: [:show, :edit, :update, :destroy]
+
   def index
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
   end
@@ -34,8 +35,14 @@ class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
   end
 
   def destroy
-    ProductCategory.destroy params[:id]
-    redirect_to product_categories_path
+    begin
+      @product_category.destroy
+    rescue ActiveRecord::DeleteRestrictionError => e
+      @product_category.errors.add(:base, e)
+      flash[:error] = "Kan inte ta bort en kategori som innehåller produkter"
+    ensure
+      redirect_to product_categories_path
+    end
   end
 
   private

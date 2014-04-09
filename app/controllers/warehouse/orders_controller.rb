@@ -4,7 +4,6 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def index
     @orders = Order.where("status IS NOT NULL").where(karnevalist_id: current_user.karnevalist.id, warehouse_code: @warehouse_code).order("id DESC")
     @bestallare = true
-    @search = false
   end
 
   def show
@@ -17,6 +16,9 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.update_attributes(status: params[:status])
       if @order.status == "Makulerad"
         update_warehouse(@order.id)
+      elsif @order.status == "Levererad"
+        @order.finished_at = DateTime.now
+        @order.save
       end
     end
     ##
@@ -56,8 +58,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       redirect_to confirm_order_path(@order)
     else
       @bestallare = true
-      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
-      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @order.order_products.build
       render :new
     end
@@ -92,24 +93,13 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         end
       redirect_to order_path(@order)
     else
-      render :confirm_order
+      render :confirm
     end
   end
 
   def direct_selling
-    if @warehouse_code == 0
-      @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken"])
-    else
-      @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
-    end
-    @kunder = Array.new
-    @roles.each do |r|
-      r.users.each do |u|
-        @kunder.push u.karnevalist if !u.karnevalist.blank?
-      end
-    end
-    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
-    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+    @customers = Array.new
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     @order = Order.new
     @order.order_products.build
   end
@@ -120,27 +110,31 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     if @order.save
       redirect_to order_path(@order)
     else
-      if @warehouse_code == 0
-        @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken", "admin"])
-      else
-        @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
-      end
-      @kunder = Array.new
-      @roles.each do |r|
-        r.users.each do |u|
-          @kunder.push u.karnevalist if !u.karnevalist.blank?
-        end
-      end
-      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name ASC")
-      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code)
+      @customers = Array.new
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @order.order_products.build
       render :direct_selling
     end
   end
 
+  def update_customers
+    sektion = params[:sektion_id].to_i
+    if @warehouse_code == 0
+      @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken"])
+    else
+      @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
+    end
+    @customers = Array.new
+    @roles.each do |r|
+      r.users.each do |u|
+        @customers.push u.karnevalist if u.karnevalist.tilldelad_sektion == sektion
+      end
+    end
+  end
+
   def list
     @orders = Order.where("status IS NOT NULL").where(warehouse_code: @warehouse_code).order("id DESC")
-    @search = true
+    @bestallare = false
     render :index
   end
 

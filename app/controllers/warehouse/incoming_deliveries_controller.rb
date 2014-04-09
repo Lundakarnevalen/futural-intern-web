@@ -10,12 +10,12 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
   end
   
   def edit
-    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
   end
 
   def new
     @incoming_delivery = IncomingDelivery.new
-    @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     @incoming_delivery.incoming_delivery_products.build
   end
 
@@ -29,13 +29,14 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
       @incoming_delivery.ongoing = true
     end
     if @incoming_delivery.save
+      if !@incoming_delivery.ongoing
         @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
           product = Product.find(incoming_delivery.product_id)
           stand_by = product.stock_balance_stand_by
           if stand_by == 0
             stock_balance_not_ordered = product.stock_balance_not_ordered + incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
-          elsif stand_by >= new_amount.to_i
+          elsif stand_by >= incoming_delivery.amount.to_i
             stock_balance_ordered = product.stock_balance_ordered + incoming_delivery.amount.to_i
             stand_by -= incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
@@ -47,10 +48,11 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             product.update_attributes(:stock_balance_stand_by => 0)
           end
-        end  
+        end
+      end
       redirect_to incoming_delivery_path(@incoming_delivery)
     else
-      @products = Product.where(active: true, warehouse_code: @warehouse_code).order("name DESC")
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @incoming_delivery.incoming_delivery_products.build
       render :new
     end
@@ -63,9 +65,30 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
       @incoming_delivery.ongoing = true
     end
     if @incoming_delivery.update_attributes(incoming_delivery_params)
+      if !@incoming_delivery.ongoing
+        @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
+          product = Product.find(incoming_delivery.product_id)
+          stand_by = product.stock_balance_stand_by
+          if stand_by == 0
+            stock_balance_not_ordered = product.stock_balance_not_ordered + incoming_delivery.amount.to_i
+            product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)   
+          elsif stand_by >= incoming_delivery.amount.to_i
+            stock_balance_ordered = product.stock_balance_ordered + incoming_delivery.amount.to_i
+            stand_by -= incoming_delivery.amount.to_i
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+            product.update_attributes(:stock_balance_stand_by => stand_by)
+          else
+            stock_balance_ordered = product.stock_balance_ordered + stand_by
+            stock_balance_not_ordered = incoming_delivery.amount.to_i - stand_by
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+            product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
+            product.update_attributes(:stock_balance_stand_by => 0)
+          end
+        end
+      end
       redirect_to incoming_deliveries_path
     else
-      @products = Product.where(active true, warehouse_code: @warehouse_code).order("name DESC")
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       render :edit
     end
   end

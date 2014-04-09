@@ -1,5 +1,4 @@
 <h3>Inleverans</h3>
-<div class="table-responsive">
   <%= form_for [form_prefix, @incoming_delivery] do |f| %>
   <% if @incoming_delivery.errors.any? %>
     <div class="alert alert-danger alert-dismissable">
@@ -11,6 +10,11 @@
       </ul>
     </div>
   <% end %>
+<% @product_categories.each do |c| %>
+<% products = c.products.where(warehouse_code: @warehouse_code, active: true).order("name ASC") %>
+<% if !products.blank? %>
+<h4><%= c.name %></h4>
+<div class="table-responsive">
   <table class="table">
     <thead>
       <tr>
@@ -25,7 +29,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @products.each do |p| %>
+      <% products.each do |p| %>
       <% if p.warning_limit.blank? %>
         <tr>
       <% elsif p.stock_balance_not_ordered <= p.warning_limit %>
@@ -40,7 +44,26 @@
             <%= op.hidden_field :product_id, :value => p.id %>
           <% end %>
         </td>
-        <td><%= p.name %></td>
+        <td>
+          <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+<!-- Modal -->
+<div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </td>
         <td><%= p.ean %></td>
         <td><%= p.stock_location %></td>
         <td><%= p.stock_balance_not_ordered %></td>
@@ -52,6 +75,8 @@
     </tbody>
   </table>
 </div>
+<% end %>
+<% end %>
   <div class="row">
     <div class="col-xs-6 col-sm-6 col-md-3">
       <div class="form-group">
