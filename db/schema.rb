@@ -55,13 +55,6 @@ ActiveRecord::Schema.define(version: 20140410082839) do
     t.datetime "updated_at"
   end
 
-  create_table "info_pages", force: true do |t|
-    t.string   "content"
-    t.integer  "sektion_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "intressen", force: true do |t|
     t.string "name", null: false
   end
