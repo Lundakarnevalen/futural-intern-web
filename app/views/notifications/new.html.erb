@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Push-meddelanden"} %>
 
-<div class="container" id="content">
+<div class="white-container col-xs-12" id="content">
   <%= form_for(@notification) do |f| %>
     <h2>Nytt push-meddelande</h2>
     <% if @notification.errors.any? %>

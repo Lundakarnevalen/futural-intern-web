@@ -4,7 +4,7 @@
 
 <%= render partial: "shared/header", locals: {title: "Registrering"} %>
 
-<div class="container" id="content">
+<div class="white-container col-xs-12" id="content">
 
   <% if not @karnevalist.utcheckad %>
     <%= render partial: "shared/logo", locals: {percent: "86", text: "Vi behöver bara en bild på dig. Den tar du längst fram vid disken inuti AF-borgen."} %>
@@ -17,14 +17,13 @@
 
     <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
   <% end %>
-
-  <div class="message">
-    <h2>Dina uppgifter</h2>
-    <p><strong>ID: </strong><%= @karnevalist.id %></p>
-    <p><strong>Namn: </strong><%= @karnevalist.fornamn + " " + @karnevalist.efternamn %></p>
-    <p><strong>E-post: </strong><%= @karnevalist.email %></p>
-    <p><strong>Personnummer: </strong><%= @karnevalist.personnummer %></p>
-  </div>
+</div>
+<div class="white-container col-xs-12" id="content">
+  <h2>Dina uppgifter</h2>
+  <p><strong>ID: </strong><%= @karnevalist.id %></p>
+  <p><strong>Namn: </strong><%= @karnevalist.fornamn + " " + @karnevalist.efternamn %></p>
+  <p><strong>E-post: </strong><%= @karnevalist.email %></p>
+  <p><strong>Personnummer: </strong><%= @karnevalist.personnummer %></p>
 
   <% if not @karnevalist.utcheckad %>
   <%= button_to "Redigera mina uppgifter", {controller: "karnevalister", action: "step3"}, {method: :get} %>

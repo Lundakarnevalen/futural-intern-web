@@ -1,16 +1,19 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistan"} %>
 
+<div class="white-container col-xs-12">
   <%= render 'search_form' %>
-
-<% if !@karnevalister.blank? %>
-  <ul>
-    <% @karnevalister.each do |k| %>
-      <li>
-        <a href=<%= url_for k %>>
-          <%= "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})" %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
-<% end %>
-
+</div>
+<%= render partial: "shared/header", locals: {title: "Resultat"} %>
+<div class="white-container col-xs-12">
+  <% if !@karnevalister.blank? %>
+    <ul>
+      <% @karnevalister.each do |k| %>
+        <li>
+          <a href=<%= url_for k %>>
+            <%= "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})" %>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  <% end %>
+</div>

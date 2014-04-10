@@ -4,7 +4,7 @@
 
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 <% disabled = cannot? :update, @karnevalist %>
-<div class="container" id="content">
+<div class="white-container col-xs-12" id="content">
   <%= render 'search_form' %>
 
   <%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
