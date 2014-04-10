@@ -47,7 +47,6 @@
                 jthis.addClass('dead-cloud');
                 setTimeout(function() {
                     gen_cloud(cont, i);
-                    console.log(jthis.data('offset'));
                 }, FADE_TIME);
             }
         });
@@ -58,11 +57,11 @@
     var gen_cloud = function(div, voffset) {
         var cloud = $('<div class="one-cloud">'),
             factor = Math.random() / 2 + 0.5,
-            width = 304 * CLOUD_SIZE * factor,
+            width = 304 * CLOUD_SIZE * factor;
             height = 144 * CLOUD_SIZE * factor;
         cloud.css({ height: 144 * CLOUD_SIZE * factor,
                     width: 304 * CLOUD_SIZE * factor,
-                    "top": voffset * ((w_height - height) / N_CLOUDS),
+                    "top": voffset * ((w_height - height - 32) / N_CLOUDS) + 32,
                     left: random(0, w_width - 304 * factor * CLOUD_SIZE),
         });
         cloud.data('offset', voffset);
