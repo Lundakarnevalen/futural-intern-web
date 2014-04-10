@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140410082839) do
+ActiveRecord::Schema.define(version: 20140410150819) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -252,6 +252,7 @@ ActiveRecord::Schema.define(version: 20140410082839) do
     t.string  "name",         null: false
     t.integer "podio_id"
     t.integer "podio_sub_id"
+    t.string  "info_page"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
