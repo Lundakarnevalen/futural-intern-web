@@ -2,7 +2,6 @@
 
 class HomeController < ApplicationController
   skip_authorization_check
-
   def index
     if signed_in?
       if current_user.karnevalist? &&

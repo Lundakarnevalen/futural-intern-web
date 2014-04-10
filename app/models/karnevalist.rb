@@ -212,6 +212,10 @@ class Karnevalist < ActiveRecord::Base
     end
   end
 
+  def full_name
+    "#{self.fornamn} #{self.efternamn}"
+  end
+
   def self.personnummer? pn
     return false unless pn.length == 10
     # Validate year
