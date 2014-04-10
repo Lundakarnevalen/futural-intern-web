@@ -47,7 +47,6 @@
                 jthis.addClass('dead-cloud');
                 setTimeout(function() {
                     gen_cloud(cont, i);
-                    console.log(jthis.data('offset'));
                 }, FADE_TIME);
             }
         });
