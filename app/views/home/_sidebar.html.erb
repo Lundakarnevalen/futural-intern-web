@@ -77,7 +77,7 @@
 </div>
 <div id="evenemang" class="row">
   <div class="header col-xs-12">
-    EVENEMANG <!-- Hårdkodat är vackert har jag hört -->
+    EVENEMANG
   </div>
   <ul class="nav">
     <% Event.upcoming.for_sektion(current_user.karnevalist &&
@@ -85,7 +85,7 @@
       <li>
         <div class="block">
           <div class="date col-xs-4">
-            <%= short_date e.date %>
+            <p><%= short_date e.date %></p>
           </div>
           <div class="information col-xs-8">
             <%= link_to e.title, e %>
@@ -94,5 +94,5 @@
       </li>
     <% end %>
   </ul>
-  <% # <button class="more">SE FLER</button> %>
+  <%= link_to "SE FLER", events_path, :class => "button btn more" %>
 </div>
