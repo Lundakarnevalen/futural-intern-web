@@ -61,6 +61,15 @@ html {
             padding: 0;
             margin: 0;
         }
+        .container {
+            width: auto;
+            margin-bottom: $margin-main * 2;
+            padding-top: $padding-main;
+            background-color: white;
+            color: $color-red;
+            box-shadow: 0 $distance-shadow 0 $color-shadow;
+        }
+
         .navbar {
             height: $height-navbar;
             border: none;
@@ -144,6 +153,7 @@ input {
 .btn,button {
     $background-color: $color-green;
     $text-color: white;
+    margin-bottom: 10px;
     border-radius: 0px;
     border: none;
     font-family: $font-header;
