@@ -30,17 +30,17 @@
 <% products = c.products.where(warehouse_code: @warehouse_code, active: true).order("name ASC") %>
 <% if !products.blank? %>
 <div class="row">
-<div class="col-xs-12 col-sm-12 col-md-9 col-lg-7">
+<div class="col-xs-12 col-sm-12 col-md-9 col-lg-8">
 <h4><%= c.name %></h4>
 <div class="table-responsive">
-<table class="table table-striped" id="table">
+<table class="table table-striped table-fixed" id="table">
   <thead>
     <tr>
-      <th>Mängd</th>
-      <th>Namn</th>
-      <th>Enhet</th>
-      <th>Pris/enhet</th>
-      <th>I lager</th>
+      <th style="width: 20%;">Mängd</th>
+      <th style="width: 43%;">Namn</th>
+      <th style="width: 11%;">Enhet</th>
+      <th style="width: 15%;">Pris/enhet</th>
+      <th style="width: 11%;">I lager</th>
     </tr>
   </thead>
   <tbody>
@@ -92,7 +92,7 @@
   </div>
 </div>
 </div>  
-<%= f.submit "Gå vidare", class: "btn btn-primary" %>
+<%= f.submit "Genomför", class: "btn btn-primary" %>
 <% end %>
 <script>
  $(document).ready(function() {
