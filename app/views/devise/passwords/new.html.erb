@@ -4,10 +4,10 @@
 
 <% end %>
 
-<div class="container" id="content">
+<div class="identification" id="container clouds">
 <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
   <%= devise_error_messages! %>
-  <div class="message">
+  <div class="box">
     <p>I samband med registreringen under uppropet skapades konton på karnevalist.se för alla karnevalister.</p>
     <p>Fyll i mailadressen som du registrerade dig med på uppropet. Då får du ett mail med en länk där du får välja lösenord.</p>
   </div>
