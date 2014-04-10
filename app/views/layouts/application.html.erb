@@ -1,5 +1,25 @@
-<%= render :layout => 'layouts/bare' do %>
-  <div class=container id=content>
-    <%= yield %>
-  </div>
-<% end %>
+<!DOCTYPE html>
+<html lang=sv>
+  <head>
+    <title>Karnevalist<%= Rails.env.development?? ' (Dev)' : '' %></title>
+    <%= stylesheet_link_tag    :application, :media => :all %>
+    <%= favicon_link_tag %>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <%= yield :head %>
+    <%= javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js' %>
+    <%= javascript_include_tag :application %>
+    <%= csrf_meta_tags %>
+  </head>
+  <body>
+    <%= render "home/header" %>
+      <p class="notice"><%= notice %></p>
+      <p class="alert"><%= alert %></p>
+      <div id="left" class="col-md-8">
+        <%= yield %>
+      </div>
+      <div id="right" class="col-md-4 visible-md visible-lg">
+        <%= render "home/sidebar" %>
+      </div>
+    <%= render "shared/footer" %>
+  </body>
+</html>

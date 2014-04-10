@@ -1,16 +1,9 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag :notifications, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Push-meddelanden"} %>
 
-<div class="container" id="content">
-	<% @notifications.each do |n| %>
-		<a href=<%= url_for n %>>
-			<div class="message">
-				<div class="title"><%= n.title %></div>
-				<div class="date"><%= n.created_at.strftime("%Y-%m-%d %H:%M") %></div>
-			</div>	
-	<% end %>
-</div>
-
+<% @notifications.each do |n| %>
+	<a href=<%= url_for n %>>
+		<div class="message">
+			<div class="title"><%= n.title %></div>
+			<div class="notification_date"><%= n.created_at.strftime("%Y-%m-%d %H:%M") %></div>
+		</div>
+<% end %>

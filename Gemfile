@@ -26,6 +26,7 @@ gem 'simple_calendar', '~> 0.1.10'
 gem 'prawn'
 gem 'bootstrap-datepicker-rails'
 gem 'sprockets', '2.11.0'
+gem 'bluecloth'
 
 group :production do
   gem 'rails_12factor'
@@ -38,6 +39,9 @@ end
 
 group :development do
   gem 'thin'
+  gem 'better_errors'
+  gem 'binding_of_caller'
+  gem 'htmlbeautifier'
 end
 
 group :test do
@@ -53,5 +57,5 @@ end
 
 group :assets do
   gem 'uglifier'
-  gem 'sass-rails'
+  gem 'sass-rails', '4.0.2'
 end

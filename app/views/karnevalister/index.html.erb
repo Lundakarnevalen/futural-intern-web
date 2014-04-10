@@ -1,13 +1,8 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Karnevalistan"} %>
 
-<div class="container" id="content">
   <%= render 'search_form' %>
 
-  <% if !@karnevalister.blank? %>
+<% if !@karnevalister.blank? %>
   <ul>
     <% @karnevalister.each do |k| %>
       <li>
@@ -17,6 +12,5 @@
       </li>
     <% end %>
   </ul>
-  <% end %>
-</div>
+<% end %>
 

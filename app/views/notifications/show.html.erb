@@ -1,7 +1,3 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag :notifications, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Push-meddelanden"} %>
 
 <div class="container" id="content">
@@ -9,12 +5,10 @@
 	    <h2><%= @notification.title %></h2>
         <p><strong>Mottagare: </strong> <%= @notification.recipient_id == 0 ? "Alla karnevalister" : Sektion.find(@notification.recipient_id).name %></p><br>
 	    <p><%= @notification.message %></p>
-	    
+
 	    <p class="message-date">Skickat <%= @notification.created_at.strftime("%Y-%m-%d %H:%M") %></p>
 	</div>
 	<a href="<%= notifications_path %>" ><div class="button">
 		Tillbaka
 	</div></a>
 </div>
-
-

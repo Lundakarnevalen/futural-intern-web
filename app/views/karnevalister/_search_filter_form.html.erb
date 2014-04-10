@@ -50,7 +50,7 @@
     <% end %>
     <div class="form-group">
       <%= label_tag nil, 'Sektion' %>
-      <%= select_tag :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), 
+      <%= select_tag :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name),
                                   :prompt => "-- Välj sektion --" %>
       <%= submit_tag "Gör't", :style => 'padding: 1px' %>
     </div>

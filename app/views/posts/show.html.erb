@@ -1,0 +1,36 @@
+<% content_for :head do %>
+  <%= stylesheet_link_tag :posts, :media => :all %>
+<% end %>
+
+<div class="row">
+  <% if (current_user.can? :edit, @post) %>
+    <%= link_to "Tillbaka", root_url, class: "btn btn-small col-xs-2 col-md-offset-2" %>
+  <% end %>
+  <div class="image-container col-xs-4">
+    <div class="message-image">
+      <%= image_tag("logotyper/#{@post.sektion.name}.png") %>
+    </div>
+    <div class="sektion">
+      <%= @post.sektion.name %>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="message">
+    <div class="message-information">
+      <div class="row">
+        <h1><%= @post.title %></h1>
+      </div>
+      <div class="row">
+        <%= @post_html.html_safe %>
+      </div>
+      <% unless @post.id.nil? %>
+        <div class="form-controls">
+          <% if (current_user.can? :edit, @post) %>
+            <%= link_to "redigera", edit_post_path(@post), class: "btn btn-small", type: "edit"%>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>
