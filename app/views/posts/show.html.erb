@@ -3,9 +3,7 @@
 <% end %>
 
 <div class="row">
-  <% if (current_user.can? :edit, @post) %>
     <%= link_to "Tillbaka", root_url, class: "btn btn-small col-xs-2 col-md-offset-2" %>
-  <% end %>
   <div class="image-container col-xs-4">
     <div class="message-image">
       <%= image_tag("logotyper/#{@post.sektion.name}.png") %>

@@ -50,6 +50,7 @@
     collection do
       get ':id/export', :to => 'sektioner#export'
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
+      post ':id/edit', :to => 'sektioner#update'
     end
   end
 
@@ -104,7 +105,7 @@
         get 'search', to: 'orders#search'
         get 'direct_selling', to: 'orders#direct_selling'
         post 'direct_selling_post', to: 'orders#direct_selling_post'
-        get 'update_customers', to: 'orders#update_customers' 
+        get 'update_customers', to: 'orders#update_customers'
       end
       member do
         put 'return_products', to: 'orders#return_products'
