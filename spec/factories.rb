@@ -43,7 +43,7 @@ FactoryGirl.define do
     utcheckad_at nil
     avklarat_steg 1
     foto "MyString"
-    tilldelad_sektion 1
+    tilldelad_sektion nil
     tilldelad_klar false
     pusseldag_keep false
     medlem_kollad false
