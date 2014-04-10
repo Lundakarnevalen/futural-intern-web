@@ -16,15 +16,15 @@
 
     var cloud_swag = function(div) {
     	if($(div).length > 0) { //made some mess at "home" if not checked.
-	        update_bounds();
-	        div.removeClass('clouds');
-	        $('body').addClass('cloud-bg');
-	        div.append(cont);
-	        for(var i = 0; i < N_CLOUDS; i++) {
-	            gen_cloud(cont);
-	        }
-	        clouds = $('.one-cloud');
-	        setInterval(cloud_tick, TICK_SLEEP);
+            update_bounds();
+            div.removeClass('clouds');
+            $('body').addClass('cloud-bg');
+            div.append(cont);
+            for(var i = 0; i < N_CLOUDS; i++) {
+                gen_cloud(cont);
+            }
+            clouds = $('.one-cloud');
+            setInterval(cloud_tick, TICK_SLEEP);
         }
     };
 
@@ -37,9 +37,7 @@
             var pos = $(this).offset().left;
             if(pos > w_width - $(this).width() || pos < 0) {
                 $(this).fadeOut(FADE_TIME, function() {
-	                
-	                $(this).remove();
-	                
+                    $(this).remove();
                 });
                 clouds = $('.one-cloud');
             }
