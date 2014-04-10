@@ -1,8 +1,10 @@
 <%= render 'shared/header', :title => 'Händelser' %>
 
 <% @events.each do |e| %>
-  <ol class=posts>
-    <h1><%= e.title %></h1>
-    <%= e.date %>
-  </ol>
+  <div class="white-container col-xs-12">
+    <ol class=posts>
+      <h1><%= e.title %></h1>
+      <%= e.date %>
+    </ol>
+  </div>
 <% end %>

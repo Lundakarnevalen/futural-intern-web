@@ -1,19 +1,25 @@
 <%= render partial: "shared/header", locals: {title: "Redigera Info"} %>
-<%= form_for @sektion do |f| %>
-  <% if @sektion.errors.any? %>
-    <div id="error_explanation">
-      <ul>
-        <% @sektion.errors.each do |field, msg| %>
-          <li><%= msg %></li>
-        <% end %>
-      </ul>
+
+<div class="white-container col-xs-12">
+  <%= form_for @sektion do |f| %>
+    <% if @sektion.errors.any? %>
+      <div id="error_explanation">
+        <ul>
+          <% @sektion.errors.each do |field, msg| %>
+            <li><%= msg %></li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
+    <div class="form_group">
+      <%= f.label "Text" %>
+      <%= f.text_area :info_page, placeholder: "Skriv vacker text som beskriver din sektion här..." %>
+    </div>
+
+    <%= render partial: "shared/markdown_notice" %>
+
+    <div class="form-controls">
+      <%= f.submit "Klar", class: "btn btn-large btn-primary" %>
     </div>
   <% end %>
-  <div class="form_group">
-      <%= f.text_area :info_page, placeholder: "Skriv vacker text som beskriver din sektion här..." %>
-  </div>
-
-  <div class="form-controls">
-    <%= f.submit "Klar", class: "btn btn-large btn-primary" %>
-  </div>
-<% end %>
+</div>
