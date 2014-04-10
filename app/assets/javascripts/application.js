@@ -12,7 +12,7 @@
 //= require jquery.modal
 //= require jquery.cookie
 //= require bootstrap
-//= require bootstrap-datepicker
+//= require bootstrap-datepicker/core.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
 //= require bootstrap/modal
 
