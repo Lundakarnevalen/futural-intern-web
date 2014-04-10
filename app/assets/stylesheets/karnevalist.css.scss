@@ -315,6 +315,13 @@ a {
             background-color: white;
             color: $color-red;
             box-shadow: 0 $distance-shadow 0 $color-shadow;
+            overflow: hidden;
+            .information {
+              padding-left: 0;
+                a {
+                     color: $color-red;
+                }
+            }
             .date {
                 p {
                     margin: 0 0 0 0;

@@ -3,7 +3,7 @@
 <% @events.each do |e| %>
   <div class="white-container col-xs-12">
     <ol class=posts>
-      <h1><%= e.title %></h1>
+      <h1><%= link_to e.title, e %></h1>
       <%= e.date %>
     </ol>
   </div>
