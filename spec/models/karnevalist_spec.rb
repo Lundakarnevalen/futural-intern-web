@@ -76,6 +76,13 @@ describe (K = Karnevalist) do
       k = FactoryGirl.build(:karnevalist, :sektion => s, :sektion2 => s)
                      .should_not be_valid
     end
+
+    it 'checks that tilldelad_sektion actually exists' do
+      # This caused a great deal of trouble.
+      k = FactoryGirl.build(:karnevalist)
+      k.assign_attributes(:tilldelad_sektion => -123123)
+      k.should_not be_valid
+    end
   end
 
   describe '#save' do
@@ -87,9 +94,9 @@ describe (K = Karnevalist) do
     end
 
     it 'sets utcheckad if tilldelade_sektioner.any?' do
-      k = FactoryGirl.build(:karnevalist)
       s = FactoryGirl.create :sektion
-      k.tilldelade_sektioner << s
+      k = FactoryGirl.build :karnevalist
+      k.tilldelade_sektioner = [s]
       k.save
       k.tilldelade_sektioner.should_not be_empty
       k.utcheckad.should be_true
