@@ -38,6 +38,13 @@ class Karnevalist < ActiveRecord::Base
     end
   end
 
+  validate do # Sektioner exist
+    sids = [self.tilldelad_sektion, self.tilldelad_sektion2]
+    unless sids.all?{ |sid| sid.nil? || Sektion.exists?(sid) }
+      self.errors.add :sektion, 'Ogiltig sektion!'
+    end
+  end
+
   UTCHECKAD = 3
 
   before_save do
