@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 describe Order do
 
   describe "validation" do
