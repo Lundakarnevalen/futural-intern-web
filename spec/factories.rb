@@ -91,6 +91,7 @@ FactoryGirl.define do
 
   factory :sektion do
     name "kommunikation"
+    info_page "Trams"
   end
 
   factory :storlek do
