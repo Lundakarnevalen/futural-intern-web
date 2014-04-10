@@ -56,14 +56,6 @@ html {
         background-color: $color-light;
         //the main background.
         padding-bottom: $padding-main * 2;
-        h1 {
-          width: 100%;
-          padding-top: 3px;
-          font-family: $font-header;
-          overflow: hidden;
-          word-break: break-all;
-          text-transform: uppercase;
-        }
 
         ol {
             //Fixar så att posts inte har randompadding till vänster
@@ -147,14 +139,14 @@ html {
     }
 }
 
-input {
+input, textarea {
     padding: 20px;
     width: 100%;
     border: none;
     font-size: 20px;
     box-shadow: 0 $distance-shadow 0 $color-shadow;
     background-color: $color-gray;
-    color: red;
+    color: $color-red;
     &[type=submit] {
         width: auto;
         margin-top: $margin-main;
@@ -164,6 +156,11 @@ input {
         color: white;
         border-radius: 0 0 0 0;
     }
+}
+
+textarea {
+  height: 350px;
+  font-size: 15px;
 }
 
 .btn,button {
@@ -391,6 +388,14 @@ p {
 }
 
 #left {
+    h1 {
+          width: 100%;
+          padding-top: 3px;
+          font-family: $font-header;
+          overflow: hidden;
+          word-break: break-all;
+          text-transform: uppercase;
+    }
     background-color: $color-light;
     & > .header {
         margin-top: $margin-main * 2;
