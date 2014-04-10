@@ -1,6 +1,7 @@
 <% content_for :head do %>
   <%= stylesheet_link_tag :posts, :media => :all %>
 <% end %>
+
 <div class="row">
     <%= link_to "Tillbaka", root_url, class: "btn btn-small col-xs-2 col-md-offset-2" %>
   <div class="image-container col-xs-4">
@@ -20,17 +21,20 @@
 </div>
 <% end %>
 <div class="row">
-  <div class="container">
+  <div class="white-container">
     <%= @info_page.html_safe %>
   </div>
 </div>
-<div class="row">
-  <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
-</div>
-<div class="row">
-  <div class="container">
-    <% @sektion.members.each do |k| %>
-      <li><%= link_to k.to_s, k %></li>
-    <% end %>
+<% s = current_user.karnevalist.sektion %>
+<% if can? :edit, s %>
+  <div class="row">
+    <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
   </div>
-</div>
+  <div class="row">
+    <div class="white-container">
+      <% @sektion.members.each do |k| %>
+        <li><%= link_to k.to_s, k %></li>
+      <% end %>
+    </div>
+  </div>
+<% end %>
