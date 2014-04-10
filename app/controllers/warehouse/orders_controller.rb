@@ -107,7 +107,27 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def direct_selling_post
     @order = Order.new(order_params)
     @order.warehouse_code = @warehouse_code
+    @order.delivery_date = DateTime.now
+    @order.finished_at = DateTime.now
+    @order.status = "Levererad"
     if @order.save
+      @order.order_products.each do |order_product|
+        product = Product.find(order_product.product_id)
+        in_stock = product.stock_balance_not_ordered
+        if in_stock == 0  # Ska detta vara möjligt vid direktförsäljning?
+          stock_balance_stand_by = product.stock_balance_stand_by + order_product.amount.to_i
+          product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
+        elsif in_stock >= order_product.amount.to_i
+          in_stock -= order_product.amount.to_i
+          product.update_attributes(:stock_balance_not_ordered => in_stock)
+        else  # Ska detta vara möjligt vid direktförsäljning?
+          stock_balance_ordered = product.stock_balance_ordered + in_stock
+          stock_balance_stand_by = order_product.amount.to_i - in_stock
+          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+          product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
+          product.update_attributes(:stock_balance_not_ordered => 0)
+        end
+      end
       redirect_to order_path(@order)
     else
       @customers = Array.new

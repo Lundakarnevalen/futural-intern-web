@@ -2,7 +2,7 @@
     <div class="col-sm-3 sidebar navbar-collapse collapse col-md-2">
       <ul class="nav nav-sidebar">
         <li class="nav-header disabled"><a>Ordrar</a></li>
-        <li class="<%= 'active' if current_page?(fabriken_orders_path) %>"><%= link_to "Mina ordrar", orders_path %></li>
+        <li class="<%= 'active' if current_page?(orders_path) %>"><%= link_to "Mina ordrar", orders_path %></li>
         <li class="<%= 'active' if current_page?(new_order_path) %>"><%= link_to "Ny order", new_order_path %></li>
       </ul>
 
