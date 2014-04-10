@@ -1,3 +1,7 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag :karnevalister, :media => :all %>
+<% end %>
+
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 <% disabled = cannot? :update, @karnevalist %>
 <div class="container" id="content">
@@ -23,7 +27,7 @@
       <%= f.label :tilldelad_sektion, 'Primär Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion, Sektion.all.collect{ |s| [s.name, s.id] },
-                     {:include_blank => 'Ingen'}, 
+                     {:include_blank => 'Ingen'},
                       :disabled => !can?(:change_sektion, @karnevalist)) %>
       </div>
     </div>
@@ -32,7 +36,7 @@
       <%= f.label :tilldelad_sektion2, 'Sekundär Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion2, Sektion.all.collect{ |s| [s.name, s.id] },
-                     {:include_blank => 'Ingen'}, 
+                     {:include_blank => 'Ingen'},
                       :disabled => !can?(:change_sektion, @karnevalist)) %>
       </div>
     </div>
@@ -50,7 +54,7 @@
         <h3>Är du helt, helt säker?</h3>
       </div>
       <div class='form-group confirm-destroy'>
-        <%= link_to 'Ja, ta bort ' + gender_specific(@karnevalist), 
+        <%= link_to 'Ja, ta bort ' + gender_specific(@karnevalist),
                     @karnevalist, :method => :delete, :class => 'button' %>
       </div>
     <% end %>

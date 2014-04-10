@@ -1,15 +1,20 @@
-<%= javascript_include_tag :defaults %>
-<%= csrf_meta_tag %>
-<li>
-  <span class="title"><%= post.title %></span>
-  <span class="content"><%= post.content %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> sedan
-  </span>
-  <span class="posted_by">
-    av <%= "#{post.karnevalist.fornamn} #{post.karnevalist.efternamn}"%>.
-  </span>
-  <% if current_user.can? :edit, post %>
-    <%= link_to "redigera", edit_post_path(post) %>
-  <% end %>
-</li>
+<div class="message col-xs-12">
+  <%= image_tag("logotyper/#{post.sektion.name}.png", class: "img-responsive message-image col-xs-2") %>
+  <div class="message-information col-xs-8">
+    <div class="row">
+    <h1><%= post.title %></h1>
+  </div>
+    <div class="row">
+      <div class="post-preview"><%=  BlueCloth.new( truncate post.content, length: 180 ).to_html.html_safe %>
+      </div>
+    </div>
+    <% unless post.id.nil? %>
+      <div class="form-controls">
+          <%= link_to "läs mer", post, class: "btn btn-small" %>
+          <% if (current_user.can? :edit, post) %>
+            <%= link_to "redigera", edit_post_path(post), class: "btn btn-small", type: "edit" %>
+          <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

@@ -3,7 +3,7 @@ class Api::NotificationsController < Api::ApplicationController
   def index
     user = User.where(authentication_token: params[:token]).take
     sektioner = user.karnevalist.tilldelade_sektioner
-    sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
+    sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist
     sektioner.each do |s|
       sektioner_ids.push s.id
     end

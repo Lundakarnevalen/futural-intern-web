@@ -1,12 +1,5 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag :posts, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Redigera Inlägg"} %>
-
-<div class="container" id="content">
 <%= form_for @post do |f| %>
-    <h2>Redigera inlägg</h2>
       <% if @post.errors.any? %>
         <div id="error_explanation">
           <ul>
@@ -45,4 +38,3 @@
                                      data: { confirm: "Är du verkligen helt säker på att du vill radera inlägget?" },
                                      title: @post.title %>
   <% end %>
-</div>

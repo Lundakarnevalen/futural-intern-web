@@ -1,0 +1,61 @@
+@import "karnevalist.css.scss";
+
+$image-height: 60px;
+
+#left {
+    margin-top: 120px !important;
+    padding-right: 15px;
+    padding-left: 15px;
+
+
+    .image-container {
+      margin-left: 60px;
+      height: auto;
+      width: auto;
+      background-color: white;
+      box-shadow: 0 $distance-shadow 0 $color-shadow;
+
+      img {
+        margin-top: 20px;
+        margin-left: 20px;
+        margin-right: 20px;
+        height: 160px;
+        width: 160px;
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
+      }
+
+      .sektion {
+        font-family: $font-header;
+        font-weight: bold;
+        font-size: $fontsize-headerbar;
+        height: $height-headerbar;
+        line-height: $height-headerbar;
+        text-align: center;
+        color: $color-red;
+      }
+    }
+
+    .message {
+      margin-left: 20px;
+      margin-right: 20px;
+      margin-top: 40px;
+      height: auto;
+      padding-bottom: 30px;
+    }
+
+    .message-information {
+      margin-left: 30px;
+      margin-right: 30px;
+            h1 {
+              text-align: center;
+            }
+            p {
+                font-family: $font-text !important;
+                overflow: hidden;
+                margin-left: 20px;
+                word-wrap: break-word;
+                word-break: break-all;
+                display: block;
+            }
+        }
+}
