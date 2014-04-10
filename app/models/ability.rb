@@ -36,6 +36,7 @@ class Ability
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
     can [:read], Event
+    can [:read], Sektion
 
     can :read, Notification, :recipient_id => 0
 
@@ -96,13 +97,13 @@ class Ability
       can :manage, IncomingDelivery
       can :manage, ProductCategory
     end
-    
+
     # Lagersystem - beställare
     if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
     end
-    
+
     # Lagersystem - kassör
     if user.is? :kassor_festmasteriet
       can :manage, Order

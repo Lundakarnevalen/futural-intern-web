@@ -23,7 +23,7 @@
       <%= f.label :title, "Rubrik" %>
       <%= f.text_area :title, placeholder: "Skriv en jättefin rubrik här..." %>
     </div>
-
+    <%= render partial: "shared/markdown_notice" %>
     <div class="form_group">
       <%= f.label :title, "Text" %>
       <%= f.text_area :content, placeholder: "Skriv vacker text här..." %>

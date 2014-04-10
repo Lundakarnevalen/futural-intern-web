@@ -7,9 +7,11 @@
     </div>
   </div>
   <ul class="nav">
-    <li>
-      <a href="#">KOMMER SNART</a>
-    </li>
+    <li><%= link_to "INFO", current_user.karnevalist.sektion %></li>
+    <%# General stuff %>
+    <% if can? :read, Notification %>
+        <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
+    <% end %>
     <li>
       <a href="#">MASSOR MED SKOJS</a>
     </li>
@@ -27,10 +29,6 @@
     <% if can? :checkout, Karnevalist %>
       <li><%= link_to 'Checka ut karnevalister', checkout_karnevalister_path %></li>
     <% end %>
-    <%# General stuff %>
-    <% if can? :read, Notification %>
-        <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
-    <% end %>
     <%# Sektionsadmin stuff %>
     <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
       <% if can? :read, Karnevalist %>
@@ -42,10 +40,6 @@
       <% end %>
       <% if current_user.sektioner.count > 1 %>
         <li><%= link_to 'Sektionslistan', Sektion %></li>
-      <% end %>
-      <% #if can? :create, Post %>
-      <% if false # Add posts later %>
-        <li><%= link_to 'Nytt inlägg', new_post_path %></li>
       <% end %>
       <% if can? :create, Notification %>
         <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
@@ -75,7 +69,6 @@
       <% if can? :read, Sektion %>
         <li><%= link_to 'Sektionslistan', Sektion %></li>
       <% end %>
-      <% #if can? :create, Post %>
       <% if can? :create, Notification %>
         <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
       <% end %>
@@ -87,7 +80,7 @@
     EVENEMANG <!-- Hårdkodat är vackert har jag hört -->
   </div>
   <ul class="nav">
-    <% Event.upcoming.for_sektion(current_user.karnevalist && 
+    <% Event.upcoming.for_sektion(current_user.karnevalist &&
                                   current_user.karnevalist.sektion).each do |e| %>
       <li>
         <div class="block">
