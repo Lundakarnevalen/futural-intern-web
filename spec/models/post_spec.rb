@@ -45,4 +45,10 @@ describe Post do
     it { should include(sektion_post) }
     it { should_not include(not_my_sektion_post) }
   end
+
+  describe '.create' do
+    it 'can actually create a sektion' do
+      FactoryGirl.create(:sektion).should_not throw_exception
+    end
+  end
 end
