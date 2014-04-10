@@ -107,7 +107,6 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def direct_selling_post
     @order = Order.new(order_params)
     @order.warehouse_code = @warehouse_code
-    @order.delivery_date = DateTime.now
     @order.finished_at = DateTime.now
     @order.status = "Levererad"
     if @order.save

@@ -27,7 +27,7 @@
         <td><%= "#{o.karnevalist.fornamn} #{o.karnevalist.efternamn}" %></td>
         <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
         <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
-        <td><%= o.delivery_date.blank? ? "N/A" : o.delivery_date.strftime("%Y-%m-%d")%></td>
+        <td><%= o.delivery_date.blank? ? "Direktförsäljning" : o.delivery_date.strftime("%Y-%m-%d")%></td>
         <td><%= number_to_currency(o.total_sum) %></td>
       </tr>
     <% end %>

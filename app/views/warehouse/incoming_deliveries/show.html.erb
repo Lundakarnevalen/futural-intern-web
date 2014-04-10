@@ -36,7 +36,7 @@
       </tr>
     </thead>
     <tbody>
-      <% @incoming_delivery.products.each do |p| %>
+      <% @incoming_delivery.products.order("name ASC").each do |p| %>
         <tr>
           <td><%= p.name %></td>
           <td><%= p.ean %></td>
