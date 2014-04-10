@@ -5,7 +5,8 @@ describe Warehouse::OrdersController do
   before :each do
     @user = FactoryGirl.create(:user)
     sign_in @user
-    @order = FactoryGirl.create(:order, karnevalist: @user.karnevalist)
+    @sektion = FactoryGirl.build(:sektion)
+    @order = FactoryGirl.create(:order, sektion: @sektion, karnevalist: @user.karnevalist)
   end
 
   describe "GET to OrdersController" do

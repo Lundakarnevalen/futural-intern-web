@@ -48,7 +48,7 @@ describe Post do
 
   describe '.create' do
     it 'can actually create a sektion' do
-      FactoryGirl.create(:sektion).should_not throw_exception
+      FactoryGirl.create(:sektion).should_not raise_error
     end
   end
 end
