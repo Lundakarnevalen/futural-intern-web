@@ -1,10 +1,5 @@
   Futural::Application.routes.draw do
   root :to => 'home#index'
-=begin
-  scope format: true, constraints: { format: 'json'} do
-    post '/phones', to: 'api/phones#create'
-  end
-=end
 
   devise_for :users
 
@@ -18,8 +13,6 @@
     resources :karnevalister, only: [:update]
     resources :notifications, only: [:index]
   end
-
-
 
   resources :notifications, only: [:new, :create, :show, :index]
 
@@ -59,6 +52,10 @@
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
     end
   end
+
+  resources :events do
+  end
+
 =begin
   # concern for festmästeriet / fabriken
   concern :party_factory do

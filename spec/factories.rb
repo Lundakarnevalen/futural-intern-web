@@ -140,4 +140,12 @@ FactoryGirl.define do
     stock_balance_stand_by 50
     purchase_price 25.50
   end
+
+  factory :event do
+    title 'An Event'
+    date '2014-08-01'
+    sektion nil
+    creator nil
+    description 'Lets get drunk on a tuesday'
+  end
 end

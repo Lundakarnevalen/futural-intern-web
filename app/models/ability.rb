@@ -1,4 +1,3 @@
-
 class Ability
   include CanCan::Ability
 
@@ -36,6 +35,7 @@ class Ability
     can [:create, :new, :step1, :step1_post], Karnevalist
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
+    can [:read], Event
 
     can :read, Notification, :recipient_id => 0
 
@@ -60,6 +60,20 @@ class Ability
     # Export
     if user.is? :exporter
       can :export_all, Karnevalist
+    end
+
+    # Sektion-local info
+    if user.is?(:info) && user.karnevalist.present? && user.karnevalist.sektion.present?
+      can :create, Post
+      can :manage, Post, :sektion => user.karnevalist.sektion
+      can :create, Event
+      can :manage, Event, :sektion => user.karnevalist.sektion
+    end
+
+    # Global info
+    if user.is? :global_info
+      can :manage, Post
+      can :manage, Event
     end
 
     # Sektionsadmin

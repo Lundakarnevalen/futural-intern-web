@@ -1,0 +1,18 @@
+<%= render 'shared/header', :title => 'Händelser' %>
+
+<hgroup>
+  <h1><%= @event.title %></h1>
+  <h2><%= @event.date %></h2>
+</hgroup>
+
+<i>Skapat av <%= @event.creator_karnevalist.full_name %></i>
+
+<%= render_markdown @event.description %>
+
+<% if can? :manage, @event %>
+  <hr>
+  <p>Visas för <%= @event.sektion || 'alla sektioner' %></p>
+  <%= link_to 'Ändra', edit_event_path(@event) %>
+  <%= link_to 'Ta bort', @event, :method => :delete, :confirm => 'Är du säker' %>
+<% end %>
+
