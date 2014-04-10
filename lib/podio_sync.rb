@@ -280,10 +280,15 @@ module PodioSync
 
   def self.delete_karnevalist karnevalist
     self.prelims
+    unless karnevalist.podio_id.present?
+      self.log "Delete: Nothing to do for karnevalist (id == #{karnevalist.id})"
+      return
+    end
     self.log "DELETE /item/#{karnevalist.podio_id}"
-    Podio::Item.delete karnevalist.podio_id
+    podio_id = karnevalist.podio_id
+    Podio::Item.delete podio_id
     karnevalist.update_attributes :podio_id => nil
-    self.log "Broke link with local == #{karnevalist.id} (was podio == #{karnevalist.podio_id})"
+    self.log "Broke link with local == #{karnevalist.id} (was podio == #{podio_id})"
   end
 
   ### Local read methods
@@ -378,7 +383,7 @@ module PodioSync
 
   def self.to_podio_sektion local_id
     @local_conv_sektioner ||= Sektion.all.map{ |s| [s.id, s] }.to_hash
-    return nil if local_id.nil?
+    return [nil, nil] if local_id.nil?
     s = @local_conv_sektioner[local_id]
     return [s.podio_id, s.podio_sub_id]
   end
