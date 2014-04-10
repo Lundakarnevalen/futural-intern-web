@@ -385,7 +385,7 @@ module PodioSync
     @local_conv_sektioner ||= Sektion.all.map{ |s| [s.id, s] }.to_hash
     return [nil, nil] if local_id.nil?
     s = @local_conv_sektioner[local_id]
-    return [s.podio_id, s.podio_sub_id]
+    return s.nil?? [nil, nil] : [s.podio_id, s.podio_sub_id]
   end
 
   def self.to_local_sektion podio_id, podio_sub_id = nil
