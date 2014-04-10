@@ -59,6 +59,7 @@ class Karnevalist < ActiveRecord::Base
     # Set utcheckad if sektioner
     if self.tilldelade_sektioner.any?
       self.utcheckad = true
+      self.tilldelad_klar = true
     end
 
     # Set utcheckad_at

@@ -1,1 +1,1 @@
-$('#customer_select').html('<%= options_from_collection_for_select(@customers, :id, :name) %>');
+$('#customer_select').html("<%= escape_javascript(options_from_collection_for_select(@customers, :id, :name)) %>");
