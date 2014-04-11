@@ -1,37 +1,3 @@
 <%= render partial: "shared/header", locals: {title: "Nytt Inlägg"} %>
 
-<div class="white-container col-xs-12">
-  <%= form_for @post do |f| %>
-    <% if @post.errors.any? %>
-      <div id="error_explanation">
-        <ul>
-          <% @post.errors.each do |field, msg| %>
-            <li><%= msg %></li>
-          <% end %>
-        </ul>
-      </div>
-    <% end %>
-    <div class="selection_box">
-      <% if current_user.is? :admin %>
-        <%= f.label :title, "Byt sektion att skicka till" %>
-        <%= f.collection_select :sektion, Sektion.all, :id, :name, :selected => @post_sektion %>
-      <% end %>
-      <% if current_user.is? :sektionsadmin %>
-        <%= f.label :title, "Byt sektion att skicka till" %>
-        <%= f.collection_select :sektion, @tilldelade_sektioner, :id, :name, :selected => @post_sektion %>
-      <% end %>
-    </div>
-    <div class="form_group">
-      <%= f.label :title, "Rubrik" %>
-      <%= f.text_field :title, placeholder: "Skriv en jättefin rubrik här..." %>
-    </div>
-    <div class="form_group">
-      <%= f.label :title, "Text" %>
-      <%= f.text_area :content, placeholder: "Skriv vacker text här..." %>
-    </div>
-    <%= render partial: "shared/markdown_notice" %>
-    <div class="form-controls">
-      <%= f.submit "Klar", class: "btn btn-large btn-primary" %>
-    </div>
-  <% end %>
-</div>
+<%= render "form" %>
