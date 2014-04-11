@@ -12,7 +12,6 @@ class PostsController < ApplicationController
     sektion_id = p[:sektion].to_i
     p[:sektion] = Sektion.find(sektion_id)
     p[:karnevalist] = current_user.karnevalist
-    #p[:content] = markdown p[:content]
     @post = Post.new(p)
     if @post.save
       flash[:success] = "Inlägg skapat!"
@@ -21,16 +20,15 @@ class PostsController < ApplicationController
   end
 
   def edit
-    @post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
+    @post = Post.find params[:id]
     @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
   end
 
   def update
-    @post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
+    @post = Post.find params[:id]
     p = params[:post]
     sektion_id = p[:sektion].to_i
     p[:sektion] = Sektion.find(sektion_id)
-    #p[:content] = markdown p[:content]
     if @post.update_attributes(p)
       flash[:success] = "inlägg redigerat"
     end
@@ -38,8 +36,8 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
-    post.destroy
+    @post = Post.find params[:id]
+    @post.destroy
     redirect_to root_url
   end
 
