@@ -5,9 +5,9 @@ class Api::KarnevalisterController < Api::ApiController
     g_token = karnevalist_params[:google_token]
     ios_token = karnevalist_params[:ios_token]
     success = false
-    if karnevalist_params[:google_token]
+    if !g_token.blank?
       success = Karnevalist.update(params[:id], google_token: g_token) 
-    elsif
+    elsif !ios_token.blank?
       success = Karnevalist.update(params[:id], ios_token: ios_token) 
     end
     render_response(success)
