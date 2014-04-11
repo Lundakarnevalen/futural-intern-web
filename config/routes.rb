@@ -57,6 +57,7 @@
     collection do
       get ':id/export', :to => 'sektioner#export'
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
+      get ':id/aktiva', :to => 'sektioner#aktiva'
     end
   end
 =begin
