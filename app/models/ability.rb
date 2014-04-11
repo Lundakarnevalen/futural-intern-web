@@ -92,7 +92,7 @@ class Ability
     # Lagersystem - kassör
     if user.is? :kassor_festmasteriet
       can :manage, Order
-      can :read, :weekly_overview, Product
+      can [:read, :weekly_overview], Product
       can :manage, IncomingDelivery
     end
 
