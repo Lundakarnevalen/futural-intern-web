@@ -1,5 +1,6 @@
 class PostsController < ApplicationController
   skip_authorization_check
+  include MarkdownHelper
 
   def new
     @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
@@ -55,10 +56,5 @@ class PostsController < ApplicationController
 
   def post_params
     params.require(:post).permit(:title, :content, :sektion)
-  end
-
-  # Process text with Markdown.
-  def markdown(text)
-    BlueCloth.new(text).to_html
   end
 end
