@@ -15,10 +15,11 @@ class HomeController < ApplicationController
   def app_store
     urls = {
       android: "https://play.google.com/store/apps/details?id=se.lundakarnevalen.android",
-      ios: "https://itunes.apple.com/se/app/karnevalisten/id811615995?mt=8"
+      iphone: "https://itunes.apple.com/se/app/karnevalisten/id811615995?mt=8"
     }
     user_agent = request.user_agent.downcase.match(/android|iphone/).to_s
-    redirect_to urls[user_agent.to_sym] if user_agent
+    puts request.user_agent
+    redirect_to urls[user_agent.to_sym] unless user_agent.blank?
   end
 
 end
