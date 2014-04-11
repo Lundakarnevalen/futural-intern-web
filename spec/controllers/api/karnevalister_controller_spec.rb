@@ -18,6 +18,12 @@ describe Api::KarnevalisterController do
       @user.karnevalist.ios_token.should_not eq(old_token)
     end
 
+    it "should ignore other params for karnevalist" do
+      put :update, {karnevalist: { ios_token: "test", tilldelad_sektion: 9000}, id: @id, token: @user.authentication_token }, format: :json
+      @user.reload
+      @user.karnevalist.tilldelad_sektion.should_not eq(9000)
+    end
+
     it "should update google_token if it is provided" do
       old_token = @user.karnevalist.google_token
       new_token = "newtoken"
