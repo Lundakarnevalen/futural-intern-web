@@ -5,6 +5,7 @@ describe Post do
   let(:karnevalist) { FactoryGirl.create(:karnevalist) }
   let(:sektion) { FactoryGirl.create(:sektion) }
   before { @post = Post.new(content: "HEJEJEJE", title: "Title", sektion: sektion, karnevalist: karnevalist) }
+  before { karnevalist.sektion = sektion }
 
   subject { @post }
 
