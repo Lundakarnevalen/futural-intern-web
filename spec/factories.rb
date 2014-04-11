@@ -118,6 +118,7 @@ FactoryGirl.define do
     delivery_date Date.tomorrow
     comment "No comment"
     association :karnevalist, factory: :karnevalist
+    association :sektion, factory: :sektion
     warehouse_code 0
     order_number 0
   end
