@@ -80,7 +80,12 @@ html {
         background-color: $color-light;
         //the main background.
         padding-bottom: $padding-main * 2;
-
+        label {
+          margin-top: $margin-main;
+        }
+        select {
+          border: none;
+        }
         ol {
             //Fixar så att posts inte har randompadding till vänster
             padding: 0;
