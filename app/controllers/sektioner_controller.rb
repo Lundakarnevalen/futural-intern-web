@@ -25,4 +25,11 @@ class SektionerController < ApplicationController
     authorize! :read, @sektion
     @karnevalister = @sektion.members.order('efternamn, fornamn asc')
   end
+
+  def aktiva
+    @sektion = Sektion.find(params[:id])
+    authorize! :read, @sektion
+    @karnevalister = @sektion.members.order('efternamn, fornamn asc')
+  end
+    
 end

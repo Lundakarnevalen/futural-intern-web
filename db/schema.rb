@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140408140902) do
+ActiveRecord::Schema.define(version: 20140411210545) do
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -22,6 +22,16 @@ ActiveRecord::Schema.define(version: 20140408140902) do
   end
 
   add_index "clusters", ["lat", "lng"], name: "index_clusters_on_lat_and_lng"
+
+  create_table "events", force: true do |t|
+    t.string   "title"
+    t.date     "date"
+    t.text     "description"
+    t.integer  "sektion_id"
+    t.integer  "creator_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "incoming_deliveries", force: true do |t|
     t.string   "invoice_nbr"
@@ -41,6 +51,13 @@ ActiveRecord::Schema.define(version: 20140408140902) do
     t.integer  "incoming_delivery_id"
     t.integer  "product_id"
     t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "info_pages", force: true do |t|
+    t.string   "content"
+    t.integer  "sektion_id"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -103,6 +120,7 @@ ActiveRecord::Schema.define(version: 20140408140902) do
     t.boolean  "medlem_kollad",         default: false
     t.text     "ios_token"
     t.integer  "tilldelad_sektion2"
+    t.boolean  "aktiv",                 default: false
   end
 
   add_index "karnevalister", ["efternamn"], name: "index_karnevalister_on_efternamn"
@@ -244,6 +262,7 @@ ActiveRecord::Schema.define(version: 20140408140902) do
     t.string  "name",         null: false
     t.integer "podio_id"
     t.integer "podio_sub_id"
+    t.string  "info_page"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
