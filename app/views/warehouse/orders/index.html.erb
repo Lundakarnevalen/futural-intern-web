@@ -31,10 +31,12 @@
         <td><%= number_to_currency(o.total_sum) %></td>
       </tr>
     <% end %>
-    <tr class="sum">
+    <% if @bestallare %>
+      <tr class="sum">
         <td colspan="6"></td>
         <td><%= number_to_currency(Order.my_orders_total_sum(current_user.karnevalist.id, @warehouse_code)) %></td>
-    </tr>
+      </tr>
+    <% end %>
     <% end %>
     </tbody>
   </table>
