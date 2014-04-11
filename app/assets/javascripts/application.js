@@ -1,5 +1,4 @@
 //= require jquery_ujs
-//= require notifications
 //= require karnevalister
 //= require sektioner
 //= require jquery.validate

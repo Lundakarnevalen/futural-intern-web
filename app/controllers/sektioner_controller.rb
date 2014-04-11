@@ -1,5 +1,6 @@
 class SektionerController < ApplicationController
   load_and_authorize_resource
+  include MarkdownHelper
 
   def index
     if current_user.is? :admin
@@ -48,10 +49,5 @@ class SektionerController < ApplicationController
 
   def sektion_params
     params.require(:sektion).permit(:info_page)
-  end
-
-  # Process text with Markdown.
-  def markdown(text)
-    BlueCloth.new(text).to_html
   end
 end
