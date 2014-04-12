@@ -4,12 +4,8 @@
 #   Ensure the SQLite 3 gem is defined in your Gemfile
 #   gem 'sqlite3'
 development:
-  adapter: mysql2
-  encoding: utf8
-  database: karnevalist
-  username: root
-  password: jaf123
-  socket: /var/run/mysqld/mysqld.sock
+  adapter: sqlite3
+  database: db/development.sqlite3
   pool: 5
   timeout: 5000
 
