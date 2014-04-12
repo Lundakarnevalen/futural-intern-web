@@ -50,15 +50,6 @@ class PhonesController < ApplicationController
     end
   end
 
-  def app_stores
-    urls = {
-      android:"https://play.google.com/store/apps/details?id=se.lundakarnevalen.android" ,
-      iphone: "https://itunes.apple.com/se/app/karnevalisten/id811615995?mt=8"
-    }
-    user_agent = if request.user_agent.downcase.match(/android|iphone/).to_sym
-    redirect_to urls[user_agent.to_sym] if user_agent
-  end
-
   private
   def phone_params
     params.require(:phone).permit!
