@@ -41,17 +41,6 @@ class EventsController < ApplicationController
   end
 
   # Utility
-  def handle_errors res, msg, opts = {}
-    opts = { :redirect => res }.merge opts
-
-    if res.errors.any?
-      flash[:alert] = res.errors.full_messages.join '; '
-      redirect_to :back
-    else
-      flash[:notice] = msg
-      redirect_to opts[:redirect]
-    end
-  end
 
   def authorize_sektion ev
     if ev.sektion.nil? || ev.sektion != sektion_or_nil

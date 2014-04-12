@@ -18,6 +18,20 @@ class ApplicationController < ActionController::Base
     params[resource] &&= send(method) if respond_to?(method, true)
   end
 
+  # Neat error handling.
+
+  def handle_errors res, msg, opts = {}
+    opts = { :redirect => res }.merge opts
+
+    if res.errors.any?
+      flash[:alert] = res.errors.full_messages.join '; '
+      redirect_to :back
+    else
+      flash[:notice] = msg
+      redirect_to opts[:redirect]
+    end
+  end
+
   private
 
   def mail_default_url

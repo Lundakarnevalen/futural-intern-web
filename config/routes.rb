@@ -43,6 +43,10 @@
       post 'enter_pwd'
       put 'step3_put'
       put 'checkout_digital_put'
+      # Access
+      get 'roles', :to => 'roles#roles'
+      post 'roles/:role_id', :to => 'roles#grant'
+      delete 'roles/:role_id', :to => 'roles#revoke'
     end
   end
 
@@ -56,6 +60,8 @@
 
   resources :events do
   end
+
+  resources :roles, :only => [:index]
 
 =begin
   # concern for festmästeriet / fabriken
