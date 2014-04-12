@@ -72,7 +72,7 @@ class Ability
     end
 
     # Global info
-    if user.is? :global_info
+    if user.is? :'global-info'
       can :manage, Post
       can :manage, Event
     end
@@ -109,6 +109,11 @@ class Ability
       can :manage, Order
       can :read, :weekly_overview, Product
       can :manage, IncomingDelivery
+    end
+
+    # Access admin
+    if user.is? :'access-admin'
+      can :manage, Role
     end
 
     # Admin

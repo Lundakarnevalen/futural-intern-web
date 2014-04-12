@@ -222,6 +222,9 @@ Role.delete_all
   3 => 'sektionsadmin',
   4 => 'exporter',
   5 => 'checker',
+  6 => 'info',
+  7 => 'global-info',
+  8 => 'access-admin',
 }.each{ |k, v| Role.new do |i|
   i.id = k
   i.name = v
