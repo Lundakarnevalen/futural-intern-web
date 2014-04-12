@@ -2,7 +2,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   before_filter :find_order, only: [:show, :update, :confirm, :confirm_put]
 
   def index
-    @orders = Order.where("status IS NOT NULL").where(karnevalist_id: current_user.karnevalist.id, warehouse_code: @warehouse_code).order("id DESC")
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC")
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC")
     @bestallare = true
   end
 
@@ -16,6 +17,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.update_attributes(status: params[:status])
       if @order.status == "Makulerad"
         update_warehouse(@order.id)
+        @order.finished_at = DateTime.now
+        @order.save
       elsif @order.status == "Levererad"
         @order.finished_at = DateTime.now
         @order.save
@@ -23,7 +26,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     end
     ##
 
-    # TODO Detta borde vara en metod i modelen.
+    # TODO Detta borde vara en metod i modellen.
     if @order.status == "Levererad"
         @levererad = true;
     elsif @order.status == "Makulerad"
@@ -152,7 +155,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def list
-    @orders = Order.where("status IS NOT NULL").where(warehouse_code: @warehouse_code).order("id DESC")
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC")
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at ASC")
     @bestallare = false
     render :index
   end

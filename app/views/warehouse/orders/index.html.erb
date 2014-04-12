@@ -4,23 +4,23 @@
   <h3>Alla ordrar</h3>
   <!-- TODO: Select sektion -->
 <% end %>
-
+<h4>Pågående ordrar</h4>
 <div class="table-responsive">
-  <table class="table table-striped">
+  <table class="table table-striped table-fixed">
     <thead>
       <tr>
-        <th>Order #</th>
-        <th>Kund</th>
-        <th>Beställare</th>
-        <th>Status</th>
-        <th>Beställningsdatum</th>
-        <th>Hämtdatum</th>
-        <th>Totalsumma</th>
+        <th style="width: 5%;">Ordernr</th>
+        <th style="width: 20%;">Kund</th>
+        <th style="width: 20%;">Beställare</th>
+        <th style="width: 20%;">Status</th>
+        <th style="width: 14%;">Beställningsdatum</th>
+        <th style="width: 14%;">Hämtdatum</th>
+        <th style="width: 7%;">Totalsumma</th>
       </tr>
     </thead>
     <tbody>
-    <% if !@orders.nil? %>
-    <% @orders.each do |o| %>
+    <% if !@active_orders.blank? %>
+    <% @active_orders.each do |o| %>
       <tr>
         <td><%= link_to "#{o.order_number}", order_path(o.id) %></td>
         <td><%= o.sektion.name %></td>
@@ -34,10 +34,47 @@
     <% if @bestallare %>
       <tr class="sum">
         <td colspan="6"></td>
-        <td><%= number_to_currency(Order.my_orders_total_sum(current_user.karnevalist.id, @warehouse_code)) %></td>
+        <td><%= number_to_currency(Order.my_active_orders_total_sum(current_user.karnevalist.id, @warehouse_code)) %></td>
       </tr>
     <% end %>
     <% end %>
     </tbody>
   </table>
 </div>
+<% if !@completed_orders.blank? %>
+<h4>Avslutade ordrar</h4>
+<div class="table-responsive">
+  <table class="table table-striped table-fixed">
+    <thead>
+      <tr>
+        <th style="width: 5%;">Ordernr</th>
+        <th style="width: 20%;">Kund</th>
+        <th style="width: 20%;">Beställare</th>
+        <th style="width: 20%;">Status</th>
+        <th style="width: 14%;">Beställningsdatum</th>
+        <th style="width: 14%;">Avslutningsdatum</th>
+        <th style="width: 7%;">Totalsumma</th>
+      </tr>
+    </thead>
+    <tbody>
+    <% @completed_orders.each do |o| %>
+      <tr>
+        <td><%= link_to "#{o.order_number}", order_path(o.id) %></td>
+        <td><%= o.sektion.name %></td>
+        <td><%= "#{o.karnevalist.fornamn} #{o.karnevalist.efternamn}" %></td>
+        <td><%= o.status.blank? ? "Bearbetas" : o.status %></td>
+        <td><%= o.order_date.strftime("%Y-%m-%d") %></td>
+        <td><%= o.delivery_date.blank? ? "Direktförsäljning" : o.finished_at.strftime("%Y-%m-%d")%></td>
+        <td><%= number_to_currency(o.total_sum) %></td>
+      </tr>
+    <% end %>
+    <% if @bestallare %>
+      <tr class="sum">
+        <td colspan="6"></td>
+        <td><%= number_to_currency(Order.my_completed_orders_total_sum(current_user.karnevalist.id, @warehouse_code)) %></td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
