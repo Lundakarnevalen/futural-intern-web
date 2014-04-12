@@ -41,9 +41,17 @@ class Order < ActiveRecord::Base
     return sum
   end
 
-  def self.my_orders_total_sum(karnevalist_id, warehouse_code)
+  def self.my_active_orders_total_sum(karnevalist_id, warehouse_code)
     sum = 0
-    Order.where(warehouse_code: warehouse_code, karnevalist_id: karnevalist_id).each do |o|
+    Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND karnevalist_id = ?", warehouse_code, karnevalist_id).each do |o|
+      sum += o.total_sum
+    end
+    return sum
+  end
+  
+  def self.my_completed_orders_total_sum(karnevalist_id, warehouse_code)
+    sum = 0
+    Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND karnevalist_id = ?", warehouse_code, karnevalist_id).each do |o|
       sum += o.total_sum
     end
     return sum
