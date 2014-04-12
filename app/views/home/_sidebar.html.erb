@@ -32,7 +32,7 @@
     <%# Sektionsadmin stuff %>
     <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
       <% if can? :read, Karnevalist %>
-        <li><%= link_to 'Karnelistan', Karnevalist %></li>
+        <li><%= link_to 'Karnevalistan', Karnevalist %></li>
       <% end %>
       <% s = current_user.karnevalist.sektion %>
       <% if can? :read, s %>
@@ -60,6 +60,10 @@
     <% # Checker %>
     <% if can? :check, Karnevalist %>
       <li><%= link_to 'Karnevalistkoll', check_karnevalister_path %></li>
+    <% end %>
+    <% # Access admin %>
+    <% if can? :manage, Role %>
+      <li><%= link_to 'Administrera accesser', roles_path %></li>
     <% end %>
     <%# Admin stuff %>
     <% if current_user.is? :admin %>

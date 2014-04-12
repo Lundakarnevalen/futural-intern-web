@@ -41,6 +41,10 @@
       </div>
     </div>
 
+    <% if can? :manage, Role %>
+      <h2><%= link_to 'Administrera accesser', karnevalist_roles_path(@karnevalist) %></h2>
+    <% end %>
+
     <% if can? :destroy, @karnevalist %>
       <h2>Ta bort karnevalist</h2>
       <div class=form-group>
