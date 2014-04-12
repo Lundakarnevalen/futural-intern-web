@@ -13,7 +13,7 @@
         <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>
         <p><%= link_to "Visa Kvitto", order_path(@order.id, :format => "pdf") %></p>
 
-        <% if (current_user.is? :admin) || (current_user.is? :kassor) %>
+        <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin) %>
         <tr>
           <% if @levererad == false && @makulerad == false && @part_delivered == false %>
           <td><%= link_to "Leverera", params.merge(:status => "Levererad"), :class => "btn btn-success"%></td>
@@ -26,7 +26,7 @@
     </div>
   </div>
 </div>
-<% if ((current_user.is? :admin) || (current_user.is? :kassor)) && (@order.status == "Levererad")
+<% if (@order.status == "Levererad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
     @show_return = true
   else
     @show_return = false
