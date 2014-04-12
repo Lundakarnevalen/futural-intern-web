@@ -195,6 +195,53 @@ module PodioSync
     end
   end
 
+  LIMIT = 500 # Max 500
+  RETRIES = 2
+
+  def self.get_all_karnevalist
+    self.prelims
+    pks = []
+    i = 0
+    total = 0
+    first = true
+    re_try = 0
+    while true
+      if first
+        self.log "GET /item/app/#{@app_id}"
+        first = false
+      end
+      begin
+        resp = Podio::Item.find_all @app_id, :limit => 500, :offset => i
+      rescue Faraday::Error::ConnectionFailed => e
+        if re_try < RETRIES
+          if re_try == 0
+            self.log 'Podio fucked up, let\'s try again in 5 secs'
+          else
+            self.log 'Trying again'
+          end
+
+          re_try += 1
+          sleep 5
+          retry
+        else
+          self.log 'Retry fails, sorry'
+          fail e
+        end
+      end
+      re_try = 0
+
+      total = resp.count
+      i += resp.all.count
+      self.log "  Receieved #{i} / #{total}"
+      pks += resp.all
+      if i >= total
+        break
+      end
+    end
+    self.log 'Got all records, processing...'
+    return pks.map{ |pk| self.to_karnevalist self.attributes_from_podio pk }
+  end
+
   def self.get_edited_since time
     self.prelims
     self.log "POST /item/app/#{@app_id}/filter"
@@ -206,6 +253,7 @@ module PodioSync
 
   ### Podio write methods
   def self.sync_karnevalist lk
+    self.prelims
     if lk.podio_id.present?
       # Already linked
       self.put_karnevalist lk
@@ -353,6 +401,8 @@ module PodioSync
           field['values'][0]['value']
         when 'category'
           field['values'][0]['value']['id']
+        when 'image'
+          nil
         else
           fail PodioSyncError, "Can't convert type #{field['type']}"
         end
@@ -366,7 +416,8 @@ module PodioSync
     return nil if podio_id.nil?
     x = @podio_categories[model][podio_id]
     if x.nil?
-      fail PodioSyncError, "Can't find #{model} with (podio_id == #{podio_id})"
+      #fail PodioSyncError, 
+      self.log "Warning: Can't find #{model} with (podio_id == #{podio_id})"
     end
     x
   end
@@ -396,16 +447,19 @@ module PodioSync
       fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id})"
     end
     if podio_sub_id.nil? 
+      ss = ss.select{ |s| s.podio_sub_id == nil }
       if ss.length > 1
         fail PodioSyncError, "Several sektion satisfy (podio_id == #{podio_id})"
       else
         return ss.first
       end
     else
-      ss = ss.select{ |s| s.podio_sub_id == podio_sub_id }
-      if ss.empty? 
-        fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
-      elsif ss.length > 1
+      subss = ss.select{ |s| s.podio_sub_id == podio_sub_id }
+      if subss.empty? 
+        #fail PodioSyncError, 
+        self.log "Warning: Can't find sektion with (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
+        return ss[podio_id]
+      elsif subss.length > 1
         fail PodioSyncError, "Several sektion satisfy (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
       else
         return ss.first
