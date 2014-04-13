@@ -6,7 +6,7 @@ class Event < ActiveRecord::Base
   validates :description, :presence => true
 
   scope :upcoming, -> { 
-    self.where 'date >= ?', Date.today
+    self.where('date >= ?', Date.today).order('date asc')
   }
 
   scope :for_sektioner, -> sektioner {
