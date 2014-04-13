@@ -430,6 +430,7 @@ a {
 p {
     &.alert,
     &.notice {
+    	cursor: n-resize;
         $width: 320px;
         font-family: $font-header;
         opacity: 0.95;
@@ -801,6 +802,22 @@ input[type="checkbox"] {
 		width: 100%;
 		text-transform: uppercase;
 		box-shadow: 0 $distance-shadow 0 $color-shadow;
+		
+	}
+	
+}
+
+.form-group,
+.form-controls {
+	
+	input[type=submit] {
+		
+		$height: 50px;
+		
+		width: 100%;
+		min-height: $height;
+		line-height: $height;
+		padding: 0 0 0 0;
 		
 	}
 	
