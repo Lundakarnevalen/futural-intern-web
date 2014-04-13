@@ -12,6 +12,7 @@ module Futural
 
     config.time_zone = 'Stockholm'
     config.active_record.default_timezone = :local
+    config.action_view.logger = nil # Don't log partials.
     config.i18n.default_locale = :sv
     config.i18n.enforce_available_locales = true
     I18n.config.enforce_available_locales = true

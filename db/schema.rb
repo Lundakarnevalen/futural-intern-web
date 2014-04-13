@@ -55,13 +55,6 @@ ActiveRecord::Schema.define(version: 20140411210545) do
     t.datetime "updated_at"
   end
 
-  create_table "info_pages", force: true do |t|
-    t.string   "content"
-    t.integer  "sektion_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "intressen", force: true do |t|
     t.string "name", null: false
   end
@@ -118,8 +111,8 @@ ActiveRecord::Schema.define(version: 20140411210545) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.text     "ios_token"
     t.integer  "tilldelad_sektion2"
+    t.text     "ios_token"
     t.boolean  "aktiv",                 default: false
   end
 
@@ -196,8 +189,6 @@ ActiveRecord::Schema.define(version: 20140411210545) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
-
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"

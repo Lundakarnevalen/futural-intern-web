@@ -31,12 +31,12 @@
           <% end %>
         </div>
         <div id="profile-information-container" class="col-xs-8">
-          <% if current_user.karnevalist.nil? %>
+          <% if current_karnevalist.nil? || current_karnevalist.fornamn.nil? %> 
             <% message = "Hej!" %>
           <% else %>
-            <% message = "Hej, " + current_user.karnevalist.fornamn %>
+            <% message = "Hej, " + current_karnevalist.fornamn %>
           <% end %>
-          <h5><%= link_to message, current_user.karnevalist %></h5>
+          <h5><%= link_to message, current_karnevalist %></h5>
           <%= sign_out_link 'Logga ut' %>
         </div>
       </div>
