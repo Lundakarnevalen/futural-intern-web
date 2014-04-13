@@ -782,7 +782,49 @@ input[type="checkbox"] {
 
 }
 
+.access-sektion {
+	
+	margin-bottom: $margin-main * 2;
+	
+	a {
+		
+		$height: 50px;
+		display: inline-block;
+		font-size: 18px;
+		font-family: $font-header;
+		text-align: center;
+		line-height: $height;
+		background-color: $color-blue;
+		color: white;
+		padding: 0 0 0 0;
+		min-height: $height;
+		width: 100%;
+		text-transform: uppercase;
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+		
+	}
+	
+}
+
 .form-group {
+
+	&.confirm-destroy {
+
+		.button {
+			$height: 50px;
+			display: inline-block;
+			text-align: center;
+			line-height: $height;
+			font-size: 18px;
+			background-color: $color-red;
+			color: white;
+			padding: 0 0 0 0;
+			min-height: $height;
+			width: 100%;
+			text-transform: uppercase;
+		}
+
+	}
 
 	.button {
 
