@@ -1,7 +1,3 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 <% disabled = cannot? :update, @karnevalist %>
 <div class="white-container col-xs-12" id="content">
@@ -22,7 +18,7 @@
         <div class="error-message"><%= msg %></div>
       <% end %>
     <% end %>
-    
+
     <% if can? :manage, Role %>
       <h2 class="access-sektion"><%= link_to 'Administrera accesser', karnevalist_roles_path(@karnevalist) %></h2>
     <% end %>
