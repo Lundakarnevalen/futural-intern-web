@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
-<div class="white-container col-xs-12">
+<div class="white-container col-xs-12" id="karnevalistan">
     <div class="info_box">
     <% if !@id.blank? %>
         <p>Karnevalist sparad med <strong>ID <%= @id %></strong>.</p>

@@ -10,7 +10,6 @@ $screen-custom-min: 960px;
 // will tell navbar when to collapse
 $grid-float-breakpoint: $screen-custom-min;
 
-
 @import "bootstrap";
 
 $padding-main: 10px;
@@ -84,7 +83,7 @@ html {
           margin-top: $margin-main;
         }
         select {
-          border: none;
+//          border: none;
         }
         ol {
             //Fixar så att posts inte har randompadding till vänster
@@ -124,6 +123,7 @@ html {
                     font-family: $font-header;
                     font-weight: bold;
                     font-size: $fontsize-headerbar * 0.75;
+                    text-transform: uppercase;
                     a {
                         &:active {
                             background-color: darken($background-color, 20%) !important;
@@ -227,6 +227,30 @@ a {
     }
 }
 
+.check-response {
+
+	$height:100px;
+
+	font-family: $font-header;
+	font-size: $fontsize-headerbar;
+	width: 100%;
+	height: $height;
+	line-height: $height;
+	text-align: center;
+	text-transform: uppercase;
+	&.check-fail {
+		background-color: $color-red;
+		color: white;
+
+	}
+	&.check-success {
+		background-color: green;
+		color: $color-green;
+
+	}
+
+}
+
 #profile-image-container {
     text-align: right;
     img {
@@ -238,20 +262,26 @@ a {
 }
 
 #profile-information-container {
+
     $text-color: white;
     h5 {
         font-family: $font-profile;
         font-weight: normal;
         padding-top: 20px;
-        margin: 0 0 0 0;
+        margin: 0 0 3px 0;
         color: $text-color;
         a {
             color: inherit;
         }
     }
     & > a {
+	    font-family: $font-header;
         font-size: 10px;
-        text-decoration: underline;
+        //text-decoration: underline;
+        background-color:$color-red;
+        padding: 3px;
+        text-transform: uppercase;
+        box-shadow: 0 ($distance-shadow  / 2) 0 $color-shadow;
         color: $text-color;
     }
 }
@@ -286,10 +316,11 @@ a {
             li {
                 $text-color: $color-red;
                 $background-color: white;
-                height: $height-rowblocks;
+                min-height: $height-rowblocks;
                 font-family: $font-header;
                 font-size: 0;
                 //dirty hack to remove white-space
+                text-transform: uppercase;
                 line-height: $height-rowblocks;
                 text-align: center;
                 margin-bottom: $margin-main;
@@ -399,10 +430,11 @@ a {
 p {
     &.alert,
     &.notice {
+    	cursor: n-resize;
         $width: 320px;
         font-family: $font-header;
-        opacity: 0.9;
-        z-index: 5;
+        opacity: 0.95;
+        z-index: 10000 !important;
         position: fixed;
         top: 0px;
         left: 50%;
@@ -415,7 +447,8 @@ p {
         text-transform: uppercase;
         word-break: break-all;
         border: none !important;
-        border-radius: 0 0 5px 5px !important;
+        //border-radius: 0 0 5px 5px !important;
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
     }
     &.alert {
         background-color: $color-red !important;
@@ -442,6 +475,7 @@ p {
         padding-bottom: $padding-main * 3;
         background-color: white;
         color: $color-red;
+        text-transform: uppercase;
     }
     .row:last-child {
         margin-bottom: $margin-main;
@@ -700,4 +734,123 @@ input[type="checkbox"] {
             box-shadow: 0 $distance-shadow 0 $color-shadow;
         }
     }
+}
+
+#karnevalistan {
+
+	ul {
+
+		list-style: none;
+		padding: 0 0 0 0;
+		margin: 0 0 0 0;
+
+		&>li {
+
+			font-family: $font-text;
+			color: white;
+			background-color: $color-blue;
+			padding: $padding-main;
+			margin-bottom: $margin-main;
+			font-weight: bold;
+
+			a {
+
+				color: inherit;
+
+			}
+
+			&:hover {
+
+				text-decoration: underline;
+
+			}
+
+			&:last-child {
+
+				margin-bottom: 0;
+
+			}
+
+			.personnummer {
+
+				font-weight: normal;
+
+			}
+
+		}
+
+	}
+
+}
+
+.access-sektion {
+	
+	margin-bottom: $margin-main * 2;
+	
+	a {
+		
+		$height: 50px;
+		display: inline-block;
+		font-size: 18px;
+		font-family: $font-header;
+		text-align: center;
+		line-height: $height;
+		background-color: $color-blue;
+		color: white;
+		padding: 0 0 0 0;
+		min-height: $height;
+		width: 100%;
+		text-transform: uppercase;
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+		
+	}
+	
+}
+
+.form-group,
+.form-controls {
+	
+	input[type=submit] {
+		
+		$height: 50px;
+		
+		width: 100%;
+		min-height: $height;
+		line-height: $height;
+		padding: 0 0 0 0;
+		
+	}
+	
+}
+
+.form-group {
+
+	&.confirm-destroy {
+
+		.button {
+			$height: 50px;
+			display: inline-block;
+			text-align: center;
+			line-height: $height;
+			font-size: 18px;
+			background-color: $color-red;
+			color: white;
+			padding: 0 0 0 0;
+			min-height: $height;
+			width: 100%;
+			text-transform: uppercase;
+		}
+
+	}
+
+	.button {
+
+		padding: $padding-main;
+		color: $color-red;
+		font-family: $font-header;
+		text-transform: uppercase;
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+
+	}
+
 }

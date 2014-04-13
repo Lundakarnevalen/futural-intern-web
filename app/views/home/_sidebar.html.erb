@@ -49,15 +49,15 @@
     <% end %>
     <% # Events %>
     <% if can? :create, Event %>
-      <li><%= link_to 'Ny händelse', new_event_path %></li>
+      <li><%= link_to 'Skapa händelse', new_event_path %></li>
     <% end %>
     <% # Posts %>
     <% if can? :create, Post %>
-      <li><%= link_to 'Ny nyhet', new_post_path %></li>
+      <li><%= link_to 'Skapa nyhet', new_post_path %></li>
     <% end %>
     <% # Notifications %>
     <% if can? :create, Notification %>
-      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
+      <li><%= link_to 'Skicka pushnotiser', new_notification_path %></li>
     <% end %>
     <% # Exporter %>
     <% if current_user.can? :export_all, Karnevalist %>
