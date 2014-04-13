@@ -14,7 +14,7 @@
         <h1><%= @post.title %></h1>
       </div>
       <div class="col-xs-12">
-        <%= @post_html.html_safe %>
+        <%= (render_markdown @post.content).html_safe %>
       </div>
       <% unless @post.id.nil? %>
         <div class="form-controls">

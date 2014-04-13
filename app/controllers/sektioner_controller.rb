@@ -11,9 +11,9 @@ class SektionerController < ApplicationController
 
   def show
     @sektion = Sektion.find params[:id]
-    @info_page = render_markdown @sektion.info_page
-    if @info_page.empty?
-      @info_page = "Här skulle kunna stå saker, men det gör det inte"
+    @info_page = @sektion.info_page
+    if (@info_page.nil? || @info_page.empty?)
+      @info_page = "Här skulle kunna stå saker, men det gör det inte än :("
     end
   end
 
