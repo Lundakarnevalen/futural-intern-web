@@ -6,4 +6,13 @@ module SektionerHelper
       'medlem-fail'
     end
   end
+  
+  def aktiv_status k
+    if k.aktiv
+      'medlem-ok'
+    else
+      'medlem-fail'
+    end
+  end
+
 end
