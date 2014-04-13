@@ -3,7 +3,7 @@ class EventsController < ApplicationController
 
   # Views
   def index
-    @events = Event.upcoming.for_sektion sektion_or_nil
+    @events = Event.upcoming.for_sektioner current_sektioner
   end
 
   def show
@@ -11,7 +11,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new :sektion_id => sektion_or_nil.id
+    @event = Event.new :sektion_id => current_sektioner.first
   end
 
   def edit
@@ -46,12 +46,6 @@ class EventsController < ApplicationController
     if ev.sektion.nil? || ev.sektion != sektion_or_nil
       authorize! :modify, Event.new
     end
-  end
-
-  def sektion_or_nil
-    if current_user.karnevalist.present?
-      current_user.karnevalist.sektion
-    end # else nil
   end
 
   private
