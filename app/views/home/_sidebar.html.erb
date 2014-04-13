@@ -59,7 +59,7 @@
     <% end %>
     <% # Posts %>
     <% if can? :create, Post %>
-      <li><%= link_to 'Nytt inlägg', new_post_path %></li>
+      <li><%= link_to 'Ny Nyhet', new_post_path %></li>
     <% end %>
     <% # Exporter %>
     <% if current_user.can? :export_all, Karnevalist %>

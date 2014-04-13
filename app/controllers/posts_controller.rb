@@ -13,7 +13,7 @@ class PostsController < ApplicationController
     p[:karnevalist] = current_user.karnevalist
     @post = Post.new(p)
     if @post.save
-      flash[:success] = "Inlägg skapat!"
+      flash[:success] = "Nyhet skapad!"
     end
     redirect_to root_url
   end
@@ -29,7 +29,7 @@ class PostsController < ApplicationController
     sektion_id = p[:sektion].to_i
     p[:sektion] = Sektion.find(sektion_id)
     if @post.update_attributes(p)
-      flash[:success] = "inlägg redigerat"
+      flash[:success] = "Nyhet redigerad"
     end
     redirect_to @post
   end

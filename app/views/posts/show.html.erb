@@ -21,6 +21,9 @@
           <% if (current_user.can? :edit, @post) %>
             <%= link_to "redigera", edit_post_path(@post), class: "btn btn-small", type: "edit"%>
           <% end %>
+          <% if !(@post.nil?) && (current_user.can? :destroy, @post) %>
+            <%= link_to "Radera Inlägget", @post, method: :delete, data: { confirm: "Är du verkligen helt säker på att du vill radera nyheten?" }, :class =>"btn", :type => "edit" %>
+          <% end %>
         </div>
       <% end %>
   </div>
