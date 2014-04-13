@@ -321,7 +321,9 @@ class KarnevalisterController < ApplicationController
 
   def export_all
     authorize! :export_all, Karnevalist
-    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation]).all
+    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation])
+                                .where('tilldelad_sektion is not null or ' +
+                                       'tilldelad_sektion2 is not null')
     render :xlsx => 'export_all',
            :filename => "karnevalister-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'
