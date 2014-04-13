@@ -639,17 +639,23 @@ input[type="checkbox"] {
     }
     .sign {
         width: 275px;
-        height: 100px;
+        //height: 100px;
         font-family: $font-header;
         line-height: 50px;
         text-align: center;
         color: $color-red;
         padding: $padding-main;
+        padding-bottom: 0;
         margin: 0 auto $margin-main auto;
         background-color: white;
         text-transform: uppercase;
         box-shadow: 0 $distance-shadow 0 $color-shadow;
         h1 {
+            font-family: inherit;
+            margin: 0 0 0 0;
+            padding: 0 0 0 0;
+        }
+        h2 {
             font-family: inherit;
             margin: 0 0 0 0;
             padding: 0 0 0 0;

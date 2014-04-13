@@ -1,27 +1,31 @@
-<% if !(browser.iphone? && browser.version == "0") %>
+<body class="cloud-bg">
+  <div id="identification" class="container clouds">
 
-<%= render 'shared/header', :title => 'Vad är mitt lösenord?' %>
+    <header>
+      <%= image_tag 'karnevalist-large.png' %>
+    </header>
 
-<% end %>
+    <div class="sign">
+      <h1>Skicka mig</h1>
+      <h2>mitt lösenord!</h2>
+    </div>
+    <%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
+      <%= devise_error_messages! %>
+      <div class="box">
+        <p>I samband med registreringen under uppropet skapades konton på karnevalist.se för alla karnevalister.</p>
+        <p>Fyll i mailadressen som du registrerade dig med på uppropet. Då får du ett mail med en länk där du får välja lösenord.</p>
+      </div>
+      <br>
+      <div class="box">
+        <div class="form-group">
+        	<%= f.email_field :email, :autofocus => true, placeholder: "E-postadress" %>
+        </div>
+      </div>
+        <div class="form-group">
+        	<%= f.submit "Skicka länken!" %>
+        </div>
+  <% end %>
 
-<div class="identification" id="container clouds">
-<%= form_for(resource, :as => resource_name, :url => password_path(resource_name), :html => { :method => :post }) do |f| %>
-  <%= devise_error_messages! %>
-  <div class="box">
-    <p>I samband med registreringen under uppropet skapades konton på karnevalist.se för alla karnevalister.</p>
-    <p>Fyll i mailadressen som du registrerade dig med på uppropet. Då får du ett mail med en länk där du får välja lösenord.</p>
+  <%#= render "devise/shared/links" %>
   </div>
-  <br>
-
-  <div class="form-group">
-  	<%= f.label :email %>
-  	<%= f.email_field :email, :autofocus => true %>
-  </div>
-
-  <div class="form-group">
-  	<%= f.submit "Skicka länk för val av lösenord" %>
-  </div>
-<% end %>
-
-<%= render "devise/shared/links" %>
-</div>
+</body>

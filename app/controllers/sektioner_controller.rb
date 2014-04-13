@@ -1,6 +1,5 @@
 class SektionerController < ApplicationController
   load_and_authorize_resource
-  include MarkdownHelper
 
   def index
     if current_user.is? :admin
@@ -12,7 +11,7 @@ class SektionerController < ApplicationController
 
   def show
     @sektion = Sektion.find params[:id]
-    @info_page = markdown @sektion.info_page
+    @info_page = render_markdown @sektion.info_page
     if @info_page.empty?
       @info_page = "Här skulle kunna stå saker, men det gör det inte"
     end
