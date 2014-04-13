@@ -39,7 +39,7 @@ class ApplicationController < ActionController::Base
   end
 
   helper_method :current_sektioner
-  def current_sekioner
+  def current_sektioner
     current_karnevalist ? current_karnevalist.tilldelade_sektioner 
                         : []
   end

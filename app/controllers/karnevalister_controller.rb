@@ -14,7 +14,7 @@ class KarnevalisterController < ApplicationController
     c = current_user
 
     if c.is? :admin
-      @karnevalister = Karnevalist.order(efternamn: :asc, fornamn: :asc)
+      @karnevalister = [] #Karnevalist.order(efternamn: :asc, fornamn: :asc)
     elsif c.karnevalist? and c.is? :sektionsadmin
       @karnevalister = Karnevalist.where(:tilldelad_sektion => c.sektioner).order(efternamn: :asc, fornamn: :asc)
     else
