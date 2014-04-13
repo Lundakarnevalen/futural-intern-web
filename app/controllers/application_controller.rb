@@ -32,6 +32,13 @@ class ApplicationController < ActionController::Base
     end
   end
 
+  # Much needed
+  helper_method :current_karnevalist
+
+  def current_karnevalist
+    current_user && current_user.karnevalist
+  end
+
   private
 
   def mail_default_url
