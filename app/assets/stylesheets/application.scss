@@ -10,7 +10,6 @@ $screen-custom-min: 960px;
 // will tell navbar when to collapse
 $grid-float-breakpoint: $screen-custom-min;
 
-
 @import "bootstrap";
 
 $padding-main: 10px;
@@ -239,16 +238,12 @@ a {
 	line-height: $height;
 	text-align: center;
 	text-transform: uppercase;
-
-	.check-fail {
-
+	&.check-fail {
 		background-color: $color-red;
 		color: white;
 
 	}
-
-	.check-success {
-
+	&.check-success {
 		background-color: green;
 		color: $color-green;
 
@@ -437,8 +432,8 @@ p {
     &.notice {
         $width: 320px;
         font-family: $font-header;
-        opacity: 0.9;
-        z-index: 5;
+        opacity: 0.95;
+        z-index: 10000 !important;
         position: fixed;
         top: 0px;
         left: 50%;
@@ -451,7 +446,8 @@ p {
         text-transform: uppercase;
         word-break: break-all;
         border: none !important;
-        border-radius: 0 0 5px 5px !important;
+        //border-radius: 0 0 5px 5px !important;
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
     }
     &.alert {
         background-color: $color-red !important;
@@ -737,4 +733,65 @@ input[type="checkbox"] {
             box-shadow: 0 $distance-shadow 0 $color-shadow;
         }
     }
+}
+
+#karnevalistan {
+
+	ul {
+
+		list-style: none;
+		padding: 0 0 0 0;
+		margin: 0 0 0 0;
+
+		&>li {
+
+			font-family: $font-text;
+			color: white;
+			background-color: $color-blue;
+			padding: $padding-main;
+			margin-bottom: $margin-main;
+			font-weight: bold;
+
+			a {
+
+				color: inherit;
+
+			}
+
+			&:hover {
+
+				text-decoration: underline;
+
+			}
+
+			&:last-child {
+
+				margin-bottom: 0;
+
+			}
+
+			.personnummer {
+
+				font-weight: normal;
+
+			}
+
+		}
+
+	}
+
+}
+
+.form-group {
+
+	.button {
+
+		padding: $padding-main;
+		color: $color-red;
+		font-family: $font-header;
+		text-transform: uppercase;
+		box-shadow: 0 $distance-shadow 0 $color-shadow;
+
+	}
+
 }
