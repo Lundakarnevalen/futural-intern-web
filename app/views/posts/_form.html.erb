@@ -25,7 +25,4 @@
   <%= render partial: "shared/markdown_notice" %>
   <%= f.submit "Klar", :class =>"btn"  %>
   <% end %>
-  <% if !(@post.nil?) && (current_user.can? :destroy, @post) %>
-    <%= link_to "Radera Inlägget", @post, method: :delete, data: { confirm: "Är du verkligen helt säker på att du vill radera inlägget?" }, :class =>"btn", :type => "edit" %>
-  <% end %>
 </div>

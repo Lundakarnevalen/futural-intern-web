@@ -20,7 +20,7 @@ module ApplicationHelper
   end
 
   def render_markdown text
-    raw Markdown.new(text).to_html
+    BlueCloth.new(text).to_html
   end
 
   def short_date date
