@@ -9,8 +9,8 @@
 </div>
 <% if (current_user.can? :edit, @sektion) %>
 <div class="white-container col-xs-12">
-  <div class="btn button"><%= link_to 'Exportera personuppgifter som Excel-ark', :action => :export %></div>
-  <div class="btn button"><%= link_to 'Medlemskoll', :action => :kollamedlem %></div>
+  <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "btn button"}%>
+  <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button"} %>
   <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
 </div>
 <% end %>

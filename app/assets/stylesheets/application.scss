@@ -109,10 +109,6 @@ html {
               margin-top: 10px;
               background-color: $color-yellow;
             }
-            a {
-              color: white;
-              text-decoration: none;
-            }
         }
 
         .navbar {
@@ -233,9 +229,9 @@ a {
 }
 
 .check-response {
-	
+
 	$height:100px;
-	
+
 	font-family: $font-header;
 	font-size: $fontsize-headerbar;
 	width: 100%;
@@ -243,21 +239,21 @@ a {
 	line-height: $height;
 	text-align: center;
 	text-transform: uppercase;
-	
+
 	.check-fail {
-		
+
 		background-color: $color-red;
 		color: white;
-		
+
 	}
-	
+
 	.check-success {
-		
+
 		background-color: green;
 		color: $color-green;
-		
+
 	}
-	
+
 }
 
 #profile-image-container {
