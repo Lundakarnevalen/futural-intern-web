@@ -14,7 +14,7 @@
       <% unless current_user.can? :manage, Event.new %>
         <%= f.hidden_field :sektion_id %>
       <% end %>
-
+      <br>
       <%= f.label :description, 'Beskrivning' %>
       <%= f.text_area :description %>
     </fieldset>

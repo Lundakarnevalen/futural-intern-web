@@ -27,10 +27,30 @@ var leave_event = function() {
 
 $(function() {
 
+	var flash = function() {
+		
+		return $('.alert,.notice');
+		
+	}
+	
+	//$('body').fadeOut(0).fadeIn(200);
+
 	$('.dropdown > .header').bind(action_event(), function() {
 		
 		$(this).parent().toggleClass('toggled');
 		
 	});
+	
+	flash().bind(action_event(), function() {
+		
+		$(this).slideUp(200);
+		
+	});
+	
+	window.setTimeout(function() {
+	
+		flash().fadeOut(200);
+	
+	}, 5000); //got to have some time to read.
 
 });
