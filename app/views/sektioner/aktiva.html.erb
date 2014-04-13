@@ -1,0 +1,45 @@
+<h1><%= @sektion.name %>: Aktiva karnevalister</h1>
+<h2>Instruktioner</h2>
+<p>Kryssa för Aktiv-rutan vid de karnevalister som ska räknas som aktiva karnevalister.</p>
+<p>Alla ändringar sparas automatiskt.</p>
+
+<table class='table table-striped kollamedlem'>
+  <thead>
+    <tr>
+      <td>
+      </td>
+      <td>
+        Personnummer
+      </td>
+      <td>
+        Namn
+      </td>
+      <td>
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <% @karnevalister.each do |k| %>
+      <tr data-id=<%= k.id %>>
+        <td class=medlem-status>
+          <span class=<%= aktiv_status k %>>
+            &bullet;
+          </span>
+        </td>
+        <td>
+          <%= k.personnummer %>
+        </td>
+        <td>
+          <%= "#{k.fornamn} #{k.efternamn}" %>
+        </td>
+        <%= form_for k, :remote => true, :html => { :'data-type' => :json } \
+                     do |f| %>
+          <td class=fixright>
+            <%= f.check_box :aktiv %>
+            <%= f.label :aktiv, 'Aktiv?' %>
+          </td>
+        <% end %>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

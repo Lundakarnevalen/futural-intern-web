@@ -68,6 +68,7 @@ class Ability
       can :manage, Post, :sektion => user.karnevalist.sektion
       can :manage, Event, :sektion => user.karnevalist.sektion
       can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+      can :new, Notification
     end
 
     # Global info
@@ -103,7 +104,7 @@ class Ability
     # Lagersystem - kassör
     if user.is? :kassor_festmasteriet
       can :manage, Order
-      can :read, :weekly_overview, Product
+      can [:read, :weekly_overview], Product
       can :manage, IncomingDelivery
     end
 
