@@ -1,6 +1,3 @@
-<% content_for :head do %>
-  <%= stylesheet_link_tag :karnevalister, :media => :all %>
-<% end %>
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 <div class="container" id="content">
   <%= form_for @karnevalist, :method => @method, :html => { :class => 'validate' } do |f| %>
