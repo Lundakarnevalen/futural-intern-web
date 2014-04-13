@@ -15,7 +15,7 @@
 </div>
 <% end %>
   <div class="white-container col-xs-12">
-    <%= @info_page.html_safe %>
+    <%= (render_markdown @info_page).html_safe %>
   </div>
 <% s = current_user.karnevalist.sektion %>
 <% if can? :edit, s %>

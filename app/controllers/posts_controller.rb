@@ -46,7 +46,6 @@ class PostsController < ApplicationController
       p = s.posts.find_by(id: params[:id])
       @post = p unless p.nil?
     end
-    @post_html = render_markdown @post.content
   end
 
   private
