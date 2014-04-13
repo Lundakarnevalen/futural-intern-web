@@ -110,6 +110,12 @@ html {
             }
         }
 
+        .yellow-background {
+            padding-top: 0px;
+            margin-top: 10px;
+            background-color: $color-yellow;
+        }
+
         .navbar {
             height: $height-navbar;
             border: none;
@@ -574,6 +580,30 @@ p {
 #right {
     margin-top: $height-navbar !important;
 
+}
+
+.kollamedlem {
+    td {
+        vertical-align: middle !important;
+    }
+
+    td.medlem-status {
+        text-align: center;
+        font-weight: bold;
+        font-size: 200%;
+    }
+
+    span.medlem-ok {
+        color: #108800;
+    }
+
+    span.medlem-fail {
+        color: #f12e1f;
+    }
+
+    span.medlem-wait {
+        color: #f4ca1c;
+    }
 }
 
 /*SIGN IN*/
