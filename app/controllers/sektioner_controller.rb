@@ -13,7 +13,7 @@ class SektionerController < ApplicationController
     @sektion = Sektion.find params[:id]
     @info_page = @sektion.info_page
     if (@info_page.nil? || @info_page.empty?)
-      @info_page = "Här skulle kunna stå saker, men det gör det inte än :("
+      @info_page = "Snart kommer du kunna läsa information om din sektion här."
     end
   end
 
