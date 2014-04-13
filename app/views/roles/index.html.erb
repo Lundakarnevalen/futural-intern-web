@@ -1,26 +1,27 @@
 <%= render 'shared/header', :title => 'Accesslista' %>
-
-<ul>
-  <% @roles.each do |r| %>
-    <h3><%= r.name.upcase %></h3>
-    <% if r.users.empty? %>
-      <i>Inga</i>
+<div class="white-container col-xs-12">
+  <ul>
+    <% @roles.each do |r| %>
+      <h3><%= r.name.upcase %></h3>
+      <% if r.users.empty? %>
+        <i>Inga</i>
+      <% end %>
+      <% r.users.each do |u| %>
+        <% k = u.karnevalist %>
+        <li>
+          <% if k.present? %>
+            <strong><%= link_to k.full_name, k %></strong>
+            <%= link_to '(Återta access)', karnevalist_roles_path(k, r), :method => :delete %>
+          <% else %>
+            <strong><%= "[#{u.email}]" %></strong>
+            (Snacka med IT)
+          <% end %>
+        </li>
+      <% end %>
     <% end %>
-    <% r.users.each do |u| %>
-      <% k = u.karnevalist %>
-      <li>
-        <% if k.present? %>
-          <strong><%= link_to k.full_name, k %></strong>
-          <%= link_to '(Återta access)', karnevalist_roles_path(k, r), :method => :delete %>
-        <% else %>
-          <strong><%= "[#{u.email}]" %></strong>
-          (Snacka med IT)
-        <% end %>
-      </li>
-    <% end %>
-  <% end %>
-</ul>
+  </ul>
 
-<strong>Ge access till någon annan? Börja med att söka upp dem i 
-  <%= link_to 'Karnevalistan', karnevalister_path %>
-</strong>
+  <strong>Ge access till någon annan? Börja med att söka upp dem i
+    <%= link_to 'Karnevalistan', karnevalister_path %>
+  </strong>
+</div>

@@ -1,4 +1,5 @@
-<%= render partial: "shared/header", locals: {title: "Fututalkarnevalens sektioner"} %>
+<%= render partial: "shared/header", locals: {title: "Futuralkarnevalens sektioner"} %>
+<div class="white-container col-xs-12">
   <% @sektioner.each do |s| %>
       <li><%= link_to s.name, s %></li>
   <% end %>
