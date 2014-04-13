@@ -20,7 +20,7 @@ describe Event do
       e1 = FactoryGirl.create :event, :date => 10.days.ago 
       e2 = FactoryGirl.create :event, :date => 10.days.since
       e3 = FactoryGirl.create :event, :date => Date.today
-      Event.upcoming.should eq([e2, e3])
+      Event.upcoming.should match_array [e2, e3]
     end
   end
 
