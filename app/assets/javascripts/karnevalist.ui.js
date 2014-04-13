@@ -33,7 +33,7 @@ $(function() {
 		
 	}
 	
-	$('body').fadeOut(0).fadeIn(200);
+	//$('body').fadeOut(0).fadeIn(200);
 
 	$('.dropdown > .header').bind(action_event(), function() {
 		
