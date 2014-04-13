@@ -22,18 +22,19 @@ describe User do
   describe "is" do
     it "returns true if the user has the role" do
       u = FactoryGirl.create(:user_with_role)
-      u.is?("testrole").should be_true
+      u.is?("admin").should be_true
     end
 
     it "returns false if the user does not have the role" do
       u = FactoryGirl.create(:user)
-      u.is?("testrole").should be_false
+      u.is?("admin").should be_false
     end
   end
 
   describe "karnevalist" do
     it "should return true if the user has a karnevalist and a sektion" do
-      u = FactoryGirl.create(:user)
+      s = FactoryGirl.create(:sektion, id: 300)
+      u = FactoryGirl.create(:user, karnevalist: FactoryGirl.build(:karnevalist, tilldelad_sektion: s.id))
       u.karnevalist?.should be_true
     end
 
@@ -51,13 +52,15 @@ describe User do
   end
 
   describe "sektion" do
+    before :each do
+    end
     it "should return the sektion if karnevalist is present present" do
-      u = FactoryGirl.create(:user)
+      s = FactoryGirl.create(:sektion, id: 300)
+      u = FactoryGirl.create(:user, karnevalist: FactoryGirl.build(:karnevalist, tilldelad_sektion: s.id))
       u.sektioner.should_not be_blank
     end
     it "should return nil if the user does not have a karnevalist" do
-      u = FactoryGirl.create(:user)
-      u.karnevalist = nil
+      u = FactoryGirl.create(:user, karnevalist: nil)
       u.sektioner.should be_nil
     end
   end

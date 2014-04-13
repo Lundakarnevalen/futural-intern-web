@@ -7,7 +7,7 @@ FactoryGirl.define do
   end
 
   factory :role do
-    name "testrole"
+    name "admin"
   end
 
   factory :karnevalist do
