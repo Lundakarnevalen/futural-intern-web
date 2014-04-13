@@ -65,10 +65,9 @@ class Ability
 
     # Sektion-local info
     if user.is?(:info) && user.karnevalist.present? && user.karnevalist.sektion.present?
-      can :create, Post
       can :manage, Post, :sektion => user.karnevalist.sektion
-      can :create, Event
       can :manage, Event, :sektion => user.karnevalist.sektion
+      can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
 
     # Global info
@@ -83,11 +82,7 @@ class Ability
       if user.karnevalist?
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
         can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
-        can [:read, :edit, :update, :create, :destroy], Post
         can [:manage], Sektion, :id => user.sektioner
-        can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
-        can [:new], Notification
-        can [:create, :edit, :update, :destroy, :manage], Event
       end
     end
 
