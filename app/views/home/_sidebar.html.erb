@@ -94,8 +94,7 @@
     EVENEMANG
   </div>
   <ul class="nav">
-    <% Event.upcoming.for_sektion(current_user.karnevalist &&
-                                  current_user.karnevalist.sektion).each do |e| %>
+    <% Event.upcoming.for_sektion(current_user.karnevalist).each do |e| %>
       <li>
         <div class="block">
           <div class="date col-xs-4">
