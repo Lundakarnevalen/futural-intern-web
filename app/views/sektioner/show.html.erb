@@ -1,16 +1,28 @@
-<h1><%= @sektion.name %></h1>
-<ul>
-  <li><%= link_to 'Exportera personuppgifter som Excel-ark',
-                  :action => :export %></li>
-  <li><%= link_to 'Kolla om dina karnevalister är medlemmar i AF, nation och kår',
-                  :action => :kollamedlem %>
-</ul>
-
-<h2>Medlemmar</h2>
-
-<ul>
-  <% @sektion.members.each do |k| %>
-    <li><%= link_to k.to_s, k %>
-  <% end %>
-</ul>
-            
+<%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
+<div class="image-container col-xs-4">
+  <div class="message-image">
+    <%= image_tag("logotyper/#{@sektion.name}.png") %>
+  </div>
+  <div class="sektion">
+    <%= @sektion.name %>
+  </div>
+</div>
+<% if (current_user.can? :edit, @sektion) %>
+<div class="white-container col-xs-12">
+  <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "btn button"}%>
+  <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button"} %>
+  <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
+</div>
+<% end %>
+  <div class="white-container col-xs-12">
+    <%= (render_markdown @info_page).html_safe %>
+  </div>
+<% s = current_user.karnevalist.sektion %>
+<% if can? :edit, s %>
+  <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
+  <div class="white-container col-xs-12">
+    <% @sektion.members.each do |k| %>
+      <li><%= link_to k.to_s, k %></li>
+    <% end %>
+  </div>
+<% end %>

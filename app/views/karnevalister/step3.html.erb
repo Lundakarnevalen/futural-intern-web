@@ -10,7 +10,7 @@
 
 	<%= form_for @karnevalist, url: {action: "step3_put"}, :method => @method,
 								:html => { :class => 'validate' } do |f| %>
-	
+
 	<%= render partial: "shared/step3", locals: {f: f} %>
 
 	<div class="form-controls">
@@ -22,7 +22,7 @@
 	<div id="steg1">
 		<%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
 	</div>
-	
+
 	<div class="form-controls">
 		<%= f.submit'Spara' %>
 	</div>

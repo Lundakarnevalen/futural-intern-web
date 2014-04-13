@@ -5,6 +5,7 @@ describe Post do
   let(:karnevalist) { FactoryGirl.create(:karnevalist) }
   let(:sektion) { FactoryGirl.create(:sektion) }
   before { @post = Post.new(content: "HEJEJEJE", title: "Title", sektion: sektion, karnevalist: karnevalist) }
+  before { karnevalist.sektion = sektion }
 
   subject { @post }
 
@@ -44,5 +45,11 @@ describe Post do
 
     it { should include(sektion_post) }
     it { should_not include(not_my_sektion_post) }
+  end
+
+  describe '.create' do
+    it 'can actually create a sektion' do
+      FactoryGirl.create(:sektion).should_not raise_error
+    end
   end
 end

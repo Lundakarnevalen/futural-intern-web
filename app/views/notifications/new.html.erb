@@ -1,10 +1,6 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag :notifications, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Push-meddelanden"} %>
 
-<div class="container" id="content">
+<div class="white-container col-xs-12" id="content">
   <%= form_for(@notification) do |f| %>
     <h2>Nytt push-meddelande</h2>
     <% if @notification.errors.any? %>
@@ -16,7 +12,7 @@
         </ul>
       </div>
     <% end %>
-    
+
     <% if current_user.is? :admin and current_user.karnevalist? %>
       <div class="form-group">
         <%= f.label :recipient_id, "Mottagare" %>
@@ -26,7 +22,7 @@
         <%= f.label :recipient_id, "Mottagare" %>
         <%= f.select :recipient_id, options_from_collection_for_select(current_user.karnevalist.tilldelade_sektioner, :id, :name) %>
     <% end %>
-    
+
     <div class="form-group">
       <%= f.label :title, "Rubrik" %>
       <%= f.text_field :title %>

@@ -7,7 +7,7 @@ FactoryGirl.define do
   end
 
   factory :role do
-    name "testrole"
+    name "admin"
   end
 
   factory :karnevalist do
@@ -91,6 +91,7 @@ FactoryGirl.define do
 
   factory :sektion do
     name "kommunikation"
+    info_page "Trams"
   end
 
   factory :storlek do
@@ -140,5 +141,13 @@ FactoryGirl.define do
     stock_balance_not_ordered 200
     stock_balance_stand_by 50
     purchase_price 25.50
+  end
+
+  factory :event do
+    title 'An Event'
+    date '2014-08-01'
+    sektion nil
+    creator nil
+    description 'Lets get drunk on a tuesday'
   end
 end

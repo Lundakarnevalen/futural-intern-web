@@ -1,15 +1,10 @@
   Futural::Application.routes.draw do
   root :to => 'home#index'
-=begin
-  scope format: true, constraints: { format: 'json'} do
-    post '/phones', to: 'api/phones#create'
-  end
-=end
 
   devise_for :users
 
   resources :phones, only: [:new, :create]
-  resources :posts, only: [:new, :create, :edit, :update, :destroy]
+  resources :posts, only: [:new, :create, :edit, :update, :destroy, :show]
 
   namespace :api do
     devise_for :users
@@ -18,8 +13,6 @@
     resources :karnevalister, only: [:update]
     resources :notifications, only: [:index]
   end
-
-
 
   resources :notifications, only: [:new, :create, :show, :index]
 
@@ -50,6 +43,10 @@
       post 'enter_pwd'
       put 'step3_put'
       put 'checkout_digital_put'
+      # Access
+      get 'roles', :to => 'roles#roles'
+      post 'roles/:role_id', :to => 'roles#grant'
+      delete 'roles/:role_id', :to => 'roles#revoke'
     end
   end
 
@@ -58,8 +55,15 @@
       get ':id/export', :to => 'sektioner#export'
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
       get ':id/aktiva', :to => 'sektioner#aktiva'
+      post ':id/edit', :to => 'sektioner#update'
     end
   end
+
+  resources :events do
+  end
+
+  resources :roles, :only => [:index]
+
 =begin
   # concern for festmästeriet / fabriken
   concern :party_factory do
