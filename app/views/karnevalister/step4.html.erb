@@ -2,28 +2,26 @@
 <%= stylesheet_link_tag    :karnevalister, :media => :all %>
 <% end %>
 
-<%= render partial: "shared/header", locals: {title: "Registrering"} %>
+<%= render partial: "shared/header", locals: {title: "Mina uppgifter"} %>
 
 <div class="white-container col-xs-12" id="content">
 
   <% if not @karnevalist.utcheckad %>
-    <%= render partial: "shared/logo", locals: {percent: "86", text: "Vi behöver bara en bild på dig. Den tar du längst fram vid disken inuti AF-borgen."} %>
+    <%= render partial: "shared/logo", locals: {percent: "86", text: "Vi behöver en bild på dig. Det fixar du genom att besöka expen på Karnevalscentralen, Tornavägen 9B."} %>
   <% else %>
     <% if @karnevalist.sektion.nil? %>
-      <%= render partial: "shared/logo", locals: {percent: "99", text: "Du är nu utcheckad och inom två veckor kommer vi att höra av oss med mer information. Tills dess - ha det bäst!"} %>
-    <% else %>
-      <%= render partial: "shared/logo", locals: {percent: "100", text: "Du är karnevalist i " + @karnevalist.sektion.name + "!" } %>
+      <%= render partial: "shared/logo", locals: {percent: "99", text: "Vi har nu fått all information som behövs om dig. Nästa steg är att du ska bli tilldelad en sektion."} %>
     <% end %>
-
     <%= image_tag(@karnevalist.foto_url.to_s, :class => @karnevalist.foto_url.present? ? 'photo' : nil) %>
   <% end %>
 </div>
 <div class="white-container col-xs-12" id="content">
-  <h2>Dina uppgifter</h2>
-  <p><strong>ID: </strong><%= @karnevalist.id %></p>
-  <p><strong>Namn: </strong><%= @karnevalist.fornamn + " " + @karnevalist.efternamn %></p>
-  <p><strong>E-post: </strong><%= @karnevalist.email %></p>
+  <p><strong>Tilldelad sektion: </strong><%= Sektion.find(@karnevalist.tilldelad_sektion).name %><%= ", #{Sektion.find(@karnevalist.tilldelad_sektion2).name}" if !@karnevalist.tilldelad_sektion2.blank? %></p>
+  <p><strong>Namn: </strong><%= "#{@karnevalist.fornamn} #{@karnevalist.efternamn}" %></p>
   <p><strong>Personnummer: </strong><%= @karnevalist.personnummer %></p>
+  <p><strong>Adress: </strong><%= "#{@karnevalist.gatuadress}, #{@karnevalist.postnr} #{@karnevalist.postort}" %></p>
+  <p><strong>E-post: </strong><%= @karnevalist.email %></p>
+  <p><strong>Telefonnummer: </strong><%= @karnevalist.telnr %></p>
 
   <% if not @karnevalist.utcheckad %>
   <%= button_to "Redigera mina uppgifter", {controller: "karnevalister", action: "step3"}, {method: :get} %>
