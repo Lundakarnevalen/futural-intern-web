@@ -8,17 +8,17 @@ describe KarnevalisterController do
     sign_in @user
   end
 
-  describe "GET to KarnvealistController" do
+  describe "GET to KarnevalisterController" do
     before :each do
       #sanity check
       @user.roles = []
     end
 
-    it "should assign all karnivalister for an admin" do
+    it "should not display any karnevalister by default" do
       @user.roles << FactoryGirl.create(:role, name: "admin")
       get :index
       assigns(:karnevalister).should_not be_nil
-      assigns(:karnevalister).should eq([@user.karnevalist])
+      assigns(:karnevalister).should be_empty
       response.should be_success
     end
 
