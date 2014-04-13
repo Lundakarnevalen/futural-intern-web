@@ -18,4 +18,15 @@ class HomeController < ApplicationController
       redirect_to new_user_session_path
     end
   end
+
+  def app_store
+    urls = {
+      android: "market://details?id=se.lundakarnevalen.android",
+      iphone: "https://itunes.apple.com/se/app/karnevalisten/id811615995?mt=8"
+    }
+    user_agent = request.user_agent.downcase.match(/android|iphone/).to_s
+    puts request.user_agent
+    redirect_to urls[user_agent.to_sym] unless user_agent.blank?
+  end
+
 end
