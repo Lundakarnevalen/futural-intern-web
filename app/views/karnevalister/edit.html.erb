@@ -1,6 +1,10 @@
+<% content_for :head do %>
+<%= stylesheet_link_tag :karnevalister, :media => :all %>
+<% end %>
+
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 <% disabled = cannot? :update, @karnevalist %>
-<div class="container" id="content">
+<div class="white-container col-xs-12" id="content">
   <%= render 'search_form' %>
 
   <%= form_for @karnevalist, :url => { :action => 'update' }, :method => @method,
@@ -18,12 +22,23 @@
         <div class="error-message"><%= msg %></div>
       <% end %>
     <% end %>
+    
+    <% if can? :manage, Role %>
+      <h2 class="access-sektion"><%= link_to 'Administrera accesser', karnevalist_roles_path(@karnevalist) %></h2>
+    <% end %>
+
+    <% if can? :destroy, @karnevalist %>
+      <div class='form-group confirm-destroy'>
+        <%= link_to 'Ta bort ' + @karnevalist.fornamn,
+                    @karnevalist, :method => :delete, :confirm => 'Är du helt säker på att du vill ta bort ' + @karnevalist.fornamn + "?\nDETTA GÅR INTE ATT ÄNDRA!", :class => 'button' %>
+      </div>
+    <% end %>
 
     <div class=form-group>
       <%= f.label :tilldelad_sektion, 'Primär Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion, Sektion.all.collect{ |s| [s.name, s.id] },
-                     {:include_blank => 'Ingen'}, 
+                     {:include_blank => 'Ingen'},
                       :disabled => !can?(:change_sektion, @karnevalist)) %>
       </div>
     </div>
@@ -32,28 +47,10 @@
       <%= f.label :tilldelad_sektion2, 'Sekundär Sektion' %>
       <div>
         <%= f.select(:tilldelad_sektion2, Sektion.all.collect{ |s| [s.name, s.id] },
-                     {:include_blank => 'Ingen'}, 
+                     {:include_blank => 'Ingen'},
                       :disabled => !can?(:change_sektion, @karnevalist)) %>
       </div>
     </div>
-
-    <% if can? :destroy, @karnevalist %>
-      <h2>Ta bort karnevalist</h2>
-      <div class=form-group>
-        <h3>Är du helt säker?</h3>
-      </div>
-      <div class=form-group>
-        <%= link_to 'Jag är helt säker', '#',
-                    :class => 'button confirm-button' %>
-      </div>
-      <div class='form-group confirm-destroy'>
-        <h3>Är du helt, helt säker?</h3>
-      </div>
-      <div class='form-group confirm-destroy'>
-        <%= link_to 'Ja, ta bort ' + gender_specific(@karnevalist), 
-                    @karnevalist, :method => :delete, :class => 'button' %>
-      </div>
-    <% end %>
 
     <%= render :partial => 'shared/personupg', :locals => {:f => f } %>
 

@@ -11,6 +11,10 @@ class SektionerController < ApplicationController
 
   def show
     @sektion = Sektion.find params[:id]
+    @info_page = @sektion.info_page
+    if (@info_page.nil? || @info_page.empty?)
+      @info_page = "Här skulle kunna stå saker, men det gör det inte än :("
+    end
   end
 
   def export
@@ -19,6 +23,20 @@ class SektionerController < ApplicationController
            :filename => "#{@sektion.name.downcase}-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'
   end
+
+  def edit
+    @sektion = Sektion.find params[:id]
+  end
+
+  def update
+    @sektion = Sektion.find params[:id]
+    p = params[:sektion]
+    if @sektion.update_attributes(p)
+      flash[:success] = "Sektionsinfo redigerat"
+    end
+    redirect_to @sektion
+  end
+
 
   def kollamedlem
     @sektion = Sektion.find(params[:id])
@@ -31,5 +49,9 @@ class SektionerController < ApplicationController
     authorize! :read, @sektion
     @karnevalister = @sektion.members.order('efternamn, fornamn asc')
   end
-    
+  private
+
+  def sektion_params
+    params.require(:sektion).permit(:info_page)
+  end
 end

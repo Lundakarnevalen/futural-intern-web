@@ -1,22 +1,20 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Karnevalistan"} %>
 
-<div class="container" id="content">
+<div class="white-container col-xs-12">
   <%= render 'search_form' %>
-
+</div>
+<%= render partial: "shared/header", locals: {title: "Resultat"} %>
+<div class="white-container col-xs-12" id="karnevalistan">
   <% if !@karnevalister.blank? %>
-  <ul>
-    <% @karnevalister.each do |k| %>
-      <li>
-        <a href=<%= url_for k %>>
-          <%= "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})" %>
-        </a>
-      </li>
-    <% end %>
-  </ul>
+    <ul>
+      <% @karnevalister.each do |k| %>
+        <li>
+          <a href=<%= url_for k %>>
+          	<%= "#{k.efternamn}, #{k.fornamn} " %>
+          	<span class="personnummer"><%= k.personnummer %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
   <% end %>
 </div>
-

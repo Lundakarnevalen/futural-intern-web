@@ -1,0 +1,24 @@
+<div class="white-container col-xs-12">
+  <%= form_for @event do |f| %>
+    <fieldset>
+      <%= f.label :title, 'Rubrik' %>
+      <%= f.text_field :title %>
+
+      <%= f.label :date, 'Datum' %>
+      <%= f.text_field :date, :data => { :behaviour => 'datepicker' } %>
+
+      <%= f.label :sektion_id, 'Visa för sektion' %>
+      <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
+                                { :include_blank => '[Visa för alla]' },
+                                { :disabled => !current_user.can?(:manage, Event.new) } %>
+      <% unless current_user.can? :manage, Event.new %>
+        <%= f.hidden_field :sektion_id %>
+      <% end %>
+
+      <%= f.label :description, 'Beskrivning' %>
+      <%= f.text_area :description %>
+    </fieldset>
+
+    <%= f.submit 'Spara' %>
+  <% end %>
+</div>

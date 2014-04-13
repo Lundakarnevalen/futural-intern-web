@@ -12,7 +12,7 @@ class NotificationsController < ApplicationController
       format.html do
         if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektioner.blank?
           sektioner = current_user.karnevalist.tilldelade_sektioner
-          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
+          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist
           sektioner.each do |s|
             sektioner_ids.push s.id
           end

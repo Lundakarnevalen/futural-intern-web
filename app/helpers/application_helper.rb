@@ -18,4 +18,12 @@ module ApplicationHelper
       lst[0..-2].join(', ') + ' och ' + lst[-1]
     end
   end
+
+  def render_markdown text
+    BlueCloth.new(text).to_html
+  end
+
+  def short_date date
+    "#{date.day} / #{date.month}"
+  end
 end
