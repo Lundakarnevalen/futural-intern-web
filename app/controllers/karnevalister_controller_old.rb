@@ -112,7 +112,7 @@ class KarnevalisterController < ApplicationController
   def checkout_paper
     @karnevalist = Karnevalist.new
     @method = :post
-    render :checkout_paper, :layout => 'bare'
+    render :checkout_paper
   end
 
   def checkout_paper_post
@@ -132,7 +132,7 @@ class KarnevalisterController < ApplicationController
   def checkout_digital
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    render :checkout_digital, :layout => 'bare'
+    render :checkout_digital
   end
 
   def checkout_digital_put
