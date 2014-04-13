@@ -25,7 +25,6 @@ class HomeController < ApplicationController
       iphone: "https://itunes.apple.com/se/app/karnevalisten/id811615995?mt=8"
     }
     user_agent = request.user_agent.downcase.match(/android|iphone/).to_s
-    puts request.user_agent
     redirect_to urls[user_agent.to_sym] unless user_agent.blank?
   end
 

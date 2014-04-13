@@ -32,8 +32,19 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  private
+  # Much needed
+  helper_method :current_karnevalist
+  def current_karnevalist
+    current_user && current_user.karnevalist
+  end
 
+  helper_method :current_sektioner
+  def current_sekioner
+    current_karnevalist ? current_karnevalist.tilldelade_sektioner 
+                        : []
+  end
+
+  private
   def mail_default_url
     ActionMailer::Base.default_url_options = {:host => request.host_with_port}
   end
