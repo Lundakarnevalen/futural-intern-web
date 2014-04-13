@@ -9,8 +9,8 @@ class Event < ActiveRecord::Base
     self.where('date >= ?', Date.today).order('date asc')
   }
 
-  scope :for_sektion, -> sektion {
-    self.where 'sektion_id = ? or sektion_id is null', sektion.id
+  scope :for_sektioner, -> sektioner {
+    self.where 'sektion_id in (?) or sektion_id is null', sektioner.map(&:id)
   }
 
   def creator_karnevalist
