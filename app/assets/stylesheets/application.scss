@@ -84,7 +84,7 @@ html {
           margin-top: $margin-main;
         }
         select {
-          border: none;
+//          border: none;
         }
         ol {
             //Fixar så att posts inte har randompadding till vänster
@@ -124,6 +124,7 @@ html {
                     font-family: $font-header;
                     font-weight: bold;
                     font-size: $fontsize-headerbar * 0.75;
+                    text-transform: uppercase;
                     a {
                         &:active {
                             background-color: darken($background-color, 20%) !important;
@@ -227,6 +228,34 @@ a {
     }
 }
 
+.check-response {
+	
+	$height:100px;
+	
+	font-family: $font-header;
+	font-size: $fontsize-headerbar;
+	width: 100%;
+	height: $height;
+	line-height: $height;
+	text-align: center;
+	text-transform: uppercase;
+	
+	.check-fail {
+		
+		background-color: $color-red;
+		color: white;
+		
+	}
+	
+	.check-success {
+		
+		background-color: green;
+		color: $color-green;
+		
+	}
+	
+}
+
 #profile-image-container {
     text-align: right;
     img {
@@ -244,15 +273,20 @@ a {
         font-family: $font-profile;
         font-weight: normal;
         padding-top: 20px;
-        margin: 0 0 0 0;
+        margin: 0 0 3px 0;
         color: $text-color;
         a {
             color: inherit;
         }
     }
     & > a {
+	    font-family: $font-header;
         font-size: 10px;
-        text-decoration: underline;
+        //text-decoration: underline;
+        background-color:$color-red;
+        padding: 3px;
+        text-transform: uppercase;
+        box-shadow: 0 ($distance-shadow  / 2) 0 $color-shadow;
         color: $text-color;
     }
 }
@@ -287,7 +321,7 @@ a {
             li {
                 $text-color: $color-red;
                 $background-color: white;
-                height: $height-rowblocks;
+                min-height: $height-rowblocks;
                 font-family: $font-header;
                 font-size: 0;
                 //dirty hack to remove white-space
