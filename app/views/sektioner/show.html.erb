@@ -1,4 +1,4 @@
-<%= link_to "Tillbaka", root_url, class: "btn btn-small col-xs-2 col-md-offset-2" %>
+<%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
 <div class="image-container col-xs-4">
   <div class="message-image">
     <%= image_tag("logotyper/#{@sektion.name}.png") %>
@@ -9,9 +9,9 @@
 </div>
 <% if (current_user.can? :edit, @sektion) %>
 <div class="white-container col-xs-12">
-  <button><%= link_to 'Exportera personuppgifter som Excel-ark', :action => :export %></button>
-  <button><%= link_to 'Medlemskoll', :action => :kollamedlem %></button>
-  <button type="edit"><%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion)%></button>
+  <div class="btn button"><%= link_to 'Exportera personuppgifter som Excel-ark', :action => :export %></div>
+  <div class="btn button"><%= link_to 'Medlemskoll', :action => :kollamedlem %></div>
+  <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
 </div>
 <% end %>
   <div class="white-container col-xs-12">
