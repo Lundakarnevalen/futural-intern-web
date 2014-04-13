@@ -71,11 +71,6 @@
     <% if can? :manage, Role %>
       <li><%= link_to 'Administrera accesser', roles_path %></li>
     <% end %>
-    <% if current_user.is? :admin %>
-      <% if can? :create, Karnevalist %>
-        <li><%= link_to 'Registrera karnevalist', new_karnevalist_path %></li>
-      <% end %>
-    <% end %>
     <% if can? :checkout, Karnevalist %>
       <li><%= link_to 'Checka ut karnevalist', checkout_karnevalister_path %></li>
     <% end %>
