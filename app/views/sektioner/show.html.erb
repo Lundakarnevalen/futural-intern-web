@@ -20,9 +20,16 @@
 <% s = current_user.karnevalist.sektion %>
 <% if can? :edit, s %>
   <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
-  <div class="white-container col-xs-12">
-    <% @sektion.members.each do |k| %>
-      <li><%= link_to k.to_s, k %></li>
-    <% end %>
+  <div class="white-container col-xs-12" id="karnevalistan">
+    <ul>
+      <% @sektion.members.each do |k| %>
+        <li>
+          <a href=<%= url_for k %>>
+            <%= "#{k.efternamn}, #{k.fornamn} " %>
+            <span class="personnummer"><%= k.personnummer %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
   </div>
 <% end %>
