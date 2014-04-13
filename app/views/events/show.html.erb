@@ -8,7 +8,7 @@
 
   <i>Skapat av <%= @event.creator_karnevalist.full_name %></i>
 
-  <%= render_markdown @event.description %>
+  <%= (render_markdown @event.description).html_safe %>
 
   <% if can? :manage, @event %>
     <hr>
