@@ -173,6 +173,7 @@ Sektion.delete_all
 }.each{ |k, v| Sektion.new do |i|
   i.id = k
   i.name = v
+  i.info_page = 'etc'
   i.save
 end }
 
