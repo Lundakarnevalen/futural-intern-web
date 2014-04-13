@@ -87,6 +87,7 @@ class Ability
         can [:manage], Sektion, :id => user.sektioner
         can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
         can [:new], Notification
+        can [:create, :edit, :update, :destroy, :manage], Event
       end
     end
 
