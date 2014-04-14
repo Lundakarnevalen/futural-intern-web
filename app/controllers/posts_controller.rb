@@ -9,7 +9,7 @@ class PostsController < ApplicationController
     p = params[:post]
     sektion_id = p[:sektion].to_i
     p[:sektion] = Sektion.find(sektion_id)
-    p[:karnevalist] = current_user.karnevalist
+    p[:karnevalist] = current_karnevalist
     @post = Post.new(p)
     if @post.save
       flash[:success] = "Nyhet skapad!"
@@ -19,7 +19,7 @@ class PostsController < ApplicationController
 
   def edit
     @post = Post.find params[:id]
-    @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
+    @tilldelade_sektioner = current_sektioner
   end
 
   def update
@@ -40,7 +40,7 @@ class PostsController < ApplicationController
   end
 
   def show
-    @sektioner = current_user.karnevalist.tilldelade_sektioner
+    @sektioner = current_sektioner
     @sektioner.each do |s|
       p = s.posts.find_by(id: params[:id])
       @post = p unless p.nil?

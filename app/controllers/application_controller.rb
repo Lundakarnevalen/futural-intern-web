@@ -38,10 +38,20 @@ class ApplicationController < ActionController::Base
     current_user && current_user.karnevalist
   end
 
+  helper_method :current_karnevalist?
+  def current_karnevalist?
+    !(current_karnevalist.nil?)
+  end
+
   helper_method :current_sektioner
   def current_sektioner
-    current_karnevalist ? current_karnevalist.tilldelade_sektioner 
+    current_karnevalist ? current_karnevalist.tilldelade_sektioner
                         : []
+  end
+
+  helper_method :current_sektioner?
+  def current_sektioner?
+    current_sektioner.any?
   end
 
   private

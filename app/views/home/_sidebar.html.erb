@@ -39,7 +39,7 @@
         <li><%= link_to 'Sektionslistan', Sektion %></li>
       <% end %>
     <%# Sektionsadmin stuff %>
-    <% elsif current_user.is? :sektionsadmin and current_user.karnevalist? %>
+    <% elsif current_user.is? :sektionsadmin and current_karnevalist? %>
       <% if can? :read, Karnevalist %>
         <li><%= link_to 'Karnevalistan', Karnevalist %></li>
       <% end %>
@@ -52,11 +52,11 @@
       <% end %>
     <% end %>
     <% # Events %>
-    <% if can? :create, Event %>
+    <% if can? :create, Event and current_karnevalist? %>
       <li><%= link_to 'Skapa händelse', new_event_path %></li>
     <% end %>
     <% # Posts %>
-    <% if can? :create, Post %>
+    <% if can? :create, Post and current_karnevalist? %>
       <li><%= link_to 'Skapa nyhet', new_post_path %></li>
     <% end %>
     <% # Notifications %>
