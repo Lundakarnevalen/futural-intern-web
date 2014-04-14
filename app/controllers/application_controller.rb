@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
 
   check_authorization :unless => :devise_controller?
   before_filter :can_can_strong
+  before_filter :require_login
 
   layout :layout
 
@@ -83,5 +84,12 @@ class ApplicationController < ActionController::Base
   def layout
     # turn layout off for every devise controller:
     "login" if devise_controller?
+  end
+
+  private
+   def require_login
+    unless current_user or devise_controller?
+      redirect_to new_user_session_path
+    end
   end
 end
