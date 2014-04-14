@@ -10,7 +10,7 @@
         <% k = u.karnevalist %>
         <li>
           <% if k.present? %>
-            <strong><%= link_to k.full_name, k %></strong>
+            <strong><%= link_to k.name, k %></strong>
             <%= link_to '(Återta access)', karnevalist_roles_path(k, r), :method => :delete %>
           <% else %>
             <strong><%= "[#{u.email}]" %></strong>
