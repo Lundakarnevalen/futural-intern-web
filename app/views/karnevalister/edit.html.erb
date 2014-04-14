@@ -25,8 +25,8 @@
 
     <% if can? :destroy, @karnevalist %>
       <div class='form-group confirm-destroy'>
-        <%= link_to 'Ta bort ' + @karnevalist.fornamn,
-                    @karnevalist, :method => :delete, :confirm => 'Är du helt säker på att du vill ta bort ' + @karnevalist.fornamn + "?\nDETTA GÅR INTE ATT ÅNGRA!", :class => 'button' %>
+        <%= link_to "Ta bort #{@karnevalist.name}",
+                    @karnevalist, :method => :delete, :confirm => "Är du helt säker på att du vill ta bort #{@karnevalist.fornamn}?\nDETTA GÅR INTE ATT ÅNGRA!", :class => 'button' %>
       </div>
     <% end %>
 
