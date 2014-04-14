@@ -21,7 +21,7 @@
   <div class="white-container col-xs-12">
     <%= (render_markdown @info_page).html_safe %>
   </div>
-<% s = current_user.karnevalist.sektion %>
+<% s = current_sektioner %>
 <% if can? :edit, s %>
   <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
   <div class="white-container col-xs-12" id="karnevalistan">

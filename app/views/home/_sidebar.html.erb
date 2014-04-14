@@ -8,8 +8,12 @@
     </div>
   </div>
   <ul class="nav">
-    <li><%= link_to "Mina uppgifter", current_user.karnevalist %></li>
-    <li><%= link_to "Sektionsinfo", current_user.karnevalist.sektion %></li>
+    <% unless current_karnevalist.nil? %>
+      <li><%= link_to "Mina uppgifter", current_karnevalist %></li>
+      <% unless current_sektioner.empty? %>
+        <li><%= link_to "Sektionsinfo", current_user.karnevalist.sektion %></li>
+      <% end %>
+    <% end %>
     <%# General stuff %>
     <% if can? :read, Notification %>
         <li><%= link_to 'Pushnotiser', Notification %></li>
@@ -83,7 +87,7 @@
     EVENEMANG
   </div>
   <ul class="nav">
-    <% Event.upcoming.for_sektioner(current_karnevalist.tilldelade_sektioner).each do |e| %>
+    <% Event.upcoming.for_sektioner(current_sektioner).each do |e| %>
       <li>
         <div class="block">
           <div class="date col-xs-4">
