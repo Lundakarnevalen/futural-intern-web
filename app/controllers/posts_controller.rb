@@ -2,7 +2,6 @@ class PostsController < ApplicationController
   skip_authorization_check
 
   def new
-    @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
     @post = Post.new
   end
 
