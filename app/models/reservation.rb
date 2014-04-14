@@ -3,12 +3,37 @@ class Reservation < ActiveRecord::Base
   validates :karnevalist, presence: true
   validate :reservation_time
 
-  def total_time
-    self.end_time - self.start_time
+  scope :between,
+  lambda {|start_time, end_time|
+    {
+      conditions:
+      [
+        "? < start_time < ?",
+        Reservation.format_date(start_time),
+        Reservation.format_date(end_time)
+      ]
+    }
+  }
+
+  def self.format_date(date_time)
+    Time.at(date_time.to_i).to_formatted_s(:db)
   end
 
   def reservation_time
     DateTime.now < self.start_time
+  end
+
+  def as_json(options = {})
+    {
+      id: self.id,
+      title: "#{self.karnevalist}",
+      description: self.message || "",
+      start: self.start_time,
+      end: self.end_time,
+      allDay: false,
+      recurring: false,
+      url: Rails.application.routes.url_helpers.fabriken_reservation_path(self.id)
+    }
   end
 
 end

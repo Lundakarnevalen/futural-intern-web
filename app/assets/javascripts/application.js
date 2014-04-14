@@ -14,6 +14,8 @@
 //= require bootstrap-datepicker/core.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
 //= require bootstrap/modal
+//= require fullcalendar
+//= require warehouse.js
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
