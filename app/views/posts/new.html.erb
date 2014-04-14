@@ -1,3 +1,7 @@
 <%= render partial: "shared/header", locals: {title: "Skapa nyhet"} %>
 
-<%= render "form", selected_section: @tilldelade_sektioner.first.id %>
+<% if current_sektioner.empty? %>
+  <%= render "form", selected_section: 0 %>
+<% else %>
+  <%= render "form", selected_section: current_sektioner.first.id %>
+<% end %>

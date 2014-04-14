@@ -48,7 +48,7 @@ class Karnevalist < ActiveRecord::Base
   UTCHECKAD = 3
 
   before_save do
-    # User 
+    # User
     if user.nil?
       # In memory only!
       @pass = SecureRandom.base64
@@ -221,7 +221,11 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def full_name
-    "#{self.fornamn} #{self.efternamn}"
+    if self.fornamn.present? || self.efternamn.present?
+      "#{self.fornamn} #{self.efternamn}"
+    else
+      "NAMNLÖS KARNEVALIST #{self.hash}"
+    end
   end
 
   def self.personnummer? pn
