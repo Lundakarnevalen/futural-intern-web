@@ -17,7 +17,7 @@ describe HomeController do
 
   describe "GET to app store" do
     urls = {
-      android: "https://play.google.com/store/apps/details?id=se.lundakarnevalen.android",
+      android: "market://details?id=se.lundakarnevalen.android",
       ios: "https://itunes.apple.com/se/app/karnevalisten/id811615995?mt=8"
     }
 
