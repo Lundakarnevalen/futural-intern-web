@@ -1,11 +1,12 @@
 <div class="message col-xs-12">
-  <%= image_tag("logotyper/#{post.sektion.name}.png", class: "img-responsive message-image col-xs-2") %>
+  <%= image_tag("logotyper/#{post.sektion.name}.png", class: "img-responsive message-image col-xs-2") unless post.sektion.nil? %>
+  <%= image_tag("logotyper/logo.png", class: "img-responsive message-image col-xs-2") if post.sektion.nil? %>
   <div class="message-information col-xs-8">
     <div class="row">
     <h1><%= post.title %></h1>
   </div>
     <div class="row">
-      <div class="post-preview"><%=  BlueCloth.new( truncate post.content, length: 180 ).to_html.html_safe %>
+      <div class="post-preview"><%= Sanitize.clean((render_markdown (truncate post.content, length: 180)), Sanitize::Config::RESTRICTED).html_safe %>
       </div>
     </div>
     <% unless post.id.nil? %>

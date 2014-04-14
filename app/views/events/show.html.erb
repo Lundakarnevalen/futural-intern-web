@@ -6,9 +6,9 @@
     <h2><%= @event.date %></h2>
   </hgroup>
 
-  <i>Skapat av <%= @event.creator_karnevalist.name %></i>
+  <p><i>Skapat av <%= @event.creator_karnevalist.name %></i></p>
 
-  <%= (render_markdown @event.description).html_safe %>
+  <%= Sanitize.clean((render_markdown @event.description), Sanitize::Config::RESTRICTED).html_safe %>
 
   <% if can? :manage, @event %>
     <hr>
