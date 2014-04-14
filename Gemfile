@@ -28,6 +28,7 @@ gem 'bootstrap-datepicker-rails'
 gem 'sprockets', '2.11.0'
 gem 'bluecloth'
 gem 'quiet_assets'
+gem 'sanitize'
 
 group :production do
   gem 'rails_12factor'
