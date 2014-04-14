@@ -151,7 +151,11 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def name
-    "#{fornamn} #{efternamn}"
+    if fornamn.present? && efternamn.present?
+      "#{fornamn} #{efternamn}"
+    else
+      "NAMNLÖS KARNEVALIST #{self.hash}"
+    end
   end
 
   # In memory only
@@ -215,14 +219,6 @@ class Karnevalist < ActiveRecord::Base
   def to_s
     if self.fornamn.present? || self.efternamn.present?
       "#{self.fornamn} #{self.efternamn} (#{self.personnummer})"
-    else
-      "NAMNLÖS KARNEVALIST #{self.hash}"
-    end
-  end
-
-  def full_name
-    if self.fornamn.present? || self.efternamn.present?
-      "#{self.fornamn} #{self.efternamn}"
     else
       "NAMNLÖS KARNEVALIST #{self.hash}"
     end
