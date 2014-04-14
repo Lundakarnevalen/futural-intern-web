@@ -7,11 +7,15 @@
     <%= @sektion.name %>
   </div>
 </div>
-<% if (current_user.can? :edit, @sektion) %>
+<% if (current_user.can? :edit, @sektion) || (current_user.can? :change_info, @sektion) %>
 <div class="white-container col-xs-12">
-  <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "btn button"}%>
-  <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button"} %>
-  <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
+  <% if (current_user.can? :edit, @sektion) %>
+    <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "btn button"}%>
+    <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button"} %>
+  <% end %>
+  <% if (current_user.can? :change_info, @sektion) %>
+    <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
+  <% end %>
 </div>
 <% end %>
   <div class="white-container col-xs-12">

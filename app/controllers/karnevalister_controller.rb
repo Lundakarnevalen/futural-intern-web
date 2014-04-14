@@ -14,7 +14,7 @@ class KarnevalisterController < ApplicationController
     c = current_user
 
     if c.is? :admin
-      @karnevalister = Karnevalist.order(efternamn: :asc, fornamn: :asc)
+      @karnevalister = [] #Karnevalist.order(efternamn: :asc, fornamn: :asc)
     elsif c.karnevalist? and c.is? :sektionsadmin
       @karnevalister = Karnevalist.where(:tilldelad_sektion => c.sektioner).order(efternamn: :asc, fornamn: :asc)
     else
@@ -321,7 +321,9 @@ class KarnevalisterController < ApplicationController
 
   def export_all
     authorize! :export_all, Karnevalist
-    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation]).all
+    @karnevalister = Karnevalist.includes([:sektion, :kon, :korkort, :storlek, :nation])
+                                .where('tilldelad_sektion is not null or ' +
+                                       'tilldelad_sektion2 is not null')
     render :xlsx => 'export_all',
            :filename => "karnevalister-#{Time.now.strftime '%Y%m%d'}.xlsx",
            :disposition => 'attachment'

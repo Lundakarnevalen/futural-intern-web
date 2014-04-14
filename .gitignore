@@ -30,4 +30,7 @@
 # Ignore Podio login information
 /config/podio_login.yaml
 
+# Ignore local DB config
+/config/database.yml
+
 /bin/.*

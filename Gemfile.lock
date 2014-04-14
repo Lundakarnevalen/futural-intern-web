@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    ZenTest (4.9.5)
     actionmailer (4.0.2)
       actionpack (= 4.0.2)
       mail (~> 2.5.4)
@@ -26,6 +27,8 @@ GEM
       thread_safe (~> 0.1)
       tzinfo (~> 0.3.37)
     arel (4.0.2)
+    autotest-rails (4.2.1)
+      ZenTest (~> 4.5)
     axlsx (2.0.1)
       htmlentities (~> 4.3.1)
       nokogiri (>= 1.4.1)
@@ -256,6 +259,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  autotest-rails
   axlsx_rails
   better_errors
   binding_of_caller
