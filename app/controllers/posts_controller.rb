@@ -1,55 +1,48 @@
 class PostsController < ApplicationController
-  skip_authorization_check
+  authorize_resource
 
   def new
-    @post = Post.new
+    @post = Post.new :sektion_id => current_sektioner.first
   end
 
   def create
-    p = params[:post]
-    sektion_id = p[:sektion].to_i
-    p[:sektion] = Sektion.find(sektion_id)
-    p[:karnevalist] = current_karnevalist
-    @post = Post.new(p)
-    if @post.save
-      flash[:success] = "Nyhet skapad!"
-    end
-    redirect_to root_url
+    @post = Post.new post_params
+    @post.karnevalist = current_karnevalist
+    authorize_sektion @post
+    @post.save
+    handle_errors @post, 'Nyheten skapades!', :redirect => @post
   end
 
   def edit
     @post = Post.find params[:id]
-    @tilldelade_sektioner = current_sektioner
   end
 
   def update
     @post = Post.find params[:id]
-    p = params[:post]
-    sektion_id = p[:sektion].to_i
-    p[:sektion] = Sektion.find(sektion_id)
-    if @post.update_attributes(p)
-      flash[:success] = "Nyhet redigerad"
-    end
-    redirect_to @post
+    authorize_sektion @post
+    @post.update_attributes post_params
+    handle_errors @post, 'Nyheten ändrades'
   end
 
   def destroy
     @post = Post.find params[:id]
     @post.destroy
-    redirect_to root_url
+    handle_errors @post, 'Nyheten togs bort', :redirect => root_url
   end
 
   def show
-    @sektioner = current_sektioner
-    @sektioner.each do |s|
-      p = s.posts.find_by(id: params[:id])
-      @post = p unless p.nil?
+    @post = Post.find params[:id]
+  end
+
+  def authorize_sektion post
+    if post.sektion.nil? || current_sektioner.include?(post.sektion)
+      authorize! :modify, Post.new
     end
   end
 
   private
 
   def post_params
-    params.require(:post).permit(:title, :content, :sektion)
+    params.require(:post).permit(:title, :content, :sektion_id)
   end
 end

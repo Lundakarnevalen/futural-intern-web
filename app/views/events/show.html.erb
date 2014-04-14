@@ -6,7 +6,7 @@
     <h2><%= @event.date %></h2>
   </hgroup>
 
-  <i>Skapat av <%= @event.creator_karnevalist.name %></i>
+  <p><i>Skapat av <%= @event.creator_karnevalist.name %></i></p>
 
   <%= Sanitize.clean((render_markdown @event.description), Sanitize::Config::RESTRICTED).html_safe %>
 
