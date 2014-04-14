@@ -17,7 +17,7 @@
       </div>
         <p><i><%= @post.karnevalist.name %></i></p>
       <div class="col-xs-12">
-        <%= Sanitize.clean((render_markdown @post.content), Sanitize::Config::RESTRICTED).html_safe%>
+        <%= Sanitize.clean((render_markdown @post.content), Sanitize::Config::BASIC).html_safe%>
       </div>
       <% unless @post.id.nil? %>
         <div class="form-controls">

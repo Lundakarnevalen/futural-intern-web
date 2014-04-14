@@ -6,7 +6,7 @@
     <h1><%= post.title %></h1>
   </div>
     <div class="row">
-      <div class="post-preview"><%= Sanitize.clean((render_markdown (truncate post.content, length: 180)), Sanitize::Config::RESTRICTED).html_safe %>
+      <div class="post-preview"><%= Sanitize.clean((render_markdown (truncate post.content, length: 180)), Sanitize::Config::BASIC).html_safe %>
       </div>
     </div>
     <% unless post.id.nil? %>
