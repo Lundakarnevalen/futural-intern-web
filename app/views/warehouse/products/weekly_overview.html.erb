@@ -10,7 +10,7 @@
                   <table class="table table-striped">
                     <thead>
                       <tr>
-                        <th>Order #</th>
+                        <th>Ordernr</th>
                         <th>Summa orderintäkt</th>
                       </tr>
                     </thead>
@@ -19,17 +19,15 @@
                       <% Order.find_orders_in_week(w, @warehouse_code).each do |o| %>
                         <tr>
                           <td><%= link_to "#{o.order_number}", order_path(o.id) %></td>
-                          <td><%= o.total_sum %> kr</td>
+                          <td><%= number_to_currency(o.total_sum) %></td>
                           <% sum_all_orders += o.total_sum %>
                         </tr>
                       <% end %>
                     </tbody>
                   </table>
-                  <p><%= "Intäkt vecka #{week}: #{sum_all_orders} kr" %></p>
+                  <p><strong>Intäkt vecka <%= "#{week}: "%></strong><%= number_to_currency(sum_all_orders) %></p>
                 </div>
           </div>
-          
-
           
           <div class="col-md-6"> 
               <h3>Inköp</h3>
@@ -39,7 +37,7 @@
                       <tr>
                         <th>Fakturanr #</th>
                         <th>Summa produktkostnad</th>
-                        <th>Fraktkostnad</th>
+                        <th>Leveranskostnad</th>
                       </tr>
                     </thead>
                     <tbody>
@@ -52,15 +50,19 @@
                           <% incoming_delivery_products.each do |p| %>
                             <% total_price += p.product.total_price(p.amount) %>
                           <% end %>
-                          <td><%= "#{total_price}" %></td>
+                          <td><%= number_to_currency(total_price) %></td>
                           <% sum_all_deliveries += total_price %>
-                          <td><%= "#{i.delivery_cost}"%></td>
-                          <% sum_all_deliveries += i.delivery_cost %>
+                          <% if !i.delivery_cost.blank? %>
+                            <td><%= number_to_currency(i.delivery_cost) %></td>
+                            <% sum_all_deliveries += i.delivery_cost %>
+                          <% else %>
+                            <td></td>
+                          <% end %>
                         </tr>
                       <% end %>
                     </tbody>
                   </table>
-                  <p><%= "Totala utgifter vecka #{week}: #{sum_all_deliveries} kr" %></p>
+                  <p><strong>Utgifter vecka <%= "#{week}: " %></strong><%= number_to_currency(sum_all_deliveries) %></p>
                 </div>
           </div>
     </div>
