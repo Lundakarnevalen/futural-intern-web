@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Api::KarnevalisterController < Api::ApiController
   before_filter :authenticate_user_from_token!
   before_filter :karnevalist_params

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
   Futural::Application.routes.draw do
   root :to => 'home#index'
 
@@ -60,6 +61,11 @@
   end
 
   resources :events do
+    member do
+      get 'attending'
+      get 'sign_up'
+      put 'attend'
+    end
   end
 
   resources :roles, :only => [:index]

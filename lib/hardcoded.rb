@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Support code for hardcoded attribute names. 
 # Warning, may contain traces of metaprogramming!
 

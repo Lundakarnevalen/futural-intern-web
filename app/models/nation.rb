@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Nation < ActiveRecord::Base
   has_many :karnevalister
 

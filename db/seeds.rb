@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 #encoding: utf-8
 Kon.delete_all
 { 1 => 'Vill inte definiera mig',

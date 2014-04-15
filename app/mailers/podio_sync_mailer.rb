@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class PodioSyncMailer < ActionMailer::Base
   default :from => 'it@lundakarnevalen.se'
 

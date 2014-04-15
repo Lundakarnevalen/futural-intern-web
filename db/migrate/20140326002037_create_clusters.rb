@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateClusters < ActiveRecord::Migration
   def change
     create_table :clusters do |t|

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddDetailsToNotifications < ActiveRecord::Migration
   def change
     remove_column :notifications, :text, :text
