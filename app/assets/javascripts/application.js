@@ -1,4 +1,5 @@
 //= require jquery
+//= require jquery.turbolinks
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery.cookie
@@ -13,6 +14,7 @@
 //= require messages_sv
 //= require cloud-swag
 //= require karnevalist.ui.js
+//= require turbolinks
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
