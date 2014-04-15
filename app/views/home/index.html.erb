@@ -4,8 +4,8 @@
   <%= render partial: "shared/message", locals: {title: "Hoppsan!", content: "Något har blivit fel och du verkar inte vara en karnevalist, kontakta IT!"} %>
 <% elsif !(current_sektioner?) %>
   <%= render partial: "shared/message", locals: {title: "Hoppsan!", content: "Du verkar inte ha fått tilldelad dig en sektion, kontakta IT!"} %>
-<% elsif !(@posts.any?) %>
-  <% @posts << Post.new(title: "Hoppsan!", content: "Ingen kommunikationsperson verkar ha skrivit något vackert, engagerande, magiskt eller futuralt här än :(", sektion: @sektioner.first) %>
+<% elsif @posts.empty? %>
+  <%= render partial: "shared/message", locals: {title: "Hoppsan!", content: "Ingen kommunikationsperson verkar ha skrivit något vackert, engagerande, magiskt eller futuralt här än :(" } %>
 <% else %>
   <ol class="posts">
     <%= render @posts %>
