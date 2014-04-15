@@ -1,5 +1,5 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
-<div class="container" id="content">
+<div class="white-container col-xs-12" id="content">
   <%= form_for @karnevalist, :method => @method, :html => { :class => 'validate' } do |f| %>
     <% if !@karnevalist.tilldelad_sektion.blank? %>
       <div class="form-group">

@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Pusseldagen"} %>
 
-<div class="container" id="uppdelning_search">
+<div class="white-container col-xs-12" id="uppdelning_search">
   <%= render 'search_filter_pusseldag' %>
 </div>
 <div class="wide">
@@ -27,7 +27,7 @@
       <% else %>
         <tr id="<%= k.id %>" class="green">
       <% end %>
-          <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+          <td><%= link_to_modal "#{k.name}", controller: "karnevalister", action: "show_modal", id: k %></td>
           <td><%= k.personnummer %></td>
           <td>
             <% if !k.tilldelad_sektion.blank? %>
