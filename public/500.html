@@ -4,42 +4,55 @@
   <title>(500) Karnevalisten</title>
   <meta charset="UTF-8" />
   <style>
-  
+
+
+    @font-face {
+
+      font-family: 'Futura';
+        src: font-url('FuturaBT-Bold.eot?') format('eot'),
+        font-url('FuturaBT-Bold.woff') format('woff'),
+        font-url('FuturaBT-Bold.ttf')  format('truetype'),
+        font-url('FuturaBT-Bold.svg#FuturaBT-Bold') format('svg');
+
+        font-weight: bold;
+        font-style: normal;
+    }
+
   	html, body { height: 100%; }
-  
+
   	body {
 	  	background-color: #e65537;
 	  	color: white;
 	  	text-align: center;
   	}
-  	
-  	h1, h2, button { font-family: Futura, Helvetica, sans-serif }
-  	
-  	h1, h2 { 
+
+  	h1, h2, button { font-family: 'Futura', Helvetica, sans-serif }
+
+  	h1, h2 {
   		line-height: 150%;
   		margin: 5px 0 0 0;
   	}
-  	
+
   	h1 {
   		font-size:96pt;
 	  	text-transform: uppercase;
 	  	color: #eccd3c;
 	  	color: rgba(0,0,0,0.75);
   	}
-  	
-  	p { 
+
+  	p {
   		margin: 5px 0;
-  		opacity: 0.75;	
+  		opacity: 0.75;
   	}
-  	
+
   	a {
-	  color:white;	
+	  color:white;
   	}
-  	
+
   	p, a {
 	  	font-family: 'Helvetica-light', sans-serif;
   	}
-  	
+
   	button {
 	  	background-color: white;
 	  	color: #e65537;
@@ -52,27 +65,14 @@
 	  	cursor: pointer;
 	  	outline: none;
   	}
-  	
+
   	button:active {
 	  	box-shadow: none;
 	  	background-color: rgba(255,255,255,0.9);
   	}
-  	
-	@font-face {
-	
-	  font-family: 'Futura';
-	  src: url('FuturaBT-Bold.eot?') format('eot'),
-	     url('FuturaBT-Bold.woff') format('woff'),
-	     url('FuturaBT-Bold.ttf')  format('truetype'),
-	     url('FuturaBT-Bold.svg#FuturaBT-Bold') format('svg');
-	
-	  font-weight: bold;
-	  font-style: normal;
-	
-	}
-  
+
   </style>
-  
+
 </head>
 
 <body>
@@ -82,22 +82,22 @@
 		<h1>500!</h1>
 		<h2>Vi är ledsna, men det har uppstått ett internt fel.</h2>
 		<p>Kontakta gärna <a href="mailto:it@lundakarnevalen.se?subject=Internt fel på karnevalist.se&body=Så här gjorde jag för att felet skulle uppstå:">it-supporten</a> och förklara hur man kan återskapa felet.</p>
-		
+
 		<a href="javascript:history.go(-1);">
-		
+
 			<button>Gå tillbaka</button>
-			
+
 		</a>
-	
+
 	</div>
-  
+
   <script>
-  
+
   	var container = document.getElementById("information-container");
   	container.style.marginTop = "" + ((document.body.offsetHeight / 2) - (container.offsetHeight / 2) - 40) + "px";
-  
+
   </script>
-  
+
 </body>
 
 </html>
