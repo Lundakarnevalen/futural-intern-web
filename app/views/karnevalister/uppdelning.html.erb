@@ -1,9 +1,7 @@
 <%= render partial: "shared/header", locals: {title: "Uppdelning av karnevalister"} %>
 
-<div class="container" id="uppdelning_search">
+<div class="white-container col-xs-12">
   <%= render 'search_filter_form' %>
-</div>
-<div class="wide">
 <% if !@karnevalister.blank? %>
 <h2>Sökresultat (<%= @karnevalister.count.length %> personer)</h2>
 <table class="table table-condensed" id="uppdelning">
@@ -26,7 +24,7 @@
       <% else %>
         <tr id="<%= k.id %>">
       <% end %>
-          <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+          <td><%= link_to "#{k.name}", controller: "karnevalister", action: "show", id: k %></td>
           <td><%= k.personnummer %></td>
           <td>
             <form>
@@ -66,5 +64,5 @@
     <% end %>
   </tbody>
 </table>
-</div>
 <% end %>
+</div>
