@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Warehouse::ProductsController < Warehouse::ApplicationController
   before_filter :find_product, only: [:show, :edit, :update, :inactivate, :activate]
   def index

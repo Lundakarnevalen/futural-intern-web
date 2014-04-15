@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateProductCategories < ActiveRecord::Migration
   def change
     create_table :product_categories do |t|

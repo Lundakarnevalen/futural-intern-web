@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Warehouse::OrdersController < Warehouse::ApplicationController
   before_filter :find_order, only: [:show, :update, :confirm, :confirm_put]
 

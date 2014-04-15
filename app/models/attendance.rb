@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Attendance < ActiveRecord::Base
   belongs_to :karnevalist
   belongs_to :event

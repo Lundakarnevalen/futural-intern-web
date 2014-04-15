@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddDetailsToKarnevalister < ActiveRecord::Migration
   def change
     change_column :karnevalister, :google_token, :text, :limit => nil

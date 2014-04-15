@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateKarnevalisterIncomingDeliveriesJoinTable < ActiveRecord::Migration
   def change
     create_table :karnevalister_incoming_deliveries, id: false do |t|

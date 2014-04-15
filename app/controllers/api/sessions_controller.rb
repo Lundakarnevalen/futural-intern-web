@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Api::SessionsController < Api::AuthenticationController
   prepend_before_filter :require_no_authentication, only: :create
   before_filter :validate_auth_token, except: :create

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 describe Phone do
 	describe "validation" do
 		it "google token should be unique" do

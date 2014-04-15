@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveFotoFromKarnevalist < ActiveRecord::Migration
   def up
     # remove_column :karnevalister, :foto_file_name

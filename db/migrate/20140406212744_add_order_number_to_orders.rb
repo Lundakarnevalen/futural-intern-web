@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddOrderNumberToOrders < ActiveRecord::Migration
   def change
     add_column :orders, :order_number, :integer
