@@ -1,6 +1,6 @@
 <h3>Veckoöversikt</h3>
 <% @weeks.each do |w| %>
-  <% if Order.has_week(w, @warehouse_code) %>
+  <% if Order.has_week(w, @warehouse_code) || IncomingDelivery.has_week(w, @warehouse_code) %>
   <% week = w[:week] %>
     <h3> Vecka <%= week %></h3>
     <div class="row-fluid">

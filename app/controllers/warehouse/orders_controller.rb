@@ -12,19 +12,6 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @levererad = false
     @makulerad = false
     @part_delivered = false
-    # TODO: flytta till update:
-    if !params[:status].blank?
-      @order.update_attributes(status: params[:status])
-      if @order.status == "Makulerad"
-        update_warehouse(@order.id)
-        @order.finished_at = DateTime.now
-        @order.save
-      elsif @order.status == "Levererad"
-        @order.finished_at = DateTime.now
-        @order.save
-      end
-    end
-    ##
 
     # TODO Detta borde vara en metod i modellen.
     if @order.status == "Levererad"
@@ -155,7 +142,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def list
-    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC")
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC, id DESC")
     @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at ASC")
     @bestallare = false
     render :index
@@ -194,7 +181,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         end
       end
     end
-    redirect_to orders_path
+    redirect_to order_path(@order)
   end
 
   def edit
@@ -202,6 +189,26 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def update
+    if params[:order][:status]
+      @order.update_attributes(order_params)
+      if @order.status == "Makulerad"
+        update_warehouse(@order.id)
+        @order.finished_at = DateTime.now
+        @order.save
+      elsif @order.status == "Levererad"
+        @order.order_products.each do |order_product|
+          product = Product.find(order_product.product_id)
+          in_stock = product.stock_balance_ordered
+          if in_stock >= order_product.amount.to_i
+            in_stock -= order_product.amount.to_i
+            product.update_attributes(:stock_balance_ordered => in_stock)
+          end
+        end
+        @order.finished_at = DateTime.now
+        @order.save
+      end
+    end
+    redirect_to order_path(@order)
   end
 
   def delete
