@@ -10,9 +10,18 @@
 
   <%= (render_markdown @event.description).html_safe %>
 
+  <% if @event.attendable? %>
+    <% text = @event.attending?(current_karnevalist) ? 'Se din anmälan'
+                                                     : 'Anmäl dig!' %>
+    <%= link_to text, sign_up_event_path, :class => 'btn button' %>
+  <% end %>
+
   <% if can? :manage, @event %>
     <hr>
     <p>Visas för <%= @event.sektion || 'alla sektioner' %></p>
+    <% if @event.attendable? %>
+      <%= link_to 'Se anmälningar', attending_event_path, :class => 'btn button' %>
+    <% end %>
     <%= link_to 'Ändra', edit_event_path(@event), :class => "btn button" %>
     <%= link_to 'Ta bort', @event, :method => :delete, :confirm => 'Är du säker', :class => "button btn", :type => "edit" %>
   <% end %>

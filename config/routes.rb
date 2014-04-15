@@ -60,6 +60,11 @@
   end
 
   resources :events do
+    member do
+      get 'attending'
+      get 'sign_up'
+      put 'attend'
+    end
   end
 
   resources :roles, :only => [:index]
