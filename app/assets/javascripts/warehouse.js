@@ -2,14 +2,16 @@ $(function() {
   $('#bookings').fullCalendar({
     editable: true,
     header: {
-      left: 'prev,next today',
+      left: 'prev, next, today',
       center: 'title',
-      right: 'month,agendaWeek,agendaDay'
+      right: 'month, agendaWeek ,agendaDay'
     },
-    defaultView: 'agendaWeek',
-    height: 500,
+    defaultView: 'month',
+    height: 600,
     slotMinutes: 15,
-    events: "/events/get_events",
+    eventSources:[{
+      url: '/fabriken/reservations.json'
+    }],
     timeFormat: 'h:mm t{ - h:mm t} ',
     dragOpacity: "0.5",
     eventClick: function(event, jsEvent, view){

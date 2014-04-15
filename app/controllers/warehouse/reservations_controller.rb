@@ -1,7 +1,7 @@
 class Warehouse::ReservationsController < Warehouse::ApplicationController
   def index
-    @reservations = Reservations.scoped
-    @reservations = Reservations.between(params[:start], params[:end]) if params[:start] && params[:end]
+    @reservations = Reservation.where(nil)
+    @reservations = Reservation.between(params[:start], params[:end]) if params[:start] && params[:end]
     respond_to do |format|
       format.html
       format.json { render json: @reservations }

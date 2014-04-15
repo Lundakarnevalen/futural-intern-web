@@ -3,16 +3,11 @@ class Reservation < ActiveRecord::Base
   validates :karnevalist, presence: true
   validate :reservation_time
 
-  scope :between,
-  lambda {|start_time, end_time|
-    {
-      conditions:
-      [
-        "? < start_time < ?",
-        Reservation.format_date(start_time),
-        Reservation.format_date(end_time)
-      ]
-    }
+  scope :between, lambda { |start_time, end_time|
+    where("? < start_time < ?",
+      Reservation.format_date(start_time),
+      Reservation.format_date(end_time)
+    )
   }
 
   def self.format_date(date_time)
