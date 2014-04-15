@@ -1,0 +1,25 @@
+<% phrase = @event.attending?(current_karnevalist) ? 'Min anmälan'
+                                                   : 'Anmäl mig' %>
+
+<%= render 'shared/header', :title => "#{phrase} till #{@event.title}" %>
+
+<%= form_for @attendance, :url => attend_event_path(@event),
+             :method => :put do |f| %>
+
+  <h2>Jag vill gå på <%= @event.title %>!</h2>
+
+  <h3>Mina matpreferenser</h3>
+  <p>
+    <%= current_karnevalist.matpref || 'Inga.' %>
+  </p>
+  <p>
+    <i>Du kan ändra dessa under "Mina personuppgifter"</i>
+  </p>
+
+  <h3>Är det något annat som arrangören behöver veta?</h3>
+
+  <%= f.text_area :comment, :rows => 6 %>
+
+  <%= f.submit 'Anmäl mig!', :class => 'btn button' %>
+
+<% end %> 

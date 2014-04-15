@@ -14,8 +14,17 @@
       <% unless current_user.can? :manage, Event.new %>
         <%= f.hidden_field :sektion_id %>
       <% end %>
-      <br>
+
+      <div>
+      <strong>Ska man kunna anmäla sig till händelsen?</strong>
+      <%= f.label :attendable, 'Ja', :value => true %>
+      <%= f.radio_button :attendable, true %>
+      <%= f.label :attendable, 'Nej', :value => false %>
+      <%= f.radio_button :attendable, false %>
+      </div>
+
       <%= f.label :description, 'Beskrivning' %>
+
       <%= f.text_area :description %>
     </fieldset>
     <%= render partial: "shared/markdown_notice" %>
