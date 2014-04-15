@@ -29,8 +29,6 @@ gem 'sprockets', '2.11.0'
 gem 'bluecloth'
 gem 'quiet_assets'
 gem 'sanitize'
-gem 'turbolinks'
-gem 'jquery-turbolinks'
 gem 'oink'
 
 group :production do

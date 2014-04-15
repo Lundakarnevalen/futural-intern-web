@@ -1,5 +1,4 @@
 //= require jquery_ujs
-//= require jquery.turbolinks
 //= require karnevalister
 //= require sektioner
 //= require jquery.validate
@@ -15,7 +14,6 @@
 //= require bootstrap-datepicker/core.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
 //= require bootstrap/modal
-//= require turbolinks
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
