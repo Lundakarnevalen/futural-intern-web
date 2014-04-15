@@ -12,8 +12,8 @@
   <% end %>
 </div>
 <div class="white-container col-xs-12" id="content">
-  <p><strong>Tilldelad sektion: </strong><%= Sektion.find(@karnevalist.tilldelad_sektion).name %><%= ", #{Sektion.find(@karnevalist.tilldelad_sektion2).name}" if !@karnevalist.tilldelad_sektion2.blank? %></p>
-  <p><strong>Namn: </strong><%= "#{@karnevalist.fornamn} #{@karnevalist.efternamn}" %></p>
+  <p><strong>Tilldelad sektion: </strong><%= @karnevalist.tilldelad_sektion %><%= @karnevalist.tilldelad_sektion if !@karnevalist.tilldelad_sektion.blank? %></p>
+  <p><strong>Namn: </strong><%= "#{@karnevalist.name} " %></p>
   <p><strong>Personnummer: </strong><%= @karnevalist.personnummer %></p>
   <p><strong>Adress: </strong><%= "#{@karnevalist.gatuadress}, #{@karnevalist.postnr} #{@karnevalist.postort}" %></p>
   <p><strong>E-post: </strong><%= @karnevalist.email %></p>
