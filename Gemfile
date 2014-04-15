@@ -30,6 +30,8 @@ gem 'bluecloth'
 gem 'quiet_assets'
 gem 'sanitize'
 gem 'oink'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 
 group :production do
   gem 'rails_12factor'
