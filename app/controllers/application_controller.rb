@@ -87,9 +87,15 @@ class ApplicationController < ActionController::Base
   end
 
   private
-   def require_login
-    unless current_user or devise_controller?
+
+  def require_login
+    unless (current_user || devise_controller? || create_karnevalist_action?)
       redirect_to new_user_session_path
     end
   end
+
+  def create_karnevalist_action?
+    (params[:controller] == "karnevalister" && (params[:action] == "new" || params[:action] == "create")) ? true : false
+  end
+
 end
