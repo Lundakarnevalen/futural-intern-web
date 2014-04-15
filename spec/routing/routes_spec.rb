@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require "spec_helper"
 describe "routes" do
   describe "routes for Devise" do

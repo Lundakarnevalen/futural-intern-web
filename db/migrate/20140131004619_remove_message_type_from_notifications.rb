@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class RemoveMessageTypeFromNotifications < ActiveRecord::Migration
   def change
     remove_column :notifications, :message_type, :integer

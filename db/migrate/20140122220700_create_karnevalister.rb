@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateKarnevalister < ActiveRecord::Migration
   def change
     create_table :karnevalister do |t|

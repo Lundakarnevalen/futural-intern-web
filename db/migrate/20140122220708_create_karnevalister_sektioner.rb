@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateKarnevalisterSektioner < ActiveRecord::Migration
   def change
     create_table :karnevalister_sektioner do |t|
