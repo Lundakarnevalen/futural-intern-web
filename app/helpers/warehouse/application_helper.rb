@@ -69,6 +69,23 @@ module Warehouse::ApplicationHelper
   def edit_incoming_delivery_path(i)
     @warehouse_code == 0 ? edit_fabriken_incoming_delivery_path(i) : edit_fest_incoming_delivery_path(i)
   end
+  
+  def partial_deliveries_path
+    @warehouse_code == 0 ? fabriken_partial_deliveries_path : fest_partial_deliveries_path
+  end
+
+  def partial_delivery_path(p, format = :html)
+    @warehouse_code == 0 ? fabriken_partial_delivery_path(p, format) : fest_partial_delivery_path(p, format)
+  end
+
+  def new_partial_delivery_path
+    @warehouse_code == 0 ? new_fabriken_partial_delivery_path : new_fest_partial_delivery_path
+  end
+
+  def edit_partial_delivery_path(p)
+    @warehouse_code == 0 ? edit_fabriken_partial_delivery_path(p) : edit_fest_partial_delivery_path(p)
+  end
+
   # products
   def weekly_overview_products_path
     @warehouse_code == 0 ? weekly_overview_fabriken_products_path : weekly_overview_fest_products_path
