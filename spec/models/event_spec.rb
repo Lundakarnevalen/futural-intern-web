@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Event do
@@ -43,6 +44,27 @@ describe Event do
       e1 = FactoryGirl.create :event, :sektion => @s
       e2 = FactoryGirl.create :event, :sektion => s2
       Event.for_sektioner([@s, s2]).should eq([e1, e2])
+    end
+  end
+
+  describe '#attending?' do
+    before do
+      @k = FactoryGirl.build :karnevalist
+      @e = FactoryGirl.build :event
+      @a = FactoryGirl.build :attendance, :event => @e, :karnevalist => @k
+    end
+    
+    it 'returns false when it should' do 
+      @e.attending?(@k).should == false
+    end
+
+    it 'returns false for nil' do
+      @e.attending?(nil).should == false
+    end
+
+    it 'returns true when it should' do 
+      @a.save
+      @e.attending?(@k).should == true
     end
   end
 end

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Api::PasswordsController < Api::AuthenticationController
   def create
     @user = User.send_reset_password_instructions(params[:user])

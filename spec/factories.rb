@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
 
   factory :ability do
@@ -149,5 +150,10 @@ FactoryGirl.define do
     sektion nil
     creator nil
     description 'Lets get drunk on a tuesday'
+    attendable true
+  end
+
+  factory :attendance do
+    comment 'Allergisk mot protoner'
   end
 end

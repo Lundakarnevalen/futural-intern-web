@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class ProductCategory < ActiveRecord::Base
   has_many :products, :dependent => :restrict
   validates :name, presence: true, uniqueness: true

@@ -29,6 +29,7 @@ gem 'sprockets', '2.11.0'
 gem 'bluecloth'
 gem 'quiet_assets'
 gem 'sanitize'
+gem 'oink'
 
 group :production do
   gem 'rails_12factor'

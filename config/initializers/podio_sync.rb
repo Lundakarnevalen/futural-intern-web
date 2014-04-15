@@ -1,9 +1,9 @@
+# -*- encoding : utf-8 -*-
 require 'yaml'
 require 'podio_sync'
 
 PODIO_CONFIG = Rails.root.join 'config/podio.yaml'
 PODIO_LOGIN = Rails.root.join 'config/podio_login.yaml'
-
 
 begin
   config = YAML.load_file PODIO_CONFIG

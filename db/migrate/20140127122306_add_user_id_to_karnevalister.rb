@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddUserIdToKarnevalister < ActiveRecord::Migration
   def change
     change_table :karnevalister do |t|

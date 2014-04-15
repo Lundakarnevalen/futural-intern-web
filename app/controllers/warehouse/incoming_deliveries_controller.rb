@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
   before_filter :find_incoming_delivery, only: [:show, :edit, :update]
 

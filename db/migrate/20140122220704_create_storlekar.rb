@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateStorlekar < ActiveRecord::Migration
   def change
     create_table :storlekar do |t|

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Warehouse::ProductCategoriesController < Warehouse::ApplicationController
   before_filter :find_product_category, only: [:show, :edit, :update, :destroy]
 

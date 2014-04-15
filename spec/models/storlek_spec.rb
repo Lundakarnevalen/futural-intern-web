@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 describe Storlek do
 	describe "to string" do
 		it "should return the name" do

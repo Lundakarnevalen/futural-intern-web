@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Post do
@@ -18,16 +19,6 @@ describe Post do
   its(:sektion) { should eq sektion }
 
   it { should be_valid }
-
-  describe "when karnevalist_id is not present" do
-    before { @post.karnevalist_id = nil }
-    it { should_not be_valid }
-  end
-
-  describe "when sektion_id is not present" do
-    before { @post.sektion_id = nil }
-    it { should_not be_valid }
-  end
 
   describe "with blank content" do
     before { @post.content = " "}
