@@ -15,6 +15,7 @@ class Karnevalist < ActiveRecord::Base
                         :class_name => Sektion
   accepts_nested_attributes_for :user
   has_many :orders
+  has_many :attendances, :dependent => :destroy
   has_and_belongs_to_many :incoming_deliveries
 
   mount_uploader :foto, FotoUploader

@@ -40,6 +40,29 @@ class EventsController < ApplicationController
     handle_errors @event, 'Händelsen togs bort', :redirect => Event
   end
 
+  # Attendance
+
+  def attending
+    @event = Event.includes(:attendances => :karnevalist)
+                  .order('karnevalister.efternamn, karnevalister.fornamn')
+                  .find params[:id]
+    authorize! :modify, @event
+  end
+
+  def sign_up
+    @event = Event.find params[:id]
+    @attendance = Attendance.existing_or_new :event => @event, 
+                                             :karnevalist => current_karnevalist
+  end
+
+  def attend
+    @event = Event.find params[:id]
+    aps = attendance_params.merge({ :event => @event,
+                                    :karnevalist => current_karnevalist })
+    a = Attendance.create_or_update aps
+    handle_errors a, 'Du är anmäld!', :redirect => @event
+  end
+
   # Utility
 
   def authorize_sektion ev
@@ -51,5 +74,9 @@ class EventsController < ApplicationController
   private
   def event_params
     params.require(:event).permit!
+  end
+
+  def attendance_params
+    params.require(:attendance).permit :comment
   end
 end
