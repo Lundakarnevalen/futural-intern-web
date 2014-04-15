@@ -29,6 +29,8 @@ gem 'sprockets', '2.11.0'
 gem 'bluecloth'
 gem 'quiet_assets'
 gem 'sanitize'
+gem 'turbolinks'
+gem 'jquery-turbolinks'
 
 group :production do
   gem 'rails_12factor'
