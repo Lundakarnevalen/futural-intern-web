@@ -1,6 +1,8 @@
 #encoding: UTF-8
 
 class HomeController < ApplicationController
+  skip_before_filter :require_login
+
   skip_authorization_check
   def index
     if signed_in?

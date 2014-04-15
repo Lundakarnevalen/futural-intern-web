@@ -40,7 +40,7 @@
         <td>
           <% in_delivery_product = p.incoming_delivery_products.where(incoming_delivery_id: @incoming_delivery.id) %>
           <%= f.fields_for :incoming_delivery_products, in_delivery_product.blank? ? p.incoming_delivery_products.build : in_delivery_product do |op| %>
-            <%= op.number_field :amount, class: "form-control", style: "width: 110px;" %>
+            <%= op.number_field :amount, class: "form-control", style: "width: 100%;" %>
             <%= op.hidden_field :product_id, :value => p.id %>
           <% end %>
         </td>
