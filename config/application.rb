@@ -20,5 +20,8 @@ module Futural
     # Postmark
     config.action_mailer.delivery_method   = :postmark
     config.action_mailer.postmark_settings = { :api_key => ENV['POSTMARK_API_KEY'] }
+
+    #Memory Profiling
+    config.middleware.use Oink::Middleware, :logger => Hodel3000CompliantLogger.new(STDOUT)
   end
 end
