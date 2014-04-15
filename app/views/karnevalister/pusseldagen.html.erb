@@ -30,12 +30,12 @@
           <td><%= link_to_modal "#{k.name}", controller: "karnevalister", action: "show_modal", id: k %></td>
           <td><%= k.personnummer %></td>
           <td>
-            <% if !k.tilldelad_sektion.blank? %>
+            <% if !k.tilldelad_sektion.blank? && k.snalla_sektion != 0 %>
                 <%= Sektion.find(k.tilldelad_sektion).name %>
             <% end %>
           </td>
           <td>
-            <% if !k.snalla_intresse.blank? %>
+            <% if !k.snalla_intresse.blank? && k.snalla_intresse != 0 %>
                 <%= Intresse.find(k.snalla_intresse).name %>
             <% end %>
           </td>
