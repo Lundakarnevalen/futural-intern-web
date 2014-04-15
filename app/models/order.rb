@@ -4,6 +4,7 @@ class Order < ActiveRecord::Base
   belongs_to :sektion
   has_many :order_products
   has_many :products, through: :order_products
+  has_many :partial_deliveries
   validates :karnevalist, presence: true
   validates :sektion, presence: true
   before_create :set_order_date, :set_order_number

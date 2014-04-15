@@ -9,6 +9,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def show
+    @partial_delivery = PartialDelivery.new 
+    @partial_delivery.partial_delivery_products.build
     @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
     @makulerad = false

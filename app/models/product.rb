@@ -5,6 +5,8 @@ class Product < ActiveRecord::Base
   has_many :orders, through: :order_products
   has_many :incoming_delivery_products
   has_many :incoming_deliveries, through: :incoming_delivery_products
+  has_many :partial_delivery_products
+  has_many :partial_deliveries, through: :partial_delivery_products
   
   before_save :purchase_price
   before_save :sale_price
@@ -39,6 +41,10 @@ class Product < ActiveRecord::Base
 
   def amount(order_id)
     return self.order_products.find_by_order_id(order_id).amount
+  end
+  
+  def delivered_amount(order_id)
+    return self.order_products.find_by_order_id(order_id).delivered_amount
   end
 
   def new_amount(incoming_delivery_id)

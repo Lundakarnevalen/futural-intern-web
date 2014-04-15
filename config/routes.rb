@@ -140,6 +140,7 @@
     resources :incoming_deliveries
     resources :product_categories
     resources :order_products
+    resources :partial_deliveries
   end
 
   namespace :warehouse, path: 'fabriken', as: 'fabriken' do
