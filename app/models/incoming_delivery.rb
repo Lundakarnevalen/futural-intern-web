@@ -26,4 +26,13 @@ class IncomingDelivery < ActiveRecord::Base
     incoming_deliveries = IncomingDelivery.where("created_at >= ?", week[:day_1]).where("created_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code)
     return incoming_deliveries
   end
+
+  def self.has_week week, warehouse_code
+    incoming_deliveries = IncomingDelivery.where("created_at >= ?", week[:day_1]).where("created_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code)
+    if incoming_deliveries.count >= 1
+      return true
+    else
+      return false
+    end
+  end
 end
