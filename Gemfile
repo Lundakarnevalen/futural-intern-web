@@ -31,6 +31,7 @@ gem 'quiet_assets'
 gem 'sanitize'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
+gem 'oink'
 
 group :production do
   gem 'rails_12factor'
