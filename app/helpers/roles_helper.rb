@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module RolesHelper
   def karnevalist_roles_path karnevalist, role = nil
     route = "/karnevalister/#{karnevalist.id}/roles"

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 describe Product do
   describe "validation" do
     it "should have a name" do

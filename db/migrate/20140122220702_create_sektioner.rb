@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateSektioner < ActiveRecord::Migration
   def change
     create_table :sektioner do |t|

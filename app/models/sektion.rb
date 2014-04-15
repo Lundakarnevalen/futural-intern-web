@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Sektion < ActiveRecord::Base
   has_and_belongs_to_many :karnevalister
   has_many :posts

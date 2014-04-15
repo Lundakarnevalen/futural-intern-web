@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddDetailsToProducts < ActiveRecord::Migration
   def change
     change_column :products, :stock_balance_ordered, :integer, :default => 0

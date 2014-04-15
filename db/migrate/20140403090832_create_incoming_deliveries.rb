@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateIncomingDeliveries < ActiveRecord::Migration
   def change
     create_table :incoming_deliveries do |t|

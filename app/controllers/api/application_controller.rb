@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Api::ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   before_filter :authenticate_user_from_token!

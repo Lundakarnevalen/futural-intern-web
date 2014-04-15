@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Storlek < ActiveRecord::Base
   has_many :karnevalister
 

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddIndexes < ActiveRecord::Migration
   def change
     add_index :karnevalister_sektioner, :karnevalist_id

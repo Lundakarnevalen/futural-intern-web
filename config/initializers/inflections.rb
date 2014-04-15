@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 # Add Swedish inflections
 ActiveSupport::Inflector.inflections do |inflect|
   inflect.irregular 'karnevalist', 'karnevalister'

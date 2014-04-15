@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module Warehouse::ApplicationHelper
 
   def icon(name)

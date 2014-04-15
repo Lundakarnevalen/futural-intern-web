@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Product < ActiveRecord::Base
   belongs_to :product_category
   has_many :order_products
