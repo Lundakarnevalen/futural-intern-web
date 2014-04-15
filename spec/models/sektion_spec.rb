@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 describe Sektion do
   describe '#members' do
     it 'handles the empty case' do

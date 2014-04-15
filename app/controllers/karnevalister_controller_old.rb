@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 
 class KarnevalisterController < ApplicationController
   # Old stuff that is not maintained.

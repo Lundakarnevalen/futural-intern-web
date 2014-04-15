@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Warehouse::ApplicationController < ApplicationController
   before_filter :w_code
   load_and_authorize_resource

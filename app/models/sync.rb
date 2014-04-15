@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Sync < ActiveRecord::Base
   self.table_name = 'podio_syncs'
 

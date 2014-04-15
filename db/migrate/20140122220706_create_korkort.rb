@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateKorkort < ActiveRecord::Migration
   def change
     create_table :korkort do |t|

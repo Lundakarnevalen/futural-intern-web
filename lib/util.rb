@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Array
   def to_hash
     self.inject({}) do |r, s|

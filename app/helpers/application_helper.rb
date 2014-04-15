@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ApplicationHelper
   def parent_layout(layout)
     @_content_for[:layout] = self.output_buffer
