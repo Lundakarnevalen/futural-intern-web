@@ -1,4 +1,5 @@
- module Warehouse::ApplicationHelper
+module Warehouse::ApplicationHelper
+
   def icon(name)
     content_tag(:i, nil, class: "glyphicon glyphicon-#{name}")
   end
@@ -128,8 +129,9 @@
     pad_top(25) do
       text "Kvitto från #{@warehouse}", :align => :center, :size => 18
       pad_top(55) do
-        text "Order nr: #{order.id}"
+        text "Ordernr: #{order.id}"
         text "Beställare: #{order.karnevalist.fornamn} #{order.karnevalist.efternamn}"
+        text "Sektion: #{order.sektion.name}"
         text "Status: #{order.status}"
         order_date = order.order_date.strftime("%Y-%m-%d %H:%M")
         text "Beställningsdatum: #{order_date}"
@@ -141,9 +143,10 @@
         table_data.push(titles)
         products.each do |p|
           amount = p.amount(order.id)
-          total_price = p.total_price(amount)
+          total_price = ActionController::Base.helpers.number_to_currency(p.total_price(amount))
+          sale_price = ActionController::Base.helpers.number_to_currency(p.sale_price)
           order_product = OrderProduct.where(:order_id => order.id, :product_id => p.id).first
-          data = ["#{p.name}", "#{order_product.amount} #{p.unit}","#{p.sale_price}", "#{total_price} kr"]
+          data = ["#{p.name}", "#{order_product.amount} #{p.unit}","#{sale_price}", "#{total_price}"]
           table_data.push(data)
           product_number += 1
         end
@@ -151,7 +154,7 @@
           table(table_data, :width => 500, :cell_style => { :inline_format => true })
         end
         pad_top(10) do
-          text "Pris för hela ordern: #{order.total_sum} kr"
+          text "Pris för hela ordern: #{ActionController::Base.helpers.number_to_currency(order.total_sum)}"
         end
       end
     end
