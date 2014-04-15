@@ -48,4 +48,8 @@ class Product < ActiveRecord::Base
   def total_price(amount)
     return amount*self.sale_price
   end
+  
+  def total_purchase_price(amount)
+    return amount*self.purchase_price
+  end
 end
