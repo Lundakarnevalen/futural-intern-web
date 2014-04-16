@@ -5,11 +5,14 @@
 body {
   padding-top: 50px;
 }
-
+.fc-widget-content {
+  height: 55px;
+}
 
 /*
  * Global add-ons
  */
+
 
 .sub-header {
   padding-bottom: 10px;
@@ -100,7 +103,7 @@ body {
     display: block;
     padding-right: 15px;
   }
-  
+
   .nav-sidebar > li.disabled.nav-header > a {
     color: #000;
   }
@@ -116,7 +119,7 @@ body {
     max-height: none;
     width: 16.6666666667%;
   }
-}  
+}
 
 /*
  * Main content
