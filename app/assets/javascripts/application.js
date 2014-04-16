@@ -15,6 +15,8 @@
 //= require cloud-swag
 //= require karnevalist.ui.js
 //= require turbolinks
+//= require fullcalendar
+//= require warehouse.js
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({

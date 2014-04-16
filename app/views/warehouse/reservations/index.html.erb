@@ -1,0 +1,52 @@
+<div class="row">
+  <div class="col-sm-3 col-md-2"
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">
+              Boka
+            </a>
+          </h4>
+        </div>
+        <div id="collapse" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <p class="help-block">Välj ett passande block i kalendern</p>
+            <%= form_for :reservation, remote: true, url: { action: :create }, html: { id: "res_form"} do |f| %>
+              <%= f.label :start_time, "Från *" %>
+              <%= f.datetime_field :start_time, class: "form-control" %>
+              <%= f.label :start_time, "Till *" %>
+              <%= f.datetime_field :end_time, class: "form-control" %>
+              <%= f.label :message, "Meddelande" %>
+              <%= f.text_area :message, class: "form-control" %>
+              <%= f.hidden_field :karnevalist_id, value: current_user.karnevalist.id %>
+
+              <%= f.submit "Boka", class: "btn btn-primary" %>
+            <% end %>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            Öppettider
+          </h5>
+        </div>
+
+        <div class="panel-body">
+          <p><i>mån-fre 16-22</i></p>
+          <p><i>lör stängt</i></p>
+          <p><i>sön 12-18</i></p>
+          <h5><strong>Vi håller stängt följande datum:</strong></h5>
+          <p><i>17-21 och 30 april</i></p>
+          <p><i>1 och 11 maj</i></p>
+        </div>
+
+      </div>
+    </div>
+  <div class="col-sm-12 col-md-9">
+    <div id="bookings"></div>
+  </div>
+</div>
