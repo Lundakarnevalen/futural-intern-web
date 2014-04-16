@@ -102,6 +102,7 @@ GEM
     fog-json (1.0.0)
       multi_json (~> 1.0)
     formatador (0.2.4)
+    fullcalendar-rails (1.6.4.0)
     gcm (0.0.7)
       httparty
       json
@@ -291,6 +292,7 @@ DEPENDENCIES
   devise
   factory_girl_rails (= 4.2.0)
   fog
+  fullcalendar-rails
   gcm
   geokit-rails
   grocer

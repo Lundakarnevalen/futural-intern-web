@@ -9,6 +9,12 @@
           <li class="<%= 'active' if current_page?(sektion_orders_path(:sektion_id => sektion_id)) %>"><%= link_to "Min sektions ordrar", sektion_orders_path(:sektion_id => sektion_id) %></li>
         <% end %>
       </ul>
+      <% if @warehouse_code == 0 %>
+      <ul class="nav nav-sidebar">
+        <li class="nav-header disabled"><a>BOKNING</a></li>
+        <li class="<%= 'active' if current_page?(fabriken_reservations_path) %>"><%= link_to "Boka bygge", fabriken_reservations_path %></li>
+      </ul>
+      <% end %>
 
       <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin) %>
       <ul class="nav nav-sidebar">
