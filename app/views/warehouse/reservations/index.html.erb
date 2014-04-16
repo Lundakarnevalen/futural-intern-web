@@ -1,1 +1,30 @@
-<div id="bookings"></div>
+<div class="row">
+  <div class="col-sm-3 col-md-2"
+    <div class="panel-group" id="accordion">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <h4 class="panel-title">
+            <a data-toggle="collapse" data-parent="#accordion" href="#collapse">
+              Skapa Bokning
+            </a>
+          </h4>
+        </div>
+        <div id="collapse" class="panel-collapse collapse in">
+          <div class="panel-body">
+            <%= form_for :reservation, remote: true, url: { action: :create } do |f| %>
+              <%= f.hidden_field :start_time %>
+              <%= f.hidden_field :end_time %>
+              <%= f.label :message, "Meddelande" %>
+              <%= f.text_area :message, class: "form-control" %>
+              <p class="help-block">Lite hjälp</p>
+
+              <%= f.submit "Create", data: { dismiss: "modal" }, class: "btn btn-primary" %>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  <div class="col-sm-12 col-md-9">
+    <div id="bookings"></div>
+  </div>
+</div>
