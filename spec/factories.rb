@@ -124,6 +124,13 @@ FactoryGirl.define do
     order_number 0
   end
 
+  factory :reservation do
+    start_time Date.today
+    end_time Date.tomorrow
+    message "No comment"
+    association :karnevalist, factory: :karnevalist
+  end
+
   factory :product_category do
     name "tools"
   end

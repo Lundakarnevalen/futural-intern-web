@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
   Futural::Application.routes.draw do
+  resources :tests
+
   root :to => 'home#index'
 
   devise_for :users
@@ -114,6 +116,7 @@
       collection do
         get 'calendar', to: 'orders#calendar'
         get 'list', to: 'orders#list'
+        get 'sektion', to: 'orders#sektion'
         get 'search/:search_param', to: 'orders#search'
         get 'search', to: 'orders#search'
         get 'direct_selling', to: 'orders#direct_selling'
@@ -140,10 +143,12 @@
     resources :incoming_deliveries
     resources :product_categories
     resources :order_products
+    resources :partial_deliveries
   end
 
   namespace :warehouse, path: 'fabriken', as: 'fabriken' do
     concerns :party_factory
+    resources :reservations
   end
 
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do
