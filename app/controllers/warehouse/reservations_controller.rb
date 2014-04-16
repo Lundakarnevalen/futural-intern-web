@@ -13,6 +13,14 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   end
 
   def create
+    @reservation = Reservation.new(reservation_params)
+    respond_to do |format|
+      if @reservation.save
+        format.json { render json: @reservation, status: :created, location: @user}
+      else
+        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def update
@@ -24,5 +32,9 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   private
     def find_reservation
       @reservation = Reservation.find(params[:id])
+    end
+
+    def reservation_params
+      params.require(:reservation).permit!
     end
 end

@@ -21,7 +21,7 @@ class Reservation < ActiveRecord::Base
   def as_json(options = {})
     {
       id: self.id,
-      title: "#{self.karnevalist}",
+      title: "#{Sektion.find(self.karnevalist.tilldelad_sektion).name}",
       description: self.message || "",
       start: self.start_time,
       end: self.end_time,
