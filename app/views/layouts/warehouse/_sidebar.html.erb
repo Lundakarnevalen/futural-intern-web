@@ -12,7 +12,7 @@
       <% if @warehouse_code == 0 %>
       <ul class="nav nav-sidebar">
         <li class="nav-header disabled"><a>BOKNING</a></li>
-        <li class="<%= 'active' if current_page?(fabriken_reservations_path) %>"><%= link_to "Boka bygge", fabriken_reservations_path %></li>
+        <li class="<%= 'active' if current_page?(fabriken_reservations_path) %>"><%= link_to "Boka byggtid", fabriken_reservations_path %></li>
       </ul>
       <% end %>
 
@@ -21,7 +21,7 @@
         <li class="nav-header disabled"><a>Orderhantering</a></li>
         <li class="<%= 'active' if current_page?(list_orders_path) %>"><%= link_to "Alla ordrar", list_orders_path %><li>
         <li class="<%= 'active' if current_page?(direct_selling_orders_path) %>"><%= link_to "Direktförsäljning", direct_selling_orders_path %><li>
-        <li class="<%= 'active' if current_page?(calendar_orders_path) %>"><%= link_to "Kalender", calendar_orders_path %></li>
+        <li class="<%= 'active' if current_page?(calendar_orders_path) %>"><%= link_to "Kalender Hämtdatum", calendar_orders_path %></li>
       </ul>
 
       <ul class="nav nav-sidebar">
