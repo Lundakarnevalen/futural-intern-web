@@ -37,6 +37,10 @@ module Warehouse::ApplicationHelper
     @warehouse_code == 0 ? list_fabriken_orders_path : list_fest_orders_path
   end
 
+  def sektion_orders_path(s)
+    @warehouse_code == 0 ? sektion_fabriken_orders_path(s) : sektion_fest_orders_path(s)
+  end
+
   def return_products_order_path
     @warehouse_code == 0 ? return_products_fabriken_order_path : return_products_fest_order_path
   end

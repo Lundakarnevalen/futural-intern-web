@@ -1,21 +1,29 @@
-<% if @bestallare %>
+<% if @sektion_orders %>
+  <h3>Alla ordrar - <%= @sektion.name %></h3>
+<% elsif @bestallare %>
   <h3>Mina ordrar</h3>
 <% else %>
   <h3>Alla ordrar</h3>
-  <!-- TODO: Select sektion -->
+    <%= form_tag list_orders_path, method: :get, class: "form-inline" do %>
+      <div class="form-group">
+        <%= label_tag :sektion_id, "Sektion", class: "sr-only" %>
+        <%= select_tag :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), {prompt: "-- Välj sektion --", class: "form-control"} %>
+      </div>
+      <%= submit_tag "Filtrera", class: "btn btn-primary" %>
+    <% end %>
 <% end %>
 <h4>Pågående ordrar</h4>
 <div class="table-responsive">
   <table class="table table-striped table-fixed">
     <thead>
       <tr>
-        <th style="width: 5%;">Ordernr</th>
+        <th style="width: 7%;">Ordernr</th>
         <th style="width: 20%;">Kund</th>
         <th style="width: 20%;">Beställare</th>
-        <th style="width: 20%;">Status</th>
+        <th style="width: 15%;">Status</th>
         <th style="width: 14%;">Beställningsdatum</th>
         <th style="width: 14%;">Hämtdatum</th>
-        <th style="width: 7%;">Totalsumma</th>
+        <th style="width: 10%;">Totalsumma</th>
       </tr>
     </thead>
     <tbody>
@@ -36,6 +44,11 @@
         <td colspan="6"></td>
         <td><%= number_to_currency(Order.my_active_orders_total_sum(current_user.karnevalist.id, @warehouse_code)) %></td>
       </tr>
+    <% elsif @sektion_orders %>
+      <tr class="sum">
+        <td colspan="6"></td>
+        <td><%= number_to_currency(Order.sektion_active_orders_total_sum(@sektion.id, @warehouse_code)) %></td>
+      </tr>
     <% end %>
     <% end %>
     </tbody>
@@ -47,13 +60,13 @@
   <table class="table table-striped table-fixed">
     <thead>
       <tr>
-        <th style="width: 5%;">Ordernr</th>
+        <th style="width: 7%;">Ordernr</th>
         <th style="width: 20%;">Kund</th>
         <th style="width: 20%;">Beställare</th>
-        <th style="width: 20%;">Status</th>
+        <th style="width: 15%;">Status</th>
         <th style="width: 14%;">Beställningsdatum</th>
         <th style="width: 14%;">Avslutningsdatum</th>
-        <th style="width: 7%;">Totalsumma</th>
+        <th style="width: 10%;">Totalsumma</th>
       </tr>
     </thead>
     <tbody>
@@ -72,6 +85,11 @@
       <tr class="sum">
         <td colspan="6"></td>
         <td><%= number_to_currency(Order.my_completed_orders_total_sum(current_user.karnevalist.id, @warehouse_code)) %></td>
+      </tr>
+    <% elsif @sektion_orders %>
+      <tr class="sum">
+        <td colspan="6"></td>
+        <td><%= number_to_currency(Order.sektion_completed_orders_total_sum(@sektion.id, @warehouse_code)) %></td>
       </tr>
     <% end %>
     </tbody>

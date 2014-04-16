@@ -145,9 +145,22 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def list
-    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC, id DESC")
-    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at ASC")
-    @bestallare = false
+    if params[:sektion_id]
+      redirect_to sektion_orders_path(:sektion_id => params[:sektion_id])
+    else
+      @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC, id DESC")
+      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at ASC")
+      @bestallare = false
+      render :index
+    end
+  end
+  
+  def sektion
+    @sektion = Sektion.find(params[:sektion_id])
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
+    @bestallare = true
+    @sektion_orders = true
     render :index
   end
 
