@@ -1,5 +1,7 @@
 # -*- encoding : utf-8 -*-
   Futural::Application.routes.draw do
+  resources :tests
+
   root :to => 'home#index'
 
   devise_for :users
@@ -144,6 +146,7 @@
 
   namespace :warehouse, path: 'fabriken', as: 'fabriken' do
     concerns :party_factory
+    resources :reservations
   end
 
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do

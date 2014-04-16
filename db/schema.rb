@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(version: 20140415010132) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.text     "ios_token"
     t.integer  "tilldelad_sektion2"
+    t.text     "ios_token"
     t.boolean  "aktiv",                 default: false
   end
 
@@ -208,8 +208,6 @@ ActiveRecord::Schema.define(version: 20140415010132) do
     t.datetime "updated_at"
   end
 
-  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
-
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
   end
@@ -255,6 +253,13 @@ ActiveRecord::Schema.define(version: 20140415010132) do
   end
 
   add_index "products", ["product_category_id"], name: "index_products_on_product_category_id"
+
+  create_table "reservations", force: true do |t|
+    t.datetime "start_time"
+    t.datetime "end_time"
+    t.text     "message"
+    t.integer  "karnevalist_id"
+  end
 
   create_table "roles", force: true do |t|
     t.string   "name"
