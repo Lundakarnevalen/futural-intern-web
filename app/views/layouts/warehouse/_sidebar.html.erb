@@ -5,7 +5,8 @@
         <li class="<%= 'active' if current_page?(orders_path) %>"><%= link_to "Mina ordrar", orders_path %></li>
         <li class="<%= 'active' if current_page?(new_order_path) %>"><%= link_to "Ny order", new_order_path %></li>
         <% if (((current_user.is? :sektionsadmin_fabriken) || (current_user.is? :admin_fabriken)) && @warehouse_code == 0) || (((current_user.is? :sektionsadmin_festmasteriet) || (current_user.is? :admin_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin) %>
-          <li class="<%= 'active' if current_page?(sektion_orders_path(:sektion_id => current_user.karnevalist.tilldelad_sektion)) %>"><%= link_to "Min sektions ordrar", sektion_orders_path(:sektion_id => current_user.karnevalist.tilldelad_sektion) %></li>
+          <% current_user.karnevalist.tilldelad_sektion == 399 ? sektion_id = 300 : sektion_id = current_user.karnevalist.tilldelad_sektion %>
+          <li class="<%= 'active' if current_page?(sektion_orders_path(:sektion_id => sektion_id)) %>"><%= link_to "Min sektions ordrar", sektion_orders_path(:sektion_id => sektion_id) %></li>
         <% end %>
       </ul>
 
