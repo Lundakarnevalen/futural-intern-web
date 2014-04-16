@@ -1,4 +1,5 @@
 class Warehouse::ReservationsController < Warehouse::ApplicationController
+  before_filter :find_reservation, only: [:show, :update, :delete]
   def index
     @reservations = Reservation.where(nil)
     @reservations = Reservation.between(params[:start], params[:end]) if params[:start] && params[:end]
@@ -11,9 +12,6 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   def show
   end
 
-  def new
-  end
-
   def create
   end
 
@@ -23,4 +21,8 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   def delete
   end
 
+  private
+    def find_reservation
+      @reservation = Reservation.find(params[:id])
+    end
 end
