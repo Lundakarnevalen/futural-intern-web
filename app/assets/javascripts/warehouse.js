@@ -15,7 +15,7 @@ $(function() {
     minTime: 12,
     maxTime: 22,
     hiddenDays: [6],
-
+    axisFormat: 'H:mm { - H:mm } ',
     slotEventOverlap: false,
     allDaySlot: false,
 

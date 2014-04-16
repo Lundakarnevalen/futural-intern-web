@@ -1,4 +1,21 @@
-<div></div>
-  <strong><%= @reservation.start_time %></strong>
-  <strong><%= @reservation.end_time %></strong>
+<div class="row">
+  <div class="col-md-4">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Bokning: <%= @reservation.id %></h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Bokad av: </strong> <%= "#{@reservation.karnevalist.fornamn} #{@reservation.karnevalist.efternamn}" %></p>
+        <p><strong>Sektion: </strong> <%= @sektion.name %></p>
+        <p><strong>Börjar: </strong> <%= @reservation.start_time.strftime("%Y-%m-%d %H:%M") %></p>
+        <p><strong>Slutar: </strong> <%= @reservation.end_time.strftime("%Y-%m-%d %H:%M") %></p>
+        <p><strong>Meddelande: </strong> <%= "#{@reservation.message}" %>
+
+        <% if ((current_user.is? :admin_fabriken) || (current_user.karnevalist.id == @reservation.karnevalist.id )) %>
+          <%= button_to "Ta bort", fabriken_reservation_path(@reservation), method: :delete, class: "btn btn-danger"%>
+        </tr>
+        <% end %>
+      </div>
+    </div>
+  </div>
 </div>
