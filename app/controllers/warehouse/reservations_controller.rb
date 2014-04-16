@@ -10,6 +10,7 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   end
 
   def show
+    @sektion = Sektion.find(current_user.karnevalist.tilldelad_sektion)
   end
 
   def create
@@ -27,6 +28,8 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   end
 
   def delete
+    @reservation.delete
+    redirect_to fabriken_reservations_path
   end
 
   private
