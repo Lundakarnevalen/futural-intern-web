@@ -116,6 +116,7 @@
       collection do
         get 'calendar', to: 'orders#calendar'
         get 'list', to: 'orders#list'
+        get 'sektion', to: 'orders#sektion'
         get 'search/:search_param', to: 'orders#search'
         get 'search', to: 'orders#search'
         get 'direct_selling', to: 'orders#direct_selling'
@@ -142,6 +143,7 @@
     resources :incoming_deliveries
     resources :product_categories
     resources :order_products
+    resources :partial_deliveries
   end
 
   namespace :warehouse, path: 'fabriken', as: 'fabriken' do

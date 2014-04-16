@@ -27,8 +27,8 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
   def update
   end
 
-  def delete
-    @reservation.delete
+  def destroy
+    @reservation.destroy
     redirect_to fabriken_reservations_path
   end
 

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140415010132) do
+ActiveRecord::Schema.define(version: 20140415214630) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -129,8 +129,8 @@ ActiveRecord::Schema.define(version: 20140415010132) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.integer  "tilldelad_sektion2"
     t.text     "ios_token"
+    t.integer  "tilldelad_sektion2"
     t.boolean  "aktiv",                 default: false
   end
 
@@ -183,6 +183,7 @@ ActiveRecord::Schema.define(version: 20140415010132) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "amount"
+    t.integer  "delivered_amount", default: 0
   end
 
   create_table "orders", force: true do |t|
@@ -202,11 +203,28 @@ ActiveRecord::Schema.define(version: 20140415010132) do
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id"
   add_index "orders", ["sektion_id"], name: "index_orders_on_sektion_id"
 
+  create_table "partial_deliveries", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "seller_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "partial_delivery_products", force: true do |t|
+    t.integer  "partial_delivery_id"
+    t.integer  "product_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "phones", force: true do |t|
     t.text     "google_token"
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
