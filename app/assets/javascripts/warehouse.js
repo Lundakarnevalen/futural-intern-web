@@ -23,7 +23,8 @@ $(function() {
     }],
 
     select: function(start, end, allDay) {
-      $el.fullCalendar('unselect');
+      $('input[name=reservation[start_time]]').val(start);
+      $('input[name=reservation[end_time]]').val(end);
     },
 
     eventRender: function(event, element) {
