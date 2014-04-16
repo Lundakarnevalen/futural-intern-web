@@ -102,6 +102,11 @@ class Ability
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
     end
+    
+    # Lagersystem - sektionsadmin
+    if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet)
+      can [:sektion, :read], Order, :sektion_id => user.karnevalist.tilldelad_sektion
+    end
 
     # Lagersystem - kassör
     if user.is? :kassor_festmasteriet
