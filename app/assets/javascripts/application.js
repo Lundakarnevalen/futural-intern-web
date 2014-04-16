@@ -15,14 +15,6 @@
 //= require cloud-swag
 //= require karnevalist.ui.js
 //= require turbolinks
-//= require main
-//= require jquery.ui.all
-//= require jquery.modal
-//= require jquery.cookie
-//= require bootstrap
-//= require bootstrap-datepicker/core.js
-//= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
-//= require bootstrap/modal
 //= require fullcalendar
 //= require warehouse.js
 
