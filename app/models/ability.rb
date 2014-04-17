@@ -95,17 +95,26 @@ class Ability
       can :manage, Product
       can :manage, IncomingDelivery
       can :manage, ProductCategory
+      can :manage, Reservation
     end
 
     # Lagersystem - beställare
     if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
+      can :read, Reservation
+      can [:create, :update, :destroy], Reservation, :karnevalist_id => user.karnevalist.id
     end
     
     # Lagersystem - sektionsadmin
     if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet)
-      can [:sektion, :read], Order, :sektion_id => user.karnevalist.tilldelad_sektion
+      # Show "Tåget - Vagn" instead of "Tåget - centralt"
+      if user.karnevalist.tilldelad_sektion == 399
+        sektion_id = 300
+      else
+        sektion_id = user.karnevalist.tilldelad_sektion
+      end
+      can [:sektion, :read], Order, :sektion_id => sektion_id
     end
 
     # Lagersystem - kassör

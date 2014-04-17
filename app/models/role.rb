@@ -28,8 +28,8 @@ class Role < ActiveRecord::Base
       'Kan lägga beställningar i festmästeriets lagersystem' ],
     [ :kassor_festmasteriet,
       'Kan administera vissa funktioner i festmästeriets lagersystem' ],
-    [ :sekionsadmin_fabriken,
-      'En oklar roll som inte ger någon access.' ],
+    [ :sektionsadmin_fabriken,
+      'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar).' ],
   ]
 
   def self.seed_roles
