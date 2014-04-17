@@ -143,6 +143,14 @@ tr.sum td {
     margin-right: 3px;
 }
 
+.calendar {
+    width: auto;
+    td {
+        height: 100px;
+        width: 10%;
+    }
+}
+
 @media (min-width: 768px) {
   .main {
     padding-right: 40px;

@@ -176,6 +176,7 @@ ActiveRecord::Schema.define(version: 20140416234749) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "amount"
+    t.integer  "delivered_amount", default: 0
   end
 
   create_table "orders", force: true do |t|
@@ -194,6 +195,21 @@ ActiveRecord::Schema.define(version: 20140416234749) do
 
   add_index "orders", ["karnevalist_id"], name: "index_orders_on_karnevalist_id", using: :btree
   add_index "orders", ["sektion_id"], name: "index_orders_on_sektion_id", using: :btree
+
+  create_table "partial_deliveries", force: true do |t|
+    t.integer  "order_id"
+    t.integer  "seller_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "partial_delivery_products", force: true do |t|
+    t.integer  "partial_delivery_id"
+    t.integer  "product_id"
+    t.integer  "amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "phones", force: true do |t|
     t.text     "google_token"

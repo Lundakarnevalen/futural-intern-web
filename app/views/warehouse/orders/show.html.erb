@@ -41,6 +41,12 @@
     </div>
   </div>
 </div>
+<% if (@order.status != "Levererad" && @order.status != "Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+    #@show_partial = true
+    @show_partial = false
+  else
+    @show_partial = false
+  end %> 
 <% if (@order.status == "Levererad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
     @show_return = true
   else
@@ -57,8 +63,12 @@
           <th>Mängd</th>
           <th>Styckpris</th>
           <th>Totalpris</th>
+          <!--<th>Levererat antal</th>-->
+          <% if @show_partial %>
+            <th>Dellevera antal</th>
+          <% end %>
           <% if @show_return %>
-          <th>Returnera antal<th>
+            <th>Returnera antal</th>
           <% end %>
         </tr>
       </thead>
@@ -92,7 +102,7 @@
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>
           <% if @show_return %>
-          <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 1, class: "form-control" %><td>
+            <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 1, class: "form-control" %><td>
           <% end %>
         </tr>
         <% end %>
@@ -113,5 +123,5 @@
 <% if @show_return %>
   <%= hidden_field_tag 'order_id', @order.id %>
   <%= submit_tag "Returnera varor", class: "btn btn-primary" %>
-<% end %>
+  <% end %>
 <% end %>
