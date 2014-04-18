@@ -12,7 +12,7 @@ class EventsController < ApplicationController
   end
 
   def new
-    @event = Event.new :sektion_id => current_sektioner.first
+    @event = Event.new :sektion_id => current_sektioner.first.id
   end
 
   def edit
@@ -67,7 +67,7 @@ class EventsController < ApplicationController
   # Utility
 
   def authorize_sektion ev
-    if ev.sektion.nil? || ev.sektion != sektion_or_nil
+    if ev.sektion.nil? || ! current_sektioner.include?(ev.sektion)
       authorize! :modify, Event.new
     end
   end
