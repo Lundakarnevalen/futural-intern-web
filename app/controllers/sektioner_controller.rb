@@ -12,9 +12,25 @@ class SektionerController < ApplicationController
 
   def show
     @sektion = Sektion.find params[:id]
-    @info_page = @sektion.info_page
-    if (@info_page.nil? || @info_page.empty?)
-      @info_page = "Snart kommer du kunna läsa information om din sektion här."
+    @page_content = @sektion.info_page
+    if @page_content.blank?
+      @page_content = "Snart kommer du kunna läsa information om din sektion här."
+    end
+  end
+
+  def show_english
+    @sektion = Sektion.find params[:id]
+    @page_content = @sektion.english_page
+    if @page_content.blank?
+      @page_content = "In English."
+    end
+  end
+
+  def show_contact
+    @sektion = Sektion.find params[:id]
+    @page_content = @sektion.contact_page
+    if @page_content.blank?
+      @page_content = "Such Concact"
     end
   end
 
