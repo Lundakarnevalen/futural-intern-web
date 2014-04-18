@@ -1,5 +1,8 @@
 <%= render partial: "shared/header", locals: {title: "NYHETER"} %>
 
+<% if current_user.is? :info %>
+  <%= render partial: "shared/message", locals: {title: "Hejsan info-person!", content: render_markdown(File.read('app/assets/info_clarification.txt'))} %>
+<% end %>
 <% if !(current_karnevalist?) %>
   <%= render partial: "shared/message", locals: {title: "Hoppsan!", content: "Något har blivit fel och du verkar inte vara en karnevalist, kontakta IT!"} %>
 <% elsif !(current_sektioner?) %>
