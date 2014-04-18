@@ -9,16 +9,16 @@
   </div>
   <ul class="nav">
     <% unless current_karnevalist.nil? %>
-      <li><%= link_to "Mina uppgifter", current_karnevalist %></li>
+      <li><%= link_to "Mina uppgifter", current_karnevalist, :class => "button" %></li>
       <% unless current_sektioner.empty? %>
-        <li><%= link_to "Sektionsinfo", current_karnevalist.sektion %></li>
-        <li><%= link_to "Kontakt", show_contact_sektioner_path(current_karnevalist.sektion) %></li>
-        <li><%= link_to "In English", show_english_sektioner_path(current_karnevalist.sektion) %></li>
+        <li><%= link_to "Sektionsinfo", current_karnevalist.sektion, :class => "button" %></li>
+        <li><%= link_to "Kontakt", show_contact_sektioner_path(current_karnevalist.sektion, :class => "button" ) %></li>
+        <li><%= link_to "In English", show_english_sektioner_path(current_karnevalist.sektion), :class => "button" %></li>
       <% end %>
     <% end %>
     <%# General stuff %>
     <% if can? :read, Notification %>
-        <li><%= link_to 'Pushnotiser', Notification %></li>
+        <li><%= link_to 'Pushnotiser', Notification, :class => "button" %></li>
     <% end %>
   </ul>
 </div>
@@ -35,50 +35,50 @@
     <% # Admin stuff %>
     <% if current_user.is? :admin %>
       <% if can? :read, Karnevalist %>
-        <li><%= link_to 'Karnevalistan', Karnevalist %></li>
+        <li><%= link_to 'Karnevalistan', Karnevalist, :class => "button" %></li>
       <% end %>
       <% if can? :read, Sektion %>
-        <li><%= link_to 'Sektionslistan', Sektion %></li>
+        <li><%= link_to 'Sektionslistan', Sektion, :class => "button" %></li>
       <% end %>
     <%# Sektionsadmin stuff %>
     <% elsif current_user.is? :sektionsadmin and current_karnevalist? %>
       <% if can? :read, Karnevalist %>
-        <li><%= link_to 'Karnevalistan', Karnevalist %></li>
+        <li><%= link_to 'Karnevalistan', Karnevalist, :class => "button" %></li>
       <% end %>
       <% s = current_user.karnevalist.sektion %>
       <% if can? :read, s %>
-        <li><%= link_to 'Administrera din sektion', s %></li>
+        <li><%= link_to 'Administrera din sektion', s, :class => "button" %></li>
       <% end %>
       <% if current_user.sektioner.count > 1 %>
-        <li><%= link_to 'Sektionslistan', Sektion %></li>
+        <li><%= link_to 'Sektionslistan', Sektion, :class => "button" %></li>
       <% end %>
     <% end %>
     <% # Events %>
     <% if can? :create, Event and current_karnevalist? %>
-      <li><%= link_to 'Skapa händelse', new_event_path %></li>
+      <li><%= link_to 'Skapa händelse', new_event_path, :class => "button" %></li>
     <% end %>
     <% # Posts %>
     <% if can? :create, Post and current_karnevalist? %>
-      <li><%= link_to 'Skapa nyhet', new_post_path %></li>
+      <li><%= link_to 'Skapa nyhet', new_post_path, :class => "button" %></li>
     <% end %>
     <% # Notifications %>
     <% if can? :create, Notification %>
-      <li><%= link_to 'Skicka pushnotiser', new_notification_path %></li>
+      <li><%= link_to 'Skicka pushnotiser', new_notification_path, :class => "button" %></li>
     <% end %>
     <% # Exporter %>
     <% if current_user.can? :export_all, Karnevalist %>
-      <li><%= link_to 'Exportera personuppgifter', export_all_karnevalister_path %></li>
+      <li><%= link_to 'Exportera personuppgifter', export_all_karnevalister_path, :class => "button" %></li>
     <% end %>
     <% # Checker %>
     <% if can? :check, Karnevalist %>
-      <li><%= link_to 'Karnevalistkoll', check_karnevalister_path %></li>
+      <li><%= link_to 'Karnevalistkoll', check_karnevalister_path, :class => "button" %></li>
     <% end %>
     <% # Access admin %>
     <% if can? :manage, Role %>
-      <li><%= link_to 'Administrera accesser', roles_path %></li>
+      <li><%= link_to 'Administrera accesser', roles_path, :class => "button" %></li>
     <% end %>
     <% if can? :checkout, Karnevalist %>
-      <li><%= link_to 'Checka ut karnevalist', checkout_karnevalister_path %></li>
+      <li><%= link_to 'Checka ut karnevalist', checkout_karnevalister_path, :class => "button" %></li>
     <% end %>
   </ul>
 </div>
@@ -91,17 +91,19 @@
   <ul class="nav">
     <% Event.upcoming.for_sektioner(current_sektioner).each do |e| %>
       <li>
-        <div class="block">
-          <div class="date col-xs-4">
-            <p><%= short_date e.date %></p>
-          </div>
-          <div class="information col-xs-8">
-            <%= link_to e.title, e %>
-          </div>
-        </div>
+        <%= link_to e do %>
+        <button class="fill">
+            <div class="col-xs-4">
+              <div class="block gray"><%= short_date e.date %></div>
+            </div>
+            <div class="col-xs-8">
+              <div class="block left fill invisible"><%= e.title %></div>
+            </div>
+        </button>
+        <% end %>
       </li>
     <% end %>
   </ul>
-  <%= link_to "SE FLER", events_path, :class => "button btn more" %>
+  <%= link_to "Se fler", events_path, :class => "button green" %>
 </div>
 <% end %>

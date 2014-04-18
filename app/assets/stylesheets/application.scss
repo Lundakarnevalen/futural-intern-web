@@ -13,6 +13,9 @@ $grid-float-breakpoint: $screen-custom-min;
 @import "bootstrap";
 
 $padding-main: 10px;
+$padding-button: 10px;
+$padding-mini-button: 3px;
+
 $margin-main: $padding-main;
 
 $color-red: #e65537;
@@ -67,7 +70,7 @@ $size-profile-image: 48px;
 $fontsize-headerbar: 20px;
 
 //you'll have to change these manually if any of the variables above is changed (size and position properties).
-$margin-navbar: 15px;
+$margin-navbar: 18px;
 
 
 
@@ -123,28 +126,15 @@ html {
             box-shadow: 0 $distance-shadow 0 $color-shadow;
             ul.nav {
                 li {
-                    //navigation buttons.
-                    $text-color: $color-red;
-                    $background-color: white;
-                    font-family: $font-header;
-                    font-weight: bold;
-                    font-size: $fontsize-headerbar * 0.75;
-                    text-transform: uppercase;
+                    text-align: center;
+                    margin: $margin-navbar $margin-main 0 $margin-main;
                     a {
-                        &:active {
-                            background-color: darken($background-color, 20%) !important;
-                            color: darken($text-color, 20%) !important;
-                            box-shadow: none;
-                        }
-                        &:hover {
-                            background-color: darken($background-color, 10%);
-                            color: darken($text-color, 10%);
-                        }
+                        color: $color-red;
                         padding: $padding-main;
-                        margin: $margin-navbar $margin-main 0 $margin-main;
-                        background-color: $background-color;
-                        color: $text-color;
-                        box-shadow: 0 $distance-shadow 0 $color-shadow;
+                        &:hover {
+                            background-color: white;
+                            color: $color-red;
+                        }
                     }
                 }
             }
@@ -202,31 +192,6 @@ textarea {
   font-size: 15px;
 }
 
-.btn,button {
-    $background-color: $color-green;
-    $text-color: white;
-    margin-bottom: 10px;
-    border-radius: 0px;
-    border: none;
-    font-family: $font-header;
-    box-shadow: 0 $distance-shadow 0 $color-shadow;
-    background-color: $color-green;
-    color: white;
-    box-shadow: 0 $distance-shadow 0 $color-shadow;
-    &[type=edit] {
-        background-color: $color-red;
-    }
-    &.more {
-        &:active {
-            background-color: darken($background-color, 10%) !important;
-            box-shadow: none;
-        }
-        &:hover {
-            background-color: lighten($background-color, 5%);
-        }
-    }
-}
-
 a {
     img {
         border: none;
@@ -280,16 +245,6 @@ a {
             color: inherit;
         }
     }
-    & > a {
-	    font-family: $font-header;
-        font-size: 10px;
-        //text-decoration: underline;
-        background-color:$color-red;
-        padding: 3px;
-        text-transform: uppercase;
-        box-shadow: 0 ($distance-shadow  / 2) 0 $color-shadow;
-        color: $text-color;
-    }
 }
 
 #logotype {
@@ -310,7 +265,6 @@ a {
 .dropdown {
 
   cursor: pointer;
-
   -webkit-user-select: none; //the header will be selected as text otherwise.
   user-select: none;
 
@@ -320,34 +274,11 @@ a {
             display: block;
             background-color: $color-yellow;
             li {
-                $text-color: $color-red;
-                $background-color: white;
                 min-height: $height-rowblocks;
-                font-family: $font-header;
                 font-size: 0;
                 //dirty hack to remove white-space
-                text-transform: uppercase;
-                line-height: $height-rowblocks;
                 text-align: center;
                 margin-bottom: $margin-main;
-                a {
-                    &:active {
-                        background-color: darken($background-color, 20%) !important;
-                        color: darken($text-color, 20%) !important;
-                        box-shadow: none;
-                    }
-                    &:hover {
-                        background-color: darken($background-color, 10%);
-                        color: darken($text-color, 10%);
-                    }
-                    display: inline-block;
-                    width: 300px;
-                    font-size: $fontsize-headerbar;
-                    line-height: normal;
-                    color: $text-color;
-                    background-color: $background-color;
-                    box-shadow: 0 $distance-shadow 0 $color-shadow;
-                }
             }
         }
     }
@@ -371,35 +302,35 @@ a {
         color: white;
     }
     ul {
-        .block {
-            font-family: $font-header;
-            height: $height-rowblocks;
-            width: 300px;
-            text-align: left;
-            line-height: $height-rowblocks;
-            margin: $margin-main auto;
-            background-color: white;
-            color: $color-red;
-            box-shadow: 0 $distance-shadow 0 $color-shadow;
-            overflow: hidden;
-            .information {
-              padding-left: 0;
-                a {
-                     color: $color-red;
-                }
-            }
-            .date {
-                p {
-                    margin: 0 0 0 0;
-                    padding: 0 0 0 0;
-                    background-color: $color-light;
-                    box-shadow: 0 $distance-shadow 0 $color-shadow;
-                }
-                text-align: center;
-                line-height: $height-rowblocks - $margin-main * 2;
-                margin-top: $margin-main - $distance-shadow / 2;
-            }
-        }
+        // .block {
+        //     font-family: $font-header;
+        //     height: $height-rowblocks;
+        //     width: 300px;
+        //     text-align: left;
+        //     line-height: $height-rowblocks;
+        //     margin: $margin-main auto;
+        //     background-color: white;
+        //     color: $color-red;
+        //     box-shadow: 0 $distance-shadow 0 $color-shadow;
+        //     overflow: hidden;
+        //     .information {
+        //       padding-left: 0;
+        //         a {
+        //              color: $color-red;
+        //         }
+        //     }
+        //     .date {
+        //         p {
+        //             margin: 0 0 0 0;
+        //             padding: 0 0 0 0;
+        //             background-color: $color-light;
+        //             box-shadow: 0 $distance-shadow 0 $color-shadow;
+        //         }
+        //         text-align: center;
+        //         line-height: $height-rowblocks - $margin-main * 2;
+        //         margin-top: $margin-main - $distance-shadow / 2;
+        //     }
+        // }
     }
     button {
         $text-color: white;
@@ -422,6 +353,12 @@ a {
             box-shadow: 0 $distance-shadow 0 $color-shadow;
             outline: none;
         }
+    }
+}
+
+.notification {
+    a {
+        color: $color-red;
     }
 }
 
@@ -984,3 +921,73 @@ input[type="checkbox"], input[type="radio"] {
 	}
 
 }
+
+//refactored stylesheet
+button,
+.button,
+.block {
+
+    display: inline-block;
+    font-family: $font-header;
+    font-size: 16px;
+    background-color: darken(white, 3%);
+    color: $color-red;
+    text-transform: uppercase;
+    padding: $padding-button;
+    border: none;
+    outline: none;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
+    margin-bottom: $distance-shadow * 2;
+    text-decoration: none;
+
+    &.fill { width: 100%; }
+    &.mini {
+        font-size: 10px;
+        padding: $padding-mini-button;
+        box-shadow: 0 ($distance-shadow / 2) 0 $color-shadow;
+    }
+
+    &.green { 
+        background-color: $color-green; 
+        color: white;
+    }
+    &.blue {
+        background-color: $color-blue;
+        color: white;
+    }
+    &.red {
+        background-color: $color-red;
+        color: white;
+    }
+    &.gray { background-color: $color-light; }
+
+    &.invisible {
+        background-color: transparent;
+        box-shadow: none;
+        visibility: visible !important;
+    }
+    &.left { text-align: left; }
+
+    &:hover { 
+        opacity: 0.9;
+    }
+    &:active { 
+        opacity: 0.8;
+        box-shadow: none;
+    }
+
+}
+
+div.block {
+    margin-bottom: 0 !important;
+}
+
+// .block {
+//     display:inline-block;
+//     padding:$padding-main;
+//     font-family: $font-header;
+//     color:$color-red;
+//     background-color: white;
+//     box-shadow: 0 $distance-shadow 0 $color-shadow;
+//     &.fill { width: 100%; }
+// }
