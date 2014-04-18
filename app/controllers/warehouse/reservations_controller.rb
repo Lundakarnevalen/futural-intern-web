@@ -19,7 +19,7 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
       if @reservation.save
         format.json { render json: @reservation, status: :created }
       else
-        format.json { render json: @reservation.errors, status: :unprocessable_entity }
+        format.json { render json: { errors: @reservation.errors.full_messages } , status: :unprocessable_entity }
       end
     end
   end
