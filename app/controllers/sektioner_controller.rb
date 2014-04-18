@@ -26,12 +26,20 @@ class SektionerController < ApplicationController
     end
   end
 
+  def edit_english
+    @sektion = Sektion.find params[:id]
+  end
+
   def show_contact
     @sektion = Sektion.find params[:id]
     @page_content = @sektion.contact_page
     if @page_content.blank?
       @page_content = "Such Concact"
     end
+  end
+
+  def edit_contact
+    @sektion = Sektion.find params[:id]
   end
 
   def export
@@ -69,6 +77,6 @@ class SektionerController < ApplicationController
   private
 
   def sektion_params
-    params.require(:sektion).permit(:info_page)
+    params.require(:sektion).permit(:info_page, :english_page, :contact_page)
   end
 end
