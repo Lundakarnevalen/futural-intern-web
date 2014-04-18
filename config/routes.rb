@@ -59,6 +59,8 @@
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
       get ':id/aktiva', :to => 'sektioner#aktiva'
       post ':id/edit', :to => 'sektioner#update'
+      get ':id/contact', :to => 'sektioner#show_contact', :as => 'show_contact'
+      get ':id/english', :to => 'sektioner#show_english', :as => 'show_english'
     end
   end
 
