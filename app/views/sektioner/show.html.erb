@@ -1,12 +1,5 @@
 <%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
-<div class="image-container col-xs-4">
-  <div class="message-image">
-    <%= image_tag("logotyper/#{@sektion.name}.png") %>
-  </div>
-  <div class="sektion">
-    <%= @sektion.name %>
-  </div>
-</div>
+<%= render 'sektion_image' %>
 <% if (current_user.can? :edit, @sektion) || (current_user.can? :change_info, @sektion) %>
 <div class="white-container col-xs-12">
   <% if (current_user.can? :edit, @sektion) %>
@@ -19,7 +12,7 @@
 </div>
 <% end %>
   <div class="white-container col-xs-12">
-    <%= render_markdown @info_page %>
+    <%= render_markdown @page_content unless @page_content.blank? %>
   </div>
 <% s = current_sektioner %>
 <% if can? :edit, s %>
