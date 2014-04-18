@@ -1,0 +1,10 @@
+Hejsan person-som-får-lägga-upp-saker-på-sidan! För att förhindra fortsatt förvirring förklaras här de olika delarna av sidan.
+
+En ***nyhet*** är som ett blogginlägg som personer i sektionen ser precis nedanför denna texten, testa att göra en!
+
+En ***händelse*** är ett event, fest, skojjig aktivitet, som har ett datum och som man kan anmäla sig till om man vill.
+
+En ***pushnotis*** är en liten notis som skickas ut till alla karnevalisters telefoner via internapparna.
+
+I många av fälten på sidan kan man formattera texten med något som heter markdown, för fetstilt etc.
+Det står under vilka fält man kan göra det på, med en länk till hur det fungerar.
