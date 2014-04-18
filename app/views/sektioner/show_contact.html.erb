@@ -2,5 +2,7 @@
 <%= render 'sektion_image' %>
 
 <div class="white-container col-xs-12">
-    <%= render_markdown @page_content unless @page_content.blank? %>
+  <%= render_markdown @page_content unless @page_content.blank? %>
+  <%= "Här står tyvärr ingen kontaktinfo än =( " if @page_content.blank? %>
+  <%= button_to "Redigera", edit_contact_sektioner_path(params[:id]), {:class => "btn button btn-small", :type => "edit" } %>
 </div>
