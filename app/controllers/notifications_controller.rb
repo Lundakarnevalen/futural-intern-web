@@ -71,7 +71,10 @@ class NotificationsController < ApplicationController
             'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
           }
         }
-        @response = gcm.send_notification(reg_ids, options)
+        # Don't actually send unless in production mode.
+        if Rails.env.production?
+          @response = gcm.send_notification(reg_ids, options)
+        end
       end
       redirect_to :action => 'index'
     else
