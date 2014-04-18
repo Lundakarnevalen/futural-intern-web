@@ -19,7 +19,7 @@
 </div>
 <% end %>
   <div class="white-container col-xs-12">
-    <%= (render_markdown @info_page).html_safe %>
+    <%= render_markdown @info_page %>
   </div>
 <% s = current_sektioner %>
 <% if can? :edit, s %>
