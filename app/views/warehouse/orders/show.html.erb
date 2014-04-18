@@ -52,6 +52,7 @@
   else
     @show_return = false
   end %> 
+<%= form_tag return_products_order_path, method: :put do |f| %>
 <div class="row">
 <div class="col-lg-12">
   <div class="table-responsive">
@@ -73,7 +74,6 @@
         </tr>
       </thead>
       <tbody>
-        <%= form_tag return_products_order_path, method: :put do |f| %>
           <% @order.products.each do |p| %>
             <% amount = p.amount(@order.id) %>
         <tr>
@@ -102,7 +102,7 @@
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>
           <% if @show_return %>
-            <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 1, class: "form-control" %><td>
+            <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 0, class: "form-control" %><td>
           <% end %>
         </tr>
         <% end %>
@@ -123,5 +123,5 @@
 <% if @show_return %>
   <%= hidden_field_tag 'order_id', @order.id %>
   <%= submit_tag "Returnera varor", class: "btn btn-primary" %>
-  <% end %>
+<% end %>
 <% end %>
