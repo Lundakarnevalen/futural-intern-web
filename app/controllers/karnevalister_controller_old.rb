@@ -25,15 +25,15 @@ class KarnevalisterController < ApplicationController
       return false
     end
 
-    if @karnevalist.avklarat_steg == 0
-      redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
-    elsif @karnevalist.avklarat_steg == 1
-      redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
-    elsif @karnevalist.avklarat_steg == 2
-      redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
-    elsif @karnevalist.utcheckad
-      redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
-    end
+    #if @karnevalist.avklarat_steg == 0
+    #  redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
+    #elsif @karnevalist.avklarat_steg == 1
+    #  redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
+    #elsif @karnevalist.avklarat_steg == 2
+    #  redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
+    #elsif @karnevalist.utcheckad
+    #  redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+    #end
   end
 
   def step1
