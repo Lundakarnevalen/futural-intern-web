@@ -15,7 +15,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def reservation_time
-    errors.add(:start_time, "Starttiden har redan inträffat") if DateTime.now > self.start_time
+    errors.add(:starttiden, "har redan inträffat") if DateTime.now > self.start_time
   end
 
   def as_json(options = {})
