@@ -30,7 +30,6 @@ gem 'sprockets', '2.11.0'
 gem 'bluecloth'
 gem 'quiet_assets'
 gem 'sanitize'
-#gem 'oink'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 
