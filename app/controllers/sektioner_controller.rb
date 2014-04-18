@@ -21,7 +21,7 @@ class SektionerController < ApplicationController
   def show_english
     @sektion = Sektion.find params[:id]
     @page_content = @sektion.english_page
-    @page_content = "In English." if @page_content.blank?
+    @page_content = "In English" if @page_content.blank?
   end
 
   def edit_english
@@ -31,7 +31,7 @@ class SektionerController < ApplicationController
   def show_contact
     @sektion = Sektion.find params[:id]
     @page_content = @sektion.contact_page
-    @page_content = "Such Concact" if @page_content.blank?
+    @page_content = "Kontaktinfo" if @page_content.blank?
   end
 
   def edit_contact
