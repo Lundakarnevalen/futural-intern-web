@@ -17,7 +17,7 @@ class Warehouse::ReservationsController < Warehouse::ApplicationController
     @reservation = Reservation.new(reservation_params)
     respond_to do |format|
       if @reservation.save
-        format.json { render json: @reservation, status: :created, location: @user}
+        format.json { render json: @reservation, status: :created }
       else
         format.json { render json: @reservation.errors, status: :unprocessable_entity }
       end
