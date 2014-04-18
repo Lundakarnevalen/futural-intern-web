@@ -743,6 +743,9 @@ input[type="checkbox"], input[type="radio"] {
             color: white;
             border-radius: 0 0 0 0;
         }
+        &[type=edit] {
+            background-color: $color-red;
+        }
     }
     .options {
         width: 100%;

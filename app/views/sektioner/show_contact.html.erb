@@ -1,0 +1,8 @@
+<%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
+<%= render 'sektion_image' %>
+
+<div class="white-container col-xs-12">
+  <%= render_markdown @page_content unless @page_content.blank? %>
+  <%= "Här står tyvärr ingen kontaktinfo än =( " if @page_content.blank? %>
+  <%= link_to "Redigera", edit_contact_sektioner_path(params[:id]), {method: "post" ,:class => "btn btn-small", type: "edit" } %>
+</div>

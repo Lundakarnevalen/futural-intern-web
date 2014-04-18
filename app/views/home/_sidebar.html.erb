@@ -11,7 +11,9 @@
     <% unless current_karnevalist.nil? %>
       <li><%= link_to "Mina uppgifter", current_karnevalist %></li>
       <% unless current_sektioner.empty? %>
-        <li><%= link_to "Sektionsinfo", current_user.karnevalist.sektion %></li>
+        <li><%= link_to "Sektionsinfo", current_karnevalist.sektion %></li>
+        <li><%= link_to "Kontakt", show_contact_sektioner_path(current_karnevalist.sektion) %></li>
+        <li><%= link_to "In English", show_english_sektioner_path(current_karnevalist.sektion) %></li>
       <% end %>
     <% end %>
     <%# General stuff %>
