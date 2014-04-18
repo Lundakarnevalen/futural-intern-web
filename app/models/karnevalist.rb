@@ -155,7 +155,7 @@ class Karnevalist < ActiveRecord::Base
     if fornamn.present? && efternamn.present?
       "#{fornamn} #{efternamn}"
     else
-      "NAMNLÖS KARNEVALIST #{self.hash}"
+      "NAMNLÖS KARNEVALIST #{self.hash.abs.to_s(16).upcase}"
     end
   end
 
