@@ -4,8 +4,8 @@
 <div class="white-container col-xs-12">
   <% if (current_user.can? :edit, @sektion) %>
     <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "btn button"}%>
-    <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button"} %>
-    <%= link_to 'Aktiva karnevalister', { :action => :aktiva }, {:class => "btn button"} %>
+    <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button", data: {no_turbolink: true}} %>
+    <%= link_to 'Aktiva karnevalister', { :action => :aktiva }, {:class => "btn button", data: {no_turbolink: true}} %>
   <% end %>
   <% if (current_user.can? :change_info, @sektion) %>
     <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
