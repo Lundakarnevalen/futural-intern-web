@@ -13,6 +13,8 @@ class Role < ActiveRecord::Base
       'Kan administrera nyheter, händelser och allmän info för alla sektioner' ],
     [ :sektionsadmin,
       'Kan se personuppgifter för medlemmarna i sin sektion' ],
+    [ :sektionsadmin_lite,
+      'Kan markera karnevalister som aktiva (sektionschefer, souschefer och kommunikationschefer)' ],
     [ :exporter,
       'Kan se personuppgifter för alla karnevalister' ],
     [ :checker,
