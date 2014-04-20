@@ -88,6 +88,15 @@ class Ability
         can [:manage], Sektion, :id => user.sektioner
       end
     end
+    
+    # Sektionsadmin Lite
+    if user.is? :sektionsadmin_lite
+      if user.karnevalist?
+        can [:edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
+        can [:edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
+        can [:read, :aktiva], Sektion, :id => user.sektioner
+      end
+    end
 
     # Lagersystem - admin
     if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet)
