@@ -42,8 +42,7 @@
   </div>
 </div>
 <% if (@order.status != "Levererad" && @order.status != "Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
-    #@show_partial = true
-    @show_partial = false
+    @show_partial = true
   else
     @show_partial = false
   end %> 
@@ -51,8 +50,8 @@
     @show_return = true
   else
     @show_return = false
-  end %> 
-<%= form_tag return_products_order_path, method: :put do |f| %>
+  end %>
+<%= form_for @partial_delivery, url: partial_deliveries_path do |partial| %>
 <div class="row">
 <div class="col-lg-12">
   <div class="table-responsive">
@@ -64,7 +63,7 @@
           <th>Mängd</th>
           <th>Styckpris</th>
           <th>Totalpris</th>
-          <!--<th>Levererat antal</th>-->
+          <th>Levererat antal</th>
           <% if @show_partial %>
             <th>Dellevera antal</th>
           <% end %>
@@ -101,6 +100,16 @@
           <td><%= "#{amount} #{p.unit}" %></td>
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>
+          <td><%= p.delivered_amount(@order.id) %></td>
+          <% if @show_partial %>
+            <%= partial.hidden_field :order_id, :value => @order.id %>
+            <td>
+              <%= partial.fields_for :partial_delivery_products do |pd| %>
+                <%= pd.number_field :amount, class: "form-control", min: 0, style: "width: 100%;" %>
+                <%= pd.hidden_field :product_id, :value => p.id %>
+              <% end %>
+            </td>
+          <% end %>
           <% if @show_return %>
             <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 0, class: "form-control" %><td>
           <% end %>
@@ -123,5 +132,8 @@
 <% if @show_return %>
   <%= hidden_field_tag 'order_id', @order.id %>
   <%= submit_tag "Returnera varor", class: "btn btn-primary" %>
+<% end %>
+<%if @show_partial %>
+  <%= partial.submit "Delleverera", class: "btn btn-primary" %>
 <% end %>
 <% end %>
