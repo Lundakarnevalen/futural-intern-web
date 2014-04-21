@@ -36,8 +36,8 @@ class Ability
     can [:create, :new, :step1, :step1_post], Karnevalist
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
-    can [:read], Event
-    can [:read], Sektion
+    can [:read, :sign_up, :attend], Event
+    can [:read, :show_english, :show_contact], Sektion
 
     can :read, Notification, :recipient_id => 0
 
@@ -70,7 +70,7 @@ class Ability
       can :manage, Event, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can :new, Notification
-      can :change_info, Sektion, :id => user.sektioner
+      can [:edit, :update, :edit_contact, :edit_english], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
 
     # Global info

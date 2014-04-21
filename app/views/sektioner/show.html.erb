@@ -1,13 +1,13 @@
 <%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
 <%= render 'sektion_image' %>
-<% if (current_user.can? :edit, @sektion) || (current_user.can? :change_info, @sektion) %>
+<% if (current_user.is? :sektionsadmin) || (current_user.is? :info) %>
 <div class="white-container col-xs-12">
-  <% if (current_user.can? :edit, @sektion) %>
+  <% if (current_user.is? :sektionsadmin) %>
     <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "btn button"}%>
     <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "btn button", data: {no_turbolink: true}} %>
     <%= link_to 'Aktiva karnevalister', { :action => :aktiva }, {:class => "btn button", data: {no_turbolink: true}} %>
   <% end %>
-  <% if (current_user.can? :change_info, @sektion) %>
+  <% if (current_user.is? :info) %>
     <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "btn button" %>
   <% end %>
 </div>
