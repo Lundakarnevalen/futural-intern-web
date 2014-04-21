@@ -2,7 +2,7 @@
   <%= form_for @post do |f| %>
     <fieldset>
       <div class="selection_box">
-        <%= f.label :sektion, "Visa för sektion: " %>
+        <%= f.label :sektion_id, "Visa för sektion: " %>
         <% if (current_user.is? :admin) || (current_user.is? :global_info) %>
           <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
           { :include_blank => '[Visa för alla]' }, :selected => selected_section %>
