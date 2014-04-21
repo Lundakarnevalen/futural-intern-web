@@ -39,8 +39,11 @@ describe Post do
   end
 
   describe '.create' do
-    it 'can actually create a sektion' do
-      FactoryGirl.create(:sektion).should_not raise_error
+    it 'can create post with long text' do
+      str = 'text ' * 1000
+      p = FactoryGirl.create :post, :content => str
+      p.reload
+      p.content.should == str
     end
   end
 end
