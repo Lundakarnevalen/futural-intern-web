@@ -15,7 +15,7 @@
 
         <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin) %>
         <tr>
-          <% if @levererad == false && @makulerad == false && @part_delivered == false %>
+          <% if !@levererad && !@makulerad && !@part_delivered %>
               <td>
                 <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
                   <%= f.hidden_field :status, value: "Levererad" %>
@@ -24,14 +24,21 @@
               </td>
               <td>
                 <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
-                  <%= f.hidden_field :status, value: "Dellevererad" %>
-                  <%= f.submit "Delleverera", class: "btn btn-default" %>
+                  <%= f.hidden_field :status, value: "Makulerad" %>
+                  <%= f.submit "Makulera", class: "btn btn-danger" %>
+                <% end %>
+              </td>
+          <% elsif @part_delivered %>
+              <td>
+                <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
+                  <%= f.hidden_field :status, value: "Levererad" %>
+                  <%= f.submit "Leverera resterande", class: "btn btn-success" %>
                 <% end %>
               </td>
               <td>
                 <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
-                  <%= f.hidden_field :status, value: "Makulerad" %>
-                  <%= f.submit "Makulera", class: "btn btn-danger" %>
+                  <%= f.hidden_field :status, value: "Dellevererad/Makulerad" %>
+                  <%= f.submit "Makulera resterande", class: "btn btn-danger" %>
                 <% end %>
               </td>
           <% end %>
@@ -51,6 +58,8 @@
   else
     @show_return = false
   end %>
+
+<% if !@show_return %>
 <%= form_for @partial_delivery, url: partial_deliveries_path do |partial| %>
 <div class="row">
 <div class="col-lg-12">
@@ -61,15 +70,11 @@
           <th>Varunamn</th>
           <th>Kategori</th>
           <th>Mängd</th>
-          <th>(varav rest)</th>
           <th>Styckpris</th>
           <th>Totalpris</th>
           <th>Levererat antal</th>
           <% if @show_partial %>
             <th>Dellevera antal</th>
-          <% end %>
-          <% if @show_return %>
-            <th>Returnera antal</th>
           <% end %>
         </tr>
       </thead>
@@ -99,7 +104,6 @@
           </td>
           <td><%= p.product_category.name %></td>
           <td><%= "#{amount} #{p.unit}" %></td>
-          <td>0</td>
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>
           <td><%= p.delivered_amount(@order.id) %></td>
@@ -113,9 +117,6 @@
                 <%= pd.hidden_field :product_id, :value => p.id %>
               <% end %>
             </td>
-          <% end %>
-          <% if @show_return %>
-            <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 0, class: "form-control" %><td>
           <% end %>
         </tr>
         <% end %>
@@ -131,12 +132,74 @@
   </div>
 </div>
 <% end %>
-<% if @show_return %>
-  <%= hidden_field_tag 'order_id', @order.id %>
-  <%= submit_tag "Returnera varor", class: "btn btn-primary" %>
-<% end %>
-<%if @show_partial %>
+<% if @show_partial %>
   <%= partial.submit "Delleverera", class: "btn btn-primary" %>
+<% end %>
+<% end %>
+
+<% elsif @show_return %>
+<%= form_tag return_products_order_path, method: :put do |f| %>
+<div class="row">
+<div class="col-lg-12">
+  <div class="table-responsive">
+    <table class="table table-striped" id="table">
+      <thead>
+        <tr>
+          <th>Varunamn</th>
+          <th>Kategori</th>
+          <th>Mängd</th>
+          <th>Styckpris</th>
+          <th>Totalpris</th>
+          <th>Levererat antal</th>
+          <th>Returnera antal</th>
+        </tr>
+      </thead>
+      <tbody>
+          <% @order.products.each do |p| %>
+            <% amount = p.amount(@order.id) %>
+        <tr>
+          <td>
+            <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+<!-- Modal -->
+<div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+      </div>
+    </div>
+  </div>
+</div>
+          </td>
+          <td><%= p.product_category.name %></td>
+          <td><%= "#{amount} #{p.unit}" %></td>
+          <td><%= number_to_currency(p.sale_price) %></td>
+          <td><%= number_to_currency(p.total_price(amount)) %></td>
+          <td><%= p.delivered_amount(@order.id) %></td>
+          <td><%= number_field_tag "return_amount[#{p.id}]", nil, min: 0, class: "form-control" %><td>
+        </tr>
+        <% end %>
+      </tbody>
+    </table>
+  </div>
+</div>
+</div>
+<% if !@order.comment.blank? %>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <p><strong>Kommentar:</strong><br><%= @order.comment %></p>
+  </div>
+</div>
+<% end %>
+<%= hidden_field_tag 'order_id', @order.id %>
+<%= submit_tag "Returnera varor", class: "btn btn-primary" %>
 <% end %>
 <% end %>
 

@@ -184,7 +184,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
               product.update_attributes(:stock_balance_stand_by => 0)
             end
             order_product.amount = order_product.amount - return_amount.to_i
-            order_product.update_attributes(:amount => order_product.amount)
+            order_product.update_attributes(:amount => order_product.amount, :delivered_amount => order_product.amount)
           end
         end
       end
@@ -206,10 +206,12 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       elsif @order.status == "Levererad"
         @order.order_products.each do |order_product|
           product = Product.find(order_product.product_id)
+          amount = order_product.amount - order_product.delivered_amount
           in_stock = product.stock_balance_ordered
-          if in_stock >= order_product.amount.to_i
-            in_stock -= order_product.amount.to_i
+          if in_stock >= amount
+            in_stock -= amount
             product.update_attributes(:stock_balance_ordered => in_stock)
+            order_product.update_attributes(:delivered_amount => order_product.amount)
           end
         end
         @order.finished_at = DateTime.now
