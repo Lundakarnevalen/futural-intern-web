@@ -107,9 +107,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.order_products.each do |order_product|
         product = Product.find(order_product.product_id)
         in_stock = product.stock_balance_not_ordered
-        if in_stock >= order_product.amount.to_i
-          in_stock -= order_product.amount.to_i
+        if in_stock >= order_product.amount
+          in_stock -= order_product.amount
           product.update_attributes(:stock_balance_not_ordered => in_stock)
+          order_product.update_attributes(:delivered_amount => order_product.amount)
         end
       end
       redirect_to order_path(@order)
