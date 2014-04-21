@@ -21,7 +21,7 @@ module ApplicationHelper
   end
 
   def render_markdown text
-    BlueCloth.new(text).to_html
+    Sanitize.clean(BlueCloth.new(text).to_html, Sanitize::Config::BASIC).html_safe
   end
 
   def short_date date

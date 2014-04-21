@@ -3,8 +3,9 @@
   <ul>
     <% @roles.each do |r| %>
       <h3><%= r.name.upcase %></h3>
+      <p><i><%= r.description || '[Beskrivning saknas]' %>.</i></p>
       <% if r.users.empty? %>
-        <i>Inga</i>
+        <p>Inga innehavare</p>
       <% end %>
       <% r.users.each do |u| %>
         <% k = u.karnevalist %>

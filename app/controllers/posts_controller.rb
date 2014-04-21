@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   authorize_resource
 
   def new
-    @post = Post.new :sektion_id => current_sektioner.first
+    @post = Post.new :sektion_id => current_sektioner.first.id
   end
 
   def create
@@ -36,7 +36,7 @@ class PostsController < ApplicationController
   end
 
   def authorize_sektion post
-    if post.sektion.nil? || current_sektioner.include?(post.sektion)
+    if post.sektion.nil? || ! current_sektioner.include?(post.sektion)
       authorize! :modify, Post.new
     end
   end

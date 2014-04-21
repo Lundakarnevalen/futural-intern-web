@@ -12,10 +12,30 @@ class SektionerController < ApplicationController
 
   def show
     @sektion = Sektion.find params[:id]
-    @info_page = @sektion.info_page
-    if (@info_page.nil? || @info_page.empty?)
-      @info_page = "Snart kommer du kunna läsa information om din sektion här."
+    @page_content = @sektion.info_page
+    if @page_content.blank?
+      @page_content = "Snart kommer du kunna läsa information om din sektion här."
     end
+  end
+
+  def show_english
+    @sektion = Sektion.find params[:id]
+    @page_content = @sektion.english_page
+    @page_content = "In English" if @page_content.blank?
+  end
+
+  def edit_english
+    @sektion = Sektion.find params[:id]
+  end
+
+  def show_contact
+    @sektion = Sektion.find params[:id]
+    @page_content = @sektion.contact_page
+    @page_content = "Kontaktinfo" if @page_content.blank?
+  end
+
+  def edit_contact
+    @sektion = Sektion.find params[:id]
   end
 
   def export
@@ -31,11 +51,8 @@ class SektionerController < ApplicationController
 
   def update
     @sektion = Sektion.find params[:id]
-    p = params[:sektion]
-    if @sektion.update_attributes(p)
-      flash[:success] = "Sektionsinfo redigerat"
-    end
-    redirect_to @sektion
+    @sektion.update_attributes sektion_params
+    handle_errors @sektion, 'Sektion uppdaterad'
   end
 
 
@@ -53,6 +70,6 @@ class SektionerController < ApplicationController
   private
 
   def sektion_params
-    params.require(:sektion).permit(:info_page)
+    params.require(:sektion).permit!
   end
 end
