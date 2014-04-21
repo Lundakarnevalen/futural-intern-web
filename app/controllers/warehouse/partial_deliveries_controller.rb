@@ -16,6 +16,8 @@ class Warehouse::PartialDeliveriesController < Warehouse::ApplicationController
     @partial_delivery.seller_id = current_user.karnevalist.id
     if @partial_delivery.save
       order = Order.find(@partial_delivery.order_id)
+      order.status = "Dellevererad"
+      order.save
       @partial_delivery.partial_delivery_products.each do |partial_product|
         product = Product.find(partial_product.product_id)
         in_stock = product.stock_balance_ordered
