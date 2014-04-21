@@ -66,8 +66,8 @@ class Ability
 
     # Sektion-local info
     if user.is?(:info) && user.karnevalist.present? && user.karnevalist.sektion.present?
-      can :manage, Post, :sektion => user.karnevalist.sektion
-      can :manage, Event, :sektion => user.karnevalist.sektion
+      can :manage, Post, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+      can :manage, Event, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can :new, Notification
       can :change_info, Sektion, :id => user.sektioner
