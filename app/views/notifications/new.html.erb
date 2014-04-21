@@ -18,7 +18,7 @@
         <%= f.label :recipient_id, "Mottagare" %>
         <%= f.select :recipient_id, options_for_select([['Alla', 0]])+options_from_collection_for_select(current_user.karnevalist.tilldelade_sektioner, :id, :name) %>
       </div>
-    <% elsif current_user.is? :sektionsadmin and current_user.karnevalist? %>
+    <% elsif current_user.is? :info and current_user.karnevalist? %>
         <%= f.label :recipient_id, "Mottagare" %>
         <%= f.select :recipient_id, options_from_collection_for_select(current_user.karnevalist.tilldelade_sektioner, :id, :name) %>
     <% end %>
@@ -34,7 +34,7 @@
     </div>
 
     <div class="form-controls">
-      <%= f.submit "Skicka" %>
+      <%= f.submit (Rails.env.production? ? 'Skicka' : 'Fejka') %>
     </div>
   <% end %>
 </div>

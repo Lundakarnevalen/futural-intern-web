@@ -4,7 +4,7 @@
 	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
 		<span class="required-field"><img src="/images/required-field.png" alt="*"/></span>
-		<%= f.text_field :personnummer, { :pattern => '[0-9]*', :placeholder => "ÅÅMMDDNNNN", :required => true, :disabled => disabled }  %>
+                <%= f.text_field :personnummer, { :pattern => '[0-9]{6}[TP0-9][0-9]{3}', :placeholder => "ÅÅMMDDNNNN", :required => true, :disabled => disabled }  %>
 	</div>
 
 	<div class="form-group">

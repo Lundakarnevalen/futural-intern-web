@@ -11,7 +11,9 @@
     <% unless current_karnevalist.nil? %>
       <li><%= link_to "Mina uppgifter", current_karnevalist %></li>
       <% unless current_sektioner.empty? %>
-        <li><%= link_to "Sektionsinfo", current_user.karnevalist.sektion %></li>
+        <li><%= link_to "Sektionsinfo", current_karnevalist.sektion %></li>
+        <li><%= link_to "Kontakt", show_contact_sektioner_path(current_karnevalist.sektion) %></li>
+        <li><%= link_to "In English", show_english_sektioner_path(current_karnevalist.sektion) %></li>
       <% end %>
     <% end %>
     <%# General stuff %>
@@ -50,6 +52,10 @@
       <% if current_user.sektioner.count > 1 %>
         <li><%= link_to 'Sektionslistan', Sektion %></li>
       <% end %>
+    <% end %>
+    <% # Aktiva karnevalister %>
+    <% if can? :aktiva, Sektion and current_karnevalist? and !current_sektioner.empty? %>
+      <li><%= link_to 'Aktiva karnevalister', {controller: "sektioner", action: "aktiva", id: current_user.karnevalist.sektion}, data: {no_turbolink: true} %></li>
     <% end %>
     <% # Events %>
     <% if can? :create, Event and current_karnevalist? %>
