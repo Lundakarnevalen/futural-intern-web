@@ -61,6 +61,7 @@
           <th>Varunamn</th>
           <th>Kategori</th>
           <th>Mängd</th>
+          <th>(varav rest)</th>
           <th>Styckpris</th>
           <th>Totalpris</th>
           <th>Levererat antal</th>
@@ -90,7 +91,7 @@
         <%= render partial: 'warehouse/products/show', locals: { p: p } %>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
       </div>
     </div>
   </div>
@@ -98,6 +99,7 @@
           </td>
           <td><%= p.product_category.name %></td>
           <td><%= "#{amount} #{p.unit}" %></td>
+          <td>0</td>
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>
           <td><%= p.delivered_amount(@order.id) %></td>
@@ -105,7 +107,9 @@
             <%= partial.hidden_field :order_id, :value => @order.id %>
             <td>
               <%= partial.fields_for :partial_delivery_products do |pd| %>
-                <%= pd.number_field :amount, class: "form-control", min: 0, style: "width: 100%;" %>
+                <% if p.stock_balance_not_ordered > 0 %>
+                  <%= pd.number_field :amount, class: "form-control", min: 0, style: "width: 100%;" %>
+                <% end %>
                 <%= pd.hidden_field :product_id, :value => p.id %>
               <% end %>
             </td>
@@ -121,13 +125,11 @@
 </div>
 </div>
 <% if !@order.comment.blank? %>
-<hr>
 <div class="row">
   <div class="col-xs-12 col-sm-12 col-md-6">
     <p><strong>Kommentar:</strong><br><%= @order.comment %></p>
   </div>
 </div>
-<hr>
 <% end %>
 <% if @show_return %>
   <%= hidden_field_tag 'order_id', @order.id %>
@@ -136,4 +138,49 @@
 <%if @show_partial %>
   <%= partial.submit "Delleverera", class: "btn btn-primary" %>
 <% end %>
+<% end %>
+
+<% if !@partial_deliveries.blank? %>
+<hr>
+<h3>Leveranshistorik</h3>
+<div class="row">
+<div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-9">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Utförd av</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @partial_deliveries.each do |p| %>
+        <% k = Karnevalist.find(p.seller_id) %>
+        <tr>
+          <td>
+            <a data-toggle="modal" href="#delivery<%= p.id %>"><%= p.created_at.strftime("%Y-%m-%d %H:%M") %></a>
+<!-- Modal -->
+<div class="modal fade" id="delivery<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title text-info" id="delivery<%= p.id %>Label">Leveransinfo</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'warehouse/partial_deliveries/show', locals: { p: p, k: k } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </td>
+        <td><%= "#{k.fornamn} #{k.efternamn}" %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>
 <% end %>
