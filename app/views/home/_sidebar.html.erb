@@ -54,7 +54,7 @@
       <% end %>
     <% end %>
     <% # Aktiva karnevalister %>
-    <% if can? :aktiva, Sektion and current_karnevalist? %>
+    <% if can? :aktiva, Sektion and current_karnevalist? and !current_sektioner.empty? %>
       <li><%= link_to 'Aktiva karnevalister', {controller: "sektioner", action: "aktiva", id: current_user.karnevalist.sektion}, data: {no_turbolink: true} %></li>
     <% end %>
     <% # Events %>
