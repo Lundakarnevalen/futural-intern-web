@@ -103,6 +103,7 @@ class Ability
       can :manage, Order
       can :manage, Product
       can :manage, IncomingDelivery
+      can :manage, PartialDelivery
       can :manage, ProductCategory
       can :manage, Reservation
     end
@@ -111,6 +112,7 @@ class Ability
     if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
+      can :read, PartialDelivery
       can :read, Reservation
       can [:create, :update, :destroy], Reservation, :karnevalist_id => user.karnevalist.id
     end
