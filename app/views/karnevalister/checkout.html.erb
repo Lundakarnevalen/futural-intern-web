@@ -23,7 +23,9 @@
   </script>
 
     <h3>Pappersansökan</h3>
-    <%= link_to "Formulär - Pappersansökan", {controller: "karnevalister", action: "checkout_paper"}, data: {no_turbolink: true} %>
+    <button class="green">
+      <%= link_to "Formulär - Pappersansökan", {controller: "karnevalister", action: "checkout_paper"}, data: {no_turbolink: true} %>
+    </button>
     <h3>Digital ansökan (Android/iPhone)</h3>
     <%= render 'search_form' %>
     <% if !@karnevalister.blank? %>
