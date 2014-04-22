@@ -9,7 +9,7 @@
     <ul>
       <% @karnevalister.each do |k| %>
         <li>
-          <a href=<%= url_for k %>>
+          <a href=<%= url_for k %> class="fill button left">
           	<%= "#{k.name} " %>
           	<span class="personnummer"><%= k.personnummer %></span>
           </a>
