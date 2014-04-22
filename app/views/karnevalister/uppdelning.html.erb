@@ -38,12 +38,12 @@
             </form>
           </td>
           <td>
-            <% if !k.snalla_sektion.blank? %>
+            <% if !k.snalla_sektion.blank? && k.snalla_sektion != 0 %>
                 <%= Sektion.find(k.snalla_sektion).name %>
             <% end %>
           </td>
           <td>
-            <% if !k.snalla_intresse.blank? %>
+            <% if !k.snalla_intresse.blank? && k.snalla_intresse != 0 %>
                 <%= Intresse.find(k.snalla_intresse).name %>
             <% end %>
           </td>
