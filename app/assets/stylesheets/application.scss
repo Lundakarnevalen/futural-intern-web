@@ -304,10 +304,10 @@ html {
 
 /*SIGN IN*/
 
-// .clouds {
-//     background-image: url("../assets/clouds.png");
-//     background-color: $color-blue;
-// }
+.clouds {
+    background-image: url("../assets/clouds.png");
+    background-color: $color-blue;
+}
 
 .cloud-container {
     position: static;
@@ -316,6 +316,7 @@ html {
     overflow: hidden;
     top: 0;
     left: 0;
+    background-color: $color-blue;
 }
 
 .cloud-bg {
@@ -822,7 +823,7 @@ a {
 }
 
 .white-container,
-.container {
+.block-container {
     color: $color-red;
     background-color: white;
     box-shadow: 0 $distance-shadow 0 $color-shadow;
