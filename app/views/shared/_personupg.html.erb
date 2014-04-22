@@ -1,5 +1,5 @@
 <% disabled = false unless disabled %>
-<h2>Personuppgifter</h2>
+<h2 class="light">Personuppgifter</h2>
 
 	<div class="form-group">
 		<%= f.label :personnummer, 'Personnummer' %>
@@ -8,7 +8,7 @@
 	</div>
 
 	<div class="form-group">
-		<h3>Namn <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
+		<h3 class="light">Namn <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
 		<%= f.label :fornamn, 'Förnamn', :class => "structural" %>
 		<%= f.text_field :fornamn, :placeholder => "Förnamn", :required => true, :disabled => disabled %>
 		<%= f.label :efternamn, 'Efternamn', :class => "structural" %>
@@ -16,7 +16,7 @@
 	</div>
 
 	<div class="form-group">
-		<h3>Kön <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
+		<h3 class="light">Kön <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
 
 		<div class="radio-group">
 			<% Kon.order('id desc').all.each do |k| %>
@@ -29,7 +29,7 @@
 	</div>
 
 	<div class="form-group">
-		<h3>Adress <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
+		<h3 class="light">Adress <span class="required-field"><img src="/images/required-field.png" alt="*"/></span></h3>
 
 		<%= f.label :gatuadress, 'Gatuadress', :class => "structural" %>
 		<%= f.text_field :gatuadress, :placeholder => "Gatuadress", :required => true, :disabled => disabled %>
