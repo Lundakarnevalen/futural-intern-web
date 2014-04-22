@@ -75,14 +75,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
           elsif in_stock >= order_product.amount.to_i
             stock_balance_ordered = product.stock_balance_ordered + order_product.amount.to_i
             in_stock -= order_product.amount.to_i
-            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-            product.update_attributes(:stock_balance_not_ordered => in_stock)
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_not_ordered => in_stock)
           else
             stock_balance_ordered = product.stock_balance_ordered + in_stock
             stock_balance_stand_by = order_product.amount.to_i - in_stock
-            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-            product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
-            product.update_attributes(:stock_balance_not_ordered => 0)
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_stand_by => stock_balance_stand_by, :stock_balance_not_ordered => 0)
           end
         end
       redirect_to order_path(@order)
@@ -167,28 +164,25 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def return_products
     params['return_amount'].each do |product_id, return_amount|
       if !return_amount.blank?
-        product = Product.where(:id => product_id).first
+        product = Product.find(product_id)
         stand_by = product.stock_balance_stand_by
         order_products = OrderProduct.where(:order_id => params['order_id'], :product_id => product_id)
         order_products.each do |order_product|
-          if (product.amount(params['order_id']) >= return_amount.to_i)
+          if (order_product.delivered_amount >= return_amount.to_i)
             if stand_by == 0
               stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
               product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-            elsif stand_by >= new_amount.to_i
+            elsif stand_by >= return_amount.to_i
               stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
               stand_by -= return_amount.to_i
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_stand_by => stand_by)
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_stand_by => stand_by)
             else
               stock_balance_ordered = product.stock_balance_ordered + stand_by
               stock_balance_not_ordered = return_amount.to_i - stand_by
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-              product.update_attributes(:stock_balance_stand_by => 0)
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_not_ordered => stock_balance_not_ordered, :stock_balance_stand_by => 0)
             end
-            order_product.amount = order_product.amount - return_amount.to_i
-            order_product.update_attributes(:amount => order_product.amount, :delivered_amount => order_product.amount)
+            order_product_amount = order_product.amount - return_amount.to_i
+            order_product.update_attributes(:amount => order_product_amount, :delivered_amount => order_product_amount)
           end
         end
       end
@@ -203,7 +197,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def update
     if params[:order][:status]
       @order.update_attributes(order_params)
-      if @order.status == "Makulerad"
+      if (@order.status == "Makulerad") || (@order.status == "Dellevererad/Makulerad")
         update_warehouse(@order.id)
         @order.finished_at = DateTime.now
         @order.save
@@ -244,31 +238,26 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     def order_params
       params.require(:order).permit(:warehouse_code, :status, :delivery_date, :comment, :sektion_id, :karnevalist_id, order_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
-    def update_warehouse order_id # TODO: Fixa makulering och delleverans/makulering
+    def update_warehouse order_id
       order_products = OrderProduct.where(:order_id => order_id)
       order_products.each do |o|
-        product = Product.where(:id => o.product_id).first
+        product = Product.find(o.product_id)
         stand_by = product.stock_balance_stand_by
-        return_amount = o.amount
-        if (product.amount(order_id) >= return_amount.to_i)
-            if (stand_by == 0) && (product.stock_balance_ordered == 0)
-              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-            elsif stand_by >= return_amount.to_i
-              stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
-              stand_by -= return_amount.to_i
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_stand_by => stand_by)
-            else
-              temp = return_amount - product.stock_balance_stand_by
-              stock_balance_ordered = product.stock_balance_ordered - temp
-              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-              product.update_attributes(:stock_balance_stand_by => 0)
-            end
-          end
+        return_amount = o.amount - o.delivered_amount
+        stock_balance_ordered = product.stock_balance_ordered - return_amount.to_i
+        product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+        if stand_by == 0
+          stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
+          product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
+        elsif stand_by >= return_amount.to_i
+          stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
+          stand_by -= return_amount.to_i
+          product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_stand_by => stand_by)
+        else
+          stock_balance_ordered = product.stock_balance_ordered + stand_by
+          stock_balance_not_ordered = return_amount.to_i - stand_by
+          product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_not_ordered => stock_balance_not_ordered, :stock_balance_stand_by => 0)
+        end
       end
-
     end
 end
