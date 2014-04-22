@@ -36,7 +36,7 @@
     <%= select_tag :tilldelad_klar, options_for_select([['Alla', 'all'], ['Klar', 'true'], ['Ej klar', 'false']]) %>
   </div>
   <div class="form-group">
-    <%= submit_tag 'Sök' %>
+    <%= submit_tag 'Sök', :class => "fill green button" %>
   </div>
 <% end %>
 <% if @karnevalister.present? %>
