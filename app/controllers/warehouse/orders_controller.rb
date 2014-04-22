@@ -20,7 +20,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     # TODO Detta borde vara en metod i modellen.
     if @order.status == "Levererad"
         @levererad = true;
-    elsif @order.status == "Makulerad"
+    elsif @order.status == "Makulerad" || @order.status == "Dellevererad/Makulerad"
         @makulerad = true
     elsif @order.status == "Dellevererad"
         @part_delivered = true
@@ -212,7 +212,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
             in_stock -= amount
             product.update_attributes(:stock_balance_ordered => in_stock)
             order_product.update_attributes(:delivered_amount => order_product.amount)
-            partial_delivery.partial_delivery_products.create(product_id: product.id, amount: order_product.amount)
+            partial_delivery.partial_delivery_products.create(product_id: product.id, amount: amount)
           end
         end
         @order.finished_at = DateTime.now
