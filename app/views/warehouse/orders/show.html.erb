@@ -48,12 +48,12 @@
     </div>
   </div>
 </div>
-<% if (@order.status != "Levererad" && @order.status != "Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+<% if (@order.status != "Levererad" && @order.status != "Makulerad" && @order.status != "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
     @show_partial = true
   else
     @show_partial = false
   end %> 
-<% if (@order.status == "Levererad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+<% if (@order.status == "Levererad" || @order.status == "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
     @show_return = true
   else
     @show_return = false
