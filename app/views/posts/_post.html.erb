@@ -11,9 +11,9 @@
     </div>
     <% unless post.id.nil? %>
       <div class="form-controls">
-          <%= link_to "läs mer", post, class: "btn btn-small" %>
+          <%= link_to "läs mer", post, class: "green button" %>
           <% if (current_user.can? :edit, post) %>
-            <%= link_to "redigera", edit_post_path(post), class: "btn btn-small", type: "edit" %>
+            <%= link_to "redigera", edit_post_path(post), class: "button", type: "edit" %>
           <% end %>
       </div>
     <% end %>

@@ -85,9 +85,6 @@ html {
         label {
           margin-top: $margin-main;
         }
-        select {
-//          border: none;
-        }
         ol {
             //Fixar så att posts inte har randompadding till vänster
             padding: 0;
@@ -145,10 +142,6 @@ html {
                 &:focus {
                     background-color: transparent;
                 }
-            }
-            .container-fluid {
-              //padding-bottom: 14px;
-              //box-shadow: 0 $distance-shadow 0 $color-shadow;
             }
         }
     }
@@ -214,7 +207,6 @@ a {
         width: 48px;
         height: 48px;
         margin-top: 13.5px;
-        box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
     }
 }
 
@@ -309,15 +301,9 @@ p {
 
 #left {
     background-color: $color-light;
-    & > h2 {
+    & > h1 {
         margin-top: 0;
-    }
-    & > .header {
-        margin-bottom: $margin-main * 3;
-        padding-bottom: $padding-main * 3;
-        background-color: white;
-        color: $color-red;
-        text-transform: uppercase;
+        font-size: x-large; //because of h1, but we don't want the same size (semantics).
     }
     .row:last-child {
         margin-bottom: $margin-main;
@@ -694,31 +680,31 @@ input[type="checkbox"], input[type="radio"] {
 
 	&.confirm-destroy {
 
-		.button {
-			$height: 50px;
-			display: inline-block;
-			text-align: center;
-			line-height: $height;
-			font-size: 18px;
-			background-color: $color-red;
-			color: white;
-			padding: 0 0 0 0;
-			min-height: $height;
-			width: 100%;
-			text-transform: uppercase;
-		}
+		// .button {
+		// 	$height: 50px;
+		// 	display: inline-block;
+		// 	text-align: center;
+		// 	line-height: $height;
+		// 	font-size: 18px;
+		// 	background-color: $color-red;
+		// 	color: white;
+		// 	padding: 0 0 0 0;
+		// 	min-height: $height;
+		// 	width: 100%;
+		// 	text-transform: uppercase;
+		// }
 
 	}
 
-	.button {
+	// .button {
 
-		padding: $padding-main;
-		color: $color-red;
-		font-family: $font-header;
-		text-transform: uppercase;
-		box-shadow: 0 $distance-shadow 0 $color-shadow;
+	// 	padding: $padding-main;
+	// 	color: $color-red;
+	// 	font-family: $font-header;
+	// 	text-transform: uppercase;
+	// 	box-shadow: 0 $distance-shadow 0 $color-shadow;
 
-	}
+	// }
 
 }
 
@@ -825,6 +811,8 @@ input[type="checkbox"], input[type="radio"] {
 //refactored stylesheet
 button,
 .button,
+.btn,
+input[type="submit"],
 .block {
 
     display: inline-block;
@@ -834,6 +822,7 @@ button,
     text-transform: uppercase;
     padding: $padding-button;
     border: none;
+    text-align: center;
     outline: none;
     box-shadow: 0 $distance-shadow 0 $color-shadow;
     margin-bottom: $distance-shadow * 2;
@@ -875,7 +864,9 @@ button,
 }
 
 button,
-.button {
+.button,
+.btn,
+input[type="submit"] {
     font-size: 16px;
     &:hover { 
         opacity: 0.9;
@@ -910,9 +901,7 @@ div.block { margin-bottom: 0 !important; }
             }
         }
     }
-    & h3 {
-        line-height: $_HEIGHT_HEADER;
-    }
+    h3 { line-height: $_HEIGHT_HEADER; }
     & > .header {
         height: $_HEIGHT_HEADER;
         line-height: $_HEIGHT_HEADER;
@@ -922,6 +911,10 @@ div.block { margin-bottom: 0 !important; }
         display: none;
     }
 
+}
+
+img {
+    &.shadow { box-shadow: 0 $distance-shadow 0 $color-shadow; }
 }
 
 h1,
@@ -943,25 +936,3 @@ h6 {
     &.red { color:$color-red; }
 
 }
-
-/*.header {
-            font-weight: bold;
-            font-size: $fontsize-headerbar;
-            height: $height-headerbar;
-            margin-bottom: 20px;
-            line-height: $height-headerbar;
-            text-align: center;
-            background-color: white;
-            color: $color-red;
-            box-shadow: 0px $distance-shadow 0px $color-shadow;
-        }*/
-
-// .block {
-//     display:inline-block;
-//     padding:$padding-main;
-//     font-family: $font-header;
-//     color:$color-red;
-//     background-color: white;
-//     box-shadow: 0 $distance-shadow 0 $color-shadow;
-//     &.fill { width: 100%; }
-// }
