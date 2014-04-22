@@ -16,10 +16,10 @@
       <ul class="nav navbar-nav">
         <%# Warehouse stuff %>
         <% if (current_user.is? :admin_fabriken) || (current_user.is? :bestallare_fabriken) || (current_user.is? :admin) %>
-          <li><%= link_to 'Lagersystem Fabriken', fabriken_orders_path, data: {no_turbolink: true} %></li>
+          <li><%= link_to 'Lagersystem Fabriken', fabriken_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
         <% end %>
         <% if (current_user.is? :admin_festmasteriet) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :kassor_festmasteriet) || (current_user.is? :admin) %>
-          <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path, data: {no_turbolink: true} %></li>
+          <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
         <% end %>
       </ul>
       <div class="nav navbar-nav navbar-right">
@@ -37,7 +37,7 @@
             <% message = "Hej, " + current_karnevalist.fornamn %>
           <% end %>
           <h5><%= link_to message, current_karnevalist %></h5>
-          <%= sign_out_link 'Logga ut' %>
+          <%= link_to "Logga ut", destroy_user_session_path, :method => :delete, :class => "button red mini" %>
         </div>
       </div>
       <div class="visible-sm visible-xs">
