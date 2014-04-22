@@ -82,20 +82,6 @@ html {
         background-color: $color-light;
         //the main background.
         padding-bottom: $padding-main * 2;
-        label {
-          margin-top: $margin-main;
-        }
-        ol {
-            //Fixar så att posts inte har randompadding till vänster
-            padding: 0;
-            margin: 0;
-        }
-
-        .yellow-background {
-            padding-top: 0px;
-            margin-top: 10px;
-            background-color: $color-yellow;
-        }
 
         .navbar {
             height: $height-navbar;
@@ -123,9 +109,7 @@ html {
                 border: none !important;
                 border-radius: 0 0 0 0 !important;
                 box-shadow: none;
-                &:hover {
-                    background-color: transparent;
-                }
+                &:hover,
                 &:focus {
                     background-color: transparent;
                 }
@@ -134,55 +118,24 @@ html {
     }
 }
 
-a {
-    img {
-        border: none;
-    }
-}
-
-.check-response {
-
-	$height:100px;
-
-	font-family: $font-header;
-	font-size: $fontsize-headerbar;
-	width: 100%;
-	height: $height;
-	line-height: $height;
-	text-align: center;
-	text-transform: uppercase;
-	&.check-fail {
-		background-color: $color-red;
-		color: white;
-
-	}
-	&.check-success {
-		background-color: green;
-		color: $color-green;
-
-	}
-
-}
-
 #profile-image-container {
+    $_PROFILE_SIZE: 48px;
     text-align: right;
     img {
-        width: 48px;
-        height: 48px;
+        width: $_PROFILE_SIZE;
+        height: $_PROFILE_SIZE;
         margin-top: 13.5px;
         box-shadow: 0 $distance-shadow 0 $color-shadow;
     }
 }
 
 #profile-information-container {
-
-    $text-color: white;
     h5 {
         font-family: $font-profile;
         font-weight: normal;
         padding-top: 20px;
         margin: 0 0 3px 0;
-        color: $text-color;
+        color: white;
         a {
             color: inherit;
         }
@@ -230,39 +183,6 @@ a {
 #admin {
     margin-bottom: $margin-main;
     box-shadow: 0 $distance-shadow 0 $color-shadow;
-}
-
-p {
-    &.alert,
-    &.notice {
-    	cursor: n-resize;
-        $width: 320px;
-        font-family: $font-header;
-        opacity: 0.95;
-        z-index: 10000 !important;
-        position: fixed;
-        top: 0px;
-        left: 50%;
-        max-width: $width;
-        line-height: $height-flash * 0.75;
-        padding: 0 $padding-main;
-        margin: 0 0 0 -1 * ($width / 2 - $padding-main / 2);
-        text-align: center;
-        font-weight: bold;
-        text-transform: uppercase;
-        border: none !important;
-        border-radius: 0;
-        //border-radius: 0 0 5px 5px !important;
-        box-shadow: 0 $distance-shadow 0 $color-shadow;
-    }
-    &.alert {
-        background-color: $color-red !important;
-        color: white;
-    }
-    &.notice {
-        background-color: $color-yellow !important;
-        color: black !important;
-    }
 }
 
 #left {
@@ -336,7 +256,7 @@ p {
         .message-image {
             max-height: 160px;
             max-width: 160px;
-            box-shadow: 0 6px 0 rgba(0, 0, 0, 0.25);
+            box-shadow: 0 $distance-shadow 0 $color-shadow;
             padding-right: 0px;
             padding-left: 0px;
             margin-right: 10px;
@@ -357,47 +277,37 @@ p {
 
 #right {
     background-color: $color-blue;
+    margin-top: $height-navbar !important;
     //box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 #left {
     margin-top: $height-navbar * 1.25 !important;
 }
 
-#right {
-    margin-top: $height-navbar !important;
-
-}
-
 .kollamedlem {
     td {
         vertical-align: middle !important;
+        &.medlem-status {
+            text-align: center;
+            font-weight: bold;
+            font-size: 200%;
+        }
     }
 
-    td.medlem-status {
-        text-align: center;
-        font-weight: bold;
-        font-size: 200%;
+    span {
+        &.medlem-ok { color: #108800; }
+        &.medlem-fail { color: #f12e1f; }
+        &.medlem-wait { color: #f4ca1c; }
     }
 
-    span.medlem-ok {
-        color: #108800;
-    }
-
-    span.medlem-fail {
-        color: #f12e1f;
-    }
-
-    span.medlem-wait {
-        color: #f4ca1c;
-    }
 }
 
 /*SIGN IN*/
 
-.clouds {
-    background-image: url("../assets/clouds.png");
-    background-color: $color-blue;
-}
+// .clouds {
+//     background-image: url("../assets/clouds.png");
+//     background-color: $color-blue;
+// }
 
 .cloud-container {
     position: static;
@@ -544,23 +454,6 @@ p {
 
 	}
 
-}
-
-.white-container {
-    margin-bottom: $margin-main * 2;
-    padding: $padding-main;
-
-    background-color: white;
-    color: $color-red;
-    box-shadow: 0 $distance-shadow 0 $color-shadow;
-    h1, h2, h3, h4, h5, h6 { //otherwise, the text will karateslap your eyes.
-        &.light { color: lighten(#000, 25%); }
-    }
-    .notice {
-      padding-top: 0px;
-      margin-top: 10px;
-      background-color: $color-yellow;
-    }
 }
 
 #registration {
@@ -711,58 +604,6 @@ input[type="submit"] {
         box-shadow: none;
     }
 }
-
-// input {
-//         box-shadow: 0 $distance-shadow 0 $color-shadow;
-//         &[type=email],
-//         &[type=password] {
-//             background-color: $color-gray;
-//             color: white;
-//         }
-//         &[type=submit] {
-//             width: 250px;
-//             margin-top: $margin-main;
-//             font-family: $font-header;
-//             text-transform: uppercase;
-//             background-color: $color-green;
-//             color: white;
-//             border-radius: 0 0 0 0;
-//         }
-//         &[type=edit] {
-//             background-color: $color-red;
-//         }
-//     }
-// input, textarea {
-//     &[type=submit] {
-//         width: auto;
-//         margin-top: $margin-main;
-//         font-family: $font-header;
-//         text-transform: uppercase;
-//         background-color: $color-green;
-//         color: white;
-//         border-radius: 0 0 0 0;
-//     }
-// }
-// .form-group,
-// .form-controls {
-
-//     input[type=submit] {
-
-//         $height: 50px;
-
-//         width: 100%;
-//         min-height: $height;
-//         line-height: $height;
-//         padding: 0 0 0 0;
-
-//     }
-
-// }
-
-
-    // input[type="submit"] {
-    //     margin-bottom: $margin-main * 2;
-    // }
 
 div.block { margin-bottom: 0 !important; }
 
@@ -925,6 +766,36 @@ h6 {
 
 p {
     font-family: $font-text;
+    &.alert,
+    &.notice {
+        cursor: n-resize;
+        $width: 320px;
+        font-family: $font-header;
+        opacity: 0.95;
+        z-index: 10000 !important;
+        position: fixed;
+        top: 0px;
+        left: 50%;
+        max-width: $width;
+        line-height: $height-flash * 0.75;
+        padding: 0 $padding-main;
+        margin: 0 0 0 -1 * ($width / 2 - $padding-main / 2);
+        text-align: center;
+        font-weight: bold;
+        text-transform: uppercase;
+        border: none !important;
+        border-radius: 0;
+        //border-radius: 0 0 5px 5px !important;
+        box-shadow: 0 $distance-shadow 0 $color-shadow;
+    }
+    &.alert {
+        background-color: $color-red !important;
+        color: white;
+    }
+    &.notice {
+        background-color: $color-yellow !important;
+        color: black !important;
+    }
 }
 
 h1,
@@ -945,6 +816,35 @@ label {
 a { 
     color: inherit; 
     &:hover { color: inherit;}
+
+    img { border: none; }
+
+}
+
+.white-container,
+.container {
+    color: $color-red;
+    background-color: white;
+    box-shadow: 0 $distance-shadow 0 $color-shadow;
+
+    //remove margin and padding in the future.
+    margin-bottom: $margin-main * 2;
+    padding: $padding-main;
+    &.yellow,
+    .yellow-background {
+        color: black;
+        background-color: $color-yellow;
+        padding-top: 0;
+    }
+    .notice {
+        //remove padding and margin in the future.
+        padding-top: 0px;
+        margin-top: 10px;
+        background-color: $color-yellow;
+    }
+    h1, h2, h3, h4, h5, h6 { //otherwise, the text will karateslap your eyes out of your skull.
+        &.light { color: lighten(black, 25%); }
+    }
 }
 
 //identifiers
