@@ -144,6 +144,7 @@ html {
                 margin: 0 0 0 0;
                 border: none !important;
                 border-radius: 0 0 0 0 !important;
+                box-shadow: none;
                 &:hover {
                     background-color: transparent;
                 }
@@ -247,67 +248,18 @@ a {
 #bs-example-navbar-collapse-1 {
     background-color: $color-blue;
     border-top: none;
-    //box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 
 #inviter,
 #evenemang {
     text-align: center;
-    .header {
-        background-color: lighten($color-blue, 10%);
-        color: white;
-    }
-    ul {
-        // .block {
-        //     font-family: $font-header;
-        //     height: $height-rowblocks;
-        //     width: 300px;
-        //     text-align: left;
-        //     line-height: $height-rowblocks;
-        //     margin: $margin-main auto;
-        //     background-color: white;
-        //     color: $color-red;
-        //     box-shadow: 0 $distance-shadow 0 $color-shadow;
-        //     overflow: hidden;
-        //     .information {
-        //       padding-left: 0;
-        //         a {
-        //              color: $color-red;
-        //         }
-        //     }
-        //     .date {
-        //         p {
-        //             margin: 0 0 0 0;
-        //             padding: 0 0 0 0;
-        //             background-color: $color-light;
-        //             box-shadow: 0 $distance-shadow 0 $color-shadow;
-        //         }
-        //         text-align: center;
-        //         line-height: $height-rowblocks - $margin-main * 2;
-        //         margin-top: $margin-main - $distance-shadow / 2;
-        //     }
-        // }
-    }
-    button {
-        $text-color: white;
-        $background-color: $color-green;
-        &.more {
-            &:active {
-                background-color: darken($background-color, 10%) !important;
-                box-shadow: none;
-            }
+    ul > li {
+        &:first-child { padding-top: 10px; }
+        a {
+            padding: 0 10px;
             &:hover {
-                background-color: lighten($background-color, 5%);
+                background-color: inherit;
             }
-            height: $height-button;
-            font-family: $font-header;
-            padding: $padding-main;
-            margin: 0 0 $margin-main 0;
-            background-color: $background-color;
-            color: $text-color;
-            border: none;
-            box-shadow: 0 $distance-shadow 0 $color-shadow;
-            outline: none;
         }
     }
 }
@@ -456,7 +408,7 @@ p {
 
 #right {
     background-color: $color-blue;
-    box-shadow: 0 $distance-shadow 0 $color-shadow;
+    //box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 #left {
     margin-top: $height-navbar * 1.25 !important;
