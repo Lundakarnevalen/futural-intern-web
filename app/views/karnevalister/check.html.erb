@@ -4,14 +4,14 @@
     <div class=form-group>
       <%= label_tag :q, 'Personnummer eller karnevalist-id' %>
       <%= text_field_tag :q, @q %>
-      <%= submit_tag 'Kolla' %>
+      <%= submit_tag 'Kolla', :class => "fill green" %>
     </div>
   <% end %>
 
   <% if @q %>
     <% if @karnevalist.present? && @karnevalist.tilldelade_sektioner.present? %>
-      <div class='check-success check-response'>
-        <p><%= @q %>: Karnevalist!</p>
+      <div class='fill green block'>
+        <%= @q %>: Karnevalist!
         <% if false %>
           <p>
             (<%= spell_out_list @karnevalist.tilldelade_sektioner.map &:name %>)
@@ -19,8 +19,8 @@
         <% end %>
       </div>
     <% else %>
-      <div class='check-fail check-response'>
-        <p><%= @q %>: Ej karnevalist</p>
+      <div class='fill red block'>
+        <%= @q %>: Ej karnevalist
       </div>
     <% end %>
   <% end %>
