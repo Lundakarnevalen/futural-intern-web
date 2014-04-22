@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140418081051) do
+ActiveRecord::Schema.define(version: 20140419104633) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -232,7 +232,7 @@ ActiveRecord::Schema.define(version: 20140418081051) do
 
   create_table "posts", force: true do |t|
     t.string   "title"
-    t.string   "content"
+    t.text     "content"
     t.integer  "sektion_id"
     t.integer  "karnevalist_id"
     t.datetime "created_at"
@@ -297,9 +297,9 @@ ActiveRecord::Schema.define(version: 20140418081051) do
     t.string  "name",         null: false
     t.integer "podio_id"
     t.integer "podio_sub_id"
-    t.string  "info_page"
-    t.string  "english_page"
-    t.string  "contact_page"
+    t.text    "info_page"
+    t.text    "english_page"
+    t.text    "contact_page"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
