@@ -20,13 +20,13 @@
     <% end %>
 
     <% if can? :manage, Role %>
-      <%= link_to 'Administrera accesser', karnevalist_roles_path(@karnevalist), :class => "fill blue button" %>
+      <%= link_to 'Administrera accesser', karnevalist_roles_path(@karnevalist), :class => "blue button" %>
     <% end %>
 
     <% if can? :destroy, @karnevalist %>
       <div class='form-group confirm-destroy'>
         <%= link_to "Ta bort #{@karnevalist.name}",
-                    @karnevalist, :method => :delete, :confirm => "Är du helt säker på att du vill ta bort #{@karnevalist.fornamn}?\nDETTA GÅR INTE ATT ÅNGRA!", :class => 'fill red button' %>
+                    @karnevalist, :method => :delete, :confirm => "Är du helt säker på att du vill ta bort #{@karnevalist.fornamn}?\nDETTA GÅR INTE ATT ÅNGRA!", :class => 'red button' %>
       </div>
     <% end %>
 
@@ -58,7 +58,7 @@
     </div>
 
     <div class="form-controls">
-      <%= f.submit'Spara' %>
+      <%= f.submit 'Spara', :class => "fill green button" %>
     </div>
   <% end %>
 </div>
