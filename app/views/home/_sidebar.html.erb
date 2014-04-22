@@ -2,23 +2,25 @@
 <!--Sektion-->
 <div id="sektion" class="dropdown toggled row">
   <div class="header col-xs-12">
-    <div class="col-xs-10">INFORMATION</div>
+    <div class="col-xs-10">
+      <h3 class="blue center inline">Information</h3>
+    </div>
     <div class="col-xs-2">
       <%=image_tag "hamburger-icon.svg", {width: 16} %>
     </div>
   </div>
   <ul class="nav">
     <% unless current_karnevalist.nil? %>
-      <li><%= link_to "Mina uppgifter", current_karnevalist, :class => "button" %></li>
-      <% unless current_sektioner.empty? %>
-        <li><%= link_to "Sektionsinfo", current_karnevalist.sektion, :class => "button" %></li>
-        <li><%= link_to "Kontakt", show_contact_sektioner_path(current_karnevalist.sektion, :class => "button" ) %></li>
-        <li><%= link_to "In English", show_english_sektioner_path(current_karnevalist.sektion), :class => "button" %></li>
-      <% end %>
+    <li><%= link_to "Mina uppgifter", current_karnevalist, :class => "button" %></li>
+    <% unless current_sektioner.empty? %>
+    <li><%= link_to "Sektionsinfo", current_karnevalist.sektion, :class => "button" %></li>
+    <li><%= link_to "Kontakt", show_contact_sektioner_path(current_karnevalist.sektion), :class => "button" %></li>
+    <li><%= link_to "In English", show_english_sektioner_path(current_karnevalist.sektion), :class => "button" %></li>
+    <% end %>
     <% end %>
     <%# General stuff %>
     <% if can? :read, Notification %>
-        <li><%= link_to 'Pushnotiser', Notification, :class => "button" %></li>
+    <li><%= link_to 'Pushnotiser', Notification, :class => "button" %></li>
     <% end %>
   </ul>
 </div>
@@ -26,86 +28,86 @@
 <% if current_user.roles.any? %>
 <div id="admin" class="dropdown toggled row">
   <div class="header col-xs-12">
-    <div class="col-xs-10">ADMIN</div>
+    <div class="col-xs-10">
+      <h3 class="blue center inline">Admin</h3>
+    </div>
     <div class="col-xs-2">
-      <%=image_tag "hamburger-icon.svg", {width: 16} %>
+      <%= image_tag "hamburger-icon.svg", {width: 16} %>
     </div>
   </div>
   <ul class="nav">
     <% # Admin stuff %>
     <% if current_user.is? :admin %>
-      <% if can? :read, Karnevalist %>
-        <li><%= link_to 'Karnevalistan', Karnevalist, :class => "button" %></li>
-      <% end %>
-      <% if can? :read, Sektion %>
-        <li><%= link_to 'Sektionslistan', Sektion, :class => "button" %></li>
-      <% end %>
+    <% if can? :read, Karnevalist %>
+    <li><%= link_to 'Karnevalistan', Karnevalist, :class => "button" %></li>
+    <% end %>
+    <% if can? :read, Sektion %>
+    <li><%= link_to 'Sektionslistan', Sektion, :class => "button" %></li>
+    <% end %>
     <%# Sektionsadmin stuff %>
     <% elsif current_user.is? :sektionsadmin and current_karnevalist? %>
-      <% if can? :read, Karnevalist %>
-        <li><%= link_to 'Karnevalistan', Karnevalist, :class => "button" %></li>
-      <% end %>
-      <% s = current_user.karnevalist.sektion %>
-      <% if can? :read, s %>
-        <li><%= link_to 'Administrera din sektion', s, :class => "button" %></li>
-      <% end %>
-      <% if current_user.sektioner.count > 1 %>
-        <li><%= link_to 'Sektionslistan', Sektion, :class => "button" %></li>
-      <% end %>
+    <% if can? :read, Karnevalist %>
+    <li><%= link_to 'Karnevalistan', Karnevalist, :class => "button" %></li>
+    <% end %>
+    <% s = current_user.karnevalist.sektion %>
+    <% if can? :read, s %>
+    <li><%= link_to 'Administrera din sektion', s, :class => "button" %></li>
+    <% end %>
+    <% if current_user.sektioner.count > 1 %>
+    <li><%= link_to 'Sektionslistan', Sektion, :class => "button" %></li>
+    <% end %>
     <% end %>
     <% # Aktiva karnevalister %>
     <% if can? :aktiva, Sektion and current_karnevalist? and !current_sektioner.empty? %>
-      <li><%= link_to 'Aktiva karnevalister', {controller: "sektioner", action: "aktiva", id: current_user.karnevalist.sektion}, data: {no_turbolink: true} %></li>
+    <li><%= link_to 'Aktiva karnevalister', {controller: "sektioner", action: "aktiva", id: current_user.karnevalist.sektion}, data: {no_turbolink: true}, :class => "button" %></li>
     <% end %>
     <% # Events %>
     <% if can? :create, Event and current_karnevalist? %>
-      <li><%= link_to 'Skapa händelse', new_event_path, :class => "button" %></li>
+    <li><%= link_to 'Skapa händelse', new_event_path, :class => "button" %></li>
     <% end %>
     <% # Posts %>
     <% if can? :create, Post and current_karnevalist? %>
-      <li><%= link_to 'Skapa nyhet', new_post_path, :class => "button" %></li>
+    <li><%= link_to 'Skapa nyhet', new_post_path, :class => "button" %></li>
     <% end %>
     <% # Notifications %>
     <% if can? :create, Notification %>
-      <li><%= link_to 'Skicka pushnotiser', new_notification_path, :class => "button" %></li>
+    <li><%= link_to 'Skicka pushnotiser', new_notification_path, :class => "button" %></li>
     <% end %>
     <% # Exporter %>
     <% if current_user.can? :export_all, Karnevalist %>
-      <li><%= link_to 'Exportera personuppgifter', export_all_karnevalister_path, :class => "button" %></li>
+    <li><%= link_to 'Exportera personuppgifter', export_all_karnevalister_path, :class => "button" %></li>
     <% end %>
     <% # Checker %>
     <% if can? :check, Karnevalist %>
-      <li><%= link_to 'Karnevalistkoll', check_karnevalister_path, :class => "button" %></li>
+    <li><%= link_to 'Karnevalistkoll', check_karnevalister_path, :class => "button" %></li>
     <% end %>
     <% # Access admin %>
     <% if can? :manage, Role %>
-      <li><%= link_to 'Administrera accesser', roles_path, :class => "button" %></li>
+    <li><%= link_to 'Administrera accesser', roles_path, :class => "button" %></li>
     <% end %>
     <% if can? :checkout, Karnevalist %>
-      <li><%= link_to 'Checka ut karnevalist', checkout_karnevalister_path, :class => "button" %></li>
+    <li><%= link_to 'Checka ut karnevalist', checkout_karnevalister_path, :class => "button" %></li>
     <% end %>
   </ul>
 </div>
 <% end %>
 <!--Evenemang-->
 <div id="evenemang" class="row">
-  <div class="header col-xs-12">
-    EVENEMANG
-  </div>
+  <h3 class="fill light-blue inline center block">Evenemang</h3>
   <ul class="nav">
     <% Event.upcoming.for_sektioner(current_sektioner).each do |e| %>
-      <li>
-        <%= link_to e do %>
-        <button class="fill">
-            <div class="col-xs-4">
-              <div class="block gray"><%= short_date e.date %></div>
-            </div>
-            <div class="col-xs-8">
-              <div class="block left fill invisible"><%= e.title %></div>
-            </div>
-        </button>
-        <% end %>
-      </li>
+    <li>
+      <%= link_to e do %>
+      <button class="fill">
+      <div class="col-xs-4">
+        <div class="block gray"><%= short_date e.date %></div>
+      </div>
+      <div class="col-xs-8">
+        <div class="block left fill invisible"><%= e.title %></div>
+      </div>
+      </button>
+      <% end %>
+    </li>
     <% end %>
   </ul>
   <%= link_to "Se fler", events_path, :class => "button green" %>
