@@ -9,12 +9,13 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def show
-    #@partial_delivery = PartialDelivery.new 
-    #@partial_delivery.partial_delivery_products.build
+    @partial_delivery = PartialDelivery.new 
+    @partial_delivery.partial_delivery_products.build
     @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
     @makulerad = false
     @part_delivered = false
+    @partial_deliveries = PartialDelivery.where("order_id = ?", @order.id).order("id DESC")
 
     # TODO Detta borde vara en metod i modellen.
     if @order.status == "Levererad"
@@ -106,18 +107,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.order_products.each do |order_product|
         product = Product.find(order_product.product_id)
         in_stock = product.stock_balance_not_ordered
-        if in_stock == 0  # Ska detta vara möjligt vid direktförsäljning?
-          stock_balance_stand_by = product.stock_balance_stand_by + order_product.amount.to_i
-          product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
-        elsif in_stock >= order_product.amount.to_i
-          in_stock -= order_product.amount.to_i
+        if in_stock >= order_product.amount
+          in_stock -= order_product.amount
           product.update_attributes(:stock_balance_not_ordered => in_stock)
-        else  # Ska detta vara möjligt vid direktförsäljning?
-          stock_balance_ordered = product.stock_balance_ordered + in_stock
-          stock_balance_stand_by = order_product.amount.to_i - in_stock
-          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
-          product.update_attributes(:stock_balance_not_ordered => 0)
+          order_product.update_attributes(:delivered_amount => order_product.amount)
         end
       end
       redirect_to order_path(@order)
@@ -159,7 +152,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @sektion = Sektion.find(params[:sektion_id])
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
     @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
-    @bestallare = true
+    @bestallare = false
     @sektion_orders = true
     render :index
   end
@@ -192,7 +185,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
               product.update_attributes(:stock_balance_stand_by => 0)
             end
             order_product.amount = order_product.amount - return_amount.to_i
-            order_product.update_attributes(:amount => order_product.amount)
+            order_product.update_attributes(:amount => order_product.amount, :delivered_amount => order_product.amount)
           end
         end
       end
@@ -214,10 +207,12 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       elsif @order.status == "Levererad"
         @order.order_products.each do |order_product|
           product = Product.find(order_product.product_id)
+          amount = order_product.amount - order_product.delivered_amount
           in_stock = product.stock_balance_ordered
-          if in_stock >= order_product.amount.to_i
-            in_stock -= order_product.amount.to_i
+          if in_stock >= amount
+            in_stock -= amount
             product.update_attributes(:stock_balance_ordered => in_stock)
+            order_product.update_attributes(:delivered_amount => order_product.amount)
           end
         end
         @order.finished_at = DateTime.now

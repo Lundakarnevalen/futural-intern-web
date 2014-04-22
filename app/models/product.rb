@@ -51,6 +51,10 @@ class Product < ActiveRecord::Base
     return self.incoming_delivery_products.find_by_incoming_delivery_id(incoming_delivery_id).amount
   end
 
+  def partial_delivery_amount(partial_delivery_id)
+    return self.partial_delivery_products.find_by_partial_delivery_id(partial_delivery_id).amount
+  end
+
   def total_price(amount)
     return amount*self.sale_price
   end
