@@ -22,20 +22,20 @@
     <% if devise_mapping.rememberable? -%>
       <div class="form-group">
       <%= f.check_box :remember_me %>
-      <%= f.label :remember_me, 'Kom ihåg mig' %>
+      <%= f.label :remember_me, 'Kom ihåg mig', :class => "red" %>
       </div>
     <% end -%>
 
     </div>
       <div class="form-group">
-      <%= f.submit 'Logga in' %>
+      <%= f.submit 'Logga in', { :class => "green", :id => "signin-button" } %>
     </div>
 
     <div class="options">
-      <%= link_to "Vad är mitt lösenord?", new_password_path(resource_name), class: "request-password" %>
+      <%= link_to "Vad är mitt lösenord?", new_password_path(resource_name), class: "request-password yellow button" %>
     </div>
     <div class="options">
-      <%= link_to "Registrera ny karnevalist", new_karnevalist_path, class: "request-password" %>
+      <%= link_to "Registrera ny karnevalist", new_karnevalist_path, class: "request-password yellow button" %>
     </div>
   <% end %>
 

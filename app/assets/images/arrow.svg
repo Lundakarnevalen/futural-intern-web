@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="12px" height="7px" viewBox="0 0 12 7" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.0 (7573) - http://www.bohemiancoding.com/sketch -->
+    <title>arrow</title>
+    <description>Created with Sketch.</description>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="iPhone" sketch:type="MSArtboardGroup" transform="translate(-1312.000000, -1156.000000)">
+            <g id="arrow" sketch:type="MSLayerGroup" transform="translate(1312.000000, 1156.000000)">
+                <path d="M0,0 L6,0 L12,0 L6,7 L0,0 Z" id="Triangle-1" fill="#5C617F" sketch:type="MSShapeGroup"></path>
+                <path d="M6,0 L12,0 L6,7 L6,0 Z" id="Triangle-2" fill="#4F536E" sketch:type="MSShapeGroup"></path>
+            </g>
+        </g>
+    </g>
+</svg>

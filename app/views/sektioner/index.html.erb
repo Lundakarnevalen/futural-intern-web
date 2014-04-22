@@ -1,6 +1,8 @@
 <%= render partial: "shared/header", locals: {title: "Futuralkarnevalens sektioner"} %>
 <div class="white-container col-xs-12">
-  <% @sektioner.each do |s| %>
-      <li><%= link_to s.name, s %></li>
-  <% end %>
+	<ul id="sektions-lista">
+		<% @sektioner.each do |s| %>
+		<li><%= link_to s.name, s, :class => "fill button" %></li>
+		<% end %>
+	</ul>
 </div>

@@ -1,10 +1,10 @@
-<%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
+<%= link_to "Back", root_url, :class => "green button col-xs-2 col-md-offset-2" %>
 <%= render 'sektion_image' %>
 
 <div class="white-container col-xs-12">
   <%= render_markdown @page_content unless @page_content.blank? %>
   <%= "Sorry, nobody has written anything here yet =( " if @page_content.blank? %>
   <% if current_user.can? :edit_english, Sektion.find(params[:id]) %>
-    <%= link_to "Redigera", edit_english_sektioner_path(params[:id]), {method: "post", :class => "btn button btn-small", :type => "edit" } %>
+    <%= link_to "Redigera", edit_english_sektioner_path(params[:id]), {method: "post", :class => "button", :type => "edit" } %>
   <% end %>
 </div>
