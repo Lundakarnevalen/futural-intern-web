@@ -104,6 +104,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @order.finished_at = DateTime.now
     @order.status = "Levererad"
     if @order.save
+      partial_delivery = @order.partial_deliveries.new(seller_id: current_user.karnevalist.id)
+      partial_delivery.save
       @order.order_products.each do |order_product|
         product = Product.find(order_product.product_id)
         in_stock = product.stock_balance_not_ordered
@@ -111,6 +113,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
           in_stock -= order_product.amount
           product.update_attributes(:stock_balance_not_ordered => in_stock)
           order_product.update_attributes(:delivered_amount => order_product.amount)
+          partial_delivery.partial_delivery_products.create(product_id: product.id, amount: order_product.amount)
         end
       end
       redirect_to order_path(@order)
@@ -205,6 +208,8 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
         @order.finished_at = DateTime.now
         @order.save
       elsif @order.status == "Levererad"
+        partial_delivery = @order.partial_deliveries.new(seller_id: current_user.karnevalist.id)
+        partial_delivery.save
         @order.order_products.each do |order_product|
           product = Product.find(order_product.product_id)
           amount = order_product.amount - order_product.delivered_amount
@@ -213,6 +218,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
             in_stock -= amount
             product.update_attributes(:stock_balance_ordered => in_stock)
             order_product.update_attributes(:delivered_amount => order_product.amount)
+            partial_delivery.partial_delivery_products.create(product_id: product.id, amount: order_product.amount)
           end
         end
         @order.finished_at = DateTime.now
