@@ -78,6 +78,21 @@
 			<%= f.select :korkort_id, Korkort.all.collect{ |k| [k.name, k.id] }, {}, {:disabled => disabled} %>
 		</div>
 	</div>
+    
+    <div class="form-group">
+      <div>
+        <%= f.check_box :medlem_af, :disabled => disabled %>
+        <%= f.label :medlem_af, 'Jag är medlem i AF' %>
+      </div>
+      <div>
+        <%= f.check_box :medlem_kar, :disabled => disabled %>
+        <%= f.label :medlem_kar, 'Jag är medlem i min kår' %>
+      </div>
+      <div>
+        <%= f.check_box :medlem_nation, :disabled => disabled %>
+        <%= f.label :medlem_nation, 'Jag är medlem i en nation' %>
+      </div>
+    </div>
 
 	<div class="form-group">
 		<%= f.label :ovrigt, 'Övrigt' %>

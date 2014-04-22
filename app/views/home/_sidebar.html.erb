@@ -88,6 +88,9 @@
     <% if can? :checkout, Karnevalist %>
     <li><%= link_to 'Checka ut karnevalist', checkout_karnevalister_path, :class => "button" %></li>
     <% end %>
+    <% if can? :uppdelning, Karnevalist %>
+      <li><%= link_to 'Uppdelning', uppdelning_karnevalister_path %></li>
+    <% end %>
   </ul>
 </div>
 <% end %>
