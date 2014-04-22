@@ -153,18 +153,6 @@ html {
               //box-shadow: 0 $distance-shadow 0 $color-shadow;
             }
         }
-        .header {
-            font-family: $font-header;
-            font-weight: bold;
-            font-size: $fontsize-headerbar;
-            height: $height-headerbar;
-            margin-bottom: 20px;
-            line-height: $height-headerbar;
-            text-align: center;
-            background-color: white;
-            color: $color-red;
-            box-shadow: 0px $distance-shadow 0px $color-shadow;
-        }
     }
 }
 
@@ -260,38 +248,6 @@ a {
     background-color: $color-blue;
     border-top: none;
     //box-shadow: 0 $distance-shadow 0 $color-shadow;
-}
-
-.dropdown {
-
-  cursor: pointer;
-  -webkit-user-select: none; //the header will be selected as text otherwise.
-  user-select: none;
-
-    &.toggled {
-        //if the bar is active.
-        & > ul.nav {
-            display: block;
-            background-color: $color-yellow;
-            li {
-                min-height: $height-rowblocks;
-                font-size: 0;
-                //dirty hack to remove white-space
-                text-align: center;
-                margin-bottom: $margin-main;
-            }
-        }
-    }
-    & > .header {
-        background-color: $color-yellow;
-        color: $color-blue;
-        box-shadow: none;
-        margin-bottom: 0;
-    }
-    & > ul.nav {
-        display: none;
-    }
-
 }
 
 #inviter,
@@ -403,15 +359,10 @@ p {
 }
 
 #left {
-    h1 {
-          width: 100%;
-          padding-top: 3px;
-          font-family: $font-header;
-          overflow: hidden;
-          word-break: break-all;
-          text-transform: uppercase;
-    }
     background-color: $color-light;
+    & > h2 {
+        margin-top: 0;
+    }
     & > .header {
         margin-bottom: $margin-main * 3;
         padding-bottom: $padding-main * 3;
@@ -508,7 +459,7 @@ p {
     box-shadow: 0 $distance-shadow 0 $color-shadow;
 }
 #left {
-    margin-top: $height-navbar * 1.5 !important;
+    margin-top: $height-navbar * 1.25 !important;
 }
 
 #right {
@@ -929,7 +880,6 @@ button,
 
     display: inline-block;
     font-family: $font-header;
-    font-size: 16px;
     background-color: darken(white, 3%);
     color: $color-red;
     text-transform: uppercase;
@@ -955,11 +905,16 @@ button,
         background-color: $color-blue;
         color: white;
     }
+    &.light-blue {
+        background-color: lighten($color-blue, 10%);
+        color: white;
+    }
     &.red {
         background-color: $color-red;
         color: white;
     }
     &.gray { background-color: $color-light; }
+    &.white { background-color: white; }
 
     &.invisible {
         background-color: transparent;
@@ -968,6 +923,11 @@ button,
     }
     &.left { text-align: left; }
 
+}
+
+button,
+.button {
+    font-size: 16px;
     &:hover { 
         opacity: 0.9;
     }
@@ -975,12 +935,77 @@ button,
         opacity: 0.8;
         box-shadow: none;
     }
+}
+
+div.block { margin-bottom: 0 !important; }
+
+.dropdown {
+
+    $_HEIGHT_HEADER:50px;
+    cursor: pointer;
+    -webkit-user-select: none;
+    user-select: none; //the header will be selected as text otherwise.
+
+    &.toggled {
+        //if the bar is active.
+        & > ul.nav {
+            display: block;
+            background-color: $color-yellow;
+            padding: 0 $padding-main;
+            li {
+                min-height: $height-rowblocks;
+                font-size: 0;
+                //dirty hack to remove white-space
+                text-align: center;
+                margin-bottom: $margin-main;
+            }
+        }
+    }
+    & h3 {
+        line-height: $_HEIGHT_HEADER;
+    }
+    & > .header {
+        height: $_HEIGHT_HEADER;
+        line-height: $_HEIGHT_HEADER;
+        background-color: $color-yellow;
+    }
+    & > ul.nav {
+        display: none;
+    }
 
 }
 
-div.block {
-    margin-bottom: 0 !important;
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-family: $font-header;
+    text-transform: uppercase;
+    &.inline { 
+        margin: 0 0 0 0; 
+    }
+    &.center { text-align: center; }
+    &.regular { text-transform:none; }
+
+    &.blue { color: $color-blue; }
+    &.yellow { color:$color-yellow; }
+    &.red { color:$color-red; }
+
 }
+
+/*.header {
+            font-weight: bold;
+            font-size: $fontsize-headerbar;
+            height: $height-headerbar;
+            margin-bottom: 20px;
+            line-height: $height-headerbar;
+            text-align: center;
+            background-color: white;
+            color: $color-red;
+            box-shadow: 0px $distance-shadow 0px $color-shadow;
+        }*/
 
 // .block {
 //     display:inline-block;
