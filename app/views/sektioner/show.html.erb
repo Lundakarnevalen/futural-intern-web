@@ -1,20 +1,20 @@
 <%= link_to "Tillbaka", root_url, :class => "green button col-xs-2 col-md-offset-2" %>
 <%= render 'sektion_image' %>
-<% if (can? :manage, @sektion) || (can? :edit_info, @sektion) %>
+<% if (can? :manage, @sektion) %>
 <div class="white-container col-xs-12">
   <% if can? :manage, @sektion %>
     <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "green button"}%>
     <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "green button", data: {no_turbolink: true}} %>
     <%= link_to 'Aktiva karnevalister', { :action => :aktiva }, {:class => "green button", data: {no_turbolink: true}} %>
   <% end %>
-  <% if (can? :edit_info, @sektion) %>
-    <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "button" %>
-  <% end %>
 </div>
 <% end %>
 <div class="white-container col-xs-12">
-  <%= link_to "Kontakt", show_contact_sektioner_path(@sektion), :class => "green button" %>
-  <%= link_to "In English", show_english_sektioner_path(@sektion), :class => "green button" %>
+  <%= link_to "Kontakt", contact_sektion_path(@sektion), :class => "green button" %>
+  <%= link_to "In English", english_sektion_path(@sektion), :class => "green button" %>
+  <% if (can? :edit_info, @sektion) %>
+    <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "button" %>
+  <% end %>
 </div>
 <div class="white-container col-xs-12">
   <%= render_markdown @page_content unless @page_content.blank? %>

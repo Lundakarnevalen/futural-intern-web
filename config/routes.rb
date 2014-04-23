@@ -54,15 +54,15 @@
   end
 
   resources :sektioner do
-    collection do
-      get ':id/export', :to => 'sektioner#export'
-      get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
-      get ':id/aktiva', :to => 'sektioner#aktiva'
-      get ':id/edit', :to => 'sektioner#edit_info'
-      get ':id/contact', :to => 'sektioner#show_contact', :as => 'show_contact'
-      get ':id/contact/edit', :to => 'sektioner#edit_contact', :as => 'edit_contact'
-      get ':id/english', :to => 'sektioner#show_english', :as => 'show_english'
-      get ':id/english/edit', :to => 'sektioner#edit_english', :as => 'edit_english'
+    member do
+      get 'export', :to => 'sektioner#export'
+      get 'kollamedlem', :to => 'sektioner#kollamedlem'
+      get 'aktiva', :to => 'sektioner#aktiva'
+      get 'edit', :to => 'sektioner#edit_info'
+      get 'contact', :to => 'sektioner#show_contact'
+      get 'contact/edit', :to => 'sektioner#edit_contact'
+      get 'english', :to => 'sektioner#show_english'
+      get 'english/edit', :to => 'sektioner#edit_english'
     end
   end
 

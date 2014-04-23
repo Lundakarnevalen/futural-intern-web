@@ -3,13 +3,13 @@
 
 <div class="white-container col-xs-12">
   <%= link_to "Sektionsinfo", @sektion, :class => "green button" %>
-  <%= link_to "Kontakt", show_contact_sektioner_path(@sektion), :class => "green button" %>
+  <%= link_to "Kontakt", contact_sektion_path(@sektion), :class => "green button" %>
+  <% if current_user.can? :edit_english, Sektion.find(params[:id]) %>
+    <%= link_to "Redigera 'In English'", english_edit_sektion_path(params[:id]), {:class => "button", :type => "edit" } %>
+  <% end %>
 </div>
 
 <div class="white-container col-xs-12">
   <%= render_markdown @page_content unless @page_content.blank? %>
   <%= "Sorry, nobody has written anything here yet =( " if @page_content.blank? %>
-  <% if current_user.can? :edit_english, Sektion.find(params[:id]) %>
-    <%= link_to "Redigera", edit_english_sektioner_path(params[:id]), {:class => "button", :type => "edit" } %>
-  <% end %>
 </div>
