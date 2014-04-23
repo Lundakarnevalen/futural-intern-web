@@ -70,7 +70,7 @@ class Ability
       can :manage, Event, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can :new, Notification
-      can [:edit, :update, :edit_contact, :edit_english], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+      can [:edit_info, :edit_contact, :edit_english], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
 
     # Global info
@@ -88,7 +88,7 @@ class Ability
         can [:manage], Sektion, :id => user.sektioner
       end
     end
-    
+
     # Sektionsadmin Lite
     if user.is? :sektionsadmin_lite
       if user.karnevalist?
@@ -116,7 +116,7 @@ class Ability
       can :read, Reservation
       can [:create, :update, :destroy], Reservation, :karnevalist_id => user.karnevalist.id
     end
-    
+
     # Lagersystem - sektionsadmin
     if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet)
       # Show "Tåget - Vagn" instead of "Tåget - centralt"
