@@ -161,4 +161,5 @@
 
   get '/home', to: 'home#index'
   get '/internapp', to: 'home#app_store'
+  get '/markdown', to: 'home#markdown'
 end
