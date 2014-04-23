@@ -98,7 +98,12 @@
 <div id="evenemang" class="row">
   <h3 class="fill light-blue inline center block">Evenemang</h3>
   <ul class="nav">
-    <% Event.upcoming.for_sektioner(current_sektioner).each do |e| %>
+    <%  if (current_user.is? :'global-info') || (current_user.is? :admin)
+          events = Event.upcoming
+        else
+          events = Event.upcoming.for_sektioner current_sektioner
+        end  %>
+    <% events.each do |e| %>
     <li>
       <%= link_to e do %>
       <button class="fill">

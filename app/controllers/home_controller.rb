@@ -9,12 +9,8 @@ class HomeController < ApplicationController
     if signed_in?
       @posts = Post.includes(:sektion)
       @posts.delete_if do |post|
-        !(current_sektioner.include?(post.sektion) || post.sektion.nil?)
+        !(current_sektioner.include?(post.sektion) || post.sektion.nil?) unless can? :manage, post
       end
-      #@sektioner = current_sektioner
-      #@posts = @sektioner.map { |s| s.posts }.flatten
-      #@posts.sort_by! { |p| p.created_at }.reverse!
-      #@post = current_user.karnevalist.sektion.posts.build
     else
       redirect_to new_user_session_path
     end

@@ -4,7 +4,11 @@ class EventsController < ApplicationController
 
   # Views
   def index
-    @events = Event.upcoming.for_sektioner current_sektioner
+    if (current_user.is? :'global-info') || (current_user.is? :admin)
+      @events = Event.upcoming
+    else
+      @events = Event.upcoming.for_sektioner current_sektioner
+    end
   end
 
   def show
@@ -52,7 +56,7 @@ class EventsController < ApplicationController
 
   def sign_up
     @event = Event.find params[:id]
-    @attendance = Attendance.existing_or_new :event => @event, 
+    @attendance = Attendance.existing_or_new :event => @event,
                                              :karnevalist => current_karnevalist
   end
 

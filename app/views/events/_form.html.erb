@@ -9,7 +9,7 @@
 
       <%= f.label :sektion_id, 'Visa för sektion' %>
 
-      <% if (current_user.is? :admin) || (current_user.is? :global_info) %>
+      <% if (current_user.is? :admin) || (current_user.is? :'global-info') %>
         <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
                                 { :include_blank => '[Visa för alla]' } %>
       <% elsif current_user.is? :info %>
