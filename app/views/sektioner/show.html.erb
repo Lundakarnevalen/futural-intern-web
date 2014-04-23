@@ -12,9 +12,13 @@
   <% end %>
 </div>
 <% end %>
-  <div class="white-container col-xs-12">
-    <%= render_markdown @page_content unless @page_content.blank? %>
-  </div>
+<div class="white-container col-xs-12">
+  <%= link_to "Kontakt", show_contact_sektioner_path(@sektion), :class => "green button" %>
+  <%= link_to "In English", show_english_sektioner_path(@sektion), :class => "green button" %>
+</div>
+<div class="white-container col-xs-12">
+  <%= render_markdown @page_content unless @page_content.blank? %>
+</div>
 <% s = current_sektioner %>
 <% if can? :edit, s %>
   <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
