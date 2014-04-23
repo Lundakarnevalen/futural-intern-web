@@ -58,11 +58,11 @@
       get ':id/export', :to => 'sektioner#export'
       get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
       get ':id/aktiva', :to => 'sektioner#aktiva'
-      post ':id/edit', :to => 'sektioner#update'
+      get ':id/edit', :to => 'sektioner#edit_info'
       get ':id/contact', :to => 'sektioner#show_contact', :as => 'show_contact'
-      post ':id/contact/edit', :to => 'sektioner#edit_contact', :as => 'edit_contact'
+      get ':id/contact/edit', :to => 'sektioner#edit_contact', :as => 'edit_contact'
       get ':id/english', :to => 'sektioner#show_english', :as => 'show_english'
-      post ':id/english/edit', :to => 'sektioner#edit_english', :as => 'edit_english'
+      get ':id/english/edit', :to => 'sektioner#edit_english', :as => 'edit_english'
     end
   end
 
