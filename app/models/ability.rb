@@ -83,18 +83,18 @@ class Ability
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
-        can [:manage], Sektion, :id => user.sektioner
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:manage], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       end
     end
 
     # Sektionsadmin Lite
     if user.is? :sektionsadmin_lite
       if user.karnevalist?
-        can [:edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
-        can [:edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
-        can [:read, :aktiva], Sektion, :id => user.sektioner
+        can [:edit, :update], Karnevalist, :tilldelad_sektion => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:edit, :update], Karnevalist, :tilldelad_sektion2 => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:read, :aktiva], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       end
     end
 
