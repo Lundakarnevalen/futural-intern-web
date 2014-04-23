@@ -3,7 +3,7 @@ class PostsController < ApplicationController
   authorize_resource
 
   def new
-    @post = Post.new :sektion_id => current_sektioner.first.id
+    @post = Post.new
   end
 
   def create
