@@ -29,4 +29,7 @@ class HomeController < ApplicationController
     redirect_to urls[user_agent.to_sym] unless user_agent.blank?
   end
 
+  def markdown
+
+  end
 end
