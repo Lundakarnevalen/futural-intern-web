@@ -13,7 +13,7 @@
         <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>
         <p><%= link_to "Visa Kvitto", order_path(@order.id, :format => "pdf") %></p>
 
-        <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin) %>
+        <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin) %>
         <tr>
           <% if !@levererad && !@makulerad && !@part_delivered %>
             <% if Backorder.where(order_id: @order.id).blank? %>
@@ -50,12 +50,12 @@
     </div>
   </div>
 </div>
-<% if (@order.status != "Levererad" && @order.status != "Makulerad" && @order.status != "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+<% if (@order.status != "Levererad" && @order.status != "Makulerad" && @order.status != "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin))
     @show_partial = true
   else
     @show_partial = false
   end %> 
-<% if (@order.status == "Levererad" || @order.status == "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+<% if (@order.status == "Levererad" || @order.status == "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin))
     @show_return = true
   else
     @show_return = false

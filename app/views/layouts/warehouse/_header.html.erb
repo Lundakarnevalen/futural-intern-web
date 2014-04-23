@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="">
-        <% if (current_user.is? :bestallare_fabriken) || (current_user.is? :bestallare_festmasteriet) || @bestallare %>
+        <% if (current_user.is? :bestallare_fabriken) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :bestallare_snaxeriet) || @bestallare %>
           <span>Beställare: </span>
         <% elsif current_user.is? :kassor_festmasteriet %>
           <span>Kassör: </span>

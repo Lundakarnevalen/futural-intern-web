@@ -99,7 +99,7 @@ class Ability
     end
 
     # Lagersystem - admin
-    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet)
+    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet) || (user.is? :admin_snaxeriet)
       can :manage, Order
       can :manage, Product
       can :manage, IncomingDelivery
@@ -110,7 +110,7 @@ class Ability
     end
 
     # Lagersystem - beställare
-    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
+    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet) || (user.is? :bestallare_snaxeriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
       can :read, PartialDelivery

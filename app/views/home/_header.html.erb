@@ -21,6 +21,9 @@
         <% if (current_user.is? :admin_festmasteriet) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :kassor_festmasteriet) || (current_user.is? :admin) %>
           <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
         <% end %>
+        <% if (current_user.is? :admin_snaxeriet) || (current_user.is? :bestallare_snaxeriet) || (current_user.is? :admin) %>
+          <li><%= link_to 'Lagersystem Snaxeriet', snaxeriet_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
+        <% end %>
       </ul>
       <div class="nav navbar-nav navbar-right">
         <div id="profile-image-container" class="col-xs-4">
