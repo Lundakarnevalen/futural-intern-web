@@ -1,8 +1,8 @@
 <%= link_to "Tillbaka", root_url, :class => "green button col-xs-2 col-md-offset-2" %>
 <%= render 'sektion_image' %>
-<% if (can? :edit, @sektion) || (can? :edit_info, @sektion) %>
+<% if (can? :manage, @sektion) || (can? :edit_info, @sektion) %>
 <div class="white-container col-xs-12">
-  <% if can? :edit, @sektion %>
+  <% if can? :manage, @sektion %>
     <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "green button"}%>
     <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "green button", data: {no_turbolink: true}} %>
     <%= link_to 'Aktiva karnevalister', { :action => :aktiva }, {:class => "green button", data: {no_turbolink: true}} %>
