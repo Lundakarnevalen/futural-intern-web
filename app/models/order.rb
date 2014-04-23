@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   has_many :order_products
   has_many :products, through: :order_products
   has_many :partial_deliveries
+  has_many :backorders
   validates :karnevalist, presence: true
   validates :sektion, presence: true
   before_create :set_order_date, :set_order_number

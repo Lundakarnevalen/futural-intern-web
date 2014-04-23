@@ -16,6 +16,10 @@ module Warehouse::ApplicationHelper
   def order_path(o, format = :html)
     @warehouse_code == 0 ? fabriken_order_path(o, format) : fest_order_path(o, format)
   end
+  
+  def order_url(o)
+    @warehouse_code == 0 ? fabriken_order_url(o) : fest_order_url(o)
+  end
 
   def orders_path
     @warehouse_code == 0 ? fabriken_orders_path : fest_orders_path
