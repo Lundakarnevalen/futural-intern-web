@@ -31,12 +31,14 @@
               <% end %>
             </td>
           <% elsif @part_delivered %>
-             <td>
-              <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
-                <%= f.hidden_field :status, value: "Levererad" %>
-                <%= f.submit "Leverera resterande", class: "btn btn-success" %>
-              <% end %>
-            </td>
+            <% if Backorder.where(order_id: @order.id).blank? %>
+               <td>
+                <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
+                  <%= f.hidden_field :status, value: "Levererad" %>
+                  <%= f.submit "Leverera resterande", class: "btn btn-success" %>
+                <% end %>
+              </td>
+            <% end %>
             <td>
               <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
                 <%= f.hidden_field :status, value: "Dellevererad/Makulerad" %>
