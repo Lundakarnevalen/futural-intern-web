@@ -41,7 +41,7 @@ class SektionerController < ApplicationController
            :disposition => 'attachment'
   end
 
-  def edit
+  def edit_info
     @sektion = Sektion.find params[:id]
   end
 
