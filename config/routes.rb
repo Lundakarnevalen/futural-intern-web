@@ -158,6 +158,10 @@
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do
     concerns :party_factory
   end
+  
+  namespace :warehouse, path: 'snaxeriet', as: 'snaxeriet' do
+    concerns :party_factory
+  end
 
   get '/home', to: 'home#index'
   get '/internapp', to: 'home#app_store'
