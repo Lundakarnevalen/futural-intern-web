@@ -13,34 +13,38 @@
         <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>
         <p><%= link_to "Visa Kvitto", order_path(@order.id, :format => "pdf") %></p>
 
-        <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin) %>
+        <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin) %>
         <tr>
           <% if !@levererad && !@makulerad && !@part_delivered %>
+            <% if Backorder.where(order_id: @order.id).blank? %>
               <td>
                 <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
                   <%= f.hidden_field :status, value: "Levererad" %>
                   <%= f.submit "Leverera", class: "btn btn-success" %>
                 <% end %>
               </td>
-              <td>
-                <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
-                  <%= f.hidden_field :status, value: "Makulerad" %>
-                  <%= f.submit "Makulera", class: "btn btn-danger" %>
-                <% end %>
-              </td>
+            <% end %>
+            <td>
+              <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
+                <%= f.hidden_field :status, value: "Makulerad" %>
+                <%= f.submit "Makulera", class: "btn btn-danger" %>
+              <% end %>
+            </td>
           <% elsif @part_delivered %>
-              <td>
+            <% if Backorder.where(order_id: @order.id).blank? %>
+               <td>
                 <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
                   <%= f.hidden_field :status, value: "Levererad" %>
                   <%= f.submit "Leverera resterande", class: "btn btn-success" %>
                 <% end %>
               </td>
-              <td>
-                <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
-                  <%= f.hidden_field :status, value: "Dellevererad/Makulerad" %>
-                  <%= f.submit "Makulera resterande", class: "btn btn-danger" %>
-                <% end %>
-              </td>
+            <% end %>
+            <td>
+              <%= form_for @order, url: order_path(@order), method: "put" do |f| %>
+                <%= f.hidden_field :status, value: "Dellevererad/Makulerad" %>
+                <%= f.submit "Makulera resterande", class: "btn btn-danger" %>
+              <% end %>
+            </td>
           <% end %>
         </tr>
         <% end %>
@@ -48,12 +52,12 @@
     </div>
   </div>
 </div>
-<% if (@order.status != "Levererad" && @order.status != "Makulerad" && @order.status != "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+<% if (@order.status != "Levererad" && @order.status != "Makulerad" && @order.status != "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin))
     @show_partial = true
   else
     @show_partial = false
   end %> 
-<% if (@order.status == "Levererad" || @order.status == "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || (current_user.is? :admin))
+<% if (@order.status == "Levererad" || @order.status == "Dellevererad/Makulerad") && (((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin))
     @show_return = true
   else
     @show_return = false
@@ -70,6 +74,7 @@
           <th>Varunamn</th>
           <th>Kategori</th>
           <th>Mängd</th>
+          <th>(varav rest)</th>
           <th>Styckpris</th>
           <th>Totalpris</th>
           <th>Levererat antal</th>
@@ -81,6 +86,7 @@
       <tbody>
           <% @order.products.each do |p| %>
             <% amount = p.amount(@order.id) %>
+            <% backorder = p.backorders.where(order_id: @order.id).first %>
         <tr>
           <td>
             <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
@@ -104,6 +110,7 @@
           </td>
           <td><%= p.product_category.name %></td>
           <td><%= "#{amount} #{p.unit}" %></td>
+          <td><%= backorder.blank? ? 0 : backorder.amount %></td>
           <td><%= number_to_currency(p.sale_price) %></td>
           <td><%= number_to_currency(p.total_price(amount)) %></td>
           <td><%= p.delivered_amount(@order.id) %></td>
@@ -111,7 +118,7 @@
             <%= partial.hidden_field :order_id, :value => @order.id %>
             <td>
               <%= partial.fields_for :partial_delivery_products do |pd| %>
-                <% if p.stock_balance_not_ordered > 0 %>
+                <% if backorder.blank? || (backorder.amount < amount) %>
                   <%= pd.number_field :amount, class: "form-control", min: 0, style: "width: 100%;" %>
                 <% end %>
                 <%= pd.hidden_field :product_id, :value => p.id %>

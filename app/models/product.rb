@@ -7,6 +7,7 @@ class Product < ActiveRecord::Base
   has_many :incoming_deliveries, through: :incoming_delivery_products
   has_many :partial_delivery_products
   has_many :partial_deliveries, through: :partial_delivery_products
+  has_many :backorders
   
   before_save :purchase_price
   before_save :sale_price

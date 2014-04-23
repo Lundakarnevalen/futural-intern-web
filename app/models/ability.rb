@@ -99,21 +99,23 @@ class Ability
     end
 
     # Lagersystem - admin
-    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet)
+    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet) || (user.is? :admin_snaxeriet)
       can :manage, Order
       can :manage, Product
       can :manage, IncomingDelivery
       can :manage, PartialDelivery
       can :manage, ProductCategory
       can :manage, Reservation
+      can :manage, Backorder
     end
 
     # Lagersystem - beställare
-    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
+    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet) || (user.is? :bestallare_snaxeriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
       can :read, Product
       can :read, PartialDelivery
       can :read, Reservation
+      can [:create, :read], Backorder
       can [:create, :update, :destroy], Reservation, :karnevalist_id => user.karnevalist.id
     end
 
@@ -133,6 +135,10 @@ class Ability
       can :manage, Order
       can [:read, :weekly_overview], Product
       can :manage, IncomingDelivery
+      can :manage, PartialDelivery
+      can :manage, ProductCategory
+      can :manage, Reservation
+      can :manage, Backorder
     end
 
     # Access admin

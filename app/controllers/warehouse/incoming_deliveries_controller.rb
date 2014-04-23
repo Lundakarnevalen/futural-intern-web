@@ -42,12 +42,33 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             stand_by -= incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_stand_by => stand_by)
+            backorders = Backorder.where(product_id: product.id).order("id ASC")
+            incoming_amount = incoming_delivery.amount.to_i
+            backorders.each do |b|
+              break if incoming_amount < b.amount
+              if @warehouse_code == 0
+                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              else
+                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              end
+              incoming_amount -= b.amount
+              b.delete
+            end
           else
             stock_balance_ordered = product.stock_balance_ordered + stand_by
             stock_balance_not_ordered = incoming_delivery.amount.to_i - stand_by
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             product.update_attributes(:stock_balance_stand_by => 0)
+            backorders = Backorder.where(product_id: product.id)
+            backorders.each do |b|
+              if @warehouse_code == 0
+                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              else
+                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              end
+              b.delete
+            end
           end
         end
       end
@@ -78,12 +99,33 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             stand_by -= incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_stand_by => stand_by)
+            backorders = Backorder.where(product_id: product.id).order("id ASC")
+            incoming_amount = incoming_delivery.amount.to_i
+            backorders.each do |b|
+              break if incoming_amount < b.amount
+              if @warehouse_code == 0
+                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              else
+                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              end
+              incoming_amount -= b.amount
+              b.delete
+            end
           else
             stock_balance_ordered = product.stock_balance_ordered + stand_by
             stock_balance_not_ordered = incoming_delivery.amount.to_i - stand_by
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             product.update_attributes(:stock_balance_stand_by => 0)
+            backorders = Backorder.where(product_id: product.id)
+            backorders.each do |b|
+              if @warehouse_code == 0
+                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              else
+                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              end
+              b.delete
+            end
           end
         end
       end
