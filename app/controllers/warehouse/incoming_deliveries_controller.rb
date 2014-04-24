@@ -12,7 +12,6 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
   
   def edit
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
-    @customers = Array.new
   end
 
   def new
