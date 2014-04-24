@@ -12,12 +12,14 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
   
   def edit
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
+    @customers = Array.new
   end
 
   def new
     @incoming_delivery = IncomingDelivery.new
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     @incoming_delivery.incoming_delivery_products.build
+    @customers = Array.new
   end
 
   def create
@@ -29,8 +31,19 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
     else
       @incoming_delivery.ongoing = true
     end
-    if @incoming_delivery.save
-      if !@incoming_delivery.ongoing
+    if @incoming_delivery.save && !@incoming_delivery.ongoing
+      if params[:direct_selling] == "yes" && !params[:sektion_id].blank? && !params[:karnevalist_id].blank?
+        order = Order.new(sektion_id: params[:sektion_id], karnevalist_id: params[:karnevalist_id], warehouse_code: @warehouse_code, finished_at: DateTime.now, status: "Levererad")
+        order.save
+        partial_delivery = order.partial_deliveries.new(seller_id: current_user.karnevalist.id)
+        partial_delivery.save
+        @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
+          product = Product.find(incoming_delivery.product_id)
+          order.order_products.create(product_id: product.id, amount: incoming_delivery.amount.to_i, delivered_amount: incoming_delivery.amount.to_i)
+          partial_delivery.partial_delivery_products.create(product_id: product.id, amount: incoming_delivery.amount.to_i)
+        end
+        redirect_to order_path(order)
+      else 
         @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
           product = Product.find(incoming_delivery.product_id)
           stand_by = product.stock_balance_stand_by
@@ -71,8 +84,8 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             end
           end
         end
+        redirect_to incoming_delivery_path(@incoming_delivery)
       end
-      redirect_to incoming_delivery_path(@incoming_delivery)
     else
       @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @incoming_delivery.incoming_delivery_products.build
