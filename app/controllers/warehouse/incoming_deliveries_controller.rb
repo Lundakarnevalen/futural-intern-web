@@ -58,11 +58,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             incoming_amount = incoming_delivery.amount.to_i
             backorders.each do |b|
               break if incoming_amount < b.amount
-              if @warehouse_code == 0
-                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              else
-                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              end
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
               incoming_amount -= b.amount
               b.delete
             end
@@ -74,11 +70,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_stand_by => 0)
             backorders = Backorder.where(product_id: product.id)
             backorders.each do |b|
-              if @warehouse_code == 0
-                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              else
-                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              end
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
               b.delete
             end
           end
@@ -115,11 +107,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             incoming_amount = incoming_delivery.amount.to_i
             backorders.each do |b|
               break if incoming_amount < b.amount
-              if @warehouse_code == 0
-                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              else
-                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              end
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
               incoming_amount -= b.amount
               b.delete
             end
@@ -131,11 +119,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_stand_by => 0)
             backorders = Backorder.where(product_id: product.id)
             backorders.each do |b|
-              if @warehouse_code == 0
-                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              else
-                WarehouseMailer.notify_delivery("dryckeslager@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
-              end
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
               b.delete
             end
           end
