@@ -93,6 +93,45 @@
       </div>
     </div>
   </div>
+  <div class="checkbox">
+    <%= check_box_tag 'direct_selling', 'yes' %>
+    <%= label_tag 'direct_selling', 'Gör direktförsäljning direkt' %>
+  </div>
+  <div id="direct_selling_block" style="display: none;">
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="form-group">
+          <%= label_tag 'sektion_id', "Sektion" %>
+          <%= select_tag 'sektion_id', options_from_collection_for_select(Sektion.all, :id, :name), {prompt: "-- Välj sektion --", class: "form-control", id: "sektion_select"} %>
+        </div>
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-xs-12 col-sm-12 col-md-6">
+        <div class="form-group">
+          <%= label_tag 'karnevalist_id', "Kund" %>
+          <%= select_tag 'karnevalist_id', options_from_collection_for_select(@customers, :id, :name), {prompt: "-- Välj kund --", class: "form-control", id: "customer_select"} %>
+        </div>
+      </div>
+    </div>
+  </div>
   <%= f.submit "Spara och slutför", class: "btn btn-primary", name: "finished" %>
   <%= f.submit "Spara och fortsätt senare", class: "btn btn-primary", name: "ongoing" %>
-  <% end %>
+<% end %>
+<script>
+ $(document).ready(function() {
+   $('#sektion_select').change(function() {
+     $.ajax({
+       url: "<%= update_customers_orders_path %>",
+      data: {
+        sektion_id: $('#sektion_select').val()
+      },
+      dataType: "script"
+    });
+  });
+
+  $('#direct_selling').click(function() {
+    $('#direct_selling_block')[this.checked ? "show" : "hide"]();
+  });
+});
+</script>
