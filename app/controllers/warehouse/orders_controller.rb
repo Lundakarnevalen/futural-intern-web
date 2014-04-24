@@ -128,8 +128,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     sektion = params[:sektion_id].to_i
     if @warehouse_code == 0
       @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken"])
-    else
+    elsif @warehouse_code == 1
       @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
+    else
+      @roles = Role.where(name: ["bestallare_snaxeriet", "admin_snaxeriet"])
     end
     @customers = Array.new
     @roles.each do |r|
