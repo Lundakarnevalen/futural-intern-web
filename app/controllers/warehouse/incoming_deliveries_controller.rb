@@ -42,7 +42,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
           partial_delivery.partial_delivery_products.create(product_id: product.id, amount: incoming_delivery.amount.to_i)
         end
         redirect_to order_path(order)
-      else 
+      elsif params[:direct_selling] != "yes" 
         @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
           product = Product.find(incoming_delivery.product_id)
           stand_by = product.stock_balance_stand_by
@@ -57,7 +57,11 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             backorders = Backorder.where(product_id: product.id).order("id ASC")
             incoming_amount = incoming_delivery.amount.to_i
             backorders.each do |b|
-              break if incoming_amount < b.amount
+              if incoming_amount < b.amount
+                b.amount -= incoming_amount
+                b.save
+                break
+              end
               WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
               incoming_amount -= b.amount
               b.delete
@@ -80,6 +84,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
     else
       @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @incoming_delivery.incoming_delivery_products.build
+      @customers = Array.new
       render :new
     end
   end
