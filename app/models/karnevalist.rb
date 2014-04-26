@@ -14,6 +14,7 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :sektion2, :foreign_key => :tilldelad_sektion2,
                         :class_name => Sektion
   accepts_nested_attributes_for :user
+  has_many :bookkeepings
   has_many :orders
   has_many :attendances, :dependent => :destroy
   has_and_belongs_to_many :incoming_deliveries
