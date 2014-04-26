@@ -5,6 +5,7 @@ class Karnevalist < ActiveRecord::Base
   accepts_nested_attributes_for :intressen
   has_and_belongs_to_many :sektioner
   accepts_nested_attributes_for :sektioner
+  has_many :photos
   belongs_to :kon
   belongs_to :nation
   belongs_to :storlek

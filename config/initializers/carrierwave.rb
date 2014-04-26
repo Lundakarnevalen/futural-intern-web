@@ -1,6 +1,10 @@
 # -*- encoding : utf-8 -*-
 CarrierWave.configure do |config|
-  if Rails.env.production?
+  if Rails.env.test? || Rails.env.development?
+    config.storage = :file
+    config.enable_processing = false
+    config.root = "#{Rails.root}/tmp"
+  else
     config.fog_credentials = {
       :provider               => 'AWS',                        # required
       :aws_access_key_id      => ENV['AWS_ACCESS_KEY_ID'],                        # required
@@ -13,11 +17,5 @@ CarrierWave.configure do |config|
     config.fog_public     = true                                   # optional, defaults to true
     config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
   end
-  if Rails.env.test? || Rails.env.development?
-    config.storage = :file
-    config.enable_processing = false
-    config.root = "#{Rails.root}/tmp"
-  else
-    config.storage = :fog
-  end
+
 end
