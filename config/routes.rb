@@ -137,6 +137,8 @@
     resources :products do
       collection do
         get 'weekly_overview', to: 'products#weekly_overview'
+        get 'inventory', to: 'products#inventory'
+        post 'update_inventory', to: 'products#update_inventory'
       end
       member do
         get 'inactivate', to: 'products#inactivate'
