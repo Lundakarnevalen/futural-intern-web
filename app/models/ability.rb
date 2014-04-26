@@ -107,6 +107,7 @@ class Ability
       can :manage, ProductCategory
       can :manage, Reservation
       can :manage, Backorder
+      can :manage, Inventory
     end
 
     # Lagersystem - beställare
