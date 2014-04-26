@@ -1,9 +1,32 @@
 <%= render 'shared/header', :title => 'Bokföring och Rapportering' %>
 <div class="white-container col-xs-12">
-  <%= form_for [form_prefix, @bookkeeping] do |f| %>
+  <%= form_for @bookkeeping, method: "post" do |f| %>
 
 
-  <%= f.submit "Gå vidare", class: "green button" %>
+  <fieldset>
+      <div class="form_group">
+        <%= f.label :question_1, "Går det enligt estimerad prognos?" %>
+        <%= f.text_area :question_1 %>
+      </div>
+      <div class="form_group">
+        <%= f.label :question_2, "Har ni fått några oväntade kostnader?" %>
+        <%= f.text_area :question_2 %>
+      </div>
+      <div class="form_group">
+        <%= f.label :question_3, "Har något löst sig på ett smidigare sätt än ni trodde?" %>
+        <%= f.text_area :question_3 %>
+      </div>
+      <div class="form_group">
+        <%= f.label :question_4, "Hur glada är ni? (5 är gladast)" %>
+        <% numbers = [1, 2, 3, 4, 5] %>
+        <%= f.select :question_4, numbers %>
+      </div>
+  </fieldset>
+
+
+
+
+  <%= f.submit "Spara", class: "green button" %>
   <% end %>
 
 </div>

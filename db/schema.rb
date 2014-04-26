@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423174745) do
+ActiveRecord::Schema.define(version: 20140426200341) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -33,6 +33,14 @@ ActiveRecord::Schema.define(version: 20140423174745) do
 
   add_index "backorders", ["order_id"], name: "index_backorders_on_order_id"
   add_index "backorders", ["product_id"], name: "index_backorders_on_product_id"
+
+  create_table "bookkeepings", force: true do |t|
+    t.integer "karnevalist_id"
+    t.string  "question_1"
+    t.string  "question_2"
+    t.string  "question_3"
+    t.integer "question_4"
+  end
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
