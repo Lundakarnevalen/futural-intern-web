@@ -122,6 +122,14 @@ module Warehouse::ApplicationHelper
   def new_product_path
     @warehouse_code == 0 ? new_fabriken_product_path : (@warehouse_code == 1 ? new_fest_product_path : new_snaxeriet_product_path)
   end
+  
+  def inventory_products_path
+    @warehouse_code == 0 ? inventory_fabriken_products_path : (@warehouse_code == 1 ? inventory_fest_products_path : inventory_snaxeriet_products_path)
+  end
+  
+  def update_inventory_products_path
+    @warehouse_code == 0 ? update_inventory_fabriken_products_path : (@warehouse_code == 1 ? update_inventory_fest_products_path : update_inventory_snaxeriet_products_path)
+  end
 
   # categories
   def product_categories_path
