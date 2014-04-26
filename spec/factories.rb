@@ -1,9 +1,6 @@
 # -*- encoding : utf-8 -*-
 FactoryGirl.define do
 
-  factory :photo do
-    image Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/photos/test.jpg')))
-  end
 
   factory :ability do
   end
@@ -52,6 +49,11 @@ FactoryGirl.define do
     tilldelad_klar false
     pusseldag_keep false
     medlem_kollad false
+  end
+
+  factory :photo do
+    image Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/photos/test.jpg')))
+    association :karnevalist, factory: :karnevalist
   end
 
   factory :user_role do
