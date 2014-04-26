@@ -4,4 +4,8 @@ class BookkeepingsController < ApplicationController
   def index
 
   end
+
+  def new
+    @bookkeeping = current_user.karnevalist.bookkeepings.new
+  end
 end

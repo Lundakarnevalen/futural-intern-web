@@ -1,0 +1,9 @@
+<%= render 'shared/header', :title => 'Bokföring och Rapportering' %>
+<div class="white-container col-xs-12">
+  <%= form_for [form_prefix, @bookkeeping] do |f| %>
+
+
+  <%= f.submit "Gå vidare", class: "green button" %>
+  <% end %>
+
+</div>
