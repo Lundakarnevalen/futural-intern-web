@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423174745) do
+ActiveRecord::Schema.define(version: 20140426145537) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -227,6 +227,15 @@ ActiveRecord::Schema.define(version: 20140423174745) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  create_table "photos", force: true do |t|
+    t.string  "image"
+    t.boolean "accepted",       default: false
+    t.boolean "official",       default: false
+    t.integer "karnevalist_id"
+  end
+
+  add_index "photos", ["karnevalist_id"], name: "index_photos_on_karnevalist_id"
 
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
