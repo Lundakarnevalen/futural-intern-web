@@ -66,6 +66,8 @@
     end
   end
 
+  resources :bookkeepings
+
   resources :events do
     member do
       get 'attending'
