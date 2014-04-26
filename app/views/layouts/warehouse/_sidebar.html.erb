@@ -32,6 +32,7 @@
         <% end %>
         <li class="<%= 'active' if current_page?(incoming_deliveries_path) %>"><%= link_to "Inleverans", incoming_deliveries_path %></li>
         <li class="<%= 'active' if current_page?(weekly_overview_products_path) %>"><%= link_to "Veckoöversikt", weekly_overview_products_path %></li>
+        <li class="<%= 'active' if current_page?(inventory_products_path) %>"><%= link_to "Inventering", inventory_products_path %></li>
       </ul>
       <% end %>
     </div>
