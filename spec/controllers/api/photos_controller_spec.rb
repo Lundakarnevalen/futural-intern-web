@@ -21,10 +21,17 @@ describe Api::PhotosController do
 
   describe "POST to Api::PhotosController" do
     it "should create a new photo" do
+      img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
+      post :create, { token: @user.authentication_token, photo: {image: img} }, format: :json
+      response.code.should eq("201")
+      response.body.should have_json_path("photo")
+    end
+    it "should return errors if an image is not present " do
+      post :create, { token: @user.authentication_token, photo: {accepted: false} }, format: :json
+      response.code.should eq("400")
+      response.body.should have_json_path("errors")
     end
   end
 
-  describe "PUT to API::PhotosController with :id" do
-  end
 end
 
