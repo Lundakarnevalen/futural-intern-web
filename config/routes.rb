@@ -15,6 +15,7 @@
     resources :clusters, only: [:create, :update, :index]
     resources :karnevalister, only: [:update]
     resources :notifications, only: [:index]
+    resources :photos, except: [:delete]
   end
 
   resources :notifications, only: [:new, :create, :show, :index]
@@ -158,7 +159,7 @@
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do
     concerns :party_factory
   end
-  
+
   namespace :warehouse, path: 'snaxeriet', as: 'snaxeriet' do
     concerns :party_factory
   end
