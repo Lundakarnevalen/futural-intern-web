@@ -13,15 +13,22 @@ describe Photo do
   end
 
   describe "json output" do
+    before { @p = FactoryGirl.build(:photo) }
     it "should include the url to the image" do
+      @p.to_json.should have_json_path("url")
+      @p.to_json.should have_json_type(String).at_path("url")
     end
 
-    it "should have the first name and last name" do
+    it "should have the name" do
+      @p.to_json.should have_json_path("name")
+      @p.to_json.should have_json_type(String).at_path("name")
     end
 
-    it "should have official true if the karnevalist is a official photographer" do
-
+    it "should have official" do
+      @p = FactoryGirl.build(:photo)
+      @p.to_json.should have_json_path("official")
     end
+
   end
 
 end
