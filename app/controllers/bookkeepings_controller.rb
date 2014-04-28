@@ -2,7 +2,8 @@
 class BookkeepingsController < ApplicationController
   authorize_resource
   def index
-
+    @bookkeepings = Bookkeeping.all
+    @dates = Bookkeeping.find_dates
   end
 
   def new
@@ -18,9 +19,19 @@ class BookkeepingsController < ApplicationController
       render :new
     end
   end
+
+  def show
+    @bookkeeping = Bookkeeping.find params[:id]
+  end
+
+  def diagram
+    @date = params[:date]
+
+  end
+
   private
     def bookkeeping_params
-      params.require(:bookkeeping).permit( :karnevalist_id, :question_1, :question_2, :question_3, :question_4 )
+      params.require(:bookkeeping).permit( :question_1, :question_2, :question_3, :question_4 )
     end
   
 end

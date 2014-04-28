@@ -36,6 +36,8 @@ class Role < ActiveRecord::Base
       'Kan administera vissa funktioner i festmästeriets lagersystem' ],
     [ :sektionsadmin_fabriken,
       'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar).' ],
+    [ :admin_bookkeeping,
+      'Kan skapa nya rapporteringar i bokföringssystemet' ],
   ]
 
   def self.seed_roles

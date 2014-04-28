@@ -1,4 +1,54 @@
 <%= render 'shared/header', :title => 'Bokföring och Rapportering' %>
 <div class="white-container col-xs-12">
-  <%= link_to 'Ny Rapportering', new_bookkeeping_path, {:class => "green button", data: {no_turbolink: true}} %>
+  <table>
+    <tr>
+      <% if current_user.is? :admin_bookkeeping %>
+      <td><%= link_to 'Ny Rapportering', new_bookkeeping_path, {:class => "green button", data: {no_turbolink: true}} %></td>
+      <% end %>
+      <td></td><td></td>
+      <%= form_tag diagram_bookkeepings_path, :method => :get do %>
+      <td><%= select_tag :date, options_for_select(Bookkeeping.get_all_dates) %></td>
+      <td></td><td></td>
+      <td><%= submit_tag 'Diagram för datum', :class => "green button" %></td>
+    </tr>
+  </table>
+<% end %>
+
+
+
+</div>
+<div class="white-container col-xs-12">
+  <% @dates.each do |d| %>
+  <h3><%= "#{d.day}/#{d.month}" %></h3>
+    <table class='table table-striped kollamedlem'>
+  <thead>
+    <tr>
+      <td>
+        Bokföring #
+      </td>
+      <td>
+        Bokförd av
+      </td>
+      <td>
+        Sektion
+      </td>
+    </tr>
+  </thead>
+  <tbody>
+    <% bookkeepings_reverse = @bookkeepings.reverse %>
+    <% bookkeepings_reverse.each do |b| %>
+      <% if b.is_in_date(d) %>
+        <tr>
+          <td><%= link_to "#{b.id}", bookkeeping_path(b.id), :class => "green button", :width => "10px" %></td>
+          <td><%= "#{current_user.karnevalist.fornamn} #{current_user.karnevalist.efternamn}" %></td>
+          <td><%= "#{Sektion.find(current_user.karnevalist.tilldelad_sektion)}" %></td>
+        </tr>
+      <% end %>
+
+
+
+    <% end %>
+  </table>
+  <% end %>
+
 </div>
