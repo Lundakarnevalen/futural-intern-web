@@ -7,6 +7,13 @@ class Sektion < ActiveRecord::Base
   has_many :subsektioner, :class_name => Sektion, 
            :foreign_key => :supersektion_id
 
+  validate do # no recursive subsektioner!
+    if (subsektioner.any? && supersektion.present?) ||
+       (supersektion.present? && supersektion.supersektion.present?)
+      errors.add :supersektion, 'Subsektion kan inte ha egna subsektioner'
+    end
+  end
+
   scope :with_subsektioner, -> (ids) do
     unless ids.present? || ids.any?
       return []
