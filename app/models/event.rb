@@ -16,6 +16,10 @@ class Event < ActiveRecord::Base
     self.where 'sektion_id in (?) or sektion_id is null', sektioner.map(&:id)
   }
 
+  scope :ticketable, -> {
+    self.where :tickets => true
+  }
+
   def creator_karnevalist
     if self.creator.present? && self.creator.karnevalist.present?
       self.creator.karnevalist
@@ -28,5 +32,9 @@ class Event < ActiveRecord::Base
 
   def attending? karnevalist
     attendances.where(:karnevalist => karnevalist).any?
+  end
+
+  def tickets? 
+    !! self.tickets
   end
 end
