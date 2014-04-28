@@ -1,2 +1,10 @@
 <h1>Karneblocket::Listings#index</h1>
-<p>Find me in app/views/karneblocket/listings/index.html.erb</p>
+
+<% @listings.each do |ad| %>
+  <div class="white-container col-xs-12">
+    <ol class=posts>
+      <h1><%= ad.event.name %></h1>
+      <%= ad.price %>
+    </ol>
+  </div>
+<% end %>
