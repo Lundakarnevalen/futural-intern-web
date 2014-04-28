@@ -12,5 +12,4 @@ class Photo < ActiveRecord::Base
       id: self.id
     }
   end
-
 end

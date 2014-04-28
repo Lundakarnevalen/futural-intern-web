@@ -26,10 +26,18 @@ describe Api::PhotosController do
       response.code.should eq("201")
       response.body.should have_json_path("photo")
     end
+
     it "should return errors if an image is not present " do
       post :create, { token: @user.authentication_token, photo: {accepted: false} }, format: :json
       response.code.should eq("400")
       response.body.should have_json_path("errors")
+    end
+    it "should set official if the user is a photographer" do
+      img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
+      @user.roles << FactoryGirl.create(:role, name: "photographer")
+      post :create, { token: @user.authentication_token, photo: { image: img} }, format: :json
+      response.code.should eq("201")
+      response.body.should be_json_eql({ photo: Photo.all.first, success: true }.to_json)
     end
   end
 
