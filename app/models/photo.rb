@@ -8,6 +8,7 @@ class Photo < ActiveRecord::Base
     {
       name: "#{self.karnevalist.fornamn} #{self.karnevalist.efternamn}",
       url: self.image.url,
+      thumb: self.image.thumb.url,
       official: self.official,
       id: self.id
     }
