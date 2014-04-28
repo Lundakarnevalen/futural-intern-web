@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140426215704) do
+ActiveRecord::Schema.define(version: 20140428154755) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -53,6 +53,7 @@ ActiveRecord::Schema.define(version: 20140426215704) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "attendable",  default: false
+    t.date     "end_date"
   end
 
   create_table "incoming_deliveries", force: true do |t|

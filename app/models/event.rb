@@ -1,4 +1,5 @@
-# -*- encoding : utf-8 -*-
+# -*- encoding: utf-8 -*-
+
 class Event < ActiveRecord::Base
   belongs_to :creator, :class_name => :User
   belongs_to :sektion
@@ -7,9 +8,21 @@ class Event < ActiveRecord::Base
 
   validates :title, :presence => true
   validates :description, :presence => true
+  validates :date, :presence => true
+
+  validate do
+    if end_date.present? && end_date <= date
+      errors.add :end_date, 'Kan inte börja efter att det slutar'
+    end
+
+    if date.present? && date.past?
+      errors.add :date, 'Kan inte börja bakåt i tiden'
+    end
+  end
 
   scope :upcoming, -> { 
-    self.where('date >= ?', Date.today).order('date asc')
+    self.where('date >= ? or end_date >= ?', Date.today, Date.today)
+        .order('date asc')
   }
 
   scope :for_sektioner, -> sektioner {
