@@ -83,8 +83,11 @@ class Ability
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:read, :edit, :update], Karnevalist do |k|
+          user.karnevalist.tilldelade_sektioner.any? do |s|
+            k.tilldelade_sektioner.include? s
+          end
+        end
         can [:manage], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       end
     end
