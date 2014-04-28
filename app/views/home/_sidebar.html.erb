@@ -108,7 +108,11 @@
       <%= link_to e do %>
       <button class="fill">
       <div class="col-xs-4">
-        <div class="block gray"><%= short_date e.date %></div>
+        <div class="block gray"><%= short_date e.date %>
+          <% if e.end_date.present? %>
+            <br> &mdash; <br> <%= short_date e.end_date %>
+          <% end %>
+        </div>
       </div>
       <div class="col-xs-8">
         <div class="block left fill invisible"><%= e.title %></div>
