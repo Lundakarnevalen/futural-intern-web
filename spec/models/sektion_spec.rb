@@ -3,6 +3,25 @@
 require 'spec_helper'
 
 describe Sektion do
+  describe ' validations' do
+    it 'can create sektion from reasonable values' do
+      FactoryGirl.build(:sektion).should be_valid
+    end
+
+    it 'can create sektion with subsektion' do
+      supersekt = FactoryGirl.build :sektion
+      subsekt = FactoryGirl.build :sektion, :supersektion => supersekt
+      subsekt.should be_valid
+    end
+
+    it 'disallows subsektion with subsektioner' do
+      supersekt = FactoryGirl.create :sektion
+      subsekt = FactoryGirl.create :sektion, :supersektion => supersekt
+      subsubsekt = FactoryGirl.build :sektion, :supersektion => subsekt
+      subsubsekt.should_not be_valid
+    end
+  end
+
   describe '#members' do
     it 'handles the empty case' do
       s = FactoryGirl.create :sektion
