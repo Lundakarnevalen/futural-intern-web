@@ -19,6 +19,24 @@ describe TicketListing do
       @tl.event = @e
       @tl.should_not be_valid
     end
+
+    it 'rejects listing with no event' do
+      @tl.event = nil
+      @tl.should_not be_valid
+    end
+
+    it 'rejects listing with no seller' do
+      @tl.seller = nil
+      @tl.should_not be_valid
+    end
+
+    it 'rejects listing with suspect price' do
+      @tl.price = 10000000000
+      @tl.should_not be_valid
+
+      @tl.price = 'Hehe'
+      @tl.should_not be_valid
+    end
   end
 
   describe '.ticket_events_for_karnevalist' do
