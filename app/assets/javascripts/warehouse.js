@@ -1,6 +1,8 @@
-var a;
 $(function() {
-  var $el = $('#bookings');
+  var $el = $('#bookings'),
+      $form = $('#res_form'),
+      $status = $('#booking-status');
+
   $el.fullCalendar({
 
     header: {
@@ -24,18 +26,13 @@ $(function() {
     }],
 
     unselectAuto: false,
-
     select: function(start, end, allDay) {
       $('#reservation_start_time').val(start);
       $('#reservation_end_time').val(end);
     },
 
-    eventRender: function(event, element) {
-    },
-
     selectable: true,
     selectHelper: true,
-
     timeFormat: 'H:mm { - H:mm } ',
     dragOpacity: "0.5",
     eventClick: function(event, jsEvent, view) {
@@ -43,7 +40,7 @@ $(function() {
     }
   });
 
-  $('#res_form').on('ajax:success', function(e, data, status, xhr) {
+  $form.on('ajax:success', function(e, data, status, xhr) {
     $(this).find('textarea').val("");
     $el.fullCalendar('renderEvent',
     {
@@ -55,7 +52,13 @@ $(function() {
       url: data.url
     },true);
     $el.fullCalendar('unselect');
-  }).on('ajax:error', function(e, data, status, xhr) {
-    console.log("ERRROR");
+    $status
+      .text('Din bokning är nu registrerad!')
+      .attr('class', 'alert alert-success alert-dismissible')
+      .show();
+
+  }).on('ajax:error', function(e, xhr, status, error) {
+    var msg = 'Din bokning kunde inte genomföras pga: ' + xhr.responseJSON.errors.join(",");
+    $status.text(msg).attr('class', 'alert alert-danger alert-dismissible').show();
   });
 });

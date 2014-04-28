@@ -69,15 +69,17 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html{ redirect_to karnevalist }
       format.json do
-        render :json =>
-          if karnevalist.errors.any?
+        if karnevalist.errors.any?
+          render :json =>
             { :status => :failure,
-              :message => karnevalist.errors.full_messages.join('; ') }
-          else
+              :message => karnevalist.errors.full_messages.join('; ') },
+                 :status => 400
+        else
+          render :json =>
             { :status => :success,
               :id => karnevalist.id,
               :token => karnevalist.user.authentication_token }
-          end
+        end
       end
     end
   end
@@ -98,14 +100,16 @@ class KarnevalisterController < ApplicationController
     respond_to do |format|
       format.html { render :edit }
       format.json do
-        render :json =>
-          if @karnevalist.errors.any?
+        if @karnevalist.errors.any?
+          render :json =>
             { :status => :failure,
-              :message => @karnevalist.errors.full_messages.join('; ') }
-          else
+              :message => @karnevalist.errors.full_messages.join('; ') },
+                 :status => 400
+        else
+          render :json =>
             { :status => :success,
               :token => @karnevalist.user.authentication_token }
-          end
+        end
       end
     end
     if !@karnevalist.google_token.blank?
