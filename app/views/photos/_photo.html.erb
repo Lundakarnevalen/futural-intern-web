@@ -1,0 +1,18 @@
+<div class="well row">
+  <div class="col-sm-6 col-md-4">
+    <div class="thumbnail">
+     <%= image_tag(request.protocol + request.host_with_port + photo.image.url) %>
+      <div class="caption">
+        <h3>By <%= "#{photo.karnevalist.fornamn}" %></h3>
+        <p>
+          <button type="button" class="btn green">
+            <span class="glyphicon glyphicon-ok"></span>
+          </button>
+          <button type="button" class="btn red">
+            <span class="glyphicon glyphicon-remove"></span>
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
