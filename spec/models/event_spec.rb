@@ -10,6 +10,22 @@ describe Event do
     it 'can create event from reasonably values' do
       @e.should be_valid
     end
+
+    it 'disallows event without start date' do
+      @e.date = nil
+      @e.should_not be_valid
+    end
+
+    it 'disallows event that has already happened' do
+      @e.date = 2.days.ago
+      @e.should_not be_valid
+    end
+
+    it 'disallows event with end date after begin date' do
+      @e.date = 2.days.since
+      @e.end_date = Date.today
+      @e.should_not be_valid
+    end
   end
 
   describe '.upcoming' do 
@@ -18,10 +34,17 @@ describe Event do
     end
 
     it 'returns events when appropriate' do
-      e1 = FactoryGirl.create :event, :date => 10.days.ago 
+      e1 = FactoryGirl.build :event, :date => 10.days.ago 
+      e1.save :validate => false
+
       e2 = FactoryGirl.create :event, :date => 10.days.since
       e3 = FactoryGirl.create :event, :date => Date.today
-      Event.upcoming.should match_array [e2, e3]
+
+      e4 = FactoryGirl.build :event, :date => 5.days.ago,
+                                     :end_date => 5.days.since
+      e4.save :validate => false
+
+      Event.upcoming.should match_array [e2, e3, e4]
     end
   end
 
