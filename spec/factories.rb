@@ -160,6 +160,11 @@ FactoryGirl.define do
     attendable true
   end
 
+  factory :ticket_listing do
+    price 100
+    description 'Köpte på fyllan, kom på att jag inte gillar att festa'
+  end
+
   factory :attendance do
     comment 'Allergisk mot protoner'
   end

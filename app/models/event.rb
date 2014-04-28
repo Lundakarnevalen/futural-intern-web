@@ -16,7 +16,7 @@ class Event < ActiveRecord::Base
     self.where 'sektion_id in (?) or sektion_id is null', sektioner.map(&:id)
   }
 
-  scope :ticketable, -> {
+  scope :with_tickets, -> {
     self.where :tickets => true
   }
 
