@@ -16,7 +16,7 @@
     resources :clusters, only: [:create, :update, :index]
     resources :karnevalister, only: [:update]
     resources :notifications, only: [:index]
-    resources :photos, except: [:delete]
+    resources :photos, only: [:create, :index, :show]
   end
 
   resources :notifications, only: [:new, :create, :show, :index]
@@ -85,6 +85,7 @@
   end
 
   resources :roles, :only => [:index]
+  resources :photos, only: [:index]
 
 =begin
   # concern for festmästeriet / fabriken
