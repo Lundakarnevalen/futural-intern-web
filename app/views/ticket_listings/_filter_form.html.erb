@@ -1,0 +1,8 @@
+<%= form_tag '/karneblocket', :method => :get do %>
+  <%= label_tag :event_id, 'Händelse' %>
+  <%= select_tag :event_id, 
+    options_from_collection_for_select(
+      Event.ticket_events_for_karnevalist(current_karnevalist), :id, :title,
+      :selected => @query[:event_id])
+    :prompt => '*' %>
+<% end %>
