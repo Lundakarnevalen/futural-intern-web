@@ -146,6 +146,10 @@ class Ability
       can :manage, Backorder
     end
 
+    if user.is?(:admin) || user.is?(:photographer)
+      can [:read, :update, :delete], Photo
+    end
+
     # Access admin
     if user.is? :'access-admin'
       can :manage, Role
