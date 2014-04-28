@@ -13,4 +13,11 @@
 
 <h2>Kontakta <%= @listing.seller.fornamn %></h2>
 
-<strong>TODO</strong>
+Säljaren kommer att kunna se din email. Om du vill ge säljaren ditt 
+telefonnummer så kan du skriva det nedan.
+
+<%= form_tag do %>
+  <%= label_tag :message, 'Meddelande' %>
+  <%= text_area_tag :message %>
+  <%= submit_tag 'Skicka' %>
+<% end %>
