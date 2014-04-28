@@ -12,7 +12,7 @@ describe Warehouse::ReservationsController do
 
   describe "POST to ReservationsController" do
     it "should create a new reservation" do
-      d = DateTime.now
+      d = DateTime.now + 1
       post :create, reservation: {start_time: d, end_time: d + 1, karnevalist_id: @user.karnevalist.id}, format: :json
       response.code.should eq("201")
     end
