@@ -98,6 +98,7 @@ ActiveRecord::Schema.define(version: 20140501234222) do
 
   add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id", using: :btree
   add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id", using: :btree
+<<<<<<< HEAD
 
   create_table "inventories", force: true do |t|
     t.integer  "inventory_taker_id"
@@ -105,6 +106,8 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.datetime "updated_at"
     t.integer  "warehouse_code"
   end
+=======
+>>>>>>> sets official if the current user is a official photographer
 
   create_table "karnevalister", force: true do |t|
     t.string   "personnummer"
@@ -340,6 +343,7 @@ ActiveRecord::Schema.define(version: 20140501234222) do
   end
 
   add_index "storlekar", ["podio_id"], name: "index_storlekar_on_podio_id", using: :btree
+<<<<<<< HEAD
 
   create_table "ticket_listings", force: true do |t|
     t.text     "description"
@@ -352,6 +356,8 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.datetime "last_reminder"
     t.string   "access_token"
   end
+=======
+>>>>>>> sets official if the current user is a official photographer
 
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
