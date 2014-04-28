@@ -10,7 +10,7 @@ describe PhotosController do
     sign_in @user
   end
 
-  describe "GET to PhotosController" do
+  describe "index" do
 
     it "should return an array containing photos which are not accepted yet" do
       p = FactoryGirl.create(:photo, accepted: false)
@@ -24,6 +24,15 @@ describe PhotosController do
       get :index
       assigns(:photos).should eq([p_n])
       assigns(:photos).should_not eq([p_n, p_a])
+    end
+  end
+
+  describe "update" do
+    it "should update the photo and set it to accepted" do
+    end
+  end
+  describe "delete" do
+    it "should delete the photo if it is not accepted" do
     end
   end
 end
