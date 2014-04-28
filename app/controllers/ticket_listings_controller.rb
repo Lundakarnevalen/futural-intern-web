@@ -21,7 +21,7 @@ class TicketListingsController < ApplicationController
 
     @query = query
 
-    ar_query = TicketListing.order('price asc')
+    ar_query = TicketListing.includes(:event, :karnevalist).order('price asc')
 
     if query[:event_id]
       ar_query = ar_query.where 'event_id = ?', query[:event_id]

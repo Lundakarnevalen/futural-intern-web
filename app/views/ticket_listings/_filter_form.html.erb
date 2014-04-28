@@ -1,8 +1,15 @@
-<%= form_tag '/karneblocket', :method => :get do %>
+<%= form_tag TicketListing, :method => :get do %>
   <%= label_tag :event_id, 'Händelse' %>
   <%= select_tag :event_id, 
     options_from_collection_for_select(
       TicketListing.ticket_events_for_karnevalist(current_karnevalist), :id, :title,
       :selected => @query[:event_id]),
     :prompt => '*' %>
+
+  <%= label_tag :selling, 'Önskar sälja/byta' %>
+  <%= select_tag :selling, options_for_select([
+    ['Sälja', 'true'], ['Byta', 'false']]), :prompt => '*' %>
+
+  <%= submit_tag 'Filtrera' %>
+  <%= link_to 'Nollställ', TicketListing, :class => 'btn' %>
 <% end %>
