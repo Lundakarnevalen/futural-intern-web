@@ -131,7 +131,7 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def tilldelade_sektioner
-    [self.sektion, self.sektion2].select &:present?
+    Sektion.with_subsektioner([self.tilldelad_sektion, self.tilldelad_sektion2])
   end
 
   def utcheckad= val

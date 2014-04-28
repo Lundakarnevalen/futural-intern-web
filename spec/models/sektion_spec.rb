@@ -1,4 +1,7 @@
 # -*- encoding : utf-8 -*-
+
+require 'spec_helper'
+
 describe Sektion do
   describe '#members' do
     it 'handles the empty case' do
@@ -13,6 +16,27 @@ describe Sektion do
       k2 = FactoryGirl.create :karnevalist, :sektion => nil,
         :sektion2 => s
       s.members.should =~ [k1, k2]
+    end
+  end
+
+  describe '#subsektioner' do
+    before do
+      @s1 = FactoryGirl.build :sektion
+      @s2 = FactoryGirl.build :sektion
+      @s3 = FactoryGirl.build :sektion
+    end
+      
+    it 'handles case of no subsektioner' do
+      @s1.subsektioner.should == []
+    end
+
+    it 'handles case of some subsektioner' do
+      @s2.supersektion = @s1
+      @s2.save
+      @s3.supersektion = @s1
+      @s3.save
+
+      @s1.subsektioner.should match_array [@s2, @s3]
     end
   end
 
