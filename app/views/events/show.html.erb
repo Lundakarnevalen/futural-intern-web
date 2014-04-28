@@ -3,7 +3,11 @@
 <div class="white-container col-xs-12">
   <hgroup>
     <h1><%= @event.title %></h1>
-    <h2><%= @event.date %></h2>
+    <h2><%= @event.date %>
+      <% if @event.end_date.present? %>
+        &mdash; <%= @event.end_date %>
+      <% end %>
+    </h2>
   </hgroup>
 
   <p><i>Skapat av <%= @event.creator_karnevalist.name %></i></p>
