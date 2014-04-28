@@ -19,6 +19,8 @@
 
   resources :notifications, only: [:new, :create, :show, :index]
 
+  resources :ticket_listings
+
   resources :karnevalister do
     collection do
       get 'search/:q', :action => 'search'
@@ -161,11 +163,4 @@
 
   get '/home', to: 'home#index'
   get '/internapp', to: 'home#app_store'
-
-  #get '/karneblocket', to: 'karneblocket/karneblocket#index'
-  namespace :karneblocket do
-    root :to => "karneblocket#index"
-    resources :listings
-  end
-
 end
