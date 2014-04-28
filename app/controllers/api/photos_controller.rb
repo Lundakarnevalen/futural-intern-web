@@ -12,7 +12,8 @@ class Api::PhotosController < Api::ApiController
 
   def create
     p = photo_params
-    p.merge!(karnevalist_id: current_user.karnevalist.id)
+    official = current_user.is?("photographer")
+    p.merge!(karnevalist_id: current_user.karnevalist.id, official: official)
     @photo = Photo.new(p)
     render_response(@photo.save)
   end
