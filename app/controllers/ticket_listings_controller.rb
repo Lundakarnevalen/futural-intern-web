@@ -16,7 +16,7 @@ class TicketListingsController < ApplicationController
   def filter_query query
     query = query.select do |k, _|
       [ :event_id, :selling ]
-        .includes? k
+        .include? k
     end
 
     @query = query
