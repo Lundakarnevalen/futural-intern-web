@@ -5,17 +5,17 @@ class TicketListing < ActiveRecord::Base
 
   default_scope -> { order('created_at DESC') }
 
-  validate :seller, :presence => true
-  validate :event, :presence => true
-  validate :price, :numericality => 
-                     { :message => 'Måste vara ett helt antal kronor' },
-                   :inclusion => 
-                     { :range => 1..1000, 
-                       :message => 'Priset ser lite misstänkt ut' } 
+  validates :seller, :presence => true
+  validates :event, :presence => true
+  validates :price, :numericality => 
+                      { :message => 'Måste vara ett helt antal kronor' },
+                    :inclusion => 
+                      { :in => 1..1000, 
+                        :message => 'Priset ser lite misstänkt ut' } 
 
   validate do # event
     if event.present? && !event.tickets?
-      errors.add :event, 'Händelsen verkar inte ha några biljetter... Fel?'
+      errors.add :event, 'Händelsen verkar inte stödja biljetter'
     end
   end
 
