@@ -3,8 +3,6 @@ class TicketListing < ActiveRecord::Base
   belongs_to :seller, :class_name => Karnevalist
   belongs_to :event
 
-  default_scope -> { order('created_at DESC') }
-
   validates :seller, :presence => true
   validates :event, :presence => true
   validates :price, :numericality => 

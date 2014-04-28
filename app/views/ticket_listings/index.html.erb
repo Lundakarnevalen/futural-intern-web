@@ -1,0 +1,19 @@
+<%= render 'shared/header', :title => 'Karneblocket' %>
+
+<%= render 'filter_form', :query => @query %>
+
+<table>
+  <thead>
+    <tr>
+      <th>Pris</th>
+      <th>Säljare</th>
+      <th>Önskar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @listings.each do |l| %>
+      <%= render 'listing', :listing => l %>
+    <% end %>
+  </tbody>
+</table>
+
