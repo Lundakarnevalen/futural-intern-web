@@ -17,10 +17,17 @@
 //= require turbolinks
 //= require fullcalendar
 //= require warehouse.js
+//= require jquery.dotdotdot.js
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
     language: "sv",
     autoclose: true
+  });
+});
+
+$(document).ready(function() {
+  $(".ellipsis").dotdotdot({
+    watch: "window"
   });
 });

@@ -233,6 +233,7 @@ html {
         color: $color-red;
         box-shadow: 0 $distance-shadow 0 $color-shadow;
         .message-information {
+
             width: 80%;
             @media (max-width: 600px) {
                 h1 {
@@ -555,8 +556,8 @@ input[type="submit"],
         box-shadow: 0 ($distance-shadow / 2) 0 $color-shadow;
     }
 
-    &.green { 
-        background-color: $color-green; 
+    &.green {
+        background-color: $color-green;
         color: white;
     }
     &.blue {
@@ -592,7 +593,7 @@ button,
 .btn,
 input[type="submit"] {
     font-size: 16px;
-    &:hover { 
+    &:hover {
         opacity: 0.9;
         color: $color-red;
     }
@@ -600,7 +601,7 @@ input[type="submit"] {
     &.blue:hover,
     &.green:hover,
     &.yellow:hover { color: white; }
-    &:active { 
+    &:active {
         opacity: 0.8;
         box-shadow: none;
     }
@@ -757,8 +758,8 @@ h5,
 h6 {
     font-family: $font-header;
     text-transform: uppercase;
-    &.inline { 
-        margin: 0 0 0 0; 
+    &.inline {
+        margin: 0 0 0 0;
     }
     &.center { text-align: center; }
     &.regular { text-transform:none; }
@@ -814,8 +815,8 @@ label {
     &.dark { color:lighten(black, 25%); }
 }
 
-a { 
-    color: inherit; 
+a {
+    color: inherit;
     &:hover { color: inherit;}
 
     img { border: none; }
