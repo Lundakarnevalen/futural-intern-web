@@ -19,6 +19,11 @@ describe Photo do
       @p.to_json.should have_json_type(String).at_path("url")
     end
 
+    it "should include the url to the image" do
+      @p.to_json.should have_json_path("thumb")
+      @p.to_json.should have_json_type(String).at_path("thumb")
+    end
+
     it "should have the name" do
       @p.to_json.should have_json_path("name")
       @p.to_json.should have_json_type(String).at_path("name")

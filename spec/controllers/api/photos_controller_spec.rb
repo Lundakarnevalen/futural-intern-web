@@ -20,6 +20,7 @@ describe Api::PhotosController do
   end
 
   describe "POST to Api::PhotosController" do
+
     it "should create a new photo" do
       img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
       post :create, { token: @user.authentication_token, photo: {image: img} }, format: :json
@@ -32,6 +33,7 @@ describe Api::PhotosController do
       response.code.should eq("400")
       response.body.should have_json_path("errors")
     end
+
     it "should set official if the user is a photographer" do
       img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
       @user.roles << FactoryGirl.create(:role, name: "photographer")
