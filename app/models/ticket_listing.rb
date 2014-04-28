@@ -5,7 +5,8 @@ class TicketListing < ActiveRecord::Base
 
   validates :seller, :presence => true
   validates :event, :presence => true
-  validates :price, :numericality => 
+  validates :price, :presence => true,
+                    :numericality => 
                       { :message => 'Måste vara ett helt antal kronor' },
                     :inclusion => 
                       { :in => 1..1000, 

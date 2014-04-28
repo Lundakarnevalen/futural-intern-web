@@ -1,0 +1,16 @@
+<%= render 'shared/header', :title => "Karneblocket: #{@listing.event.title}" %>
+
+<dl>
+  <dt>Händelse</dt>
+  <dd><%= @listing.event.title %>, den <%= @listing.event.date %></dd>
+
+  <dt>Säljare</dt>
+  <dd><%= @listing.seller.fornamn %></dd>
+
+  <dt>Pris</dt>
+  <dd><%= number_to_currency @listing.price %></dd>
+</dl>
+
+<h2>Kontakta <%= @listing.seller.fornamn %></h2>
+
+<strong>TODO</strong>
