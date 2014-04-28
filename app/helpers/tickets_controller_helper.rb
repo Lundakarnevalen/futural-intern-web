@@ -1,0 +1,2 @@
+module TicketsControllerHelper
+end

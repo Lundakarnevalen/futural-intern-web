@@ -1,0 +1,2 @@
+module Karneblocket::ListingsHelper
+end

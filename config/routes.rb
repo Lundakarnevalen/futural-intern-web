@@ -161,4 +161,11 @@
 
   get '/home', to: 'home#index'
   get '/internapp', to: 'home#app_store'
+
+  #get '/karneblocket', to: 'karneblocket/karneblocket#index'
+  namespace :karneblocket do
+    root :to => "karneblocket#index"
+    resources :listings
+  end
+
 end
