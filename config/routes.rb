@@ -66,7 +66,11 @@
     end
   end
 
-  resources :bookkeepings
+  resources :bookkeepings do
+    collection do
+      get 'diagram'
+    end
+  end
 
   resources :events do
     member do
