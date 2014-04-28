@@ -66,6 +66,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.status = "Bearbetas"
     end
     if @order.update_attributes(order_params)
+        if params[:delivery_time]
+          @order.delivery_date = DateTime.strptime("#{params[:order][:delivery_date]}T#{params[:delivery_time]}", "%Y-%m-%dT%H:%M")
+          @order.save
+        end
         @order.order_products.each do |order_product|
           product = Product.find(order_product.product_id)
           in_stock = product.stock_balance_not_ordered
@@ -253,7 +257,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order = Order.find(params[:id])
     end
     def order_params
-      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :comment, :sektion_id, :karnevalist_id, order_products_attributes: [:id, :_destroy, :amount, :product_id])
+      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :delivery_time, :comment, :sektion_id, :karnevalist_id, order_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
     def update_warehouse order_id
       order_products = OrderProduct.where(:order_id => order_id)
