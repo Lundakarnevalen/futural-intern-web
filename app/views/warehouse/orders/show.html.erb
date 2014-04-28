@@ -9,7 +9,7 @@
         <p><strong>Beställare: </strong> <%= "#{@order.karnevalist.fornamn} #{@order.karnevalist.efternamn}" %></p>
         <p><strong>Sektion: </strong> <%= @order.sektion.name %></p>
         <p><strong>Beställningsdatum: </strong> <%= @order.order_date.strftime("%Y-%m-%d %H:%M") %></p>
-        <p><strong>Hämtdatum: </strong> <%= !@order.delivery_date.blank? ? @order.delivery_date.strftime("%Y-%m-%d") : "Direktförsäljning" %></p>
+        <p><strong>Hämtdatum: </strong> <%= !@order.delivery_date.blank? ? @order.delivery_date.strftime(@warehouse_code == 2 ? "%Y-%m-%d %H:%M" : "%Y-%m-%d") : "Direktförsäljning" %></p>
         <p><strong>Totalpris: </strong> <%= number_to_currency(@order.total_sum) %></p>
         <p><%= link_to "Visa Kvitto", order_path(@order.id, :format => "pdf") %></p>
 
