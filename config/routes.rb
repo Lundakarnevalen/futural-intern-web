@@ -63,6 +63,7 @@
       get 'contact/edit', :to => 'sektioner#edit_contact'
       get 'english', :to => 'sektioner#show_english'
       get 'english/edit', :to => 'sektioner#edit_english'
+      get 'images', :to => 'sektioner#image_index'
     end
   end
 
@@ -160,7 +161,7 @@
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do
     concerns :party_factory
   end
-  
+
   namespace :warehouse, path: 'snaxeriet', as: 'snaxeriet' do
     concerns :party_factory
   end

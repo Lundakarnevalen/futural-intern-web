@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428195544) do
+ActiveRecord::Schema.define(version: 20140428210635) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -236,7 +236,8 @@ ActiveRecord::Schema.define(version: 20140428195544) do
   end
 
   create_table "photos", force: true do |t|
-    t.string "photo"
+    t.string  "photo"
+    t.integer "sektion_id"
   end
 
   create_table "podio_syncs", force: true do |t|
@@ -306,8 +307,17 @@ ActiveRecord::Schema.define(version: 20140428195544) do
     t.integer "role_id"
   end
 
-# Could not dump table "sektioner" because of following NoMethodError
-#   undefined method `[]' for nil:NilClass
+  create_table "sektioner", force: true do |t|
+    t.string  "name",         null: false
+    t.integer "podio_id"
+    t.integer "podio_sub_id"
+    t.text    "info_page"
+    t.text    "english_page"
+    t.text    "contact_page"
+    t.integer "photo_id"
+  end
+
+  add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
 
   create_table "storlekar", force: true do |t|
     t.string  "name",     null: false
