@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Sektionsbilder"} %>
 
-<%= link_to "Ladda upp en ny bild", new_image_path(:sektion_id => @sektion), :class => "button green" %>
+<%= link_to "Ladda upp en ny bild", new_image_path(:sektion_id => @sektion), :class => "button green" if current_user.can? :manage, :image %>
 
 <div class="row">
   <% @images.each do |image| %>
