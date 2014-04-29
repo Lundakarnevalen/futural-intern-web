@@ -1,5 +1,14 @@
-<ul>
-  <% @photos.each do |photo| %>
-    <li> EN BILD HÄR </li>
+<%= render partial: "shared/header", locals: {title: "Sektionsbilder"} %>
+
+<%= link_to "Ladda upp en ny bild", new_image_path(:sektion_id => @sektion), :class => "button green" %>
+
+<div class="row">
+  <% @images.each do |image| %>
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <h3><%= link_to image.name, image %></h3>
+        <%= link_to image_tag(image.image_url), image if image.image? %>
+      </div>
+    </div>
   <% end %>
-</ul>
+</div>

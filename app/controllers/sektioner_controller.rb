@@ -8,20 +8,7 @@ class SektionerController < ApplicationController
 
   def image_index
     sektion = Sektion.find params[:id]
-    @photos = sektion.photos
-    @photo = Photo.new
-  end
-
-  def upload_image
-    sektion = Sektion.find params[:id]
-    p = Photo.new params[:file]
-    if p.save!
-      sektion.photos << p
-    end
-  end
-
-  def delete_image
-    #TODO
+    @images = sektion.images
   end
 
   def show
