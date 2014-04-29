@@ -6,6 +6,11 @@ class SektionerController < ApplicationController
     @sektioner = Sektion.all.order 'name asc'
   end
 
+  def image_index
+    sektion = Sektion.find params[:id]
+    @images = sektion.images
+  end
+
   def show
     @sektion = Sektion.find params[:id]
     @page_content = @sektion.info_page
