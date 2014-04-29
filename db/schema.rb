@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140428210635) do
+ActiveRecord::Schema.define(version: 20140429092253) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -54,6 +54,14 @@ ActiveRecord::Schema.define(version: 20140428210635) do
     t.datetime "updated_at"
     t.boolean  "attendable",  default: false
     t.date     "end_date"
+  end
+
+  create_table "images", force: true do |t|
+    t.integer  "sektion_id"
+    t.string   "image"
+    t.string   "name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "incoming_deliveries", force: true do |t|
@@ -235,11 +243,6 @@ ActiveRecord::Schema.define(version: 20140428210635) do
     t.datetime "updated_at"
   end
 
-  create_table "photos", force: true do |t|
-    t.string  "photo"
-    t.integer "sektion_id"
-  end
-
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
   end
@@ -314,7 +317,6 @@ ActiveRecord::Schema.define(version: 20140428210635) do
     t.text    "info_page"
     t.text    "english_page"
     t.text    "contact_page"
-    t.integer "photo_id"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id"
