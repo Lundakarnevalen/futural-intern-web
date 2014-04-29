@@ -1,6 +1,6 @@
 <%= render partial: "shared/header", locals: {title: @image.name} %>
 <%= link_to "Tillbaka", 'javascript:history.go(-1);', :class => 'green button' %>
-<%= link_to "Radera bilden", @image, method: :delete, data: { confirm: "Är du säker på att du vill radera denna säkert jättefina bild?" }, :class =>"red button col-md-offset-2", :type => "edit" %>
+<%= link_to "Radera bilden", @image, method: :delete, data: { confirm: "Är du säker på att du vill radera denna säkert jättefina bild?" }, :class =>"red button col-md-offset-2", :type => "edit" if current_user.can? :manage, :image %>
 <div class="col-xs-12 thumbnail">
   <%= image_tag @image.image_url if @image.image? %>
 </div>
