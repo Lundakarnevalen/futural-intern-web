@@ -1,4 +1,12 @@
 sv:
+  # CarrierWave
+  errors:
+    messages:
+      carrierwave_processing_error: failed to be processed
+      carrierwave_integrity_error: är inte en tillåten filtyp
+      carrierwave_download_error: kunde inte laddas ner
+      extension_white_list_error: "Du får inte ladda upp %{extension} filer, tillåtna: %{allowed_types}"
+      extension_black_list_error: "Du får inte ladda upp %{extension} filer, förbjudna: %{prohibited_types}"
   # Can can
   unauthorized:
     manage:
@@ -6,7 +14,6 @@ sv:
            det? Kontakta IT!
     change_sektion:
       all: Du får inte lov att byta sektion på folk!
-
   # Standard stuff
   date:
     abbr_day_names:

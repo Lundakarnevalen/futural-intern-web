@@ -8,6 +8,7 @@
 
   resources :phones, only: [:new, :create]
   resources :posts, only: [:new, :create, :edit, :update, :destroy, :show]
+  resources :images, only: [:new, :create, :show, :destroy]
 
   namespace :api do
     devise_for :users
@@ -63,6 +64,7 @@
       get 'contact/edit', :to => 'sektioner#edit_contact'
       get 'english', :to => 'sektioner#show_english'
       get 'english/edit', :to => 'sektioner#edit_english'
+      get 'images', :to => 'sektioner#image_index'
     end
   end
 
@@ -160,7 +162,7 @@
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do
     concerns :party_factory
   end
-  
+
   namespace :warehouse, path: 'snaxeriet', as: 'snaxeriet' do
     concerns :party_factory
   end
