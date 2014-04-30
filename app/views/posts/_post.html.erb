@@ -1,15 +1,23 @@
-<%= javascript_include_tag :defaults %>
-<%= csrf_meta_tag %>
-<li>
-  <span class="title"><%= post.title %></span>
-  <span class="content"><%= post.content %></span>
-  <span class="timestamp">
-    Posted <%= time_ago_in_words(post.created_at) %> sedan
-  </span>
-  <span class="posted_by">
-    av <%= "#{post.karnevalist.fornamn} #{post.karnevalist.efternamn}"%>.
-  </span>
-  <% if current_user.can? :edit, post %>
-    <%= link_to "redigera", edit_post_path(post) %>
-  <% end %>
-</li>
+<div class="message col-xs-12">
+  <%= image_tag("logotyper/#{post.sektion.name}.png", class: "img-responsive message-image col-xs-2") unless post.sektion.nil? %>
+  <%= image_tag("logotyper/logo.png", class: "img-responsive message-image col-xs-2") if post.sektion.nil? %>
+  <div class="message-information col-xs-8">
+    <div class="row">
+      <h1 class="ellipsis"><%= post.title %></h1>
+    </div>
+    <div class="row">
+      <div class="post-preview ellipsis"><%= render_markdown post.content %>
+      </div>
+    </div>
+  </div>
+<% unless post.id.nil? %>
+    <div class="row">
+      <div class="col-xs-12 form-controls">
+        <%= link_to "läs mer", post, class: "green button" %>
+        <% if (current_user.can? :edit, post) %>
+        <%= link_to "redigera", edit_post_path(post), class: "button", type: "edit" %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
+</div>

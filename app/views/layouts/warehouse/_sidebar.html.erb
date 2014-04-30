@@ -4,24 +4,35 @@
         <li class="nav-header disabled"><a>Ordrar</a></li>
         <li class="<%= 'active' if current_page?(orders_path) %>"><%= link_to "Mina ordrar", orders_path %></li>
         <li class="<%= 'active' if current_page?(new_order_path) %>"><%= link_to "Ny order", new_order_path %></li>
+        <% if (((current_user.is? :sektionsadmin_fabriken) || (current_user.is? :admin_fabriken)) && @warehouse_code == 0) || (((current_user.is? :sektionsadmin_festmasteriet) || (current_user.is? :admin_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin) %>
+          <% current_user.karnevalist.tilldelad_sektion == 399 ? sektion_id = 300 : sektion_id = current_user.karnevalist.tilldelad_sektion %>
+          <li class="<%= 'active' if current_page?(sektion_orders_path(:sektion_id => sektion_id)) %>"><%= link_to "Min sektions ordrar", sektion_orders_path(:sektion_id => sektion_id) %></li>
+        <% end %>
       </ul>
+      <% if @warehouse_code == 0 %>
+      <ul class="nav nav-sidebar">
+        <li class="nav-header disabled"><a>BOKNING</a></li>
+        <li class="<%= 'active' if current_page?(fabriken_reservations_path) %>"><%= link_to "Boka byggtid", fabriken_reservations_path %></li>
+      </ul>
+      <% end %>
 
-      <% if !(current_user.is? :bestallare_fabriken) && !(current_user.is? :bestallare_festmasteriet) %>
+      <% if ((current_user.is? :admin_fabriken) && @warehouse_code == 0) || (((current_user.is? :admin_festmasteriet) || (current_user.is? :kassor_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin) %>
       <ul class="nav nav-sidebar">
         <li class="nav-header disabled"><a>Orderhantering</a></li>
-        <li class="<%= 'active' if current_page?(list_orders_path) %>"><%= link_to "Alla ordrar", list_orders_path %><li>
+        <li class="<%= 'active' if current_page?(list_orders_path) %>"><%= link_to "Alla ordrar", list_orders_path, data: {no_turbolink: true} %><li>
         <li class="<%= 'active' if current_page?(direct_selling_orders_path) %>"><%= link_to "Direktförsäljning", direct_selling_orders_path %><li>
-        <li class="<%= 'active' if current_page?(calendar_orders_path) %>"><%= link_to "Kalender", calendar_orders_path %></li>
+        <li class="<%= 'active' if current_page?(calendar_orders_path) %>"><%= link_to "Kalender Hämtdatum", calendar_orders_path %></li>
       </ul>
 
       <ul class="nav nav-sidebar">
         <li class="nav-header disabled"><a>Administration</a></li>
-        <% if (current_user.is? :admin_fabriken) || (current_user.is? :admin_festmasteriet) || (current_user.is? :admin) %>
+        <% if !current_user.is? :kassor_festmasteriet %>
           <li class="<%= 'active' if current_page?(products_path) %>"><%= link_to "Varor", products_path %></li>
           <li class="<%= 'active' if current_page?(product_categories_path) %>"><%= link_to "Varukategorier", product_categories_path %></li>
         <% end %>
         <li class="<%= 'active' if current_page?(incoming_deliveries_path) %>"><%= link_to "Inleverans", incoming_deliveries_path %></li>
         <li class="<%= 'active' if current_page?(weekly_overview_products_path) %>"><%= link_to "Veckoöversikt", weekly_overview_products_path %></li>
+        <li class="<%= 'active' if current_page?(inventory_products_path) %>"><%= link_to "Inventering", inventory_products_path %></li>
       </ul>
       <% end %>
     </div>

@@ -1,20 +1,16 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Registrering"} %>
 
-<div class="container" id="content">
+<div class="container" id="registration">
 
 	<%= render partial: "shared/logo", locals: {percent: "30", text: "Nu ska du välja vilken sektion du gillar."} %>
 
 	<%= form_for @karnevalist, url: {action: "step3_put"}, :method => @method,
 								:html => { :class => 'validate' } do |f| %>
-	
+
 	<%= render partial: "shared/step3", locals: {f: f} %>
 
 	<div class="form-controls">
-		<%= f.submit'Spara' %>
+		<%= f.submit'Spara', :class => "fill green button" %>
 	</div>
 
 	<%= content_tag(:div, "", :id => 'hr') %>
@@ -22,9 +18,9 @@
 	<div id="steg1">
 		<%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
 	</div>
-	
+
 	<div class="form-controls">
-		<%= f.submit'Spara' %>
+		<%= f.submit'Spara', :class => "fill green button" %>
 	</div>
 	<% end %>
 

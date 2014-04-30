@@ -1,0 +1,28 @@
+<div class="white-container col-xs-12">
+  <%= form_for @post do |f| %>
+    <fieldset>
+      <div class="selection_box">
+        <%= f.label :sektion_id, "Visa för sektion: " %>
+        <% if (current_user.is? :admin) || (current_user.is? :'global-info') %>
+          <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
+          { :include_blank => '[Visa för alla]' }, :selected => selected_section %>
+        <% elsif current_user.is? :info %>
+          <%= f.collection_select :sektion_id, current_sektioner, :id, :name, :selected => selected_section %>
+        <% end %>
+      </div>
+
+      <div class="form_group">
+        <%= f.label :title, "Rubrik" %>
+        <%= f.text_field :title, placeholder: "Skriv en jättefin rubrik här..." %>
+      </div>
+
+      <div class="form_group">
+        <%= f.label :title, "Text" %>
+        <%= f.text_area :content, placeholder: "Skriv den vackraste texten här..." %>
+      </div>
+    </fieldset>
+
+  <%= render partial: "shared/markdown_notice" %>
+  <%= f.submit "Spara", :class =>"green button"  %>
+  <% end %>
+</div>

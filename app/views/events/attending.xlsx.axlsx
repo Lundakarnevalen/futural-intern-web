@@ -1,0 +1,9 @@
+ws_name = "#{@event.title.downcase} #{Time.now.strftime '%Y%m%d'}"[0..30]
+
+xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
+  sheet.add_row(Attendance.attributes_for_header)
+  @event.attendances.each do |a|
+    sheet.add_row(a.attributes_for_export)
+  end
+end
+

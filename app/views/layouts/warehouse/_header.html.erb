@@ -8,7 +8,7 @@
         <span class="icon-bar"></span>
       </button>
       <a class="navbar-brand" href="">
-        <% if (current_user.is? :bestallare_fabriken) || (current_user.is? :bestallare_festmasteriet) || @bestallare %>
+        <% if (current_user.is? :bestallare_fabriken) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :bestallare_snaxeriet) || @bestallare %>
           <span>Beställare: </span>
         <% elsif current_user.is? :kassor_festmasteriet %>
           <span>Kassör: </span>
@@ -20,7 +20,8 @@
     </div>
     <div>
       <ul class="nav navbar-nav navbar-right">
-        <li><%= link_to icon("home") + " karnevalist.se", root_url %></li>
+        <li><%= link_to icon("home") + " karnevalist.se", root_url, data: {no_turbolink: true} %></li>
+        <li><%= image_tag("/images/lagersystem.jpg") %></li>
       </ul>
     </div>
   </div>

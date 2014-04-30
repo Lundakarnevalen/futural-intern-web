@@ -1,0 +1,52 @@
+<% if user_signed_in? %>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+        <span class="sr-only">Toggle navigation</span>
+        <%= image_tag 'hamburger-icon-yellow.svg', size: "16x16" %>
+      </button>
+      <div id="logotype" class="navbar-left">
+        <%=link_to (image_tag "karnevalist-logotyp@2x.png"), root_url %>
+      </div>
+    </div>
+    <!-- Collect the nav links, forms, and other content for toggling -->
+    <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+      <ul class="nav navbar-nav">
+        <%# Warehouse stuff %>
+        <% if (current_user.is? :admin_fabriken) || (current_user.is? :bestallare_fabriken) || (current_user.is? :admin) %>
+          <li><%= link_to 'Lagersystem Fabriken', fabriken_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
+        <% end %>
+        <% if (current_user.is? :admin_festmasteriet) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :kassor_festmasteriet) || (current_user.is? :admin) %>
+          <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
+        <% end %>
+        <% if (current_user.is? :admin_snaxeriet) || (current_user.is? :bestallare_snaxeriet) || (current_user.is? :admin) %>
+          <li><%= link_to 'Lagersystem Snaxeriet', snaxeriet_orders_path, data: {no_turbolink: true}, :class => "button" %></li>
+        <% end %>
+      </ul>
+      <div class="nav navbar-nav navbar-right">
+        <div id="profile-image-container" class="col-xs-4">
+          <% if current_user.karnevalist.nil? || current_user.karnevalist.foto_url.nil? %>
+            <%= image_tag "picture_default.jpg" %>
+          <% else %>
+            <%= image_tag(current_user.karnevalist.foto_url.to_s) %>
+          <% end %>
+        </div>
+        <div id="profile-information-container" class="col-xs-8">
+          <% if current_karnevalist.nil? || current_karnevalist.fornamn.nil? %>
+            <% message = "Hej!" %>
+          <% else %>
+            <% message = "Hej, " + current_karnevalist.fornamn %>
+          <% end %>
+          <h5><%= link_to message, current_karnevalist %></h5>
+          <%= link_to "Logga ut", destroy_user_session_path, :method => :delete, :class => "button red mini" %>
+        </div>
+      </div>
+      <div class="visible-sm visible-xs">
+        <%= render "home/sidebar" %>
+      </div>
+    </div><!-- /.navbar-collapse -->
+  </div><!-- /.container-fluid -->
+</nav>
+<% end %>

@@ -1,0 +1,17 @@
+<%= render 'shared/header', :title => "Vilka är anmälda till #{@event.title}?" %>
+
+<strong>Totalt <%= @event.attendances.count %> anmälda</strong>
+
+<div>
+<%= link_to 'Ladda ner som excel', attending_event_path(:format => :xlsx),
+            :class => 'green button' %>
+</div>
+
+<ul>
+  <% @event.attendances.map(&:karnevalist).sort_by(&:name).each do |k| %>
+    <li>
+      <%= k.name %>
+    </li>
+  <% end %>
+</ul>
+

@@ -1,10 +1,6 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Registrering"} %>
 
-<div class="container" id="content">
+<div class="container" id="registration">
 
   <% if @karnevalist.errors.any? %>
     <% @karnevalist.errors.full_messages.each do |msg| %>
@@ -20,7 +16,7 @@
 	<%= render partial: "shared/step1", locals: {f: f, checked: nil} %>
 
 	<div class="form-controls">
-		<%= f.submit'Spara' %>
+		<%= f.submit 'Spara' %>
 	</div>
 
 	<% end %>

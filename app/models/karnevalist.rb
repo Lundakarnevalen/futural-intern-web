@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 
 class Karnevalist < ActiveRecord::Base
   has_and_belongs_to_many :intressen
@@ -9,12 +9,13 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :nation
   belongs_to :storlek
   belongs_to :korkort
-  belongs_to :user
+  belongs_to :user, :dependent => :destroy
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
   belongs_to :sektion2, :foreign_key => :tilldelad_sektion2,
                         :class_name => Sektion
   accepts_nested_attributes_for :user
   has_many :orders
+  has_many :attendances, :dependent => :destroy
   has_and_belongs_to_many :incoming_deliveries
 
   mount_uploader :foto, FotoUploader
@@ -38,10 +39,17 @@ class Karnevalist < ActiveRecord::Base
     end
   end
 
+  validate do # Sektioner exist
+    sids = [self.tilldelad_sektion, self.tilldelad_sektion2]
+    unless sids.all?{ |sid| sid.nil? || Sektion.exists?(sid) }
+      self.errors.add :sektion, 'Ogiltig sektion!'
+    end
+  end
+
   UTCHECKAD = 3
 
   before_save do
-    # User 
+    # User
     if user.nil?
       # In memory only!
       @pass = SecureRandom.base64
@@ -123,7 +131,7 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def tilldelade_sektioner
-    [self.sektion, self.sektion2].select &:present?
+    Sektion.with_subsektioner([self.tilldelad_sektion, self.tilldelad_sektion2])
   end
 
   def utcheckad= val
@@ -144,7 +152,11 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def name
-    "#{fornamn} #{efternamn}"
+    if fornamn.present? && efternamn.present?
+      "#{fornamn} #{efternamn}"
+    else
+      "NAMNLÖS KARNEVALIST #{self.hash.abs.to_s(16).upcase}"
+    end
   end
 
   # In memory only

@@ -1,40 +1,31 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
-<div class="container">
-	<div class="logo">
-		<img alt="" src="/images/RegistreringRobotTitle@2x.png" />
-		<% if @karnevalist.avklarat_steg == 3 %>
-	</div>
-	<h2><%= "#{@karnevalist.fornamn} #{@karnevalist.efternamn}" %> är redan utcheckad.</h2>
-	<p><%= link_to "Tillbaka till utcheckningssidan", controller: "karnevalister", action: "checkout" %></p>
-	<% else %>
-	<p><strong>Dags att registrera en karnevalist.</strong> Personen är för tillfället</p>
-	<div style="margin: 0.25em 0;">
-		<div class="progressbar">
-			<div class="progress" style="width: 95%;"></div>
-		</div>
-		<div class="progress-percent">95 %</div>
-	</div>
-	<p>karnevalist.</p>
-</div>
-<%= form_for @karnevalist, url: {action: "checkout_digital_put"}, :method => @method,
-							html: { :class => 'validate' } do |f| %>
-<div>
-	<span class="title">STEG 1</span>
-</div>
-<div id="steg1">
-	<%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
-	<%= render partial: "shared/step3", locals: {f: f} %>
-	<%= render partial: "shared/utcheckning", locals: {f: f} %>
-
-	<div class="form-controls">
-		<%= f.submit'Spara' %>
-	</div>
-
-	<% end %>
-	<% end %>
+<div class="white-container col-xs-12">
+  <% if @karnevalist.avklarat_steg == 3 %>
+  <h2><%= "#{@karnevalist.fornamn} #{@karnevalist.efternamn}" %> är redan utcheckad.</h2>
+  <p><%= link_to "Tillbaka till utcheckningssidan", controller: "karnevalister", action: "checkout" %></p>
+  <% else %>
+  <p><strong>Dags att registrera en karnevalist.</strong> Personen är för tillfället</p>
+    <div style="margin: 0.25em 0;">
+      <div class="progressbar">
+      <div class="progress" style="width: 95%;"></div>
+    </div>
+    <div class="progress-percent">95 %</div>
+  </div>
+  <p>karnevalist.</p>
+  <%= form_for @karnevalist, url: {action: "checkout_digital_put"}, :method => @method,
+  html: { :class => 'validate' } do |f| %>
+    <div>
+    <span class="title">STEG 1</span>
+  </div>
+    <div id="steg1">
+    <%= render partial: "shared/step1", locals: {f: f, checked: "checked"} %>
+    <%= render partial: "shared/step3", locals: {f: f} %>
+    <%= render partial: "shared/utcheckning", locals: {f: f} %>
+      <div class="form-controls">
+      <%= f.submit'Spara' %>
+    </div>
+    <% end %>
+    <% end %>
+  </div>
 </div>

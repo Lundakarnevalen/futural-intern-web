@@ -1,99 +1,16 @@
-<h1>Futuralkarnevalens internweb</h1>
+<%= render partial: "shared/header", locals: {title: "NYHETER"} %>
 
-<p><i>
-  Du är inloggad som <%= current_user.email %>.
-  <%= sign_out_link 'Logga ut?' %>
-</i></p>
-
-<br>
-
-<% unless current_user.roles.empty? %>
-  <p><b>Du är
-    <%= spell_out_list current_user.roles.map(&:name).uniq %>.
-  </b></p>
+<% if current_user.is? :info %>
+  <%= render partial: "shared/message", locals: {title: "Hejsan info-person!", content: render_markdown(File.read('app/assets/info_clarification.txt'))} %>
 <% end %>
-
-<h2>Du har följande superkrafter:</h2>
-
-<ul>
-  <%# Stuff relating to the current karnevalist %>
-  <% if can? :read, current_user.karnevalist %>
-    <li><%= link_to 'Se din registrering', current_user.karnevalist %></li>
-  <% end %>
-
-  <%# General stuff %>
-  <% if can? :read, Notification %>
-    <li><%= link_to 'Läsa gamla pushnotiser', Notification %></li>
-  <% end %>
-  <% if can? :checkout, Karnevalist %>
-    <li><%= link_to 'Checka ut karnevalister', checkout_karnevalister_path %></li>
-  <% end %>
-
-  <%# Sektionsadmin stuff %>
-  <% if current_user.is? :sektionsadmin and current_user.karnevalist? %>
-    <% if can? :read, Karnevalist %>
-      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
-    <% end %>
-    <% s = current_user.karnevalist.sektion %>
-    <% if can? :read, s %>
-      <li><%= link_to 'Administrera din sektion', s %></li>
-    <% end %>
-    <% if current_user.sektioner.count > 1 %>
-      <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
-    <% end %>
-    <% #if can? :create, Post %>
-    <% if false # Add posts later %> 
-      <li><%= link_to 'Nytt inlägg', new_post_path %></li>
-    <% end %>
-    <% if can? :create, Notification %>
-      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
-    <% end %>
-  <% end %>
-
-  <% # Exporter %>
-  <% if current_user.can? :export_all, Karnevalist %>
-    <li><%= link_to 'Exportera alla personuppgifter', export_all_karnevalister_path %></li>
-  <% end %>
-
-  <% # Checker %>
-  <% if can? :check, Karnevalist %>
-    <li><%= link_to 'Kolla om folk är karnevalister', check_karnevalister_path %>
-  <% end %>
-
-  <%# Admin stuff %>
-  <% if current_user.is? :admin %>
-    <% if can? :read, Karnevalist %>
-      <li><%= link_to 'Söka upp karnevalister i registret', Karnevalist %></li>
-    <% end %>
-    <% if can? :read, Sektion %>
-      <li><%= link_to 'Se listan med alla sektioner', Sektion %></li>
-    <% end %>
-    <% #if can? :create, Post %>
-    <% if false # Add posts later %>
-      <li><%= link_to 'Nytt inlägg', new_post_path %></li>
-    <% end %>
-    <% if can? :create, Notification %>
-      <li><%= link_to 'Skicka ut pushnotiser', new_notification_path %></li>
-    <% end %>
-  <% end %>
-
-  <%# Warehouse stuff %>
-  <% if (current_user.is? :admin_fabriken) || (current_user.is? :bestallare_fabriken) || (current_user.is? :admin) %>
-    <li><%= link_to 'Lagersystem Fabriken', fabriken_orders_path %></li>
-  <% end %>
-  <% if (current_user.is? :admin_festmasteriet) || (current_user.is? :bestallare_festmasteriet) || (current_user.is? :kassor_festmasteriet) || (current_user.is? :admin) %>
-    <li><%= link_to 'Lagersystem Festmästeriet', fest_orders_path %></li>
-  <% end %>
-</ul>
-
-<% #if current_user.can? :read, Post %> 
-<% if false # Add posts later %>
-  <div class="span8">
-      <% if @posts.any? %>
-        <h3>Inlägg från <%= @sektioner.map { |s| s.name }.join(" & ") %> (<%= @posts.count %>)</h3>
-        <ol class="posts">
-          <%= render @posts %>
-        </ol>
-      <% end %>
-  </div>
+<% if !(current_karnevalist?) %>
+  <%= render partial: "shared/message", locals: {title: "Hoppsan!", content: "Något har blivit fel och du verkar inte vara en karnevalist, kontakta IT!"} %>
+<% elsif !(current_sektioner?) %>
+  <%= render partial: "shared/message", locals: {title: "Hoppsan!", content: "Du verkar inte ha fått tilldelad dig en sektion, kontakta IT!"} %>
+<% elsif @posts.empty? %>
+  <%= render partial: "shared/message", locals: {title: "Hejsan!", content: "Ingen kommunikationsperson verkar ha skrivit något vackert, engagerande, magiskt eller futuralt här än :(" } %>
+<% else %>
+  <ol class="posts">
+    <%= render @posts %>
+  </ol>
 <% end %>

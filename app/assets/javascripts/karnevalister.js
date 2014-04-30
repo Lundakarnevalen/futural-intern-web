@@ -23,11 +23,6 @@ $(function() {
       }
     });
   }
-
-  $('.confirm-button').click(function(e) {
-      e.preventDefault();
-      $('.confirm-destroy').show();
-  });
 });
 
 function tilldelad_sektion_submit(karnevalist_id) {

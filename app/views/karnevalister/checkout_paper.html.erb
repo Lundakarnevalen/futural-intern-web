@@ -1,7 +1,6 @@
 <%= render partial: "shared/header", locals: {title: "Karnevalistlisteregistret"} %>
 
-<div class="container" id="content">
-	<%= render partial: "shared/logo", locals: {percent: "95", text: "Nu är det dags för utcheckning!"} %>
+<div class="white-container col-xs-12">
     <%= form_for @karnevalist, url: {action: "checkout_paper_post"}, :method => @method,
     							:html => { :class => 'validate' } do |f| %>
 	<h2>Karnevalistens uppgifter</h2>

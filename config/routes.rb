@@ -1,15 +1,13 @@
+# -*- encoding : utf-8 -*-
   Futural::Application.routes.draw do
+  resources :tests
+
   root :to => 'home#index'
-=begin
-  scope format: true, constraints: { format: 'json'} do
-    post '/phones', to: 'api/phones#create'
-  end
-=end
 
   devise_for :users
 
   resources :phones, only: [:new, :create]
-  resources :posts, only: [:new, :create, :edit, :update, :destroy]
+  resources :posts, only: [:new, :create, :edit, :update, :destroy, :show]
 
   namespace :api do
     devise_for :users
@@ -18,8 +16,6 @@
     resources :karnevalister, only: [:update]
     resources :notifications, only: [:index]
   end
-
-
 
   resources :notifications, only: [:new, :create, :show, :index]
 
@@ -50,15 +46,36 @@
       post 'enter_pwd'
       put 'step3_put'
       put 'checkout_digital_put'
+      # Access
+      get 'roles', :to => 'roles#roles'
+      post 'roles/:role_id', :to => 'roles#grant'
+      delete 'roles/:role_id', :to => 'roles#revoke'
     end
   end
 
   resources :sektioner do
-    collection do
-      get ':id/export', :to => 'sektioner#export'
-      get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
+    member do
+      get 'export', :to => 'sektioner#export'
+      get 'kollamedlem', :to => 'sektioner#kollamedlem'
+      get 'aktiva', :to => 'sektioner#aktiva'
+      get 'edit', :to => 'sektioner#edit_info'
+      get 'contact', :to => 'sektioner#show_contact'
+      get 'contact/edit', :to => 'sektioner#edit_contact'
+      get 'english', :to => 'sektioner#show_english'
+      get 'english/edit', :to => 'sektioner#edit_english'
     end
   end
+
+  resources :events do
+    member do
+      get 'attending'
+      get 'sign_up'
+      put 'attend'
+    end
+  end
+
+  resources :roles, :only => [:index]
+
 =begin
   # concern for festmästeriet / fabriken
   concern :party_factory do
@@ -103,11 +120,12 @@
       collection do
         get 'calendar', to: 'orders#calendar'
         get 'list', to: 'orders#list'
+        get 'sektion', to: 'orders#sektion'
         get 'search/:search_param', to: 'orders#search'
         get 'search', to: 'orders#search'
         get 'direct_selling', to: 'orders#direct_selling'
         post 'direct_selling_post', to: 'orders#direct_selling_post'
-        get 'update_customers', to: 'orders#update_customers' 
+        get 'update_customers', to: 'orders#update_customers'
       end
       member do
         put 'return_products', to: 'orders#return_products'
@@ -119,6 +137,8 @@
     resources :products do
       collection do
         get 'weekly_overview', to: 'products#weekly_overview'
+        get 'inventory', to: 'products#inventory'
+        post 'update_inventory', to: 'products#update_inventory'
       end
       member do
         get 'inactivate', to: 'products#inactivate'
@@ -129,15 +149,23 @@
     resources :incoming_deliveries
     resources :product_categories
     resources :order_products
+    resources :partial_deliveries
   end
 
   namespace :warehouse, path: 'fabriken', as: 'fabriken' do
     concerns :party_factory
+    resources :reservations
   end
 
   namespace :warehouse, path: 'festmasteriet', as: 'fest' do
     concerns :party_factory
   end
+  
+  namespace :warehouse, path: 'snaxeriet', as: 'snaxeriet' do
+    concerns :party_factory
+  end
 
   get '/home', to: 'home#index'
+  get '/internapp', to: 'home#app_store'
+  get '/markdown', to: 'home#markdown'
 end

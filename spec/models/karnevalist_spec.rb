@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe (K = Karnevalist) do
@@ -76,6 +77,13 @@ describe (K = Karnevalist) do
       k = FactoryGirl.build(:karnevalist, :sektion => s, :sektion2 => s)
                      .should_not be_valid
     end
+
+    it 'checks that tilldelad_sektion actually exists' do
+      # This caused a great deal of trouble.
+      k = FactoryGirl.build(:karnevalist)
+      k.assign_attributes(:tilldelad_sektion => -123123)
+      k.should_not be_valid
+    end
   end
 
   describe '#save' do
@@ -87,9 +95,9 @@ describe (K = Karnevalist) do
     end
 
     it 'sets utcheckad if tilldelade_sektioner.any?' do
-      k = FactoryGirl.build(:karnevalist)
       s = FactoryGirl.create :sektion
-      k.tilldelade_sektioner << s
+      k = FactoryGirl.build :karnevalist
+      k.tilldelade_sektioner = [s]
       k.save
       k.tilldelade_sektioner.should_not be_empty
       k.utcheckad.should be_true
@@ -140,11 +148,12 @@ describe (K = Karnevalist) do
 
     it 'handles case of single primary `sektion`' do
       @k.sektion = @s1
+      @k.save
       @k.tilldelade_sektioner.should eq [@s1]
     end
 
     it 'handles case of two `sektion`' do
-      @k.assign_attributes :sektion => @s1,
+      @k.update_attributes :sektion => @s1,
                            :sektion2 => @s2
       @k.tilldelade_sektioner.should eq [@s1, @s2]
     end
@@ -168,6 +177,7 @@ describe (K = Karnevalist) do
 
     it 'handles the singular case' do
       @k.tilldelade_sektioner = [@s1]
+      @k.save
       @k.tilldelade_sektioner.should eq [@s1]
       @k.sektion.should eq @s1
       @k.sektion2.should be_nil
@@ -175,6 +185,7 @@ describe (K = Karnevalist) do
 
     it 'handles the general case' do
       @k.tilldelade_sektioner = [@s2, @s1]
+      @k.save
       @k.tilldelade_sektioner.should eq [@s2, @s1]
       @k.sektion.should eq @s2
       @k.sektion2.should eq @s1

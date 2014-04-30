@@ -1,0 +1,25 @@
+<%= render 'shared/header', :title => "#{@karnevalist.name}: Access" %>
+
+<div class="white-container col-xs-12">
+  <h4 class="block fill">Nuvarande access</h4>
+
+  <ul>
+    <% @karnevalist.user.roles.each do |r| %>
+      <li>
+        <strong><%= r.name.upcase %></strong>
+        <%= link_to 'Återta', karnevalist_roles_path(@karnevalist, r), { :method => :delete, :class => "red mini button" } %>
+      </li>
+    <% end %>
+  </ul>
+
+  <h4 class="block fill">Tillgänglig access</h4>
+
+  <ul>
+    <% Role.all.reject{ |r| @karnevalist.user.roles.include? r }.each do |r| %>
+      <li>
+        <%= r.name.upcase %>
+        <%= link_to 'Tilldela', karnevalist_roles_path(@karnevalist, r), {:method => :post, :class => "green mini button" } %>
+      </li>
+    <% end %>
+  </ul>
+</div>

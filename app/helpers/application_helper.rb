@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module ApplicationHelper
   def parent_layout(layout)
     @_content_for[:layout] = self.output_buffer
@@ -17,5 +18,13 @@ module ApplicationHelper
     else
       lst[0..-2].join(', ') + ' och ' + lst[-1]
     end
+  end
+
+  def render_markdown text
+    Sanitize.clean(BlueCloth.new(text).to_html, Sanitize::Config::RELAXED).html_safe
+  end
+
+  def short_date date
+    "#{date.day} / #{date.month}"
   end
 end

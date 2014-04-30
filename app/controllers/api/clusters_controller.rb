@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Api::ClustersController < Api::ApiController
   before_filter :authenticate_user_from_token!
   before_filter :check_inclusion, only: [:update, :create]

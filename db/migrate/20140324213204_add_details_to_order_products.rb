@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class AddDetailsToOrderProducts < ActiveRecord::Migration
   def change
     remove_column :order_products, :nbr_of_products, :integer

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe Post do
@@ -5,6 +6,7 @@ describe Post do
   let(:karnevalist) { FactoryGirl.create(:karnevalist) }
   let(:sektion) { FactoryGirl.create(:sektion) }
   before { @post = Post.new(content: "HEJEJEJE", title: "Title", sektion: sektion, karnevalist: karnevalist) }
+  before { karnevalist.sektion = sektion }
 
   subject { @post }
 
@@ -17,16 +19,6 @@ describe Post do
   its(:sektion) { should eq sektion }
 
   it { should be_valid }
-
-  describe "when karnevalist_id is not present" do
-    before { @post.karnevalist_id = nil }
-    it { should_not be_valid }
-  end
-
-  describe "when sektion_id is not present" do
-    before { @post.sektion_id = nil }
-    it { should_not be_valid }
-  end
 
   describe "with blank content" do
     before { @post.content = " "}
@@ -44,5 +36,14 @@ describe Post do
 
     it { should include(sektion_post) }
     it { should_not include(not_my_sektion_post) }
+  end
+
+  describe '.create' do
+    it 'can create post with long text' do
+      str = 'text ' * 1000
+      p = FactoryGirl.create :post, :content => str
+      p.reload
+      p.content.should == str
+    end
   end
 end

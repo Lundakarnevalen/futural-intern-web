@@ -1,8 +1,16 @@
+# -*- encoding : utf-8 -*-
 class Api::KarnevalisterController < Api::ApiController
   before_filter :authenticate_user_from_token!
   before_filter :karnevalist_params
   def update
-    success = Karnevalist.update(params[:id], karnevalist_params)
+    g_token = karnevalist_params[:google_token]
+    ios_token = karnevalist_params[:ios_token]
+    success = false
+    if !g_token.blank?
+      success = Karnevalist.update(params[:id], google_token: g_token) 
+    elsif !ios_token.blank?
+      success = Karnevalist.update(params[:id], ios_token: ios_token) 
+    end
     render_response(success)
   end
 
