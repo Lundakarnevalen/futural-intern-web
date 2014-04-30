@@ -1,48 +1,49 @@
+# -*- encoding : utf-8 -*-
 class PostsController < ApplicationController
-    skip_authorization_check
+  authorize_resource
 
-    def new
-      @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
-      @post = Post.new
+  def new
+    @post = Post.new
+  end
+
+  def create
+    @post = Post.new post_params
+    @post.karnevalist = current_karnevalist
+    authorize_sektion @post
+    @post.save
+    handle_errors @post, 'Nyheten skapades!', :redirect => @post
+  end
+
+  def edit
+    @post = Post.find params[:id]
+  end
+
+  def update
+    @post = Post.find params[:id]
+    authorize_sektion @post
+    @post.update_attributes post_params
+    handle_errors @post, 'Nyheten ändrades'
+  end
+
+  def destroy
+    @post = Post.find params[:id]
+    @post.destroy
+    handle_errors @post, 'Nyheten togs bort', :redirect => root_url
+  end
+
+  def show
+    @post = Post.find params[:id]
+  end
+
+  def authorize_sektion post
+    if post.sektion.nil? || ! current_sektioner.include?(post.sektion)
+      authorize! :modify, Post.new
     end
+  end
 
-    def create
-        p = params[:post]
-        sektion_id = p[:sektion].to_i
-        p[:sektion] = Sektion.find(sektion_id)
-        p[:karnevalist] = current_user.karnevalist
-        @post = Post.new(p)
-        if @post.save
-          flash[:success] = "Inlägg skapat!"
-        end
-        redirect_to root_url
-    end
+  private
 
-    def edit
-      @post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
-      @tilldelade_sektioner = current_user.karnevalist.tilldelade_sektioner
-    end
-
-    def update
-      @post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
-      p = params[:post]
-      sektion_id = p[:sektion].to_i
-      p[:sektion] = Sektion.find(sektion_id)
-      if @post.update_attributes(p)
-        flash[:success] = "inlägg redigerat"
-      end
-      redirect_to root_url
-    end
-
-    def destroy
-      post = current_user.karnevalist.sektion.posts.find_by(id: params[:id])
-      post.destroy
-      redirect_to root_url
-    end
-
-    private
-
-      def post_params
-        params.require(:post).permit(:title, :content, :sektion)
-      end
+  def post_params
+    params.require(:post).permit(:title, :content, :sektion_id)
+  end
 end

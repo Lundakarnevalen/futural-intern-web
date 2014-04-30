@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 FactoryGirl.define do
 
   factory :ability do
@@ -7,7 +8,7 @@ FactoryGirl.define do
   end
 
   factory :role do
-    name "testrole"
+    name "admin"
   end
 
   factory :karnevalist do
@@ -43,7 +44,7 @@ FactoryGirl.define do
     utcheckad_at nil
     avklarat_steg 1
     foto "MyString"
-    tilldelad_sektion 1
+    tilldelad_sektion nil
     tilldelad_klar false
     pusseldag_keep false
     medlem_kollad false
@@ -91,6 +92,7 @@ FactoryGirl.define do
 
   factory :sektion do
     name "kommunikation"
+    info_page "Trams"
   end
 
   factory :storlek do
@@ -117,8 +119,16 @@ FactoryGirl.define do
     delivery_date Date.tomorrow
     comment "No comment"
     association :karnevalist, factory: :karnevalist
+    association :sektion, factory: :sektion
     warehouse_code 0
     order_number 0
+  end
+
+  factory :reservation do
+    start_time Date.today
+    end_time Date.tomorrow
+    message "No comment"
+    association :karnevalist, factory: :karnevalist
   end
 
   factory :product_category do
@@ -139,5 +149,18 @@ FactoryGirl.define do
     stock_balance_not_ordered 200
     stock_balance_stand_by 50
     purchase_price 25.50
+  end
+
+  factory :event do
+    title 'An Event'
+    date '2014-08-01'
+    sektion nil
+    creator nil
+    description 'Lets get drunk on a tuesday'
+    attendable true
+  end
+
+  factory :attendance do
+    comment 'Allergisk mot protoner'
   end
 end

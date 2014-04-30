@@ -1,0 +1,23 @@
+<% phrase = @event.attending?(current_karnevalist) ? 'Min anmälan'
+                                                   : 'Anmäl mig' %>
+
+<%= render 'shared/header', :title => "#{phrase} till #{@event.title}" %>
+
+<%= form_for @attendance, :url => attend_event_path(@event),
+             :method => :put do |f| %>
+
+  <h3 class="blue">Mina matpreferenser</h3>
+  <p>
+    <%= current_karnevalist.matpref || 'Inga.' %>
+  </p>
+  <p>
+    <i>Du kan ändra dessa under <%= link_to "Mina uppgifter (öppnas i en ny flik)", current_karnevalist, :target => "_blank" %></i>
+  </p>
+
+  <h3 class="blue">Är det något annat som arrangören behöver veta?</h3>
+
+  <%= f.text_area :comment, { :rows => 6, :class => "white" }%>
+
+  <%= f.submit 'Anmäl mig!', :class => 'green button' %>
+
+<% end %> 

@@ -1,10 +1,6 @@
-<% content_for :head do %>
-<%= stylesheet_link_tag    :karnevalister, :media => :all %>
-<% end %>
-
 <%= render partial: "shared/header", locals: {title: "Pusseldagen"} %>
 
-<div class="container" id="uppdelning_search">
+<div class="white-container col-xs-12" id="uppdelning_search">
   <%= render 'search_filter_pusseldag' %>
 </div>
 <div class="wide">
@@ -31,15 +27,15 @@
       <% else %>
         <tr id="<%= k.id %>" class="green">
       <% end %>
-          <td><%= link_to_modal "#{k.efternamn}, #{k.fornamn}", controller: "karnevalister", action: "show_modal", id: k %></td>
+          <td><%= link_to_modal "#{k.name}", controller: "karnevalister", action: "show_modal", id: k %></td>
           <td><%= k.personnummer %></td>
           <td>
-            <% if !k.tilldelad_sektion.blank? %>
+            <% if !k.tilldelad_sektion.blank? && k.snalla_sektion != 0 %>
                 <%= Sektion.find(k.tilldelad_sektion).name %>
             <% end %>
           </td>
           <td>
-            <% if !k.snalla_intresse.blank? %>
+            <% if !k.snalla_intresse.blank? && k.snalla_intresse != 0 %>
                 <%= Intresse.find(k.snalla_intresse).name %>
             <% end %>
           </td>

@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Korkort < ActiveRecord::Base
   has_many :karnevalister
 

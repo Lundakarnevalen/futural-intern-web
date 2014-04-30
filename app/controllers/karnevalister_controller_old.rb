@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 
 class KarnevalisterController < ApplicationController
   # Old stuff that is not maintained.
@@ -39,7 +39,7 @@ class KarnevalisterController < ApplicationController
   def step1
     @karnevalist = Karnevalist.new
     post_base
-    render :step1, :layout => 'bare'
+    render :step1
   end
 
   def step1_post
@@ -50,14 +50,14 @@ class KarnevalisterController < ApplicationController
       sign_in @karnevalist.user
       redirect_to action: 'step2', id: @karnevalist.id
     else
-      render :action => :step1, :layout => 'bare'
+      render :action => :step1
     end
   end
 
   def step2
     @karnevalist = Karnevalist.find params[:id]
     post_base
-    render :step2, :layout => 'bare'
+    render :step2
   end
 
   def enter_pwd
@@ -76,7 +76,7 @@ class KarnevalisterController < ApplicationController
   def step3
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    render :step3, :layout => 'bare'
+    render :step3
   end
 
   def step3_put
@@ -91,7 +91,7 @@ class KarnevalisterController < ApplicationController
     @karnevalist = Karnevalist.find params[:id]
     put_base
     authorize! :read, @karnevalist
-    render :step4, :layout => 'bare'
+    render :step4
   end
 
   def checkout
@@ -112,7 +112,7 @@ class KarnevalisterController < ApplicationController
   def checkout_paper
     @karnevalist = Karnevalist.new
     @method = :post
-    render :checkout_paper, :layout => 'bare'
+    render :checkout_paper
   end
 
   def checkout_paper_post
@@ -132,7 +132,7 @@ class KarnevalisterController < ApplicationController
   def checkout_digital
     @karnevalist = Karnevalist.find params[:id]
     put_base
-    render :checkout_digital, :layout => 'bare'
+    render :checkout_digital
   end
 
   def checkout_digital_put
@@ -190,7 +190,7 @@ class KarnevalisterController < ApplicationController
 
   def stop_utcheckad
     karnevalist = Karnevalist.find params[:id]
-    if not karnevalist.nil? and karnevalist.utcheckad and not current_user.is? :admin and not current_user.is? :sektionsadmin
+    if not karnevalist.nil? and karnevalist.utcheckad and not current_user.is? :admin and not current_user.is? :sektionsadmin and not current_user.is? :sektionsadmin_lite
       karnevalist.errors.add :base, "Du får tyvärr inte ändra något efter att du checkat ut."
       respond_to do |format|
         format.html{ redirect_to karnevalist }

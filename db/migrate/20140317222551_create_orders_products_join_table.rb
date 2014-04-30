@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class CreateOrdersProductsJoinTable < ActiveRecord::Migration
   def change
     create_table :orders_products, id: false do |t|

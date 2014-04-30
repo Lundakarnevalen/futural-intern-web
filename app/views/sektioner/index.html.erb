@@ -1,8 +1,8 @@
-<h1>Futuralkarnevalens sektioner</h1>
-
-<ul>
-  <% @sektioner.each do |s| %>
-    <li><%= link_to s.name, s %>
-  <% end %>
-</ul>
-            
+<%= render partial: "shared/header", locals: {title: "Futuralkarnevalens sektioner"} %>
+<div class="white-container col-xs-12">
+	<ul id="sektions-lista">
+		<% @sektioner.each do |s| %>
+		<li><%= link_to s.name, s, :class => "fill button" %></li>
+		<% end %>
+	</ul>
+</div>

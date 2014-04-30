@@ -1,4 +1,4 @@
-# encoding: utf-8
+# -*- encoding : utf-8 -*-
 class NotificationsController < ApplicationController
   require 'gcm'
 
@@ -12,7 +12,7 @@ class NotificationsController < ApplicationController
       format.html do
         if signed_in? && current_user.karnevalist? && !current_user.karnevalist.tilldelade_sektioner.blank?
           sektioner = current_user.karnevalist.tilldelade_sektioner
-          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist 
+          sektioner_ids = [0]   # Section_id 0 => show notification for every karnevalist
           sektioner.each do |s|
             sektioner_ids.push s.id
           end
@@ -71,7 +71,10 @@ class NotificationsController < ApplicationController
             'created_at' => @notification.created_at.strftime("%Y-%m-%d %H:%M")
           }
         }
-        @response = gcm.send_notification(reg_ids, options)
+        # Don't actually send unless in production mode.
+        if Rails.env.production?
+          @response = gcm.send_notification(reg_ids, options)
+        end
       end
       redirect_to :action => 'index'
     else

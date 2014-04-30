@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 describe Notification do
   describe "validations" do
     it "should have a title and a message" do

@@ -1,28 +1,33 @@
+# -*- encoding : utf-8 -*-
 require 'spec_helper'
 
 describe KarnevalisterController do
   before :each do
-    @user = FactoryGirl.create(:user)
+    @sektion_inv = FactoryGirl.create(:sektion, id: 400)
+    sektion_v = FactoryGirl.create(:sektion, id: 300)
+    @user = FactoryGirl.create(:user, karnevalist: FactoryGirl.create(:karnevalist, tilldelad_sektion: sektion_v.id))
     sign_in @user
   end
 
-  describe "GET to KarnvealistController" do
+  describe "GET to KarnevalisterController" do
     before :each do
       #sanity check
       @user.roles = []
     end
 
-    it "should assign all karnivalister for an admin" do
+    it "should not display any karnevalister by default" do
       @user.roles << FactoryGirl.create(:role, name: "admin")
       get :index
       assigns(:karnevalister).should_not be_nil
-      assigns(:karnevalister).should eq([@user.karnevalist])
+      assigns(:karnevalister).should be_empty
       response.should be_success
     end
 
     it "should only assign those of the same sektion if user is sekadmin" do
-      @wrong_sektion_karnevalist = FactoryGirl.create(:karnevalist, tilldelad_sektion: 2)
+
+      @wrong_sektion_karnevalist = FactoryGirl.create(:karnevalist, tilldelad_sektion: @sektion_inv.id)
       @user.roles << FactoryGirl.create(:role, name: "sektionsadmin")
+      @user.save
       get :index
       assigns(:karnevalister).should_not be_nil
       assigns(:karnevalister).should eq([@user.karnevalist])

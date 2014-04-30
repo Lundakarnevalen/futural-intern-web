@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Cluster < ActiveRecord::Base
   acts_as_mappable :default_units => :kms,
                    :default_formula => :sphere

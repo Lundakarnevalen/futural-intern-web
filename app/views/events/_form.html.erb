@@ -1,0 +1,37 @@
+<div class="white-container col-xs-12">
+  <%= form_for @event do |f| %>
+    <fieldset>
+      <%= f.label :title, 'Rubrik' %>
+      <%= f.text_field :title %>
+
+      <%= f.label :date, 'Datum' %>
+      <%= f.text_field :date, :data => { :behaviour => 'datepicker' } %>
+
+      <%= f.label :end_date, 'Slutdatum (valfritt)' %>
+      <%= f.text_field :end_date, :data => { :behaviour => 'datepicker' } %>
+
+      <%= f.label :sektion_id, 'Visa för sektion' %>
+
+      <% if (current_user.is? :admin) || (current_user.is? :'global-info') %>
+        <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
+                                { :include_blank => '[Visa för alla]' } %>
+      <% elsif current_user.is? :info %>
+        <%= f.collection_select :sektion_id, current_sektioner, :id, :name %>
+      <% end %>
+
+      <div>
+      <strong>Ska man kunna anmäla sig till händelsen?</strong>
+      <%= f.label :attendable, 'Ja', :value => true %>
+      <%= f.radio_button :attendable, true %>
+      <%= f.label :attendable, 'Nej', :value => false %>
+      <%= f.radio_button :attendable, false %>
+      </div>
+
+      <%= f.label :description, 'Beskrivning' %>
+
+      <%= f.text_area :description %>
+    </fieldset>
+    <%= render partial: "shared/markdown_notice" %>
+    <%= f.submit 'Spara', :class => "fill green button" %>
+  <% end %>
+</div>

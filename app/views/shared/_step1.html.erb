@@ -5,7 +5,7 @@
 		<%= f.number_field :terminer, :pattern => '[0-9]*', :min => 0, :disabled => disabled %>
 	</div>
 
-	<h2>Jag har varit engagerad i en:</h2>
+	<h2 class="light">Jag har varit engagerad i en:</h2>
 
 	<div class="form-group">
 		<%= f.label :engagerad_kar, 'Studentkår, vilken och hur?' %>
@@ -28,7 +28,7 @@
 		<%= f.text_field :engagerad_etc, :disabled => disabled %>
 	</div>
 
-	<h3>Jag har varit aktiv inom kår/nation/förening som</h3>
+	<h3 class="light">Jag har varit aktiv inom kår/nation/förening som</h3>
 	<div class="form-group">
 		<div>
 			<%= f.check_box :jobbat_heltid, :disabled => disabled %>
@@ -48,7 +48,7 @@
 		</div>
 	</div>
 
-	<h3>Lundakarnevalen</h3>
+	<h3 class="light">Lundakarnevalen</h3>
 	<div class="form-group">
 		<%= check_box :karnevalist, :karnevalist_2010, :disabled => disabled %>
 		<%= f.label :karnevalist_2010,

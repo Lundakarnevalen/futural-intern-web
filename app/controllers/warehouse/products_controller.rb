@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class Warehouse::ProductsController < Warehouse::ApplicationController
   before_filter :find_product, only: [:show, :edit, :update, :inactivate, :activate]
   def index
@@ -70,6 +71,22 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def activate
     @product.update_attributes(active: true)
+    redirect_to products_path
+  end
+
+  def inventory
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
+    @inventories = Inventory.all
+  end
+  
+  def update_inventory
+    params['stock_balance'].each do |product_id, stock_balance|
+      if !stock_balance.blank?
+        product = Product.find(product_id)
+        product.update_attributes(stock_balance_not_ordered: stock_balance)
+      end
+    end
+    Inventory.create(inventory_taker_id: current_user.karnevalist.id)
     redirect_to products_path
   end
 

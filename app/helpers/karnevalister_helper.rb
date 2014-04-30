@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 module KarnevalisterHelper
   def gender_specific k
     if k.kon.nil?

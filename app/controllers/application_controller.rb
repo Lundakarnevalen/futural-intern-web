@@ -1,9 +1,13 @@
+# -*- encoding : utf-8 -*-
 class ApplicationController < ActionController::Base
   protect_from_forgery :with => :null_session
   before_filter :mail_default_url
 
   check_authorization :unless => :devise_controller?
   before_filter :can_can_strong
+  before_filter :require_login
+
+  layout :layout
 
   def redirect_to(options = {}, response_status = {})
     ::Rails.logger.error("Redirected by #{caller(1).first rescue "unknown"}")
@@ -16,8 +20,43 @@ class ApplicationController < ActionController::Base
     params[resource] &&= send(method) if respond_to?(method, true)
   end
 
-  private
+  # Neat error handling.
 
+  def handle_errors res, msg, opts = {}
+    opts = { :redirect => res }.merge opts
+
+    if res.errors.any?
+      flash[:alert] = res.errors.full_messages.join '; '
+      redirect_to :back
+    else
+      flash[:notice] = msg
+      redirect_to opts[:redirect]
+    end
+  end
+
+  # Much needed
+  helper_method :current_karnevalist
+  def current_karnevalist
+    current_user && current_user.karnevalist
+  end
+
+  helper_method :current_karnevalist?
+  def current_karnevalist?
+    !(current_karnevalist.nil?)
+  end
+
+  helper_method :current_sektioner
+  def current_sektioner
+    current_karnevalist ? current_karnevalist.tilldelade_sektioner
+                        : []
+  end
+
+  helper_method :current_sektioner?
+  def current_sektioner?
+    current_sektioner.any?
+  end
+
+  private
   def mail_default_url
     ActionMailer::Base.default_url_options = {:host => request.host_with_port}
   end
@@ -42,4 +81,22 @@ class ApplicationController < ActionController::Base
   def after_sign_out_path_for _
     new_user_session_path
   end
+
+  def layout
+    # turn layout off for every devise controller:
+    "login" if devise_controller?
+  end
+
+  private
+
+  def require_login
+    unless (current_user || devise_controller? || create_karnevalist_action?)
+      redirect_to new_user_session_path
+    end
+  end
+
+  def create_karnevalist_action?
+    (params[:controller] == "karnevalister" && (params[:action] == "new" || params[:action] == "create")) ? true : false
+  end
+
 end

@@ -1,9 +1,13 @@
+# -*- encoding : utf-8 -*-
 class Product < ActiveRecord::Base
   belongs_to :product_category
   has_many :order_products
   has_many :orders, through: :order_products
   has_many :incoming_delivery_products
   has_many :incoming_deliveries, through: :incoming_delivery_products
+  has_many :partial_delivery_products
+  has_many :partial_deliveries, through: :partial_delivery_products
+  has_many :backorders
   
   before_save :purchase_price
   before_save :sale_price
@@ -39,12 +43,24 @@ class Product < ActiveRecord::Base
   def amount(order_id)
     return self.order_products.find_by_order_id(order_id).amount
   end
+  
+  def delivered_amount(order_id)
+    return self.order_products.find_by_order_id(order_id).delivered_amount
+  end
 
   def new_amount(incoming_delivery_id)
     return self.incoming_delivery_products.find_by_incoming_delivery_id(incoming_delivery_id).amount
   end
 
+  def partial_delivery_amount(partial_delivery_id)
+    return self.partial_delivery_products.find_by_partial_delivery_id(partial_delivery_id).amount
+  end
+
   def total_price(amount)
     return amount*self.sale_price
+  end
+  
+  def total_purchase_price(amount)
+    return amount*self.purchase_price
   end
 end

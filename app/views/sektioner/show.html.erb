@@ -1,16 +1,37 @@
-<h1><%= @sektion.name %></h1>
-<ul>
-  <li><%= link_to 'Exportera personuppgifter som Excel-ark',
-                  :action => :export %></li>
-  <li><%= link_to 'Kolla om dina karnevalister är medlemmar i AF, nation och kår',
-                  :action => :kollamedlem %>
-</ul>
-
-<h2>Medlemmar</h2>
-
-<ul>
-  <% @sektion.members.each do |k| %>
-    <li><%= link_to k.to_s, k %>
+<%= link_to "Tillbaka", 'javascript:history.go(-1);', :class => "green button col-xs-4" %>
+<%= render 'sektion_image' %>
+<% if (can? :manage, @sektion) %>
+<div class="white-container col-xs-12">
+  <% if can? :manage, @sektion %>
+    <%= link_to 'Exportera personuppgifter som Excel-ark', { :action => :export }, {:class => "green button"}%>
+    <%= link_to 'Medlemskoll', { :action => :kollamedlem }, {:class => "green button", data: {no_turbolink: true}} %>
+    <%= link_to 'Aktiva karnevalister', { :action => :aktiva }, {:class => "green button", data: {no_turbolink: true}} %>
   <% end %>
-</ul>
-            
+</div>
+<% end %>
+<div class="white-container col-xs-12">
+  <%= link_to "Kontakt", contact_sektion_path(@sektion), :class => "green button" %>
+  <%= link_to "In English", english_sektion_path(@sektion), :class => "green button" %>
+  <% if (can? :edit_info, @sektion) %>
+    <%= link_to "Redigera sektionsinfo", edit_sektion_path(@sektion), type: "edit", :class => "button" %>
+  <% end %>
+</div>
+<div class="white-container col-xs-12">
+  <%= render_markdown @page_content unless @page_content.blank? %>
+</div>
+<% s = current_sektioner %>
+<% if can? :edit, s %>
+  <%= render partial: "shared/header", locals: {title: "Medlemmar"} %>
+  <div class="white-container col-xs-12" id="karnevalistan">
+    <ul>
+      <% @sektion.members.each do |k| %>
+        <li>
+          <a href=<%= url_for k %>>
+            <%= "#{k.efternamn}, #{k.fornamn} " %>
+            <span class="personnummer"><%= k.personnummer %></span>
+          </a>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+<% end %>

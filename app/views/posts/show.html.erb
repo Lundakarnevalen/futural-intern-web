@@ -1,0 +1,34 @@
+<div class="row">
+    <%= link_to "Tillbaka", root_url, class: "green center button col-xs-2 col-md-offset-2" %>
+  <div class="image-container col-xs-4">
+    <div class="message-image">
+      <%= image_tag("logotyper/#{@post.sektion.name}.png") unless @post.sektion.nil? %>
+      <%= image_tag("logotyper/logo.png") if @post.sektion.nil? %>
+    </div>
+    <div class="sektion">
+      <%= @post.sektion.name unless @post.sektion.nil? %>
+      <%= "Lundakarnevalen" if @post.sektion.nil? %>
+    </div>
+  </div>
+</div>
+  <div class="white-container col-xs-12">
+      <div class="col-xs-12">
+        <h1><%= @post.title %></h1>
+      </div>
+        <div class="col-xs-12">
+        <p><i><%= @post.karnevalist.name %></i></p>
+        </div>
+      <div class="col-xs-12">
+        <%= render_markdown @post.content %>
+      </div>
+      <% unless @post.id.nil? %>
+        <div class="form-controls">
+          <% if (current_user.can? :edit, @post) %>
+            <%= link_to "redigera", edit_post_path(@post), class: "button", type: "edit"%>
+          <% end %>
+          <% if !(@post.nil?) && (current_user.can? :destroy, @post) %>
+            <%= link_to "Radera Inlägget", @post, method: :delete, data: { confirm: "Är du verkligen helt säker på att du vill radera nyheten?" }, :class =>"red button", :type => "edit" %>
+          <% end %>
+        </div>
+      <% end %>
+  </div>

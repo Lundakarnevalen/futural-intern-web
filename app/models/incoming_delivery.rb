@@ -1,3 +1,4 @@
+# -*- encoding : utf-8 -*-
 class IncomingDelivery < ActiveRecord::Base
   has_and_belongs_to_many :karnevalister
   has_many :incoming_delivery_products
@@ -25,5 +26,14 @@ class IncomingDelivery < ActiveRecord::Base
   def self.find_incoming_deliveries_in_week week, warehouse_code
     incoming_deliveries = IncomingDelivery.where("created_at >= ?", week[:day_1]).where("created_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code)
     return incoming_deliveries
+  end
+
+  def self.has_week week, warehouse_code
+    incoming_deliveries = IncomingDelivery.where("created_at >= ?", week[:day_1]).where("created_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code)
+    if incoming_deliveries.count >= 1
+      return true
+    else
+      return false
+    end
   end
 end

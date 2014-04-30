@@ -1,8 +1,11 @@
 sv:
   # Can can
   unauthorized:
+    manage:
+      all: Du har inte access till att göra detta. Tycker du att du borde ha
+           det? Kontakta IT!
     change_sektion:
-      all: 'Du får inte lov att byta sektion på folk!'
+      all: Du får inte lov att byta sektion på folk!
 
   # Standard stuff
   date:
