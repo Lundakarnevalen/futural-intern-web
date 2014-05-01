@@ -8,6 +8,7 @@
           <% current_user.karnevalist.tilldelad_sektion == 399 ? sektion_id = 300 : sektion_id = current_user.karnevalist.tilldelad_sektion %>
           <li class="<%= 'active' if current_page?(sektion_orders_path(:sektion_id => sektion_id)) %>"><%= link_to "Min sektions ordrar", sektion_orders_path(:sektion_id => sektion_id) %></li>
         <% end %>
+        <li class="<%= 'active' if current_page?(info_orders_path) %>"><%= link_to "Information", info_orders_path %></li>
       </ul>
       <% if @warehouse_code == 0 %>
       <ul class="nav nav-sidebar">

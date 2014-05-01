@@ -255,6 +255,9 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     render :index
   end
 
+  def info
+  end
+
   private
     def find_order
       @order = Order.find(params[:id])
