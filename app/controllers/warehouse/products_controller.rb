@@ -76,7 +76,7 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
 
   def inventory
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
-    @inventories = Inventory.all
+    @inventories = Inventory.where(warehouse_code: @warehouse_code).order("id DESC")
   end
   
   def update_inventory
