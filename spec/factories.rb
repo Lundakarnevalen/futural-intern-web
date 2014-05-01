@@ -158,6 +158,7 @@ FactoryGirl.define do
     creator nil
     description 'Lets get drunk on a tuesday'
     attendable true
+    tickets true
   end
 
   factory :ticket_listing do

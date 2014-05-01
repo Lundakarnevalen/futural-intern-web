@@ -37,4 +37,8 @@ class Event < ActiveRecord::Base
   def tickets? 
     !! self.tickets
   end
+
+  def to_s
+    "#{title}, #{date}"
+  end
 end
