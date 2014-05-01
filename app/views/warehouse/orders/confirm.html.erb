@@ -42,23 +42,23 @@
         <tr>
           <td>
             <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
-<!-- Modal -->
-<div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
-      </div>
-      <div class="modal-body">
-        <%= render partial: 'warehouse/products/show', locals: { p: p } %>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
-      </div>
-    </div>
-  </div>
-</div>
+            <!-- Modal -->
+            <div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+                  </div>
+                  <div class="modal-body">
+                    <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+                  </div>
+                </div>
+              </div>
+            </div>
           </td>
           <td><%= p.product_category.name %></td>
           <td><%= "#{amount} #{p.unit}" %></td>
@@ -85,23 +85,40 @@
 <div class="col-xs-12 col-sm-12 col-md-6">
   <div class="form-group">
     <%= f.label :delivery_date, "Hämtdatum" %>
-    <%= f.text_field :delivery_date, class: "form-control", data: { behaviour: "datepicker" } %>
-    <% if @warehouse_code == 1 %>
-      <p class="help-block help-block-red">Uthämtning kan ske endast på onsdagar och fredagar.</p>
-    <% end %>
+    <div class="input-group">
+      <%= f.text_field :delivery_date, class: "form-control", data: { behaviour: "datepicker" } %>
+      <span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+    </div>
   </div>
 </div>
 </div>
+<% if @warehouse_code == 2 %>
+  <div class="row">
+    <div class="col-xs-12 col-sm-12 col-md-6">
+      <div class="form-group">
+        <%= label_tag :delivery_time, "Hämttid" %>
+        <div class="input-group bootstrap-timepicker">
+          <%= text_field_tag :delivery_time, nil, {class: "form-control timepicker"} %>
+          <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
+        </div>
+      </div>
+    </div>
+  </div>
+<% end %>
+<% if @warehouse_code == 1 %>
+  <p class="help-block help-block-red">Uthämtning kan ske endast på onsdagar och fredagar.</p>
+<% end %>
 <div class="row">
 <div class="col-xs-12 col-sm-12 col-md-6">
- 
   <% if @warehouse_code == 0 %>
     <p><strong>Information:</strong><br>Räkna med att varor i rest tar ca 1 vecka att få hem från och med idag. När dessa fyllts på i lagret kommer du att få ett mail som säger att du kan hämta ut varorna. Varor i rest räknas alltså som en del av din beställning.</p>
-  <% else %>
+  <% elsif @warehouse_code == 1 %>
     <p><strong>Information:</strong><br>Beställning sker senast måndagar kl 15:00(..) den vecka leveransen ska hämtas ut.</p>
     <p>Uthämtning sker på onsdagar 11:00 till 13:00 samt fredagar 12:00 till 14:00 i AF-borgens källare.</p>
     <p>Vid större arrangemang där leveranser önskas direkt till plats bör kontakt tas senast två veckor innan för att vi ska kunna administrera. Tänk även på att ha alkoholtillståndet färdigt i god tid, inget tillstånd betyder ingen leverans!</p>
     <p>Vi tar gärna emot returer, men enbart föranmälda under våra öppettider. Vi tar endast emot hela förpackningar, flaskor och flak!</p>
+  <% else %>
+    <p><strong>Information:</strong><br>Orderinformation från Snaxeriet.</p>
   <% end %>
 </div>
 </div>

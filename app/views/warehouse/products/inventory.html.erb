@@ -18,7 +18,26 @@
     <tbody>
       <% products.each do |p| %>
       <tr>
-        <td><%= link_to p.name, edit_product_path(p.id) %></td>
+        <td>
+          <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+            <!-- Modal -->
+            <div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+                  </div>
+                  <div class="modal-body">
+                    <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </td>
         <td><%= p.ean %></td>
         <td><%= number_field_tag "stock_balance[#{p.id}]", p.stock_balance_not_ordered, min: 0, class: "form-control" %></td>
         <td><%= p.stock_balance_ordered %></td>
