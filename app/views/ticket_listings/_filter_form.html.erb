@@ -8,7 +8,8 @@
 
   <%= label_tag :selling, 'Önskar sälja/byta' %>
   <%= select_tag :selling, options_for_select([
-    ['Sälja', 'true'], ['Byta', 'false']]), :prompt => '*' %>
+    ['Sälja', 'true'], ['Byta', 'false']], :selected => @query[:selling]), 
+    :prompt => '*' %>
 
   <%= submit_tag 'Filtrera' %>
   <%= link_to 'Nollställ', TicketListing, :class => 'btn' %>
