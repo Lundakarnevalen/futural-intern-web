@@ -160,9 +160,9 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
   
   def sektion
-    @sektion = Sektion.find(params[:sektion_id])
-    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
-    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
+    @sektioner = current_user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
     @bestallare = false
     @sektion_orders = true
     render :index

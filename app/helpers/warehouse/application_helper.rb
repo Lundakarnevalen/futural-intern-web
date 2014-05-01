@@ -41,8 +41,8 @@ module Warehouse::ApplicationHelper
     @warehouse_code == 0 ? list_fabriken_orders_path : (@warehouse_code == 1 ? list_fest_orders_path : list_snaxeriet_orders_path) 
   end
 
-  def sektion_orders_path(s)
-    @warehouse_code == 0 ? sektion_fabriken_orders_path(s) : (@warehouse_code == 1 ? sektion_fest_orders_path(s) : sektion_snaxeriet_orders_path(s))
+  def sektion_orders_path
+    @warehouse_code == 0 ? sektion_fabriken_orders_path : (@warehouse_code == 1 ? sektion_fest_orders_path : sektion_snaxeriet_orders_path)
   end
 
   def return_products_order_path
