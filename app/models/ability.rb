@@ -129,13 +129,7 @@ class Ability
 
     # Lagersystem - sektionsadmin
     if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet)
-      # Show "Tåget - Vagn" instead of "Tåget - centralt"
-      if user.karnevalist.tilldelad_sektion == 399
-        sektion_id = 300
-      else
-        sektion_id = user.karnevalist.tilldelad_sektion
-      end
-      can [:sektion, :read], Order, :sektion_id => sektion_id
+      can [:sektion, :read], Order, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
 
     # Lagersystem - kassör
