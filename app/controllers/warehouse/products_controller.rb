@@ -86,8 +86,8 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
         product.update_attributes(stock_balance_not_ordered: stock_balance)
       end
     end
-    Inventory.create(inventory_taker_id: current_user.karnevalist.id)
-    redirect_to products_path
+    Inventory.create(inventory_taker_id: current_user.karnevalist.id, warehouse_code: @warehouse_code)
+    redirect_to inventory_products_path
   end
 
   private
