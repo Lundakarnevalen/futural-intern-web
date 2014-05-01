@@ -468,7 +468,7 @@ module PodioSync
     @podio_conv_sektioner ||= Sektion.all.group_by &:podio_id
     return nil if podio_id.nil?
     ss = @podio_conv_sektioner[podio_id]
-    if ss.empty?
+    if ss.nil? || ss.empty?
       fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id})"
     end
     if podio_sub_id.nil? 
