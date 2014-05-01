@@ -67,7 +67,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     end
     if @order.update_attributes(order_params)
         if params[:delivery_time]
-          @order.delivery_date = DateTime.strptime("#{params[:order][:delivery_date]}T#{params[:delivery_time]}", "%Y-%m-%dT%H:%M")
+          @order.delivery_date = DateTime.strptime("#{params[:order][:delivery_date]} #{params[:delivery_time]} CEST", "%Y-%m-%d %H:%M %Z")
           @order.save
         end
         @order.order_products.each do |order_product|
