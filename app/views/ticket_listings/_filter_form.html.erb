@@ -4,13 +4,15 @@
     options_from_collection_for_select(
       TicketListing.ticket_events_for_karnevalist(current_karnevalist), :id, :title,
       :selected => @query[:event_id]),
-    :prompt => '*' %>
+      :prompt => '*', :class => 'autosubmit' %>
 
   <%= label_tag :selling, 'Önskar sälja/byta' %>
   <%= select_tag :selling, options_for_select([
     ['Sälja', 'true'], ['Byta', 'false']], :selected => @query[:selling]), 
-    :prompt => '*' %>
+    :prompt => '*', :class => 'autosubmit' %>
 
-  <%= submit_tag 'Filtrera' %>
-  <%= link_to 'Nollställ', TicketListing, :class => 'btn' %>
+  <%= submit_tag 'Filtrera', :class => 'js-hide' %>
+  <%= link_to 'Mina annonser', ticket_listings_path(:seller_id => current_karnevalist.id), 
+              :class => 'btn' %>
+  <%= link_to 'Nollställ', ticket_listings_path, :class => 'btn' %>
 <% end %>

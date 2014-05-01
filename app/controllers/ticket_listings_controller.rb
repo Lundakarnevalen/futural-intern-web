@@ -43,7 +43,7 @@ class TicketListingsController < ApplicationController
 
   def filter_query params
     query = params.symbolize_keys.select do |k, v|
-      [ :event_id, :selling ]
+      [ :event_id, :seller_id, :selling ]
         .include?(k) && v.present?
     end
 
@@ -53,6 +53,10 @@ class TicketListingsController < ApplicationController
 
     if query[:event_id]
       ar_query = ar_query.where 'event_id = ?', query[:event_id]
+    end
+
+    if query[:seller_id]
+      ar_query = ar_query.where 'seller_id = ?', query[:seller_id]
     end
 
     if query[:selling]
