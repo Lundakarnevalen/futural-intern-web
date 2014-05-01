@@ -60,6 +60,10 @@ module Warehouse::ApplicationHelper
   def update_customers_orders_path
     @warehouse_code == 0 ? update_customers_fabriken_orders_path : (@warehouse_code == 1 ? update_customers_fest_orders_path : update_customers_snaxeriet_orders_path)
   end
+  
+  def info_orders_path
+    @warehouse_code == 0 ? info_fabriken_orders_path : (@warehouse_code == 1 ? info_fest_orders_path : info_snaxeriet_orders_path)
+  end
 
   #deliveries
   def incoming_deliveries_path

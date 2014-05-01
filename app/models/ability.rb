@@ -119,6 +119,7 @@ class Ability
     # Lagersystem - beställare
     if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet) || (user.is? :bestallare_snaxeriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
+      can :info, Order
       can :read, Product
       can :read, PartialDelivery
       can :read, Reservation

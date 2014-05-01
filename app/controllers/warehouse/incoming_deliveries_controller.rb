@@ -62,7 +62,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
                 b.save
                 break
               end
-              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
               incoming_amount -= b.amount
               b.delete
             end
@@ -74,7 +74,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_stand_by => 0)
             backorders = Backorder.where(product_id: product.id)
             backorders.each do |b|
-              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
               b.delete
             end
           end
@@ -112,7 +112,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             incoming_amount = incoming_delivery.amount.to_i
             backorders.each do |b|
               break if incoming_amount < b.amount
-              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
               incoming_amount -= b.amount
               b.delete
             end
@@ -124,7 +124,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             product.update_attributes(:stock_balance_stand_by => 0)
             backorders = Backorder.where(product_id: product.id)
             backorders.each do |b|
-              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order).deliver
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
               b.delete
             end
           end

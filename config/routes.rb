@@ -128,6 +128,7 @@
         get 'direct_selling', to: 'orders#direct_selling'
         post 'direct_selling_post', to: 'orders#direct_selling_post'
         get 'update_customers', to: 'orders#update_customers'
+        get 'info', to: 'orders#info'
       end
       member do
         put 'return_products', to: 'orders#return_products'

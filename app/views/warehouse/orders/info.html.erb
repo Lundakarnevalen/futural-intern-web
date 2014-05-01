@@ -1,0 +1,33 @@
+<h3>Information</h3>
+<% if @warehouse_code == 0 %>
+  <h4>Fabrikens öppettider</h4>
+  <p>mån-fre 16-22<br>lör stängt<br>sön 12-18</p>
+  <p>Vi håller stängt följande datum:<br>17-21 och 30 april<br>1 och 11 maj</p>
+  <hr>
+  <h4>Kontaktuppgifter</h4>
+  <p>Louise Olsson, Materialchef Fabriken<br><a href="mailto:louise.olsson@lundakarnevalen.se">louise.olsson@lundakarnevalen.se</a><br>076-209 79 70</p>
+  <hr>
+  <h4>Orderinformation</h4>
+  <p>Glöm inte att det går bra att lägga en order på varor även om dessa inte finns i lager för tillfället, räkna då bara med att det kan ta några extra dagar innan de kommer hem.</p>
+  <p>Tyg beställs av Helena Brandt, <a href="mailto:helena.brandt@lundakarnevalen.se">helena.brandt@lundakarnevalen.se</a>, och frågor angående verktyg tas med Hannes Nilsson, <a href="mailto:hannes.nilsson@lundakarnevalen.se">hannes.nilsson@lundakarnevalen.se</a></p>
+<% elsif @warehouse_code == 1 %>
+  <h4>Öppettider</h4>
+  <p>Uthämtning sker på onsdagar 11:00 till 13:00 samt fredagar 12:00 till 14:00 i AF-borgens källare.</p>
+  <hr>
+  <h4>Kontaktuppgifter</h4>
+  <p><a href="mailto:dryckeslager@lundakarnevalen.se">dryckeslager@lundakarnevalen.se</a></p>
+  <hr>
+  <h4>Orderinformation</h4>
+  <p>Beställning sker senast måndagar kl 15:00(..) den vecka leveransen ska hämtas ut.</p>
+  <p>Vid större arrangemang där leveranser önskas direkt till plats bör kontakt tas senast två veckor innan för att vi ska kunna administrera. Tänk även på att ha alkoholtillståndet färdigt i god tid, inget tillstånd betyder ingen leverans!</p>
+  <p>Vi tar gärna emot returer, men enbart föranmälda under våra öppettider. Vi tar endast emot hela förpackningar, flaskor och flak!</p>
+<% else %>
+  <h4>Öppettider</h4>
+  <p></p>
+  <hr>
+  <h4>Kontaktuppgifter</h4>
+  <p></p>
+  <hr>
+  <h4>Orderinformation</h4>
+  <p></p>
+<% end %>
