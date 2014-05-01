@@ -37,6 +37,7 @@ module PodioSync
     self.ensure_login
     self.podio_schema unless @podio_schema
     self.last_sync unless @last_sync
+    return true
   end
 
   def self.ensure_schemas_match
@@ -170,13 +171,19 @@ module PodioSync
     @podio_schema
   end
 
+  def self.get_raw_karnevalist podio_id
+    self.prelims
+    self.log "GET /item/#{podio_id}"
+    self.attributes_from_podio(Podio::Item.find_basic podio_id)
+  end
+
+
   def self.get_karnevalist local_karnevalist
     self.prelims
     if local_karnevalist.podio_id.present?
-      self.log "GET /item/#{local_karnevalist.podio_id}"
       begin
-        self.to_karnevalist(self.attributes_from_podio \
-          Podio::Item.find_basic local_karnevalist.podio_id)
+        self.to_karnevalist(
+          self.get_raw_karnevalist local_karnevalist.podio_id)
       rescue Podio::NotFoundError => e
         fail PodioSyncError, 
              "Not found (podio_id == #{local_karnevalist.podio_id})"
@@ -288,16 +295,22 @@ module PodioSync
     podio_id
   end
 
+  def self.put_raw_karnevalist pk
+    self.prelims
+    self.log "PUT /item/#{pk['podio-id']}"
+    Podio::Item.update pk['podio-id'], 'fields' => pk.except('podio-id')
+  end
+
   def self.put_karnevalist karnevalist
     self.prelims
     unless karnevalist.podio_id.present?
       fail PodioSyncError, 
            "Can't put karnevalist with no podio_id (local == #{karnevalist.id})"
     end
-    k = self.to_podio_karnevalist karnevalist
-    self.log "PUT /item/#{karnevalist.podio_id}"
+    pk = self.to_podio_karnevalist karnevalist
+    pk['podio-id'] = karnevalist.podio_id
     begin
-      Podio::Item.update karnevalist.podio_id, 'fields' => k
+      self.put_raw_karnevalist pk
     rescue Podio::GoneError
       self.log "Karnevalist was gone (podio_id == #{karnevalist.podio_id}), creating new"
       karnevalist.podio_id = nil
@@ -338,6 +351,17 @@ module PodioSync
     Podio::Item.delete podio_id
     karnevalist.update_attributes :podio_id => nil
     self.log "Broke link with local == #{karnevalist.id} (was podio == #{podio_id})"
+  end
+
+  def self.consolidate_karnevalister pid1, pid2
+    self.prelims
+    pk1 = self.get_raw_karnevalist pid1
+    pk2 = self.get_raw_karnevalist pid2
+    cpk = pk2.merge pk1
+    cpk['podio-id'] = pid1
+    self.put_raw_karnevalist cpk
+    # self.delete_karnevalist (Karnevalist.new :podio_id => pid2)
+    return true
   end
 
   ### Local read methods
