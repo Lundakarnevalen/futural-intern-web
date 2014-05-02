@@ -1,6 +1,9 @@
 class TicketListingsController < ApplicationController
-  before_filter :authenticate_user!, :except => [ :destroy ]
-  authorize_resource, :except => [ :destroy ]
+  # Bypass the many layers of filtering when auth by token
+  authorize_resource
+  skip_authorization_check :only => [ :destroy ]
+  skip_before_filter :require_login, :only => :destroy
+  skip_before_filter :can_can_strong, :only => :destroy
 
   def index
     @listings = filter_query params
@@ -34,13 +37,15 @@ class TicketListingsController < ApplicationController
   def destroy
     @listing = TicketListing.find params[:id]
 
-    unless params[:token] == @listing.access_token
-      authenticate_user!
+    if params[:token] == @listing.access_token
+      @listing.destroy
+      render :text => (@listing.errors.any?? @listing.errors.full_messages.join('; ')
+                                           : '<strong>Annonsen togs bort!<strong>')
+    else
       authorize! :destroy, @listing
+      @listing.destroy
+      handle_errors @listing, 'Annons togs bort utan problem'
     end
-
-    @listing.destroy
-    handle_errors @listing, 'Annons togs bort utan problem'
   end
 
   private 
