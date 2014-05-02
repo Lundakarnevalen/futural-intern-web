@@ -2,8 +2,12 @@
 class BookkeepingsController < ApplicationController
   authorize_resource
   def index
+    if (current_user.is? :admin_bookkeeping) || (current_user.is? :admin_bookkeeping_lite)
     @bookkeepings = Bookkeeping.all
     @dates = Bookkeeping.find_dates
+    else
+      raise(CanCan::AccessDenied, 'Invalid access request')
+    end
   end
 
   def new

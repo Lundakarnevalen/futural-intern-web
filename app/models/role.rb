@@ -37,7 +37,9 @@ class Role < ActiveRecord::Base
     [ :sektionsadmin_fabriken,
       'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar).' ],
     [ :admin_bookkeeping,
-      'Kan skapa nya rapporteringar i bokföringssystemet' ],
+      'Kan skapa nya rapporteringar och se befintliga i bokföringssystemet' ],
+    [ :admin_bookkeeping_lite,
+      'Kan se alla rapporteringar i bokföringssystemet' ],
   ]
 
   def self.seed_roles
