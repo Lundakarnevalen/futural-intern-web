@@ -12,9 +12,21 @@ describe PhotosController do
 
   describe "index" do
     before :each do
-      @photo = FactoryGirl.create(:photo, accepted: true)
+      @p = FactoryGirl.create(:photo, accepted: true)
+      @p_n = FactoryGirl.create(:photo, accepted: false)
     end
+
     it "should return an array with accepted photos" do
+      get :index
+      response.should be_success
+      assigns(:photos).should_not be_nil
+    end
+
+    it "should only return the photos which are accepted" do
+      get :index
+      response.should be_success
+      assigns(:photos).should eq([@p])
+      assigns(:photos).should_not eq([@p, @p_n])
     end
   end
 
