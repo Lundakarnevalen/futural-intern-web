@@ -4,10 +4,10 @@
      <%= image_tag(photo.image.url) %>
       <div class="caption">
         <p>
-          <button id="accept-photo" data-id="<%= photo.id %>" type="button" class="btn green">
+          <button data-id="<%= photo.id %>" type="button" class="btn green accept-photo">
             <span class="glyphicon glyphicon-ok">Godkänn</span>
           </button>
-          <button id="remove-photo" data-id=<%= photo.id %> type="button" class="btn red">
+          <button data-id=<%= photo.id %> type="button" class="btn red remove-photo">
             <span class="glyphicon glyphicon-remove">Ta bort</span>
           </button>
         </p>

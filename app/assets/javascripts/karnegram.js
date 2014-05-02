@@ -9,14 +9,13 @@ $(function() {
     $('#img-modal .modal-body .thumbnail').children('img').attr('src', $(this).attr('src'));
   });
 
-
-  $('#accept-photo').click(function(e) {
-    var self = $(this),
-        id = self.data('id');
+  function changePhotoStatus(action) {
+    var id = $(this).data('id'),
+        data = action === 'POST' ? { "_method": "delete" } : { photo: { accepted: true} };
     $.ajax({
-      type: 'PUT',
+      type: action,
       url: '/photos/' + id,
-      data: { photo: {accepted: true}},
+      data: data,
       dataType: 'json',
       success: function() {
         $('#photo-row-' + id).html("");
@@ -25,5 +24,12 @@ $(function() {
         console.log('Error');
       }
     });
+  }
+
+  $('.accept-photo').click(function(e) {
+    changePhotoStatus.call(this, 'PUT');
+   });
+  $('.remove-photo').click(function(e) {
+    changePhotoStatus.call(this, 'POST');
   });
 });
