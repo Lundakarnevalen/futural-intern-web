@@ -37,6 +37,7 @@ class Ability
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
     can [:read, :sign_up, :attend], Event
+    can [:read], Photo
     can [:read, :show_english, :show_contact], Sektion
 
     can :read, Notification, :recipient_id => 0
