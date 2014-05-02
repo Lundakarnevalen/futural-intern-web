@@ -38,6 +38,8 @@ class Ability
     can [:read], Post
     can [:read], Event
     can [:read], Sektion
+    can [:read], TicketListing
+    can [:manage], TicketListing, :seller => user.karnevalist
 
     can :read, Notification, :recipient_id => 0
 
