@@ -58,7 +58,7 @@ describe PhotosController do
   describe "create" do
     it "should create a new photo" do
       img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
-      post :create, {photo: {image: img, karnevalist_id: @user.karnevalist.id } }
+      post :create, {photo: {image: img, caption: "mycaption", karnevalist_id: @user.karnevalist.id } }
       response.should be_redirect
       response.should redirect_to action: :index
     end

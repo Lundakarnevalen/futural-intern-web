@@ -5,12 +5,12 @@
       <%= image_tag("#{photo.image.url}", class: "img-modal-toggle") %>
      </a>
       <div class="caption">
-        <p>
+        <h6>
         Av <%= "#{photo.karnevalist.fornamn}" %>
         <% if photo.official %>
           <span class="label label-success">Officiell fotograf</span>
         <% end %>
-        </p>
+        </h6>
         <p><%= "#{photo.caption}" %></p>
       </div>
     </div>

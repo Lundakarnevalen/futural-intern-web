@@ -11,7 +11,11 @@
         </span>
         <%= f.hidden_field :karnevalist_id, value: current_user.karnevalist.id %>
       </div>
+      <div class="form-group">
+        <%= f.label :caption %>
+        <%= f.text_field :caption, class: "form-control" %>
+      </div>
     </div>
-  <%= f.submit class: "green button" %>
+  <%= f.submit "Ladda upp bild", class: "green button" %>
   </div>
 <% end %>
