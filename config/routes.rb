@@ -85,7 +85,11 @@
   end
 
   resources :roles, :only => [:index]
-  resources :photos, only: [:index]
+  resources :photos do
+    collection do
+      get 'white_list'
+    end
+  end
 
 =begin
   # concern for festmästeriet / fabriken
