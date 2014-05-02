@@ -1,6 +1,10 @@
 <h1 class="fill white block center">Karnegram</h1>
 <div class="white-container">
-  <%= render partial: "acc_photo", collection: @photos, as: :photo %>
+  <% if @photos %>
+    <%= render partial: "acc_photo", collection: @photos, as: :photo %>
+  <% else %>
+    <p>Inga bilder finns tillängliga.</p>
+  <% end %>
 </div>
 
 <!-- Modal -->

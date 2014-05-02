@@ -29,6 +29,15 @@ class PhotosController < ApplicationController
   end
 
   def update
+    @photo = Photo.find(params[:id])
+    @photo.update_attributes(params[:photo])
+    respond_to do |format|
+      if @photo.save
+        format.json { render json: { success: true }, status: :ok }
+      else
+        format.json { render json: @photo.errors, status: :unprocessable_entity }
+      end
+    end
   end
 
   def delete
@@ -36,7 +45,7 @@ class PhotosController < ApplicationController
 
   private
     def photo_params
-      params.require(:photo).permit(:image, :karnevalist_id)
+      params.require(:photo).permit!
     end
 
 end
