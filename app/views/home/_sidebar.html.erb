@@ -17,7 +17,7 @@
         <li><%= link_to "Kontakt", contact_sektion_path(current_karnevalist.sektion), :class => "button" %></li>
         <li><%= link_to "In English", english_sektion_path(current_karnevalist.sektion), :class => "button" %></li>
       <% end %>
-      <li><%= link_to "Bokföring", bookkeepings_path, :class => "button" %></li>
+      <li><%= link_to "Rapportering", bookkeepings_path, :class => "button" %></li>
     <% end %>
     <%# General stuff %>
     <% if can? :read, Sektion %>

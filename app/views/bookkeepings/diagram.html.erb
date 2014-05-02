@@ -1,4 +1,6 @@
 <%= render 'shared/header', :title => 'Bokföring och Rapportering' %>
 <div class="white-container col-xs-12">
-  <%= @date %>
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+  <%= pie_chart  Bookkeeping.get_array(@date) %>
+
 </div>
