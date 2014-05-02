@@ -42,6 +42,8 @@ class Ability
     can [:read, :sign_up, :attend], Event
     can [:read, :show_english, :show_contact, :image_index], Sektion
     can [:show], Image
+    can [:read], Photo
+    can [:read, :show_english, :show_contact], Sektion
 
     can :read, Notification, :recipient_id => 0
 
