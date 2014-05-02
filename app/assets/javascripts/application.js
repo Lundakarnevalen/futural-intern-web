@@ -17,6 +17,7 @@
 //= require turbolinks
 //= require fullcalendar
 //= require warehouse.js
+//= require file_upload.js
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
