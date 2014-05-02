@@ -19,7 +19,11 @@
 
   resources :notifications, only: [:new, :create, :show, :index]
 
-  resources :ticket_listings
+  resources :ticket_listings do
+    member do
+      get 'destroy', :action => :destroy, :as => 'destroy'
+    end
+  end
 
   resources :karnevalister do
     collection do
