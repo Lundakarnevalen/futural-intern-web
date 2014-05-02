@@ -1,5 +1,6 @@
 class TicketListingsController < ApplicationController
-  authorize_resource
+  before_filter :authenticate_user!, :except => [ :destroy ]
+  authorize_resource, :except => [ :destroy ]
 
   def index
     @listings = filter_query params
@@ -32,6 +33,12 @@ class TicketListingsController < ApplicationController
 
   def destroy
     @listing = TicketListing.find params[:id]
+
+    unless params[:token] == @listing.access_token
+      authenticate_user!
+      authorize! :destroy, @listing
+    end
+
     @listing.destroy
     handle_errors @listing, 'Annons togs bort utan problem'
   end

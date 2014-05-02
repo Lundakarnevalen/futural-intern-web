@@ -1,8 +1,10 @@
 <%= render 'shared/header', :title => "Karneblocket: #{@listing.event.title}" %>
 
 <% if can? :modify, @listing %>
-  <%= link_to 'Ändra annonsen', edit_ticket_listing_path(@listing) %>
-  <%= link_to 'Ta bort annonsen', @listing, :method => :delete %>
+  <%= link_to 'Ändra annonsen', edit_ticket_listing_path(@listing), 
+      :class => 'btn' %>
+  <%= link_to 'Ta bort annonsen', @listing, :method => :delete,
+      :class => 'btn btn-danger', :confirm => 'Är du säker?' %>
 <% end %>
 
 <dl>

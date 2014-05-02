@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140429092253) do
+ActiveRecord::Schema.define(version: 20140501234222) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -22,17 +22,6 @@ ActiveRecord::Schema.define(version: 20140429092253) do
   end
 
   add_index "attendances", ["event_id", "karnevalist_id"], name: "index_attendances_on_event_id_and_karnevalist_id", using: :btree
-
-  create_table "backorders", force: true do |t|
-    t.integer  "order_id"
-    t.integer  "product_id"
-    t.integer  "amount"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "backorders", ["order_id"], name: "index_backorders_on_order_id", using: :btree
-  add_index "backorders", ["product_id"], name: "index_backorders_on_product_id", using: :btree
 
   create_table "clusters", force: true do |t|
     t.float    "lat"
@@ -53,16 +42,7 @@ ActiveRecord::Schema.define(version: 20140429092253) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "attendable",  default: false
-    t.date     "end_date"
     t.boolean  "tickets"
-  end
-
-  create_table "images", force: true do |t|
-    t.integer  "sektion_id"
-    t.string   "image"
-    t.string   "name"
-    t.datetime "created_at"
-    t.datetime "updated_at"
   end
 
   create_table "incoming_deliveries", force: true do |t|
@@ -98,12 +78,6 @@ ActiveRecord::Schema.define(version: 20140429092253) do
 
   add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id", using: :btree
   add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id", using: :btree
-
-  create_table "inventories", force: true do |t|
-    t.integer  "inventory_taker_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "karnevalister", force: true do |t|
     t.string   "personnummer"
@@ -250,7 +224,7 @@ ActiveRecord::Schema.define(version: 20140429092253) do
 
   create_table "posts", force: true do |t|
     t.string   "title"
-    t.text     "content"
+    t.string   "content"
     t.integer  "sektion_id"
     t.integer  "karnevalist_id"
     t.datetime "created_at"
@@ -312,13 +286,12 @@ ActiveRecord::Schema.define(version: 20140429092253) do
   end
 
   create_table "sektioner", force: true do |t|
-    t.string  "name",            null: false
+    t.string  "name",         null: false
     t.integer "podio_id"
     t.integer "podio_sub_id"
-    t.text    "info_page"
-    t.text    "english_page"
-    t.text    "contact_page"
-    t.integer "supersektion_id"
+    t.string  "info_page"
+    t.string  "english_page"
+    t.string  "contact_page"
   end
 
   add_index "sektioner", ["podio_id"], name: "index_sektioner_on_podio_id", using: :btree
@@ -333,11 +306,13 @@ ActiveRecord::Schema.define(version: 20140429092253) do
   create_table "ticket_listings", force: true do |t|
     t.text     "description"
     t.integer  "price"
-    t.boolean  "selling",     default: true
+    t.boolean  "selling",       default: true
     t.integer  "seller_id"
     t.integer  "event_id"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.datetime "last_reminder"
+    t.string   "access_token"
   end
 
   create_table "users", force: true do |t|

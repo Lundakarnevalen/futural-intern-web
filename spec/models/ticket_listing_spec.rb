@@ -56,5 +56,50 @@ describe TicketListing do
         .should match_array [@e, e1]
     end
   end
+
+  describe '.to_remind' do
+    before do
+      @tl1 = FactoryGirl.build :ticket_listing, :seller => @k,
+                               :event => @e
+      @tl2 = FactoryGirl.build :ticket_listing, :seller => @k,
+                               :event => @e
+    end
+
+    it 'returns empty when it should' do
+      @tl1.last_reminder = 1.days.ago
+      @tl1.created_at = 10.days.ago
+      @tl1.save
+      
+      @tl2.created_at = 3.days.ago
+      @tl2.save
+      TicketListing.to_remind.should == []
+    end
+
+    it 'returns listings when it should' do
+      @tl1.created_at = 10.days.ago
+      @tl1.save
+      
+      @tl2.last_reminder = 6.days.ago
+      @tl2.save
+
+      TicketListing.to_remind.should match_array [@tl1, @tl2]
+    end
+  end
+
+  describe '#link_to_destroy' do
+    before do
+      @tl = FactoryGirl.build :ticket_listing, :event => @e, :seller => @k
+    end
+
+    it 'fails if not saved' do
+      -> { @tl.link_to_destroy }.should raise_exception
+    end
+
+    it 'returns correct link' do
+      @tl.save
+      @tl.link_to_destroy.should ==
+        "http://karnevalist.se/ticket_listings/#{@tl.id}/destroy?token=#{@tl.access_token}"
+    end
+  end
 end
 
