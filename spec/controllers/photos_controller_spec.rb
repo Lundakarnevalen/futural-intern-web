@@ -11,7 +11,11 @@ describe PhotosController do
   end
 
   describe "index" do
-
+    before :each do
+      @photo = FactoryGirl.create(:photo, accepted: true)
+    end
+    it "should return an array with accepted photos" do
+    end
   end
 
   describe "white list" do
