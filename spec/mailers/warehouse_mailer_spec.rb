@@ -8,7 +8,7 @@ describe WarehouseMailer do
     @order = FactoryGirl.create(:order)
     @from = 'from@test.com'
     @to = 'to@test.com'
-    WarehouseMailer.notify_delivery(@from, @to , 'test', @order).deliver
+    WarehouseMailer.notify_delivery(@from, @to , 'test', @order, 1).deliver
   end
 
   after(:each) do
