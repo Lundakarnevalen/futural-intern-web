@@ -10,6 +10,13 @@ describe Photo do
       FactoryGirl.build(:photo, karnevalist: nil).should_not be_valid
       FactoryGirl.build(:photo).should be_valid
     end
+    it "should not allow captions longer than 140 chars" do
+      FactoryGirl.build(:photo, caption: "a"*141).should_not be_valid
+      FactoryGirl.build(:photo, caption: "b"*140).should be_valid
+    end
+    it "should allow blank captions" do
+      FactoryGirl.build(:photo, caption: "").should be_valid
+    end
   end
 
   describe "json output" do
