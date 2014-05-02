@@ -12,16 +12,20 @@ describe PhotosController do
 
   describe "index" do
 
+  end
+
+  describe "white list" do
+
     it "should return an array containing photos which are not accepted yet" do
       p = FactoryGirl.create(:photo, accepted: false)
-      get :index
+      get :white_list
       assigns(:photos).should_not be_nil
     end
 
     it "should not contain photos which have been accepted" do
       p_n = FactoryGirl.create(:photo, accepted: false)
       p_a = FactoryGirl.create(:photo, accepted: true)
-      get :index
+      get :white_list
       assigns(:photos).should eq([p_n])
       assigns(:photos).should_not eq([p_n, p_a])
     end
@@ -29,6 +33,15 @@ describe PhotosController do
 
   describe "update" do
     it "should update the photo and set it to accepted" do
+    end
+  end
+
+  describe "create" do
+    it "should create a new photo" do
+      img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
+      post :create, {photo: {image: img, karnevalist_id: @user.karnevalist.id } }
+      response.should be_redirect
+      response.should redirect_to action: :index
     end
   end
   describe "delete" do

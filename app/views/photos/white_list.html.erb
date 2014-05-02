@@ -1,0 +1,7 @@
+<div class="container">
+  <% if @photos.blank? %>
+    <p>Inga nya foton</p>
+  <% else %>
+    <%= render partial: "photo", collection: @photos %>
+  <% end %>
+</div>

@@ -1,0 +1,8 @@
+<%= form_for(@photo, html: { multipart: true }) do |f| %>
+  <div class="form-group">
+    <%= f.label :image %>
+    <%= f.file_field :image %>
+    <%= f.hidden_field :karnevalist_id, value: current_user.karnevalist.id %>
+  </div>
+  <%= f.submit class: "green button" %>
+<% end %>

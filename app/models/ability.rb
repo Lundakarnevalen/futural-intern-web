@@ -142,7 +142,7 @@ class Ability
     end
 
     if user.is?(:admin) || user.is?(:photographer)
-      can [:read, :update, :delete], Photo
+      can :manage, Photo
     end
 
     # Access admin
