@@ -54,6 +54,7 @@ FactoryGirl.define do
   factory :photo do
     image Rack::Test::UploadedFile.new(File.open(File.join(Rails.root, '/spec/fixtures/photos/test.jpg')))
     association :karnevalist, factory: :karnevalist
+    caption "my text"
     accepted true
     official false
   end
