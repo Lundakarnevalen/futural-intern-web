@@ -1,5 +1,6 @@
 class PhotosController < ApplicationController
   authorize_resource
+  before_filter :find_photo, only: [:update, :destroy]
   def index
     @photos = Photo.where(accepted: true).to_a
   end
@@ -40,10 +41,17 @@ class PhotosController < ApplicationController
     end
   end
 
-  def delete
+  def destroy
+    @photo.destroy
+    respond_to do |format|
+      format.json { render json: { success: true }, status: :ok }
+    end
   end
 
   private
+    def find_photo
+      @photo = Photo.find(params[:id])
+    end
     def photo_params
       params.require(:photo).permit!
     end

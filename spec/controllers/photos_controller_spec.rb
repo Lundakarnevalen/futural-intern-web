@@ -63,8 +63,16 @@ describe PhotosController do
       response.should redirect_to action: :index
     end
   end
-  describe "delete" do
-    it "should delete the photo if it is not accepted" do
+  describe "destroy" do
+    before { @p = FactoryGirl.create(:photo) }
+    it "should delete the photo" do
+      expect {
+        delete :destroy, id: @p.id, format: :json
+      }.to change(Photo, :count).by(-1)
+    end
+    it "should have a success response" do
+      delete :destroy, id: @p.id, format: :json
+      response.should be_success
     end
   end
 end
