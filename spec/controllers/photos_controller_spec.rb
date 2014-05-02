@@ -49,6 +49,9 @@ describe PhotosController do
 
   describe "update" do
     it "should update the photo and set it to accepted" do
+      p_n = FactoryGirl.create(:photo, accepted: false)
+      put :update, photo: { accepted: true}, id: p_n.id, format: :json
+      response.code.should eq("200")
     end
   end
 
