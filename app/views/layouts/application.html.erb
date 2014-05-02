@@ -6,6 +6,7 @@
     <%= favicon_link_tag %>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <%= yield :head %>
+    <%= yield :charts_js %> <%# Rails %>
     <%= javascript_include_tag '//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js', :application, :cache => 'cached/all' %>
     <%= csrf_meta_tags %>
   </head>

@@ -30,6 +30,7 @@ class Bookkeeping < ActiveRecord::Base
     end
     dates_array = remove_duplicates_string(dates_array)
     dates_array = dates_array.sort
+    dates_array = dates_array.reverse
     return dates_array
   end
 
@@ -64,6 +65,46 @@ class Bookkeeping < ActiveRecord::Base
       end
     end
     return dates
+  end
+
+  def self.get_string number
+    if number == 1
+      return 'Mycket sämre'
+    elsif number == 2
+      return 'Sämre'
+    elsif number == 3
+      return 'Helt enligt planerna'
+    elsif number == 4
+      return 'Bättre'
+    elsif number == 5
+      return 'Mycket bättre'
+    end
+  end
+
+  def self.get_array date
+    date = date.split('/')
+    date_time = DateTime.new(2014,date.second.to_i,date.first.to_i,0,0,1,'+1')
+    date_time2 = date_time + 1.day - 1.second
+
+
+    array = Bookkeeping.where('created_at >= ?', date_time).where('created_at <= ?', date_time2).group(:question_4).count
+    result = []
+    array.each do |a|
+      if a.first == 1
+        result_string = "Mycket sämre"
+      elsif a.first == 2
+        result_string = "Sämre"
+      elsif a.first == 3
+        result_string = "Helt enligt planerna"
+      elsif a.first == 4
+        result_string = "Bättre"
+      elsif a.first == 5
+        result_string = "Mycket bättre"
+      end
+      result.push([result_string, a.second])
+    end
+    return result
+
   end
 
   def is_in_date date
