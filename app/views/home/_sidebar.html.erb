@@ -26,7 +26,13 @@
     <% if can? :read, Notification %>
       <li><%= link_to 'Pushnotiser', Notification, :class => "button" %></li>
     <% end %>
+
     <li><%= link_to 'Karneblocket', TicketListing, :class => 'button' %></li>
+
+    <% if can? :read, Photo %>
+      <li><%= link_to 'Karnegram', Photo, :class => "button" %></li>
+    <% end %>
+
   </ul>
 </div>
 <!--Admin-->
@@ -92,6 +98,9 @@
     <% end %>
     <% if can? :uppdelning, Karnevalist %>
       <li><%= link_to 'Uppdelning', uppdelning_karnevalister_path, data: {no_turbolink: true}, :class => "button" %></li>
+    <% end %>
+    <% if can? :manage, Photo %>
+    <li><%= link_to 'Godkänn karnegram bilder', white_list_photos_path, class: "button" %></li>
     <% end %>
   </ul>
 </div>
