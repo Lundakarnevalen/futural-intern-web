@@ -20,6 +20,7 @@
 //= require warehouse.js
 //= require autosubmit
 //= require jquery.dotdotdot.js
+//= require file_upload.js
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({

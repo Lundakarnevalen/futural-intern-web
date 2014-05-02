@@ -1,7 +1,7 @@
 class PhotosController < ApplicationController
   authorize_resource
   def index
-    @photos.where(accepted: true).to_a
+    @photos = Photo.where(accepted: true).to_a
   end
 
   def white_list
