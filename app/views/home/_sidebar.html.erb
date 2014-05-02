@@ -101,6 +101,7 @@
     <% end %>
     <% if can? :manage, Photo %>
     <li><%= link_to 'Godkänn karnegram bilder', white_list_photos_path, class: "button" %></li>
+    <li><%= link_to 'Ladda upp karnegram bilder', new_photo_path, class: "button" %></li>
     <% end %>
   </ul>
 </div>
