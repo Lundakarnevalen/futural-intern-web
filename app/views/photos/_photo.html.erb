@@ -3,6 +3,7 @@
     <div class="thumbnail">
      <%= image_tag(photo.image.url) %>
       <div class="caption">
+      <p><%= "#{photo.caption}" %></p>
         <p>
           <button data-id="<%= photo.id %>" type="button" class="btn green accept-photo">
             <span class="glyphicon glyphicon-ok">Godkänn</span>

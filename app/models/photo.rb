@@ -11,6 +11,7 @@ class Photo < ActiveRecord::Base
       url: self.image.url,
       thumb: self.image.thumb.url,
       official: self.official,
+      caption: self.caption,
       id: self.id
     }
   end

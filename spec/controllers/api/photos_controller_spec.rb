@@ -28,6 +28,13 @@ describe Api::PhotosController do
       response.body.should have_json_path("photo")
     end
 
+    it "should be possible to send a caption with a picture" do
+      img = Rack::Test::UploadedFile.new('spec/fixtures/photos/test.jpg','image/jpg')
+      post :create, { token: @user.authentication_token, photo: {image: img, caption: "my caption"} }, format: :json
+      response.code.should eq("201")
+      response.body.should have_json_path("photo")
+    end
+
     it "should return errors if an image is not present " do
       post :create, { token: @user.authentication_token, photo: {accepted: false} }, format: :json
       response.code.should eq("400")
