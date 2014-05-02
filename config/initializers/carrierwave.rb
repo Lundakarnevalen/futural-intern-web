@@ -4,6 +4,7 @@ CarrierWave.configure do |config|
     config.storage = :file
     config.enable_processing = true
     config.root = Rails.env.test? ? "#{Rails.root}/tmp" : "#{Rails.root}/public"
+    config.asset_host = "http://localhost:3000"
   else
     config.storage = :fog
     config.fog_credentials = {
@@ -16,6 +17,7 @@ CarrierWave.configure do |config|
     }
     config.fog_directory  = ENV['S3_BUCKET_NAME']                     # required
     config.fog_public     = true                                   # optional, defaults to true
+    #config.fog_host      = ?
     config.fog_attributes = {'Cache-Control'=>'max-age=315576000'}  # optional, defaults to {}
   end
 
