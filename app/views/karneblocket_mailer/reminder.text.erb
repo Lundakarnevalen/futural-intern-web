@@ -1,0 +1,14 @@
+Hej <%= @listing.seller.fornamn %>!
+
+Du lade ut en annons på karneblocket för några dagar sedan, angående 
+biljetter till eventet "<%= @listing.event.title %>". 
+
+Har du fått sålt dina biljetter ännu? Klicka i så fall på länken här:
+
+<%= @listing.link_to_destroy %>
+
+Annars behöver du inte göra något, vi önskar dig lycka till helt enkelt!
+
+Mvh
+
+IT/System, Lundakarnevalen
