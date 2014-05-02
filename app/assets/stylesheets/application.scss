@@ -853,7 +853,7 @@ a {
     margin-top: 10px;
     padding: 10px 50px;
 }
-
+/* Karnegram */
 .btn-file {
   position: relative;
   overflow: hidden;
@@ -873,4 +873,8 @@ a {
     cursor: inherit;
     display: block;
   }
+}
+
+.img-modal-toggle {
+  cursor: pointer;
 }
