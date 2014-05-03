@@ -2,9 +2,7 @@
 <div class="white-container col-xs-12">
   <table>
     <tr>
-      <% if current_user.is? :admin_bookkeeping %>
       <td><%= link_to 'Ny Rapportering', new_bookkeeping_path, {:class => "green button", data: {no_turbolink: true}} %></td>
-      <% end %>
       <td></td><td></td>
       <%= form_tag diagram_bookkeepings_path, :method => :get do %>
       <td><%= select_tag :date, options_for_select(Bookkeeping.get_all_dates) %></td>
