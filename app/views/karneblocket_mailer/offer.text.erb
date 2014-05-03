@@ -1,0 +1,22 @@
+Hej <%= @listing.seller.fornamn %>!
+
+Du har en kund på G! <%= @customer.fornamn %> har hört av sig och 
+är intresserad av dina biljetter till "<% @listing.event.title %>".
+
+<%= @customer.fornamn %> säger så här:
+
+<%= @message %>
+
+=====================  
+
+Du kan kontakta kunden på <%= @customer.email %> eller genom att svara 
+på det här mailet (om det inte stod nåt annat i meddeladet).
+
+Glöm inte att ta bort din annons om affären går igenom! Det gör du genom
+att trycka på den här länken:
+
+<%= @listing.link_to_destroy %>
+
+Ha en fortsatt fräsch dag,
+
+IT/System, Lundakarnevalen

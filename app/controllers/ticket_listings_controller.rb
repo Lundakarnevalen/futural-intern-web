@@ -48,6 +48,27 @@ class TicketListingsController < ApplicationController
     end
   end
 
+  def offer
+    # Very naive spam protection...
+    if session[:karneblocket_offers] && 
+       session[:karneblocket_offers].include?(params[:id])
+      flash[:alert] = 'Inte spamma!'
+      redirect_to :back
+    elsif params[:message].empty?
+      flash[:alert] = 'Du angav inget meddelande'
+      redirect_to :back
+    else
+      session[:karneblocket_offers] ||= []
+      session[:karneblocket_offers] << params[:id]
+
+      @listing = TicketListing.find params[:id]
+      KarneblocketMailer.offer(@listing, params[:message], 
+                               current_karnevalist).deliver
+      flash[:notice] = 'Ett mail skickades till säljaren med ditt meddelade'
+      redirect_to :back
+    end
+  end 
+
   private 
   def ticket_listing_params
     params.require(:ticket_listing).permit!
