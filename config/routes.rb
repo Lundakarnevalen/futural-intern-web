@@ -20,6 +20,13 @@
 
   resources :notifications, only: [:new, :create, :show, :index]
 
+  resources :ticket_listings do
+    member do
+      get 'destroy', :action => :destroy, :as => 'destroy'
+      post 'offer'
+    end
+  end
+
   resources :karnevalister do
     collection do
       get 'search/:q', :action => 'search'

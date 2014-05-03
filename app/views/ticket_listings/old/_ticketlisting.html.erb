@@ -1,0 +1,19 @@
+<div class="message col-xs-12">
+  <div class="message-information col-xs-8">
+    <div class="row">
+      <h1><%= ticketlisting.event %></h1>
+    </div>
+    <div class="row">
+      <div class="post-preview"><%= render_markdown post.content %>
+      </div>
+    </div>
+    <% unless post.id.nil? %>
+      <div class="form-controls">
+        <%= link_to "läs mer", post, class: "btn btn-small" %>
+        <% if (current_user.can? :edit, post) %>
+          <%= link_to "redigera", edit_post_path(post), class: "btn btn-small", type: "edit" %>
+        <% end %>
+      </div>
+    <% end %>
+  </div>
+</div>

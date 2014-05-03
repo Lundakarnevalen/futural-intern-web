@@ -36,6 +36,9 @@ class Ability
     can [:create, :new, :step1, :step1_post], Karnevalist
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
+    can [:read], Event
+    can [:read], TicketListing
+    can [:manage], TicketListing, :seller => user.karnevalist
     can [:read, :sign_up, :attend], Event
     can [:read, :show_english, :show_contact, :image_index], Sektion
     can [:show], Image

@@ -18,6 +18,7 @@
 //= require turbolinks
 //= require fullcalendar
 //= require warehouse.js
+//= require autosubmit
 //= require jquery.dotdotdot.js
 
 $(document).ready(function(){

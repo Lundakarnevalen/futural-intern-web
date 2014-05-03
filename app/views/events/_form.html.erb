@@ -20,11 +20,19 @@
       <% end %>
 
       <div>
-      <strong>Ska man kunna anmäla sig till händelsen?</strong>
-      <%= f.label :attendable, 'Ja', :value => true %>
-      <%= f.radio_button :attendable, true %>
-      <%= f.label :attendable, 'Nej', :value => false %>
-      <%= f.radio_button :attendable, false %>
+        <strong>Ska man kunna anmäla sig till händelsen?</strong>
+        <%= f.label :attendable, 'Ja', :value => true %>
+        <%= f.radio_button :attendable, true %>
+        <%= f.label :attendable, 'Nej', :value => false %>
+        <%= f.radio_button :attendable, false %>
+      </div>
+
+      <div>
+        <strong>Säljer ni biljetter till händelsen</strong>
+        <%= f.label :tickets, 'Ja', :value => true %>
+        <%= f.radio_button :tickets, true %>
+        <%= f.label :tickets, 'Nej', :value => false %>
+        <%= f.radio_button :tickets, false %>
       </div>
 
       <%= f.label :description, 'Beskrivning' %>

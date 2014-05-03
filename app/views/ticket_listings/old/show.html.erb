@@ -1,0 +1,22 @@
+<div class="row">
+  <%= link_to "Tillbaka", karneblocket_listings_url, class: "btn btn-small col-xs-2 col-md-offset-2" %>
+</div>
+<div class="white-container col-xs-12">
+  <div class="col-xs-12">
+    <h1><%= @listing.title %></h1>
+  </div>
+  <p><i><%= @listing.karnevalist.name %></i></p>
+  <div class="col-xs-12">
+    <%= render_markdown @listing.content %>
+  </div>
+  <% unless @listing.id.nil? %>
+    <div class="form-controls">
+      <% if (current_user.can? :edit, @listing) %>
+        <%= link_to "redigera", edit_karneblocket_listing_path_path(@listing), class: "btn btn-small", type: "edit"%>
+      <% end %>
+      <% if !(@listing.nil?) && (current_user.can? :destroy, @listing) %>
+        <%= link_to "Radera Inlägget", @listing, method: :delete, data: { confirm: "Är du verkligen helt säker på att du vill radera annonsen?" }, :class =>"btn", :type => "edit" %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

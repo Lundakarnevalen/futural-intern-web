@@ -1,0 +1,32 @@
+<div class=white-container>
+  <h1>Karneblocket</h1> 
+  <p>
+    Här kan du köpa och sälja biljetter till events under karnevalen.
+  </p>
+</div>
+
+<%= link_to 'Lägg till annons', new_ticket_listing_path %>
+
+<div class='white-container yellow-background'>
+  <%= render 'filter_form', :query => @query %>
+</div>
+
+<table class='table table-striped'>
+  <thead>
+    <tr>
+      <th>Händelse</th>
+      <th>Pris</th>
+      <th>Säljare</th>
+      <th>Önskar</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @listings.each do |l| %>
+      <%= render 'listing', :listing => l %>
+    <% end %>
+  </tbody>
+</table>
+
+<% if @listings.empty? %>
+  <div class=white-container><strong>Inga träffar...</strong></div>
+<% end %>
