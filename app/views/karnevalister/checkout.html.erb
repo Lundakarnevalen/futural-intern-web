@@ -23,13 +23,15 @@
   </script>
 
     <h3>Pappersansökan</h3>
-    <%= link_to "Formulär - Pappersansökan", controller: "karnevalister", action: "checkout_paper" %>
+    <button class="green">
+      <%= link_to "Formulär - Pappersansökan", {controller: "karnevalister", action: "checkout_paper"}, data: {no_turbolink: true} %>
+    </button>
     <h3>Digital ansökan (Android/iPhone)</h3>
     <%= render 'search_form' %>
     <% if !@karnevalister.blank? %>
     <ul>
         <% @karnevalister.each do |k| %>
-            <li><%= link_to "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})", controller: "karnevalister", action: "checkout_digital", id: k %>
+            <li><%= link_to "#{k.efternamn}, #{k.fornamn} (#{k.personnummer})", {controller: "karnevalister", action: "checkout_digital", id: k}, data: {no_turbolink: true} %>
             </a>
             </li>
         <% end %>

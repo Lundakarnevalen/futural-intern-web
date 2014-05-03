@@ -1,8 +1,15 @@
-<%= link_to "Tillbaka", root_url, :class => "btn btn-small col-xs-2 col-md-offset-2" %>
+<%= link_to "Tillbaka", 'javascript:history.go(-1);', :class => "green button col-xs-2 col-md-offset-2" %>
 <%= render 'sektion_image' %>
+
+<div class="white-container col-xs-12">
+  <%= link_to "Sektionsinfo", @sektion, :class => "green button" %>
+  <%= link_to "In English", english_sektion_path(@sektion), :class => "green button" %>
+  <% if current_user.can? :edit_english, Sektion.find(params[:id]) %>
+    <%= link_to "Redigera Kontaktinfo", contact_edit_sektion_path(params[:id]), {:class => "button", type: "edit" } %>
+  <% end %>
+</div>
 
 <div class="white-container col-xs-12">
   <%= render_markdown @page_content unless @page_content.blank? %>
   <%= "Här står tyvärr ingen kontaktinfo än =( " if @page_content.blank? %>
-  <%= link_to "Redigera", edit_contact_sektioner_path(params[:id]), {method: "post" ,:class => "btn btn-small", type: "edit" } %>
 </div>

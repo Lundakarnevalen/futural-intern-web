@@ -7,12 +7,16 @@
       <%= f.label :date, 'Datum' %>
       <%= f.text_field :date, :data => { :behaviour => 'datepicker' } %>
 
+      <%= f.label :end_date, 'Slutdatum (valfritt)' %>
+      <%= f.text_field :end_date, :data => { :behaviour => 'datepicker' } %>
+
       <%= f.label :sektion_id, 'Visa för sektion' %>
-      <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
-                                { :include_blank => '[Visa för alla]' },
-                                { :disabled => !current_user.can?(:manage, Event.new) } %>
-      <% unless current_user.can? :manage, Event.new %>
-        <%= f.hidden_field :sektion_id %>
+
+      <% if (current_user.is? :admin) || (current_user.is? :'global-info') %>
+        <%= f.collection_select :sektion_id, Sektion.all, :id, :name,
+                                { :include_blank => '[Visa för alla]' } %>
+      <% elsif current_user.is? :info %>
+        <%= f.collection_select :sektion_id, current_sektioner, :id, :name %>
       <% end %>
 
       <div>
@@ -36,6 +40,6 @@
       <%= f.text_area :description %>
     </fieldset>
     <%= render partial: "shared/markdown_notice" %>
-    <%= f.submit 'Spara' %>
+    <%= f.submit 'Spara', :class => "fill green button" %>
   <% end %>
 </div>

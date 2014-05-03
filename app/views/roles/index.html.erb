@@ -2,7 +2,7 @@
 <div class="white-container col-xs-12">
   <ul>
     <% @roles.each do |r| %>
-      <h3><%= r.name.upcase %></h3>
+      <h4 class="fill block"><%= r.name.upcase %></h3>
       <p><i><%= r.description || '[Beskrivning saknas]' %>.</i></p>
       <% if r.users.empty? %>
         <p>Inga innehavare</p>
@@ -12,7 +12,7 @@
         <li>
           <% if k.present? %>
             <strong><%= link_to k.name, k %></strong>
-            <%= link_to '(Återta access)', karnevalist_roles_path(k, r), :method => :delete %>
+            <%= link_to 'Återta access', karnevalist_roles_path(k, r), {:method => :delete, :class => "red mini button"}%>
           <% else %>
             <strong><%= "[#{u.email}]" %></strong>
             (Snacka med IT)

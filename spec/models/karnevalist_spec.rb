@@ -148,11 +148,12 @@ describe (K = Karnevalist) do
 
     it 'handles case of single primary `sektion`' do
       @k.sektion = @s1
+      @k.save
       @k.tilldelade_sektioner.should eq [@s1]
     end
 
     it 'handles case of two `sektion`' do
-      @k.assign_attributes :sektion => @s1,
+      @k.update_attributes :sektion => @s1,
                            :sektion2 => @s2
       @k.tilldelade_sektioner.should eq [@s1, @s2]
     end
@@ -176,6 +177,7 @@ describe (K = Karnevalist) do
 
     it 'handles the singular case' do
       @k.tilldelade_sektioner = [@s1]
+      @k.save
       @k.tilldelade_sektioner.should eq [@s1]
       @k.sektion.should eq @s1
       @k.sektion2.should be_nil
@@ -183,6 +185,7 @@ describe (K = Karnevalist) do
 
     it 'handles the general case' do
       @k.tilldelade_sektioner = [@s2, @s1]
+      @k.save
       @k.tilldelade_sektioner.should eq [@s2, @s1]
       @k.sektion.should eq @s2
       @k.sektion2.should eq @s1

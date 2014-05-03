@@ -1,0 +1,22 @@
+<p><strong>Varunamn: </strong><%= product.name %></p>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Ordernummer</th>
+        <th>Sektion</th>
+        <th>Beställare</th>
+        <th>Antal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% product.backorders.each do |b| %>
+        <% order = b.order %>
+        <tr>
+          <td><%= link_to order.order_number, order_path(order) %></td>
+          <td><%= order.sektion.name %></td>
+          <td><%= "#{order.karnevalist.fornamn} #{order.karnevalist.efternamn}" %></td>
+          <td><%= b.amount %></td>
+        </tr>
+      <% end %>
+    </tbody>
+</table>

@@ -10,8 +10,6 @@
       <th>Namn</th>
       <th>Personnummer</th>
       <th>Tilldelad sektion</th>
-      <th>Stjärnmarkerad sektion</th>
-      <th>Stjärnmarkerad funktion</th>
       <th class="center">Klar?</th>
     </tr>
   </thead>
@@ -36,16 +34,6 @@
                 <%= select_tag :tilldelad_sektion, options_from_collection_for_select(Sektion.all, :id, :name, k.tilldelad_sektion), {:disabled => true, :id => "select#{k.id}", :onchange => "tilldelad_sektion_submit(#{k.id})"} %>
             <% end %>
             </form>
-          </td>
-          <td>
-            <% if !k.snalla_sektion.blank? %>
-                <%= Sektion.find(k.snalla_sektion).name %>
-            <% end %>
-          </td>
-          <td>
-            <% if !k.snalla_intresse.blank? %>
-                <%= Intresse.find(k.snalla_intresse).name %>
-            <% end %>
           </td>
           <td class="center">
             <form>

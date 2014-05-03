@@ -1,0 +1,19 @@
+<p><strong>Datum: </strong><%= p.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+<p><strong>Utförd av: </strong><%= "#{k.fornamn} #{k.efternamn}" %></p>
+<hr>
+<table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Varunamn</th>
+        <th>Levererat antal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% p.products.each do |prod| %>
+      <tr>
+        <td><%= prod.name %></td>
+        <td><%= prod.partial_delivery_amount(p.id) %></td>
+      </tr>
+      <% end %>
+    </tbody>
+</table>

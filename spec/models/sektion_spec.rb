@@ -1,5 +1,27 @@
 # -*- encoding : utf-8 -*-
+
+require 'spec_helper'
+
 describe Sektion do
+  describe ' validations' do
+    it 'can create sektion from reasonable values' do
+      FactoryGirl.build(:sektion).should be_valid
+    end
+
+    it 'can create sektion with subsektion' do
+      supersekt = FactoryGirl.build :sektion
+      subsekt = FactoryGirl.build :sektion, :supersektion => supersekt
+      subsekt.should be_valid
+    end
+
+    it 'disallows subsektion with subsektioner' do
+      supersekt = FactoryGirl.create :sektion
+      subsekt = FactoryGirl.create :sektion, :supersektion => supersekt
+      subsubsekt = FactoryGirl.build :sektion, :supersektion => subsekt
+      subsubsekt.should_not be_valid
+    end
+  end
+
   describe '#members' do
     it 'handles the empty case' do
       s = FactoryGirl.create :sektion
@@ -13,6 +35,27 @@ describe Sektion do
       k2 = FactoryGirl.create :karnevalist, :sektion => nil,
         :sektion2 => s
       s.members.should =~ [k1, k2]
+    end
+  end
+
+  describe '#subsektioner' do
+    before do
+      @s1 = FactoryGirl.build :sektion
+      @s2 = FactoryGirl.build :sektion
+      @s3 = FactoryGirl.build :sektion
+    end
+      
+    it 'handles case of no subsektioner' do
+      @s1.subsektioner.should == []
+    end
+
+    it 'handles case of some subsektioner' do
+      @s2.supersektion = @s1
+      @s2.save
+      @s3.supersektion = @s1
+      @s3.save
+
+      @s1.subsektioner.should match_array [@s2, @s3]
     end
   end
 

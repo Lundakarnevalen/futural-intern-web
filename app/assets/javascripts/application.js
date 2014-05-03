@@ -7,6 +7,7 @@
 //= require bootstrap
 //= require bootstrap-datepicker/core.js
 //= require bootstrap-datepicker/locales/bootstrap-datepicker.sv.js
+//= require bootstrap-timepicker
 //= require main
 //= require karnevalister
 //= require sektioner
@@ -18,10 +19,24 @@
 //= require fullcalendar
 //= require warehouse.js
 //= require autosubmit
+//= require jquery.dotdotdot.js
 
 $(document).ready(function(){
   $('[data-behaviour~=datepicker]').datepicker({
     language: "sv",
     autoclose: true
+  });
+
+
+  $('.timepicker').timepicker({
+    template: false,
+    minuteStep: 15,
+    showMeridian: false
+  });
+});
+
+$(document).ready(function() {
+  $(".ellipsis").dotdotdot({
+    watch: "window"
   });
 });

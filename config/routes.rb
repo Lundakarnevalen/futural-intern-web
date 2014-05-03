@@ -8,6 +8,7 @@
 
   resources :phones, only: [:new, :create]
   resources :posts, only: [:new, :create, :edit, :update, :destroy, :show]
+  resources :images, only: [:new, :create, :show, :destroy]
 
   namespace :api do
     devise_for :users
@@ -61,15 +62,16 @@
   end
 
   resources :sektioner do
-    collection do
-      get ':id/export', :to => 'sektioner#export'
-      get ':id/kollamedlem', :to => 'sektioner#kollamedlem'
-      get ':id/aktiva', :to => 'sektioner#aktiva'
-      post ':id/edit', :to => 'sektioner#update'
-      get ':id/contact', :to => 'sektioner#show_contact', :as => 'show_contact'
-      post ':id/contact/edit', :to => 'sektioner#edit_contact', :as => 'edit_contact'
-      get ':id/english', :to => 'sektioner#show_english', :as => 'show_english'
-      post ':id/english/edit', :to => 'sektioner#edit_english', :as => 'edit_english'
+    member do
+      get 'export', :to => 'sektioner#export'
+      get 'kollamedlem', :to => 'sektioner#kollamedlem'
+      get 'aktiva', :to => 'sektioner#aktiva'
+      get 'edit', :to => 'sektioner#edit_info'
+      get 'contact', :to => 'sektioner#show_contact'
+      get 'contact/edit', :to => 'sektioner#edit_contact'
+      get 'english', :to => 'sektioner#show_english'
+      get 'english/edit', :to => 'sektioner#edit_english'
+      get 'images', :to => 'sektioner#image_index'
     end
   end
 
@@ -133,6 +135,7 @@
         get 'direct_selling', to: 'orders#direct_selling'
         post 'direct_selling_post', to: 'orders#direct_selling_post'
         get 'update_customers', to: 'orders#update_customers'
+        get 'info', to: 'orders#info'
       end
       member do
         put 'return_products', to: 'orders#return_products'
@@ -144,6 +147,8 @@
     resources :products do
       collection do
         get 'weekly_overview', to: 'products#weekly_overview'
+        get 'inventory', to: 'products#inventory'
+        post 'update_inventory', to: 'products#update_inventory'
       end
       member do
         get 'inactivate', to: 'products#inactivate'
@@ -166,6 +171,11 @@
     concerns :party_factory
   end
 
+  namespace :warehouse, path: 'snaxeriet', as: 'snaxeriet' do
+    concerns :party_factory
+  end
+
   get '/home', to: 'home#index'
   get '/internapp', to: 'home#app_store'
+  get '/markdown', to: 'home#markdown'
 end

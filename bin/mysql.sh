@@ -21,7 +21,7 @@ else
     HOST=$(echo `expr "$URL" : '^.*@\(.*\)/'`)
     DB=$(echo `expr "$URL" : '^.*//.*/\(.*\)?'`)
 
-    CMD="${DB} --host=${HOST} --user=${USER} --pass=${PASS}"
+    CMD="${DB} --host=${HOST} --user=${USER} --password=${PASS}"
 
     say Got \`$CMD\`
 

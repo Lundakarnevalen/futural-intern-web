@@ -7,6 +7,7 @@ class Warehouse::ApplicationController < ApplicationController
   def w_code
     return @warehouse_code = 0 if /fabriken/.match(request.fullpath)
     return @warehouse_code = 1 if /festmasteriet/.match(request.fullpath)
+    return @warehouse_code = 2 if /snaxeriet/.match(request.fullpath)
     @warehouse_code = -1
   end
 end

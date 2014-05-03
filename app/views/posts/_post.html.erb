@@ -3,19 +3,21 @@
   <%= image_tag("logotyper/logo.png", class: "img-responsive message-image col-xs-2") if post.sektion.nil? %>
   <div class="message-information col-xs-8">
     <div class="row">
-    <h1><%= post.title %></h1>
-  </div>
+      <h1 class="ellipsis"><%= post.title %></h1>
+    </div>
     <div class="row">
-      <div class="post-preview"><%= render_markdown post.content %>
+      <div class="post-preview ellipsis"><%= render_markdown post.content %>
       </div>
     </div>
-    <% unless post.id.nil? %>
-      <div class="form-controls">
-          <%= link_to "läs mer", post, class: "btn btn-small" %>
-          <% if (current_user.can? :edit, post) %>
-            <%= link_to "redigera", edit_post_path(post), class: "btn btn-small", type: "edit" %>
-          <% end %>
-      </div>
-    <% end %>
   </div>
+<% unless post.id.nil? %>
+    <div class="row">
+      <div class="col-xs-12 form-controls">
+        <%= link_to "läs mer", post, class: "green button" %>
+        <% if (current_user.can? :edit, post) %>
+        <%= link_to "redigera", edit_post_path(post), class: "button", type: "edit" %>
+        <% end %>
+      </div>
+    </div>
+    <% end %>
 </div>

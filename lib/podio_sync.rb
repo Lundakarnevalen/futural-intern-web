@@ -37,6 +37,7 @@ module PodioSync
     self.ensure_login
     self.podio_schema unless @podio_schema
     self.last_sync unless @last_sync
+    return true
   end
 
   def self.ensure_schemas_match
@@ -170,13 +171,19 @@ module PodioSync
     @podio_schema
   end
 
+  def self.get_raw_karnevalist podio_id
+    self.prelims
+    self.log "GET /item/#{podio_id}"
+    self.attributes_from_podio(Podio::Item.find_basic podio_id)
+  end
+
+
   def self.get_karnevalist local_karnevalist
     self.prelims
     if local_karnevalist.podio_id.present?
-      self.log "GET /item/#{local_karnevalist.podio_id}"
       begin
-        self.to_karnevalist(self.attributes_from_podio \
-          Podio::Item.find_basic local_karnevalist.podio_id)
+        self.to_karnevalist(
+          self.get_raw_karnevalist local_karnevalist.podio_id)
       rescue Podio::NotFoundError => e
         fail PodioSyncError, 
              "Not found (podio_id == #{local_karnevalist.podio_id})"
@@ -196,6 +203,53 @@ module PodioSync
     end
   end
 
+  LIMIT = 500 # Max 500
+  RETRIES = 2
+
+  def self.get_all_karnevalist
+    self.prelims
+    pks = []
+    i = 0
+    total = 0
+    first = true
+    re_try = 0
+    while true
+      if first
+        self.log "GET /item/app/#{@app_id}"
+        first = false
+      end
+      begin
+        resp = Podio::Item.find_all @app_id, :limit => 500, :offset => i
+      rescue Faraday::Error::ConnectionFailed => e
+        if re_try < RETRIES
+          if re_try == 0
+            self.log 'Podio fucked up, let\'s try again in 5 secs'
+          else
+            self.log 'Trying again'
+          end
+
+          re_try += 1
+          sleep 5
+          retry
+        else
+          self.log 'Retry fails, sorry'
+          fail e
+        end
+      end
+      re_try = 0
+
+      total = resp.count
+      i += resp.all.count
+      self.log "  Receieved #{i} / #{total}"
+      pks += resp.all
+      if i >= total
+        break
+      end
+    end
+    self.log 'Got all records, processing...'
+    return pks.map{ |pk| self.to_karnevalist self.attributes_from_podio pk }
+  end
+
   def self.get_edited_since time
     self.prelims
     self.log "POST /item/app/#{@app_id}/filter"
@@ -207,6 +261,7 @@ module PodioSync
 
   ### Podio write methods
   def self.sync_karnevalist lk
+    self.prelims
     if lk.podio_id.present?
       # Already linked
       self.put_karnevalist lk
@@ -240,16 +295,22 @@ module PodioSync
     podio_id
   end
 
+  def self.put_raw_karnevalist pk
+    self.prelims
+    self.log "PUT /item/#{pk['podio-id']}"
+    Podio::Item.update pk['podio-id'], 'fields' => pk.except('podio-id')
+  end
+
   def self.put_karnevalist karnevalist
     self.prelims
     unless karnevalist.podio_id.present?
       fail PodioSyncError, 
            "Can't put karnevalist with no podio_id (local == #{karnevalist.id})"
     end
-    k = self.to_podio_karnevalist karnevalist
-    self.log "PUT /item/#{karnevalist.podio_id}"
+    pk = self.to_podio_karnevalist karnevalist
+    pk['podio-id'] = karnevalist.podio_id
     begin
-      Podio::Item.update karnevalist.podio_id, 'fields' => k
+      self.put_raw_karnevalist pk
     rescue Podio::GoneError
       self.log "Karnevalist was gone (podio_id == #{karnevalist.podio_id}), creating new"
       karnevalist.podio_id = nil
@@ -290,6 +351,17 @@ module PodioSync
     Podio::Item.delete podio_id
     karnevalist.update_attributes :podio_id => nil
     self.log "Broke link with local == #{karnevalist.id} (was podio == #{podio_id})"
+  end
+
+  def self.consolidate_karnevalister pid1, pid2
+    self.prelims
+    pk1 = self.get_raw_karnevalist pid1
+    pk2 = self.get_raw_karnevalist pid2
+    cpk = pk2.merge pk1
+    cpk['podio-id'] = pid1
+    self.put_raw_karnevalist cpk
+    # self.delete_karnevalist (Karnevalist.new :podio_id => pid2)
+    return true
   end
 
   ### Local read methods
@@ -354,6 +426,8 @@ module PodioSync
           field['values'][0]['value']
         when 'category'
           field['values'][0]['value']['id']
+        when 'image'
+          nil
         else
           fail PodioSyncError, "Can't convert type #{field['type']}"
         end
@@ -367,7 +441,8 @@ module PodioSync
     return nil if podio_id.nil?
     x = @podio_categories[model][podio_id]
     if x.nil?
-      fail PodioSyncError, "Can't find #{model} with (podio_id == #{podio_id})"
+      #fail PodioSyncError, 
+      self.log "Warning: Can't find #{model} with (podio_id == #{podio_id})"
     end
     x
   end
@@ -397,16 +472,19 @@ module PodioSync
       fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id})"
     end
     if podio_sub_id.nil? 
+      ss = ss.select{ |s| s.podio_sub_id == nil }
       if ss.length > 1
         fail PodioSyncError, "Several sektion satisfy (podio_id == #{podio_id})"
       else
         return ss.first
       end
     else
-      ss = ss.select{ |s| s.podio_sub_id == podio_sub_id }
-      if ss.empty? 
-        fail PodioSyncError, "Can't find sektion with (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
-      elsif ss.length > 1
+      subss = ss.select{ |s| s.podio_sub_id == podio_sub_id }
+      if subss.empty? 
+        #fail PodioSyncError, 
+        self.log "Warning: Can't find sektion with (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
+        return ss[podio_id]
+      elsif subss.length > 1
         fail PodioSyncError, "Several sektion satisfy (podio_id == #{podio_id}, podio_sub_id == #{podio_sub_id})"
       else
         return ss.first
