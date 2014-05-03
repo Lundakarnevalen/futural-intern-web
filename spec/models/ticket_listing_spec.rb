@@ -45,13 +45,13 @@ describe TicketListing do
     end
 
     it 'returns events when it should' do
-      s = FactoryGirl.build(:sektion)
+      s = FactoryGirl.create(:sektion)
       @k.tilldelade_sektioner = [s]
       @e.sektion = s
       @e.save
       e1 = FactoryGirl.create :event, :sektion => nil, :tickets => true
       e2 = FactoryGirl.create :event, :sektion => FactoryGirl.build(:sektion),
-        :tickets => false
+        :tickets => true
       TicketListing.ticket_events_for_karnevalist(@k)
         .should match_array [@e, e1]
     end
