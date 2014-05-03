@@ -18,6 +18,7 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
     @incoming_delivery = IncomingDelivery.new
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     @incoming_delivery.incoming_delivery_products.build
+    @customers = Array.new
   end
 
   def create
@@ -29,8 +30,19 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
     else
       @incoming_delivery.ongoing = true
     end
-    if @incoming_delivery.save
-      if !@incoming_delivery.ongoing
+    if @incoming_delivery.save && !@incoming_delivery.ongoing
+      if params[:direct_selling] == "yes" && !params[:sektion_id].blank? && !params[:karnevalist_id].blank?
+        order = Order.new(sektion_id: params[:sektion_id], karnevalist_id: params[:karnevalist_id], warehouse_code: @warehouse_code, finished_at: DateTime.now, status: "Levererad")
+        order.save
+        partial_delivery = order.partial_deliveries.new(seller_id: current_user.karnevalist.id)
+        partial_delivery.save
+        @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
+          product = Product.find(incoming_delivery.product_id)
+          order.order_products.create(product_id: product.id, amount: incoming_delivery.amount.to_i, delivered_amount: incoming_delivery.amount.to_i)
+          partial_delivery.partial_delivery_products.create(product_id: product.id, amount: incoming_delivery.amount.to_i)
+        end
+        redirect_to order_path(order)
+      elsif params[:direct_selling] != "yes" 
         @incoming_delivery.incoming_delivery_products.each do |incoming_delivery|
           product = Product.find(incoming_delivery.product_id)
           stand_by = product.stock_balance_stand_by
@@ -42,19 +54,37 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             stand_by -= incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_stand_by => stand_by)
+            backorders = Backorder.where(product_id: product.id).order("id ASC")
+            incoming_amount = incoming_delivery.amount.to_i
+            backorders.each do |b|
+              if incoming_amount < b.amount
+                b.amount -= incoming_amount
+                b.save
+                break
+              end
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+              incoming_amount -= b.amount
+              b.delete
+            end
           else
             stock_balance_ordered = product.stock_balance_ordered + stand_by
             stock_balance_not_ordered = incoming_delivery.amount.to_i - stand_by
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             product.update_attributes(:stock_balance_stand_by => 0)
+            backorders = Backorder.where(product_id: product.id)
+            backorders.each do |b|
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+              b.delete
+            end
           end
         end
+        redirect_to incoming_delivery_path(@incoming_delivery)
       end
-      redirect_to incoming_delivery_path(@incoming_delivery)
     else
       @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
       @incoming_delivery.incoming_delivery_products.build
+      @customers = Array.new
       render :new
     end
   end
@@ -78,12 +108,25 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
             stand_by -= incoming_delivery.amount.to_i
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_stand_by => stand_by)
+            backorders = Backorder.where(product_id: product.id).order("id ASC")
+            incoming_amount = incoming_delivery.amount.to_i
+            backorders.each do |b|
+              break if incoming_amount < b.amount
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+              incoming_amount -= b.amount
+              b.delete
+            end
           else
             stock_balance_ordered = product.stock_balance_ordered + stand_by
             stock_balance_not_ordered = incoming_delivery.amount.to_i - stand_by
             product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
             product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
             product.update_attributes(:stock_balance_stand_by => 0)
+            backorders = Backorder.where(product_id: product.id)
+            backorders.each do |b|
+              WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+              b.delete
+            end
           end
         end
       end

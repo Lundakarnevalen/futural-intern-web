@@ -37,9 +37,11 @@ class Ability
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
     can [:read], Event
-    can [:read], Sektion
     can [:read], TicketListing
     can [:manage], TicketListing, :seller => user.karnevalist
+    can [:read, :sign_up, :attend], Event
+    can [:read, :show_english, :show_contact, :image_index], Sektion
+    can [:show], Image
 
     can :read, Notification, :recipient_id => 0
 
@@ -68,55 +70,69 @@ class Ability
 
     # Sektion-local info
     if user.is?(:info) && user.karnevalist.present? && user.karnevalist.sektion.present?
-      can :manage, Post, :sektion => user.karnevalist.sektion
-      can :manage, Event, :sektion => user.karnevalist.sektion
+      can :manage, Post, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+      can :manage, Event, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can [:create, :update], Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       can :new, Notification
-      can :change_info, Sektion, :id => user.sektioner
+      can [:update, :edit_info, :edit_contact, :edit_english], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+      can :manage, Image
     end
 
     # Global info
     if user.is? :'global-info'
       can :manage, Post
       can :manage, Event
+      can :manage, Image
     end
 
     # Sektionsadmin
     if user.is? :sektionsadmin
       can [:pusseldagen, :search, :search_filter_pusseldag, :show_modal, :index], Karnevalist
       if user.karnevalist?
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion => user.sektioner
-        can [:read, :edit, :update], Karnevalist, :tilldelad_sektion2 => user.sektioner
-        can [:manage], Sektion, :id => user.sektioner
+        can [:read, :edit, :update], Karnevalist do |k|
+          user.karnevalist.tilldelade_sektioner.any? do |s|
+            k.tilldelade_sektioner.include? s
+          end
+        end
+        can [:manage], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+      end
+    end
+
+    # Sektionsadmin Lite
+    if user.is? :sektionsadmin_lite
+      if user.karnevalist?
+        can [:edit, :update], Karnevalist, :tilldelad_sektion => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:edit, :update], Karnevalist, :tilldelad_sektion2 => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+        can [:read, :aktiva], Sektion, :id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
       end
     end
 
     # Lagersystem - admin
-    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet)
+    if (user.is? :admin_fabriken) || (user.is? :admin_festmasteriet) || (user.is? :admin_snaxeriet)
       can :manage, Order
       can :manage, Product
       can :manage, IncomingDelivery
+      can :manage, PartialDelivery
       can :manage, ProductCategory
       can :manage, Reservation
+      can :manage, Backorder
+      can :manage, Inventory
     end
 
     # Lagersystem - beställare
-    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet)
+    if (user.is? :bestallare_fabriken) || (user.is? :bestallare_festmasteriet) || (user.is? :bestallare_snaxeriet)
       can [:create, :read, :update, :confirm, :confirm_put], Order, :karnevalist_id => user.karnevalist.id
+      can :info, Order
       can :read, Product
+      can :read, PartialDelivery
       can :read, Reservation
+      can [:create, :read], Backorder
       can [:create, :update, :destroy], Reservation, :karnevalist_id => user.karnevalist.id
     end
-    
+
     # Lagersystem - sektionsadmin
     if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet)
-      # Show "Tåget - Vagn" instead of "Tåget - centralt"
-      if user.karnevalist.tilldelad_sektion == 399
-        sektion_id = 300
-      else
-        sektion_id = user.karnevalist.tilldelad_sektion
-      end
-      can [:sektion, :read], Order, :sektion_id => sektion_id
+      can [:sektion, :read], Order, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
 
     # Lagersystem - kassör
@@ -124,6 +140,10 @@ class Ability
       can :manage, Order
       can [:read, :weekly_overview], Product
       can :manage, IncomingDelivery
+      can :manage, PartialDelivery
+      can :manage, ProductCategory
+      can :manage, Reservation
+      can :manage, Backorder
     end
 
     # Access admin

@@ -9,7 +9,7 @@ class Karnevalist < ActiveRecord::Base
   belongs_to :nation
   belongs_to :storlek
   belongs_to :korkort
-  belongs_to :user
+  belongs_to :user, :dependent => :destroy
   belongs_to :sektion, :foreign_key => :tilldelad_sektion
   belongs_to :sektion2, :foreign_key => :tilldelad_sektion2,
                         :class_name => Sektion
@@ -131,7 +131,7 @@ class Karnevalist < ActiveRecord::Base
   end
 
   def tilldelade_sektioner
-    [self.sektion, self.sektion2].select &:present?
+    Sektion.with_subsektioner([self.tilldelad_sektion, self.tilldelad_sektion2])
   end
 
   def utcheckad= val

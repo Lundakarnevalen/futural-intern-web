@@ -3,11 +3,12 @@ class SektionerController < ApplicationController
   load_and_authorize_resource
 
   def index
-    if current_user.is? :admin
-      @sektioner = Sektion.all.order 'name asc'
-    elsif current_user.is? :sektionsadmin
-      @sektioner = Sektion.where(:id => current_user.sektioner).order 'name asc'
-    end
+    @sektioner = Sektion.all.order 'name asc'
+  end
+
+  def image_index
+    sektion = Sektion.find params[:id]
+    @images = sektion.images
   end
 
   def show
@@ -45,7 +46,7 @@ class SektionerController < ApplicationController
            :disposition => 'attachment'
   end
 
-  def edit
+  def edit_info
     @sektion = Sektion.find params[:id]
   end
 

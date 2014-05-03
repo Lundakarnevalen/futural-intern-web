@@ -1,0 +1,77 @@
+<h2>Inventering</h2>
+<%= form_tag update_inventory_products_path %>
+<% @product_categories.each do |c| %>
+<% products = c.products.where(warehouse_code: @warehouse_code, active: true).order("name ASC") %>
+<% if !products.blank? %>
+<h4><%= c.name %></h4>
+<div class="table-responsive">
+  <table class="table table-striped table-fixed">
+    <thead>
+      <tr>
+        <th style="width: 23%;">Vara</th>
+        <th style="width: 12%;">Streckkod</th>
+        <th style="width: 20%;">I lager (obeställd)</th>
+        <th style="width: 14%;">I lager (beställd)</th>
+        <th style="width: 31%;">Enhet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.each do |p| %>
+      <tr>
+        <td>
+          <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+            <!-- Modal -->
+            <div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+              <div class="modal-dialog">
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                    <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+                  </div>
+                  <div class="modal-body">
+                    <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+                  </div>
+                  <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </td>
+        <td><%= p.ean %></td>
+        <td><%= number_field_tag "stock_balance[#{p.id}]", p.stock_balance_not_ordered, min: 0, class: "form-control" %></td>
+        <td><%= p.stock_balance_ordered %></td>
+        <td><%= p.unit %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+<% end %>
+<%= submit_tag "Uppdatera lagersaldo", class: "btn btn-primary" %>
+<hr>
+<h2>Inventeringshistorik</h2>
+<div class="row">
+<div class="table-responsive col-xs-12 col-sm-12 col-md-12 col-lg-9">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Datum</th>
+        <th>Utförd av</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @inventories.each do |i| %>
+      <tr>
+        <td><%= i.created_at.strftime("%Y-%m-%d %H:%M") %></td>
+        <td>
+          <% k = Karnevalist.find(i.inventory_taker_id) %>
+          <%= "#{k.fornamn} #{k.efternamn}" %>
+        </td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+</div>

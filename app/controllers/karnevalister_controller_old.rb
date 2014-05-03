@@ -25,15 +25,15 @@ class KarnevalisterController < ApplicationController
       return false
     end
 
-    #if @karnevalist.avklarat_steg == 0
-    #  redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
-    #elsif @karnevalist.avklarat_steg == 1
-    #  redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
-    #elsif @karnevalist.avklarat_steg == 2
-    #  redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
-    #elsif @karnevalist.utcheckad
-    #  redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
-    #end
+    if @karnevalist.avklarat_steg == 0
+      redirect_to action: 'step2', id: @karnevalist.id unless action_name == 'step2'
+    elsif @karnevalist.avklarat_steg == 1
+      redirect_to action: 'step3', id: @karnevalist.id unless action_name == 'step3'
+    elsif @karnevalist.avklarat_steg == 2
+      redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4' or action_name == 'step3'
+    elsif @karnevalist.utcheckad
+      redirect_to action: 'step4', id: @karnevalist.id unless action_name == 'step4'
+    end
   end
 
   def step1
@@ -190,7 +190,7 @@ class KarnevalisterController < ApplicationController
 
   def stop_utcheckad
     karnevalist = Karnevalist.find params[:id]
-    if not karnevalist.nil? and karnevalist.utcheckad and not current_user.is? :admin and not current_user.is? :sektionsadmin
+    if not karnevalist.nil? and karnevalist.utcheckad and not current_user.is? :admin and not current_user.is? :sektionsadmin and not current_user.is? :sektionsadmin_lite
       karnevalist.errors.add :base, "Du får tyvärr inte ändra något efter att du checkat ut."
       respond_to do |format|
         format.html{ redirect_to karnevalist }

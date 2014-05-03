@@ -5,6 +5,7 @@ class Order < ActiveRecord::Base
   has_many :order_products
   has_many :products, through: :order_products
   has_many :partial_deliveries
+  has_many :backorders
   validates :karnevalist, presence: true
   validates :sektion, presence: true
   before_create :set_order_date, :set_order_number
@@ -59,17 +60,17 @@ class Order < ActiveRecord::Base
     return sum
   end
   
-  def self.sektion_active_orders_total_sum(sektion_id, warehouse_code)
+  def self.sektion_active_orders_total_sum(sektioner, warehouse_code)
     sum = 0
-    Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id = ?", warehouse_code, sektion_id).each do |o|
+    Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id IN (?)", warehouse_code, sektioner).each do |o|
       sum += o.total_sum
     end
     return sum
   end
   
-  def self.sektion_completed_orders_total_sum(sektion_id, warehouse_code)
+  def self.sektion_completed_orders_total_sum(sektioner, warehouse_code)
     sum = 0
-    Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id = ?", warehouse_code, sektion_id).each do |o|
+    Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", warehouse_code, sektioner).each do |o|
       sum += o.total_sum
     end
     return sum

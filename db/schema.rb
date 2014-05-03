@@ -245,6 +245,16 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.datetime "updated_at"
   end
 
+  create_table "photos", force: true do |t|
+    t.string  "image"
+    t.string  "caption"
+    t.boolean "accepted",       default: false
+    t.boolean "official",       default: false
+    t.integer "karnevalist_id"
+  end
+
+  add_index "photos", ["karnevalist_id"], name: "index_photos_on_karnevalist_id", using: :btree
+
   create_table "podio_syncs", force: true do |t|
     t.datetime "time"
   end

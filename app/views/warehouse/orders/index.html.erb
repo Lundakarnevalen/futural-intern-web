@@ -1,5 +1,5 @@
 <% if @sektion_orders %>
-  <h3>Alla ordrar - <%= @sektion.name %></h3>
+  <h3>Alla ordrar - Min sektion</h3>
 <% elsif @bestallare %>
   <h3>Mina ordrar</h3>
 <% else %>
@@ -47,7 +47,7 @@
     <% elsif @sektion_orders %>
       <tr class="sum">
         <td colspan="6"></td>
-        <td><%= number_to_currency(Order.sektion_active_orders_total_sum(@sektion.id, @warehouse_code)) %></td>
+        <td><%= number_to_currency(Order.sektion_active_orders_total_sum(@sektioner, @warehouse_code)) %></td>
       </tr>
     <% end %>
     <% end %>
@@ -89,7 +89,7 @@
     <% elsif @sektion_orders %>
       <tr class="sum">
         <td colspan="6"></td>
-        <td><%= number_to_currency(Order.sektion_completed_orders_total_sum(@sektion.id, @warehouse_code)) %></td>
+        <td><%= number_to_currency(Order.sektion_completed_orders_total_sum(@sektioner, @warehouse_code)) %></td>
       </tr>
     <% end %>
     </tbody>

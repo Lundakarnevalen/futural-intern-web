@@ -1,0 +1,14 @@
+<%= render partial: "shared/header", locals: {title: "Sektionsfiler"} %>
+
+<%= link_to "Ladda upp en ny bild", new_image_path(:sektion_id => @sektion), :class => "button green" if current_user.can? :manage, :image %>
+
+<div class="row">
+  <% @images.each do |image| %>
+    <div class="col-md-4">
+      <div class="thumbnail">
+        <h3><%= link_to image.name, image %></h3>
+        <%= link_to image_tag(image.image_url.to_s), image if image.image? %>
+      </div>
+    </div>
+  <% end %>
+</div>

@@ -1,0 +1,16 @@
+<%= render partial: "shared/header", locals: {title: "Ladda upp ny bild!"} %>
+
+<div class="white-container col-xs-12">
+
+  <%= form_for @image do |f| %>
+    <%= f.hidden_field :sektion_id %>
+    <p>
+      <%= f.label :name, "Namn" %><br />
+      <%= f.text_field :name, placeholder: "Namnge denna vackra skapelse..." %>
+    </p>
+    <p>
+      <%= f.file_field :image %>
+    </p>
+    <p><%= f.submit "Ladda upp bild", :class => 'green button' %></p>
+  <% end %>
+</div>

@@ -9,17 +9,18 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def show
-    #@partial_delivery = PartialDelivery.new 
-    #@partial_delivery.partial_delivery_products.build
+    @partial_delivery = PartialDelivery.new 
+    @partial_delivery.partial_delivery_products.build
     @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
     @makulerad = false
     @part_delivered = false
+    @partial_deliveries = PartialDelivery.where("order_id = ?", @order.id).order("id DESC")
 
     # TODO Detta borde vara en metod i modellen.
     if @order.status == "Levererad"
         @levererad = true;
-    elsif @order.status == "Makulerad"
+    elsif @order.status == "Makulerad" || @order.status == "Dellevererad/Makulerad"
         @makulerad = true
     elsif @order.status == "Dellevererad"
         @part_delivered = true
@@ -65,24 +66,30 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @order.status = "Bearbetas"
     end
     if @order.update_attributes(order_params)
+        if params[:delivery_time]
+          @order.delivery_date = DateTime.strptime("#{params[:order][:delivery_date]} #{params[:delivery_time]} CEST", "%Y-%m-%d %H:%M %Z")
+          @order.save
+        end
         @order.order_products.each do |order_product|
           product = Product.find(order_product.product_id)
           in_stock = product.stock_balance_not_ordered
           if in_stock == 0
             stock_balance_stand_by = product.stock_balance_stand_by + order_product.amount.to_i
             product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
+            @order.backorders.create(product_id: product.id, amount: order_product.amount.to_i)
           elsif in_stock >= order_product.amount.to_i
             stock_balance_ordered = product.stock_balance_ordered + order_product.amount.to_i
             in_stock -= order_product.amount.to_i
-            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-            product.update_attributes(:stock_balance_not_ordered => in_stock)
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_not_ordered => in_stock)
           else
             stock_balance_ordered = product.stock_balance_ordered + in_stock
             stock_balance_stand_by = order_product.amount.to_i - in_stock
-            product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-            product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
-            product.update_attributes(:stock_balance_not_ordered => 0)
+            product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_stand_by => stock_balance_stand_by, :stock_balance_not_ordered => 0)
+            @order.backorders.create(product_id: product.id, amount: stock_balance_stand_by)
           end
+        end
+        if @warehouse_code == 1
+          WarehouseMailer.new_order("it@lundakarnevalen.se", "dryckeslager@lundakarnevalen.se", "Ny order", @order).deliver
         end
       redirect_to order_path(@order)
     else
@@ -103,21 +110,16 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @order.finished_at = DateTime.now
     @order.status = "Levererad"
     if @order.save
+      partial_delivery = @order.partial_deliveries.new(seller_id: current_user.karnevalist.id)
+      partial_delivery.save
       @order.order_products.each do |order_product|
         product = Product.find(order_product.product_id)
         in_stock = product.stock_balance_not_ordered
-        if in_stock == 0  # Ska detta vara möjligt vid direktförsäljning?
-          stock_balance_stand_by = product.stock_balance_stand_by + order_product.amount.to_i
-          product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
-        elsif in_stock >= order_product.amount.to_i
-          in_stock -= order_product.amount.to_i
+        if in_stock >= order_product.amount
+          in_stock -= order_product.amount
           product.update_attributes(:stock_balance_not_ordered => in_stock)
-        else  # Ska detta vara möjligt vid direktförsäljning?
-          stock_balance_ordered = product.stock_balance_ordered + in_stock
-          stock_balance_stand_by = order_product.amount.to_i - in_stock
-          product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-          product.update_attributes(:stock_balance_stand_by => stock_balance_stand_by)
-          product.update_attributes(:stock_balance_not_ordered => 0)
+          order_product.update_attributes(:delivered_amount => order_product.amount)
+          partial_delivery.partial_delivery_products.create(product_id: product.id, amount: order_product.amount)
         end
       end
       redirect_to order_path(@order)
@@ -133,8 +135,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     sektion = params[:sektion_id].to_i
     if @warehouse_code == 0
       @roles = Role.where(name: ["bestallare_fabriken", "admin_fabriken"])
-    else
+    elsif @warehouse_code == 1
       @roles = Role.where(name: ["bestallare_festmasteriet", "admin_festmasteriet", "kassor_festmasteriet"])
+    else
+      @roles = Role.where(name: ["bestallare_snaxeriet", "admin_snaxeriet"])
     end
     @customers = Array.new
     @roles.each do |r|
@@ -156,10 +160,10 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
   
   def sektion
-    @sektion = Sektion.find(params[:sektion_id])
-    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
-    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id = ?", @warehouse_code, params[:sektion_id]).order("id DESC")
-    @bestallare = true
+    @sektioner = current_user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
+    @bestallare = false
     @sektion_orders = true
     render :index
   end
@@ -171,28 +175,38 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def return_products
     params['return_amount'].each do |product_id, return_amount|
       if !return_amount.blank?
-        product = Product.where(:id => product_id).first
+        product = Product.find(product_id)
         stand_by = product.stock_balance_stand_by
         order_products = OrderProduct.where(:order_id => params['order_id'], :product_id => product_id)
         order_products.each do |order_product|
-          if (product.amount(params['order_id']) >= return_amount.to_i)
+          if (order_product.delivered_amount >= return_amount.to_i)
             if stand_by == 0
               stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
               product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-            elsif stand_by >= new_amount.to_i
+            elsif stand_by >= return_amount.to_i
               stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
               stand_by -= return_amount.to_i
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_stand_by => stand_by)
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_stand_by => stand_by)
+              backorders = Backorder.where(product_id: product.id).order("id ASC")
+              incoming_amount = return_amount.to_i
+              backorders.each do |b|
+                break if incoming_amount < b.amount
+                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+                incoming_amount -= b.amount
+                b.delete
+              end
             else
               stock_balance_ordered = product.stock_balance_ordered + stand_by
               stock_balance_not_ordered = return_amount.to_i - stand_by
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-              product.update_attributes(:stock_balance_stand_by => 0)
+              product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_not_ordered => stock_balance_not_ordered, :stock_balance_stand_by => 0)
+              backorders = Backorder.where(product_id: product.id)
+              backorders.each do |b|
+                WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+                b.delete
+              end
             end
-            order_product.amount = order_product.amount - return_amount.to_i
-            order_product.update_attributes(:amount => order_product.amount)
+            order_product_amount = order_product.amount - return_amount.to_i
+            order_product.update_attributes(:amount => order_product_amount, :delivered_amount => order_product_amount)
           end
         end
       end
@@ -207,17 +221,22 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def update
     if params[:order][:status]
       @order.update_attributes(order_params)
-      if @order.status == "Makulerad"
+      if (@order.status == "Makulerad") || (@order.status == "Dellevererad/Makulerad")
         update_warehouse(@order.id)
         @order.finished_at = DateTime.now
         @order.save
       elsif @order.status == "Levererad"
+        partial_delivery = @order.partial_deliveries.new(seller_id: current_user.karnevalist.id)
+        partial_delivery.save
         @order.order_products.each do |order_product|
           product = Product.find(order_product.product_id)
+          amount = order_product.amount - order_product.delivered_amount
           in_stock = product.stock_balance_ordered
-          if in_stock >= order_product.amount.to_i
-            in_stock -= order_product.amount.to_i
+          if in_stock >= amount
+            in_stock -= amount
             product.update_attributes(:stock_balance_ordered => in_stock)
+            order_product.update_attributes(:delivered_amount => order_product.amount)
+            partial_delivery.partial_delivery_products.create(product_id: product.id, amount: amount)
           end
         end
         @order.finished_at = DateTime.now
@@ -236,38 +255,51 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     render :index
   end
 
+  def info
+  end
+
   private
     def find_order
       @order = Order.find(params[:id])
     end
     def order_params
-      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :comment, :sektion_id, :karnevalist_id, order_products_attributes: [:id, :_destroy, :amount, :product_id])
+      params.require(:order).permit(:warehouse_code, :status, :delivery_date, :delivery_time, :comment, :sektion_id, :karnevalist_id, order_products_attributes: [:id, :_destroy, :amount, :product_id])
     end
-    def update_warehouse order_id # TODO: Fixa makulering och delleverans/makulering
+    def update_warehouse order_id
       order_products = OrderProduct.where(:order_id => order_id)
       order_products.each do |o|
-        product = Product.where(:id => o.product_id).first
+        product = Product.find(o.product_id)
         stand_by = product.stock_balance_stand_by
-        return_amount = o.amount
-        if (product.amount(order_id) >= return_amount.to_i)
-            if (stand_by == 0) && (product.stock_balance_ordered == 0)
-              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-            elsif stand_by >= return_amount.to_i
-              stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
-              stand_by -= return_amount.to_i
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_stand_by => stand_by)
-            else
-              temp = return_amount - product.stock_balance_stand_by
-              stock_balance_ordered = product.stock_balance_ordered - temp
-              stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount
-              product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
-              product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
-              product.update_attributes(:stock_balance_stand_by => 0)
-            end
+        return_amount = o.amount - o.delivered_amount
+        stock_balance_ordered = product.stock_balance_ordered - return_amount.to_i
+        product.update_attributes(:stock_balance_ordered => stock_balance_ordered)
+        if stand_by == 0
+          stock_balance_not_ordered = product.stock_balance_not_ordered + return_amount.to_i
+          product.update_attributes(:stock_balance_not_ordered => stock_balance_not_ordered)
+        elsif stand_by >= return_amount.to_i
+          stock_balance_ordered = product.stock_balance_ordered + return_amount.to_i
+          stand_by -= return_amount.to_i
+          product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_stand_by => stand_by)
+          Backorder.where(order_id: order_id).delete_all
+          backorders = Backorder.where(product_id: product.id).order("id ASC")
+          incoming_amount = return_amount.to_i
+          backorders.each do |b|
+            break if incoming_amount < b.amount
+            WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+            incoming_amount -= b.amount
+            b.delete
           end
+        else
+          stock_balance_ordered = product.stock_balance_ordered + stand_by
+          stock_balance_not_ordered = return_amount.to_i - stand_by
+          product.update_attributes(:stock_balance_ordered => stock_balance_ordered, :stock_balance_not_ordered => stock_balance_not_ordered, :stock_balance_stand_by => 0)
+          Backorder.where(order_id: order_id).delete_all
+          backorders = Backorder.where(product_id: product.id)
+          backorders.each do |b|
+            WarehouseMailer.notify_delivery("it@lundakarnevalen.se", b.order.karnevalist.email, "Dina restnoterade varor finns i lager", b.order, @warehouse_code).deliver
+            b.delete
+          end
+        end
       end
-
     end
 end
