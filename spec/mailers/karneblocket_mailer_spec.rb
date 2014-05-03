@@ -71,6 +71,7 @@ describe KarneblocketMailer do
     it 'sets a body including relevant information' do
       @mail.body.should include @customer.fornamn
       @mail.body.should include @customer.email
+      @mail.body.should include @tl.event.title
       @mail.body.should include @message
       @mail.body.should include @tl.link_to_destroy
     end
