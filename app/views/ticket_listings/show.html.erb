@@ -28,7 +28,7 @@
 Säljaren kommer att kunna se din email. Om du vill ge säljaren ditt 
 telefonnummer så kan du skriva det i meddelandet.
 
-<%= form_tag do %>
+<%= form_tag offer_ticket_listing_path(@listing) do %>
   <%= label_tag :message, 'Meddelande' %>
   <%= text_area_tag :message %>
   <%= submit_tag 'Skicka' %>

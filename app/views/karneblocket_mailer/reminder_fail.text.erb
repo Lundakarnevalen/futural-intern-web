@@ -1,0 +1,14 @@
+Good evening,
+
+Some of this night's Karneblocket reminders failed to be delivered.
+The official excuses are given below:
+
+<% @failures.each_with_index do |(listing, error), index| %>
+  (<%= index + 1%>) Reminder to <%= listing.seller.email %> fails to deliver.
+    due to <%= error.class %> (<%= error.message %>)
+<% end %>
+
+You'll probably hear from me again tomorrow unless you correct the
+error manually. Please direct any questions or insults to johan@forberg.se.
+
+Regards.

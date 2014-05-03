@@ -22,6 +22,7 @@
   resources :ticket_listings do
     member do
       get 'destroy', :action => :destroy, :as => 'destroy'
+      post 'offer'
     end
   end
 
