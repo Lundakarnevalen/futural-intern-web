@@ -149,18 +149,23 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def list
-    if params[:sektion_id]
-      redirect_to sektion_orders_path(:sektion_id => params[:sektion_id])
-    else
-      @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC, id DESC")
+    @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC, id DESC")
+    if params[:all_completed]
       @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at ASC")
-      @bestallare = false
-      render :index
+      @all_completed_orders = true;
+    else
+      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at DESC").limit(50)
     end
+    @bestallare = false
+    render :index
   end
   
   def sektion
-    @sektioner = current_user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+    if params[:sektion_id]
+      @sektioner = params[:sektion_id]
+    else
+      @sektioner = current_user.karnevalist.tilldelade_sektioner.map{|s| s.id}
+    end
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
     @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
     @bestallare = false
