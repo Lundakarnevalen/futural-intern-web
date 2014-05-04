@@ -99,9 +99,12 @@
     <% if can? :uppdelning, Karnevalist %>
       <li><%= link_to 'Uppdelning', uppdelning_karnevalister_path, data: {no_turbolink: true}, :class => "button" %></li>
     <% end %>
+    <% if can? :read, Bookkeeping %>
+      <li><%= link_to "Rapportering", bookkeepings_path, :class => "button" %></li>
+    <% end %>
     <% if can? :manage, Photo %>
-    <li><%= link_to 'Godkänn futugram', white_list_photos_path, class: "button" %></li>
-    <li><%= link_to 'Ladda upp futugram', new_photo_path, class: "button" %></li>
+      <li><%= link_to 'Godkänn futugram', white_list_photos_path, class: "button" %></li>
+      <li><%= link_to 'Ladda upp futugram', new_photo_path, class: "button" %></li>
     <% end %>
   </ul>
 </div>

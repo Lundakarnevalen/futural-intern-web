@@ -76,6 +76,12 @@
     end
   end
 
+  resources :bookkeepings do
+    collection do
+      get 'diagram'
+    end
+  end
+
   resources :events do
     member do
       get 'attending'

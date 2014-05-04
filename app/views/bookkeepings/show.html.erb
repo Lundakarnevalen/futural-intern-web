@@ -1,0 +1,21 @@
+<%= render 'shared/header', :title => 'Rapportering' %>
+<div class="white-container col-xs-12">
+  <h5>Är alla karnevalister och besökare glada och nöjda?</h5>
+  <p>
+  <%= @bookkeeping.question_1 %>
+</div>
+<div class="white-container col-xs-12">
+  <h5>Har det dykt upp något som gjort att ni behövt ta en oväntad kostnad?</h5>
+  <p>
+  <%= @bookkeeping.question_2 %>
+</div>
+<div class="white-container col-xs-12">
+  <h5>Har något löst sig smidigare än ni trott så att ni kunnat undvika någon kostnad?</h5>
+  <p>
+  <%= @bookkeeping.question_3 %>
+</div>
+<div class="white-container col-xs-12">
+  <h5>Hur går er verksamhet i förhållande till ert estimat?</h5>
+  <p>
+  <%= "#{Bookkeeping.get_string(@bookkeeping.question_4)}" %>
+</div>

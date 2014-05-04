@@ -1,0 +1,35 @@
+<%= render 'shared/header', :title => 'Rapportering' %>
+<div class="white-container col-xs-12">
+  <%= form_for @bookkeeping, method: "post" do |f| %>
+
+
+  <fieldset>
+      <div class="form_group">
+        <%= f.label :question_1, "Är alla karnevalister och besökare glada och nöjda?" %>
+        <h5>Om nej: varför?</h5>
+        <%= f.text_area :question_1 %>
+      </div>
+      <div class="form_group">
+        <%= f.label :question_2, "Har det dykt upp något som gjort att ni behövt ta en oväntad kostnad?" %>
+        <h5>Om ja: vad och ungefär hur mycket?</h5>
+        <%= f.text_area :question_2 %>
+      </div>
+      <div class="form_group">
+        <%= f.label :question_3, "Har något löst sig smidigare än ni trott så att ni kunnat undvika någon kostnad?" %>
+        <h5>Om ja: vad och ungefär hur mycket?</h5>
+        <%= f.text_area :question_3 %>
+      </div>
+      <div class="form_group">
+        <%= f.label :question_4, "Hur går er verksamhet i förhållande till ert estimat?" %>
+        <% numbers = [['Mycket sämre', 1],['Sämre', 2],['Helt enligt planerna', 3],['Bättre', 4],['Mycket bättre', 5]] %>
+        <%= f.select :question_4, numbers %>
+      </div>
+  </fieldset>
+
+
+
+
+  <%= f.submit "Spara", class: "green button" %>
+  <% end %>
+
+</div>

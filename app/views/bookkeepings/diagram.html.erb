@@ -1,0 +1,7 @@
+<%= render 'shared/header', :title => 'Rapportering' %>
+<div class="white-container col-xs-12">
+  <%= javascript_include_tag "//www.google.com/jsapi", "chartkick" %>
+  <h3>Hur verksamheten presterar <%= @date %></h3>
+  <%= pie_chart  Bookkeeping.get_array(@date) %>
+
+</div>
