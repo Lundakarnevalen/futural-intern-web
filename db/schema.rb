@@ -34,6 +34,16 @@ ActiveRecord::Schema.define(version: 20140501234222) do
   add_index "backorders", ["order_id"], name: "index_backorders_on_order_id"
   add_index "backorders", ["product_id"], name: "index_backorders_on_product_id"
 
+  create_table "bookkeepings", force: true do |t|
+    t.integer  "karnevalist_id"
+    t.string   "question_1"
+    t.string   "question_2"
+    t.string   "question_3"
+    t.integer  "question_4"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "clusters", force: true do |t|
     t.float    "lat"
     t.float    "lng"

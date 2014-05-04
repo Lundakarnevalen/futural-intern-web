@@ -157,6 +157,16 @@ class Ability
       can :manage, Role
     end
 
+    # Rapportering - admin
+    if user.is? :admin_bookkeeping
+      can [:manage], Bookkeeping
+    end
+    # Rapportering - admin lite
+    if user.is? :admin_bookkeeping_lite
+      can [:read, :diagram], Bookkeeping
+    end
+
+
     # Admin
     if user.is? :admin
       can :manage, :all
