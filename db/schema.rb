@@ -97,6 +97,13 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.datetime "updated_at"
   end
 
+  create_table "info_pages", force: true do |t|
+    t.string   "content"
+    t.integer  "sektion_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
   create_table "intressen", force: true do |t|
     t.string "name", null: false
   end
@@ -106,10 +113,8 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.integer "karnevalist_id", null: false
   end
 
-
-  add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id", using: :btree
-  add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id", using: :btree
-
+  add_index "intressen_karnevalister", ["intresse_id"], name: "index_intressen_karnevalister_on_intresse_id"
+  add_index "intressen_karnevalister", ["karnevalist_id"], name: "index_intressen_karnevalister_on_karnevalist_id"
 
   create_table "inventories", force: true do |t|
     t.integer  "inventory_taker_id"
@@ -162,8 +167,8 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.boolean  "pusseldag_keep"
     t.integer  "podio_id"
     t.boolean  "medlem_kollad",         default: false
-    t.integer  "tilldelad_sektion2"
     t.text     "ios_token"
+    t.integer  "tilldelad_sektion2"
     t.boolean  "aktiv",                 default: false
   end
 
@@ -257,6 +262,8 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.datetime "updated_at"
   end
 
+  add_index "phones", ["google_token"], name: "index_phones_on_google_token", unique: true
+
   create_table "photos", force: true do |t|
     t.string  "image"
     t.string  "caption"
@@ -334,14 +341,6 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.integer "role_id"
   end
 
-  create_table "info_pages", force: true do |t|
-    t.string   "content"
-    t.integer  "sektion_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-
   create_table "sektioner", force: true do |t|
     t.string  "name",            null: false
     t.integer "podio_id"
@@ -359,7 +358,7 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.integer "podio_id"
   end
 
-  add_index "storlekar", ["podio_id"], name: "index_storlekar_on_podio_id", using: :btree
+  add_index "storlekar", ["podio_id"], name: "index_storlekar_on_podio_id"
 
   create_table "ticket_listings", force: true do |t|
     t.text     "description"
