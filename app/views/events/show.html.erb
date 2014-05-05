@@ -29,8 +29,10 @@
     <%= link_to 'Ändra', edit_event_path(@event), :class => "button green" %>
     <%= link_to 'Ta bort', @event, :method => :delete, :confirm => 'Är du säker?', :class => "button red", :type => "edit" %>
   <% end %>
-  <%= link_to 'Köp biljetter', ticket_listings_path(:event_id => @event.id),
-              :class => "btn button" %>
-  <%= link_to 'Sälj biljetter', new_ticket_listing_path(:event_id => @event.id),
-              :class => "btn button" %>
+  <% if @event.tickets? %>
+    <%= link_to 'Köp biljetter', ticket_listings_path(:event_id => @event.id),
+                :class => "btn button" %>
+    <%= link_to 'Sälj biljetter', new_ticket_listing_path(:event_id => @event.id),
+                :class => "btn button" %>
+  <% end %>
 </div>
