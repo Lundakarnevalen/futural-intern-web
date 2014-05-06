@@ -103,6 +103,10 @@ module Warehouse::ApplicationHelper
     @warehouse_code == 0 ? weekly_overview_fabriken_products_path : (@warehouse_code == 1 ? weekly_overview_fest_products_path : weekly_overview_snaxeriet_products_path)
   end
 
+  def daily_overview_products_path
+    @warehouse_code == 0 ? daily_overview_fabriken_products_path : (@warehouse_code == 1 ? daily_overview_fest_products_path : daily_overview_snaxeriet_products_path)
+  end
+
   def products_path
     @warehouse_code == 0 ? fabriken_products_path : (@warehouse_code == 1 ? fest_products_path : snaxeriet_products_path)
   end

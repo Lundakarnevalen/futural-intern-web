@@ -159,6 +159,7 @@
     resources :products do
       collection do
         get 'weekly_overview', to: 'products#weekly_overview'
+        get 'daily_overview', to: 'products#daily_overview'
         get 'inventory', to: 'products#inventory'
         post 'update_inventory', to: 'products#update_inventory'
       end

@@ -23,6 +23,11 @@ class IncomingDelivery < ActiveRecord::Base
     self[:delivery_cost] = delivery_cost.gsub(/\,/, ".").to_f unless delivery_cost.blank?
   end
 
+  def self.find_incoming_deliveries_in_date date, warehouse_code
+    incoming_deliveries = IncomingDelivery.where("created_at >= ?", date).where("created_at <= ?", date + 1.day).where(warehouse_code: warehouse_code)
+    return incoming_deliveries
+  end
+
   def self.find_incoming_deliveries_in_week week, warehouse_code
     incoming_deliveries = IncomingDelivery.where("created_at >= ?", week[:day_1]).where("created_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code)
     return incoming_deliveries

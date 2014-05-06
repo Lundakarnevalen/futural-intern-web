@@ -55,6 +55,12 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     @weeks = calculate_weeks(date_first_day, first_week_number)
   end
 
+  def daily_overview
+    @orders = Order.where(warehouse_code: @warehouse_code, status: "Levererad")
+    @incoming_deliveries = IncomingDelivery.where(warehouse_code: @warehouse_code)
+    @dates = Order.find_all_dates(@warehouse_code)
+  end
+
   def calculate_weeks date_first_day, first_week_number
     weeks = Array.new
     for i in first_week_number..52

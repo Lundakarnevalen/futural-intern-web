@@ -89,6 +89,33 @@ class Order < ActiveRecord::Base
     return array
   end
 
+  def self.find_all_dates warehouse_code
+    initialize_day = DateTime.new(2014,1,1)
+    year = []
+    i = 2
+    datelist = []
+    while year.length <= 365 do
+      year.push(initialize_day + i.days)
+      i += 1
+    end
+    orders = Order.where(warehouse_code: warehouse_code).order("finished_at ASC")
+    orders.each do |o|
+      year.each do |y|
+        if (o.finished_at >= y) && (o.finished_at < y.next)
+          datelist.push(y)
+          year.delete(y)
+        end
+      end
+    end
+    return datelist
+  end
+
+  def self.find_orders_in_date date, warehouse_code
+    orders = Order.where("finished_at >= ? ", date).where("finished_at < ?", date + 1.day).where(warehouse_code:  warehouse_code).order("finished_at ASC")
+    return orders
+  end
+
+
   def find_week_number weeks
     weeks.each do |w|
       #hash[k.to_sym]
