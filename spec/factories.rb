@@ -134,8 +134,8 @@ FactoryGirl.define do
   end
 
   factory :reservation do
-    start_time Date.today
-    end_time Date.tomorrow
+    start_time Date.today + 1
+    end_time Date.tomorrow + 1
     message "No comment"
     association :karnevalist, factory: :karnevalist
   end

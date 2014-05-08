@@ -7,8 +7,14 @@ describe Reservation do
     it "should not be valid if the start_time begins before now" do
       FactoryGirl.build(:reservation, start_time: DateTime.yesterday).should_not be_valid
     end
+
     it "should validate the presence of karnevalist" do
       FactoryGirl.build(:reservation, karnevalist: nil).should_not be_valid
+    end
+
+    it "should not be able to book if there are more than 6 reservations for that time" do
+      FactoryGirl.create_list(:reservation, 6)
+      FactoryGirl.build(:reservation).should_not be_valid
     end
   end
 

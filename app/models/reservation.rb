@@ -2,6 +2,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :karnevalist
   validates :karnevalist, presence: true
   validate :reservation_time
+  validate :booking_qouta
 
   scope :between, lambda { |start_time, end_time|
     where("? < start_time < ?",
@@ -16,6 +17,10 @@ class Reservation < ActiveRecord::Base
 
   def reservation_time
     errors.add(:starttiden, "har redan inträffat") if DateTime.now > self.start_time
+  end
+
+  def booking_qouta
+    errors.add(:intervalet, "är fullbokat") if Reservation.where(start_time: self.start_time, end_time: self.end_time).count >= 6
   end
 
   def as_json(options = {})
