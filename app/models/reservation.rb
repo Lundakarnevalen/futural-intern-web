@@ -19,7 +19,7 @@ class Reservation < ActiveRecord::Base
     errors.add(:starttiden, "har redan inträffat") if DateTime.now > self.start_time
   end
 
-  def booking_qouta
+  def booking_quota
     errors.add(:intervalet, "är fullbokat") if Reservation.where(start_time: self.start_time, end_time: self.end_time).count >= 6
   end
 
