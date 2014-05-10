@@ -545,7 +545,7 @@ button,
 .btn,
 input[type="submit"],
 .block {
-
+    min-width: 100px;
     display: inline-block;
     font-family: $font-header;
     background-color: darken(white, 3%);
