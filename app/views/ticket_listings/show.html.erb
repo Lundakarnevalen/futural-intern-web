@@ -1,35 +1,39 @@
-<%= render 'shared/header', :title => "Karneblocket: #{@listing.event.title}" %>
+<%= render 'shared/header', :title => @listing.event.title %>
 
+<%= link_to "Tillbaka", ticket_listings_path, :class => "green button" %>
 <% if can? :modify, @listing %>
-  <%= link_to 'Ändra annonsen', edit_ticket_listing_path(@listing), 
-      :class => 'btn' %>
+  <%= link_to 'Ändra annonsen', edit_ticket_listing_path(@listing),
+      :class => 'button col-md-offset-1' %>
   <%= link_to 'Ta bort annonsen', @listing, :method => :delete,
-      :class => 'btn btn-danger', :confirm => 'Är du säker?' %>
+      :class => 'button btn-danger', :confirm => 'Är du säker?' %>
 <% end %>
 
-<dl>
-  <dt>Händelse</dt>
-  <dd><%= @listing.event.title %>, den <%= @listing.event.date %></dd>
+<div class="white-container">
+  <dl>
+    <dt>Händelse</dt>
+    <dd><%= @listing.event.title %>, den <%= @listing.event.date %></dd>
 
-  <dt>Säljare</dt>
-  <dd><%= @listing.seller.fornamn %></dd>
+    <dt>Säljare</dt>
+    <dd><%= @listing.seller.fornamn %></dd>
 
-  <dt>Pris</dt>
-  <dd><%= number_to_currency @listing.price %></dd>
+    <dt>Pris</dt>
+    <dd><%= number_to_currency @listing.price %></dd>
 
-  <% if @listing.description.present? %>
-    <dt><%= @listing.seller.fornamn %> säger:</dt>
-    <dd><%= render_markdown @listing.description %></dd>
+    <% if @listing.description.present? %>
+      <dt><%= @listing.seller.fornamn %> säger:</dt>
+      <dd><%= render_markdown @listing.description %></dd>
+    <% end %>
+  </dl>
+</div>
+<div class="white-container">
+  <h2>Kontakta <%= @listing.seller.fornamn %></h2>
+
+  Säljaren kommer att kunna se din email. Om du vill ge säljaren ditt
+  telefonnummer så kan du skriva det i meddelandet.
+
+  <%= form_tag offer_ticket_listing_path(@listing) do %>
+    <%= label_tag :message, 'Meddelande' %>
+    <%= text_area_tag :message %>
+    <%= submit_tag 'Skicka' %>
   <% end %>
-</dl>
-
-<h2>Kontakta <%= @listing.seller.fornamn %></h2>
-
-Säljaren kommer att kunna se din email. Om du vill ge säljaren ditt 
-telefonnummer så kan du skriva det i meddelandet.
-
-<%= form_tag offer_ticket_listing_path(@listing) do %>
-  <%= label_tag :message, 'Meddelande' %>
-  <%= text_area_tag :message %>
-  <%= submit_tag 'Skicka' %>
-<% end %>
+</div>

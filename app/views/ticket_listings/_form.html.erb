@@ -1,30 +1,32 @@
-<%= form_for @listing do |f| %>
-  <fieldset>
-    <div>
-      <%= f.label :event_id, 'Vilken händelse?' %><br>
-      <%= f.collection_select :event_id,
-            TicketListing.ticket_events_for_karnevalist(current_karnevalist), 
-            :id, :to_s, :selected => params[:event_id] %> 
-    </div>
+<div class="white-container">
+  <%= form_for @listing do |f| %>
+    <fieldset>
+      <div>
+        <%= f.label :event_id, 'Vilken händelse?' %><br>
+        <%= f.collection_select :event_id,
+              TicketListing.ticket_events_for_karnevalist(current_karnevalist),
+              :id, :to_s, :selected => params[:event_id] %>
+      </div>
 
-    <div>
-      <%= f.label :price, "Pris" %>
-      <%= f.text_field :price %>
-    </div>
+      <div>
+        <%= f.label :price, "Pris (kr)" %>
+        <%= f.text_field :price %>
+      </div>
 
-    <div>
-      <strong>Vill du byta eller sälja?</strong>
-      <%= f.label :selling, 'Byta', :value => false %>
-      <%= f.radio_button :selling, false %>
-      <%= f.label :selling, 'Sälja', :value => true %>
-      <%= f.radio_button :selling, true %>
-    </div>
+      <div>
+        <strong>Vill du byta eller sälja?</strong>
+        <%= f.label :selling, 'Byta', :value => false %>
+        <%= f.radio_button :selling, false %>
+        <%= f.label :selling, 'Sälja', :value => true %>
+        <%= f.radio_button :selling, true %>
+      </div>
 
-    <div>
-      <%= f.label :description, 'Annonstext' %>
-      <%= f.text_area :description %>
-    </div>
-  </fieldset>
+      <div>
+        <%= f.label :description, 'Annonstext' %>
+        <%= f.text_area :description %>
+      </div>
+    </fieldset>
 
-  <%= f.submit 'Skapa annons' %>
-<% end %>
+    <%= f.submit 'Spara annons' %>
+  <% end %>
+</div>

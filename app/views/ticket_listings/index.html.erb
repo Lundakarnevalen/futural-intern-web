@@ -1,17 +1,16 @@
-<div class=white-container>
-  <h1>Karneblocket</h1> 
+<div class="white-container">
+  <h1>Karneblocket</h1>
   <p>
     Här kan du köpa och sälja biljetter till events under karnevalen.
   </p>
 </div>
 
-<%= link_to 'Lägg till annons', new_ticket_listing_path %>
-
 <div class='white-container yellow-background'>
   <%= render 'filter_form', :query => @query %>
 </div>
+<%= link_to 'Lägg till annons', new_ticket_listing_path, :class => 'button green' %>
 
-<table class='table table-striped'>
+<table class='table table-striped white-container'>
   <thead>
     <tr>
       <th>Händelse</th>
@@ -21,12 +20,12 @@
     </tr>
   </thead>
   <tbody>
+    <% if @listings.empty? %>
+      <tr><td><strong>Inga träffar...</strong></td></tr>
+    <% end %>
     <% @listings.each do |l| %>
       <%= render 'listing', :listing => l %>
     <% end %>
   </tbody>
 </table>
 
-<% if @listings.empty? %>
-  <div class=white-container><strong>Inga träffar...</strong></div>
-<% end %>
