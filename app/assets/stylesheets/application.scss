@@ -288,6 +288,9 @@ html {
     background-color: $color-blue;
     margin-top: $height-navbar !important;
     //box-shadow: 0 $distance-shadow 0 $color-shadow;
+    ul.nav {
+        overflow: hidden;
+    }
 }
 #left {
     margin-top: $height-navbar * 1.25 !important;
