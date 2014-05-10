@@ -1,28 +1,21 @@
-<h1 class="fill white block center">Karnegram</h1>
-<div class="white-container">
-  <% if @photos %>
-    <%= render partial: "acc_photo", collection: @photos, as: :photo %>
-  <% else %>
-    <p>Inga bilder finns tillängliga.</p>
-  <% end %>
-</div>
+<%= render partial: "shared/header", locals: {title: "Futugram"} %>
+
+<% if @photos %>
+  <%= render :partial => 'photo', :collection => @photos.sort_by(&:id).reverse %>
+<% else %>
+  <p>Inga bilder finns tillängliga.</p>
+<% end %>
 
 <!-- Modal -->
 <div class="modal fade" id="img-modal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-  <div class="modal-dialog">
-    <div class="modal-content">
-      <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+  <div class="modal-content">
+    <div class="modal-body">
+      <div class="thumbnail">
+        <img src="#">
       </div>
-      <div class="modal-body">
-        <div class="thumbnail">
-          <img src="#">
-        </div>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
-      </div>
-    </div><!-- /.modal-content -->
-  </div><!-- /.modal-dialog -->
+    </div>
+    <div class="modal-footer">
+      <button type="button" class="btn btn-default" data-dismiss="modal">Stäng</button>
+    </div>
+  </div><!-- /.modal-content -->
 </div><!-- /.modal -->

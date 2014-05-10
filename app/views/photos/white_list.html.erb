@@ -2,10 +2,8 @@
 <div id="photo-status" class="alert alert-dissmisible hide ">
   <button type="button" class="close" data-dismiss="alert" aria-hidden="true">x</button>
 </div>
-<div class="container">
-  <% if @photos.blank? %>
-    <p>Inga nya foton</p>
-  <% else %>
-    <%= render partial: "photo", collection: @photos %>
-  <% end %>
-</div>
+<% if @photos.blank? %>
+  <p>Inga nya foton</p>
+<% else %>
+  <%= render partial: 'conf_photo', collection: @photos, as: :photo %>
+<% end %>

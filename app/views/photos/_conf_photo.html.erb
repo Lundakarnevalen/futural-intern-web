@@ -1,0 +1,18 @@
+<div id="photo-row-<%= photo.id %>">
+  <div class="col-md-6">
+    <div class="thumbnail">
+     <%= image_tag(photo.image.url) %>
+      <div class="caption">
+      <p><%= "#{photo.caption}" %></p>
+        <p>
+          <button data-id="<%= photo.id %>" type="button" class="btn green accept-photo">
+            <span class="glyphicon glyphicon-ok">Godkänn</span>
+          </button>
+          <button data-id=<%= photo.id %> type="button" class="btn red remove-photo">
+            <span class="glyphicon glyphicon-remove">Ta bort</span>
+          </button>
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
