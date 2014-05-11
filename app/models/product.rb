@@ -74,7 +74,8 @@ class Product < ActiveRecord::Base
     if blockorder.blank?
       return 0
     else
-      return blockorder.blockorder_products.find_by_product_id(self.id).amount
+      bp = blockorder.blockorder_products.find_by_product_id(self.id)
+      return !bp.blank? ? bp.amount : 0
     end
   end
 
