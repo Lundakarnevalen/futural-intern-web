@@ -56,7 +56,7 @@
               </div>
             </div>
         </td>
-        <td><%= p.sektion_amount(@sektion.id, @warehouse_code) %></td>
+        <td><%= p.sektion_amount(@sektion.id, @orders) %></td>
         <% if @warehouse_code == 2 %>
           <td><%= p.blockorder_amount(@sektion.id) %></td>
         <% end %>

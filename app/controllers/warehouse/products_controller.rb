@@ -100,6 +100,7 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     if params[:sektion_id]
       @sektion = Sektion.find(params[:sektion_id])
+      @orders = Order.where(sektion_id: params[:sektion_id], warehouse_code: @warehouse_code)
     end
   end
 

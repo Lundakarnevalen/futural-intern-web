@@ -58,8 +58,7 @@ class Product < ActiveRecord::Base
     return self.partial_delivery_products.find_by_partial_delivery_id(partial_delivery_id).amount
   end
 
-  def sektion_amount(sektion_id, warehouse_code)
-    orders = Order.where(sektion_id: sektion_id, warehouse_code: warehouse_code)
+  def sektion_amount(sektion_id, orders)
     amount = 0
     orders.each do |o|
       order_product = o.order_products.find_by_product_id(self.id)
