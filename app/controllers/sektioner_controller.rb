@@ -60,13 +60,13 @@ class SektionerController < ApplicationController
   def kollamedlem
     @sektion = Sektion.find(params[:id])
     authorize! :read, @sektion
-    @karnevalister = @sektion.members.order('efternamn, fornamn asc')
+    @karnevalister = @sektion.members
   end
 
   def aktiva
     @sektion = Sektion.find(params[:id])
     authorize! :read, @sektion
-    @karnevalister = @sektion.members.order('efternamn, fornamn asc')
+    @karnevalister = @sektion.members
   end
   private
 
