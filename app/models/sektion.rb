@@ -3,6 +3,7 @@ class Sektion < ActiveRecord::Base
   has_and_belongs_to_many :karnevalister
   has_many :posts
   has_many :orders
+  has_one :blockorder
   has_many :images
   belongs_to :supersektion, :class_name => Sektion
   has_many :subsektioner, :class_name => Sektion,

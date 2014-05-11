@@ -96,6 +96,13 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     redirect_to inventory_products_path
   end
 
+  def sektion_summary
+    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
+    if params[:sektion_id]
+      @sektion = Sektion.find(params[:sektion_id])
+    end
+  end
+
   private
     def find_product
       @product = Product.find(params[:id])

@@ -64,6 +64,22 @@ module Warehouse::ApplicationHelper
   def info_orders_path
     @warehouse_code == 0 ? info_fabriken_orders_path : (@warehouse_code == 1 ? info_fest_orders_path : info_snaxeriet_orders_path)
   end
+  
+  def blockorders_path
+    @warehouse_code == 0 ? fabriken_blockorders_path : (@warehouse_code == 1 ? fest_blockorders_path : snaxeriet_blockorders_path)
+  end
+
+  def blockorder_path(b, format = :html)
+    @warehouse_code == 0 ? fabriken_blockorder_path(b, format) : (@warehouse_code == 1 ? fest_blockorder_path(b, format) : snaxeriet_blockorder_path(b, format))
+  end
+
+  def new_blockorder_path
+    @warehouse_code == 0 ? new_fabriken_blockorder_path : (@warehouse_code == 1 ? new_fest_blockorder_path : new_snaxeriet_blockorder_path)
+  end
+
+  def edit_blockorder_path(b)
+    @warehouse_code == 0 ? edit_fabriken_blockorder_path(b) : (@warehouse_code == 1 ? edit_fest_blockorder_path(b) : edit_snaxeriet_blockorder_path(b))
+  end
 
   #deliveries
   def incoming_deliveries_path
@@ -137,6 +153,10 @@ module Warehouse::ApplicationHelper
   
   def update_inventory_products_path
     @warehouse_code == 0 ? update_inventory_fabriken_products_path : (@warehouse_code == 1 ? update_inventory_fest_products_path : update_inventory_snaxeriet_products_path)
+  end
+  
+  def sektion_summary_products_path
+    @warehouse_code == 0 ? sektion_summary_fabriken_products_path : (@warehouse_code == 1 ? sektion_summary_fest_products_path : sektion_summary_snaxeriet_products_path)
   end
 
   # categories
