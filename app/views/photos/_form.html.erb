@@ -1,9 +1,9 @@
-<%= form_for(@photo, html: { multipart: true }) do |f| %>
-  <div class="col-lg-6 col-sm-6 col-12">
+<!--<%= form_for(@photo, html: { multipart: true }) do |f| %>
+  <div class="col-xs-12">
     <div class="form-group">
       <div class="input-group">
         <span class="input-group-btn">
-          <span class="btn btn-default btn-file">
+          <span class="button btn-file">
             Välj fil
             <%= f.file_field :image %>
           </span>
@@ -19,3 +19,23 @@
   <%= f.submit "Ladda upp bild", class: "green button" %>
   </div>
 <% end %>
+-->
+<div class="white-container col-xs-12">
+  <%= form_for @photo do |f| %>
+    <%= f.hidden_field :karnevalist_id, value: current_user.karnevalist.id %>
+
+    <span class="input-group-btn">
+      <span class="btn btn-file">
+        Välj fil
+        <%= f.file_field :image %>
+      </span>
+      <input type="text" class="form-control" readonly />
+    </span>
+
+    <p>
+      <%= f.label :caption, "Bildtext" %><br />
+      <%= f.text_field :caption, placeholder: "Namnge denna vackra skapelse..." %>
+    </p>
+    <p><%= f.submit "Ladda upp bild", :class => 'green button' %></p>
+  <% end %>
+</div>
