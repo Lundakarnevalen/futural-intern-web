@@ -16,8 +16,8 @@ class Product < ActiveRecord::Base
   validates :name, presence: true
   validates :unit, presence: true
   validates :supplier, presence: true
-  validates :purchase_price, numericality: {greater_than_or_equal_to: 0}
-  validates :sale_price, numericality: {greater_than_or_equal_to: 0}
+  validates :purchase_price, numericality: true
+  validates :sale_price, numericality: true
 
   HUMANIZED_ATTRIBUTES = {
     :product_category_id => "Kategori",
