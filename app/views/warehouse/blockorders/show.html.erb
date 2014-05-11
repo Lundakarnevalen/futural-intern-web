@@ -1,0 +1,69 @@
+<div class="row">
+  <div class="col-md-6">
+    <div class="panel panel-primary">
+      <div class="panel-heading">
+        <h3 class="panel-title">Inleverans</h3>
+      </div>
+      <div class="panel-body">
+        <p><strong>Fakturanummer: </strong> <%= @incoming_delivery.invoice_nbr %></p>
+        <p><strong>Påbörjad: </strong> <%= @incoming_delivery.created_at.strftime("%Y-%m-%d %H:%M") %></p>
+        <p><strong>Hanterad av: </strong>
+            <% @incoming_delivery.karnevalister.each do |k|%>
+              <% if !@incoming_delivery.karnevalister.last %>
+                <%= "#{k.fornamn} #{k.efternamn}, " %>
+              <% else %>
+                <%= "#{k.fornamn} #{k.efternamn}" %>
+              <% end %>
+            <% end %>
+        </p>
+        <p><strong>Status: </strong><%= @incoming_delivery.ongoing ? "Pågående" : "Avslutad" %></p>
+        <% if !@incoming_delivery.delivery_cost.blank? %>
+          <p><strong>Leveranskostnad: </strong><%= number_to_currency(@incoming_delivery.delivery_cost) %></p>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="table-responsive">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Vara</th>
+        <th>Streckkod</th>
+        <th>Lagerplats</th>
+        <th>Enhet</th>
+        <th>Nytt antal</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% @incoming_delivery.products.order("name ASC").each do |p| %>
+        <tr>
+        <td>
+          <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+<!-- Modal -->
+<div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </td>
+          <td><%= p.ean %></td>
+          <td><%= p.stock_location %></td>
+          <td><%= p.unit %></td>
+          <td><%= p.new_amount(@incoming_delivery.id) %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>

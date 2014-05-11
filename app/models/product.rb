@@ -3,6 +3,8 @@ class Product < ActiveRecord::Base
   belongs_to :product_category
   has_many :order_products
   has_many :orders, through: :order_products
+  has_many :blockorder_products
+  has_many :blockorders, through: :blockorder_products
   has_many :incoming_delivery_products
   has_many :incoming_deliveries, through: :incoming_delivery_products
   has_many :partial_delivery_products
@@ -54,6 +56,27 @@ class Product < ActiveRecord::Base
 
   def partial_delivery_amount(partial_delivery_id)
     return self.partial_delivery_products.find_by_partial_delivery_id(partial_delivery_id).amount
+  end
+
+  def sektion_amount(sektion_id, warehouse_code)
+    orders = Order.where(sektion_id: sektion_id, warehouse_code: warehouse_code)
+    amount = 0
+    orders.each do |o|
+      order_product = o.order_products.find_by_product_id(self.id)
+      if !order_product.blank?
+        amount += order_product.delivered_amount
+      end
+    end
+    return amount
+  end
+  
+  def blockorder_amount(sektion_id)
+    blockorder = Blockorder.find_by_sektion_id(sektion_id)
+    if blockorder.blank?
+      return 0
+    else
+      return blockorder.blockorder_products.find_by_product_id(self.id).amount
+    end
   end
 
   def total_price(amount)
