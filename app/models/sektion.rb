@@ -24,8 +24,7 @@ class Sektion < ActiveRecord::Base
   end
 
   def members
-    Karnevalist.where 'tilldelad_sektion = ? or tilldelad_sektion2 = ?',
-                      self.id, self.id
+    Karnevalist.where('tilldelad_sektion = ? or tilldelad_sektion2 = ?', self.id, self.id).order('efternamn, fornamn asc')
   end
 
   def to_s
