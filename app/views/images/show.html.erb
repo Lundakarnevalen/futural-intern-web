@@ -3,5 +3,8 @@
 <%= link_to "Radera bilden", @image, method: :delete, data: { confirm: "Är du säker på att du vill radera denna säkert jättefina bild?" }, :class =>"red button col-md-offset-2", :type => "edit" if current_user.can? :manage, :image %>
 <div class="col-xs-12 thumbnail">
   <%= image_tag @image.image_url unless @image.pdf? %>
-  <%= link_to image_tag('pdf_preview.png'), @image.image_url.to_s if @image.pdf? %>
+  <% if @image.pdf? %>
+    <%= link_to image_tag(@image.image_url(:pdf_thumb).to_s), @image.image_url.to_s %>
+    <h3>Tryck på bilden för att öppna pdf filen!</h3>
+  <% end %>
 </div>
