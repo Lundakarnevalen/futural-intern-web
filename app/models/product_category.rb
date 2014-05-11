@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class ProductCategory < ActiveRecord::Base
-  has_many :products, :dependent => :restrict
+  has_many :products, :dependent => :restrict_with_exception
   validates :name, presence: true, uniqueness: true
   
   HUMANIZED_ATTRIBUTES = {
