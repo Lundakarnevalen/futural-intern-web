@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140501234222) do
+ActiveRecord::Schema.define(version: 20140511183309) do
 
   create_table "attendances", force: true do |t|
     t.integer  "event_id",       null: false
@@ -65,6 +65,7 @@ ActiveRecord::Schema.define(version: 20140501234222) do
     t.boolean  "attendable",  default: false
     t.date     "end_date"
     t.boolean  "tickets"
+    t.boolean  "visible",     default: true
   end
 
   create_table "images", force: true do |t|

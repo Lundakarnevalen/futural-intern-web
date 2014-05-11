@@ -1,10 +1,12 @@
 <%= render 'shared/header', :title => 'Händelser' %>
 
 <% @events.each do |e| %>
-  <div class="white-container col-xs-12">
-    <ol class="posts">
-      <h1><%= link_to e.title, e %></h1>
-      <p><%= e.date %></p>
-    </ol>
-  </div>
+  <% if e.visible? || (current_user.is? :admin) %>
+    <div class="white-container col-xs-12">
+      <ol class="posts">
+        <h1><%= link_to e.title, e %><%= " (DOLT EVENT)" unless e.visible? %></h1>
+        <p><%= e.date %></p>
+      </ol>
+    </div>
+  <% end %>
 <% end %>

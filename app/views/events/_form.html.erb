@@ -35,6 +35,13 @@
         <%= f.radio_button :tickets, false %>
       </div>
 
+      <% if current_user.is? :admin %>
+        <div>
+          <strong>Visas detta evenemang för alla eller bara allsmäktiga admins?</strong>
+          <%= f.check_box :visible %>
+        </div>
+      <% end %>
+
       <%= f.label :description, 'Beskrivning' %>
 
       <%= f.text_area :description %>

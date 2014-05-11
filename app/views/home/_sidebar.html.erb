@@ -119,22 +119,24 @@
           events = Event.upcoming.for_sektioner current_sektioner
         end  %>
     <% events.each do |e| %>
-    <li>
-      <%= link_to e do %>
-      <button class="fill">
-      <div class="col-xs-4">
-        <div class="block gray"><%= short_date e.date %>
-          <% if e.end_date.present? %>
-            <br> &mdash; <br> <%= short_date e.end_date %>
+      <% if e.visible? %>
+        <li>
+          <%= link_to e do %>
+          <button class="fill">
+          <div class="col-xs-4">
+            <div class="block gray"><%= short_date e.date %>
+              <% if e.end_date.present? %>
+                <br> &mdash; <br> <%= short_date e.end_date %>
+              <% end %>
+            </div>
+          </div>
+          <div class="col-xs-8">
+            <div class="block left fill invisible"><%= e.title %></div>
+          </div>
+          </button>
           <% end %>
-        </div>
-      </div>
-      <div class="col-xs-8">
-        <div class="block left fill invisible"><%= e.title %></div>
-      </div>
-      </button>
+        </li>
       <% end %>
-    </li>
     <% end %>
   </ul>
   <%= link_to "Se fler", events_path, :class => "button green" %>

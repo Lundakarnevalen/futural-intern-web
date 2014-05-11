@@ -3,7 +3,7 @@
 class Event < ActiveRecord::Base
   belongs_to :creator, :class_name => :User
   belongs_to :sektion
- 
+
   has_many :attendances, :dependent => :destroy
 
   validates :title, :presence => true
@@ -20,7 +20,7 @@ class Event < ActiveRecord::Base
     end
   end
 
-  scope :upcoming, -> { 
+  scope :upcoming, -> {
     self.where('date >= ? or end_date >= ?', Date.today, Date.today)
         .order('date asc')
   }
@@ -47,8 +47,12 @@ class Event < ActiveRecord::Base
     attendances.where(:karnevalist => karnevalist).any?
   end
 
-  def tickets? 
+  def tickets?
     !! self.tickets
+  end
+
+  def visible?
+    self.visible
   end
 
   def to_s
