@@ -98,7 +98,7 @@ class Order < ActiveRecord::Base
       year.push(initialize_day + i.days)
       i += 1
     end
-    orders = Order.where(warehouse_code: warehouse_code).order("finished_at ASC")
+    orders = Order.where(warehouse_code: warehouse_code, status: "Levererad").order("finished_at ASC")
     orders.each do |o|
       year.each do |y|
         if (o.finished_at >= y) && (o.finished_at < y.next)
