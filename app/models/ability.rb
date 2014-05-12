@@ -166,6 +166,11 @@ class Ability
       can [:read, :diagram], Bookkeeping
     end
 
+    #tåget
+    if user.is? :train_man
+      can :manage, TrainPosition
+    end
+
 
     # Admin
     if user.is? :admin

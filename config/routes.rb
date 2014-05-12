@@ -17,6 +17,7 @@
     resources :karnevalister, only: [:update]
     resources :notifications, only: [:index]
     resources :photos, only: [:create, :index, :show]
+    resources :train_positions, except: [:destroy, :edit, :new]
   end
 
   resources :notifications, only: [:new, :create, :show, :index]
