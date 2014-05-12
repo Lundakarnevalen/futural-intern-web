@@ -17,7 +17,6 @@ class TicketListing < ActiveRecord::Base
 
   scope :event_id, -> (event_id) { where event_id: event_id }
   scope :selling, -> (selling) { where selling: (selling == 'true') }
-  #scope :trading, -> (selling) { where selling: false }
   scope :seller_id, -> (seller_id) { where seller_id: seller_id }
 
   validate do # event

@@ -6,7 +6,7 @@ class TicketListingsController < ApplicationController
   skip_before_filter :can_can_strong, :only => :destroy
 
   def index
-    @listings = TicketListing.where(nil)
+    @listings = TicketListing.includes(:event, :seller).order('price asc')
     filtering_params(params).each do |key, value|
       @listings = @listings.public_send(key, value) if value.present?
     end
