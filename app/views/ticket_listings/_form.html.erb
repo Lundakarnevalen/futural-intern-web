@@ -3,9 +3,8 @@
     <fieldset>
       <div>
         <%= f.label :event_id, 'Vilken händelse?' %><br>
-        <%= f.collection_select :event_id,
-              TicketListing.ticket_events_for_karnevalist(current_karnevalist),
-              :id, :to_s, :selected => params[:event_id] %>
+        <%= f.collection_select :event_id, @events,
+              :id, :to_s, :selected => @selected %>
       </div>
 
       <div>

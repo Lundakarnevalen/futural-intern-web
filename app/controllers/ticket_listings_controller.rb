@@ -15,10 +15,13 @@ class TicketListingsController < ApplicationController
 
   def new
     @listing = TicketListing.new
+    @events = TicketListing.ticket_events_for_karnevalist(current_karnevalist)
   end
 
   def edit
     @listing = TicketListing.find params[:id]
+    @events = TicketListing.ticket_events_for_karnevalist(current_karnevalist)
+    @selected = @listing.event_id
   end
 
   def create
@@ -50,7 +53,7 @@ class TicketListingsController < ApplicationController
 
   def offer
     # Very naive spam protection...
-    if session[:karneblocket_offers] && 
+    if session[:karneblocket_offers] &&
        session[:karneblocket_offers].include?(params[:id])
       flash[:alert] = 'Inte spamma!'
       redirect_to :back
@@ -62,14 +65,14 @@ class TicketListingsController < ApplicationController
       session[:karneblocket_offers] << params[:id]
 
       @listing = TicketListing.find params[:id]
-      KarneblocketMailer.offer(@listing, params[:message], 
+      KarneblocketMailer.offer(@listing, params[:message],
                                current_karnevalist).deliver
       flash[:notice] = 'Ett mail skickades till säljaren med ditt meddelade'
       redirect_to :back
     end
-  end 
+  end
 
-  private 
+  private
   def ticket_listing_params
     params.require(:ticket_listing).permit!
   end
