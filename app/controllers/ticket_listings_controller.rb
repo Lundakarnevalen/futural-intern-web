@@ -6,7 +6,11 @@ class TicketListingsController < ApplicationController
   skip_before_filter :can_can_strong, :only => :destroy
 
   def index
-    @listings = filter_query params
+    @listings = TicketListing.where(nil)
+    filtering_params(params).each do |key, value|
+      @listings = @listings.public_send(key, value) if value.present?
+    end
+    @events = TicketListing.ticket_events_for_karnevalist(current_karnevalist)
   end
 
   def show
@@ -77,28 +81,7 @@ class TicketListingsController < ApplicationController
     params.require(:ticket_listing).permit!
   end
 
-  def filter_query params
-    query = params.symbolize_keys.select do |k, v|
-      [ :event_id, :seller_id, :selling ]
-        .include?(k) && v.present?
-    end
-
-    @query = query
-
-    ar_query = TicketListing.includes(:event, :seller).order('price asc')
-
-    if query[:event_id]
-      ar_query = ar_query.where 'event_id = ?', query[:event_id]
-    end
-
-    if query[:seller_id]
-      ar_query = ar_query.where 'seller_id = ?', query[:seller_id]
-    end
-
-    if query[:selling]
-      ar_query = ar_query.where 'selling = ?', query[:selling]
-    end
-
-    return ar_query
+  def filtering_params params
+    params.slice(:event_id, :seller_id, :selling)
   end
 end

@@ -9,11 +9,16 @@ class TicketListing < ActiveRecord::Base
   validates :seller, :presence => true
   validates :event, :presence => true
   validates :price, :presence => true,
-                    :numericality => 
+                    :numericality =>
                       { :message => 'Måste vara ett helt antal kronor' },
-                    :inclusion => 
-                      { :in => 1..1000, 
-                        :message => 'Priset ser lite misstänkt ut' } 
+                    :inclusion =>
+                      { :in => 1..1000,
+                        :message => 'Priset ser lite misstänkt ut' }
+
+  scope :event_id, -> (event_id) { where event_id: event_id }
+  scope :selling, -> (selling) { where selling: (selling == 'true') }
+  #scope :trading, -> (selling) { where selling: false }
+  scope :seller_id, -> (seller_id) { where seller_id: seller_id }
 
   validate do # event
     if event.present? && !event.tickets?
@@ -33,7 +38,7 @@ class TicketListing < ActiveRecord::Base
     if self.new_record?
       fail ArgumentError, "Can't destroy record that has not been saved."
     end
-    Rails.application.routes.url_helpers.destroy_ticket_listing_url(self, 
+    Rails.application.routes.url_helpers.destroy_ticket_listing_url(self,
       :token => self.access_token, :host => 'karnevalist.se')
   end
 
@@ -42,7 +47,7 @@ class TicketListing < ActiveRecord::Base
   end
 
   def self.to_remind
-    self.where 'last_reminder <= ? or (last_reminder is null and created_at <= ?)', 
+    self.where 'last_reminder <= ? or (last_reminder is null and created_at <= ?)',
                5.days.ago, 5.days.ago
   end
 end
