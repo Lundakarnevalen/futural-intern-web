@@ -10,6 +10,7 @@ class Order < ActiveRecord::Base
   validates :sektion, presence: true
   before_create :set_order_date, :set_order_number
   validates :delivery_date, presence: true, on: :update
+  validate :delivery_date_time, on: :update, if: "!self.delivery_date.blank?"
 
   accepts_nested_attributes_for :order_products, :reject_if => proc { |a| a['amount'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :products
@@ -22,6 +23,10 @@ class Order < ActiveRecord::Base
 
   def self.human_attribute_name(attr, options = {})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
+  end
+
+  def delivery_date_time
+    errors.add(:delivery_date, "har redan inträffat") if DateTime.now.beginning_of_day > self.delivery_date
   end
 
   def set_order_date
