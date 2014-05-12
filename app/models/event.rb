@@ -56,6 +56,6 @@ class Event < ActiveRecord::Base
   end
 
   def to_s
-    "#{title}, #{date}"
+    "#{title}"
   end
 end
