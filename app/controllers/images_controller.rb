@@ -9,7 +9,7 @@ class ImagesController < ApplicationController
     @image = Image.new(params[:image])
     authorize_sektion @image
     @image.save
-    handle_errors @image, 'Bilden skapades!', :redirect => images_sektion_path(@image.sektion)
+    handle_errors @image, 'Filen sparades!', :redirect => images_sektion_path(@image.sektion)
   end
 
   def show
@@ -20,7 +20,7 @@ class ImagesController < ApplicationController
     @image = Image.find(params[:id])
     sektion = @image.sektion
     @image.destroy
-    flash[:notice] = "Raderade bilden =("
+    flash[:notice] = "Raderade filen =("
     redirect_to images_sektion_path(sektion)
   end
 

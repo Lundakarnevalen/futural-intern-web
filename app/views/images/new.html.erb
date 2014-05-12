@@ -1,4 +1,4 @@
-<%= render partial: "shared/header", locals: {title: "Ladda upp ny bild!"} %>
+<%= render partial: "shared/header", locals: {title: "Ladda upp ny fil (bild eller pdf)"} %>
 
 <div class="white-container col-xs-12">
 
@@ -11,6 +11,6 @@
     <p>
       <%= f.file_field :image %>
     </p>
-    <p><%= f.submit "Ladda upp bild", :class => 'green button' %></p>
+    <p><%= f.submit "Ladda upp fil", :class => 'green button' %></p>
   <% end %>
 </div>
