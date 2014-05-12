@@ -119,6 +119,7 @@ class Ability
       can :manage, Reservation
       can :manage, Backorder
       can :manage, Inventory
+      can :manage, Blockorder
     end
 
     # Lagersystem - beställare
@@ -138,14 +139,15 @@ class Ability
     end
 
     # Lagersystem - kassör
-    if user.is? :kassor_festmasteriet
+    if (user.is? :kassor_festmasteriet) || (user.is? :kassor_snaxeriet)
       can :manage, Order
-      can [:read, :weekly_overview], Product
+      can [:read, :weekly_overview, :daily_overview, :sektion_summary], Product
       can :manage, IncomingDelivery
       can :manage, PartialDelivery
       can :manage, ProductCategory
       can :manage, Reservation
       can :manage, Backorder
+      can :read, Blockorder
     end
 
     if user.is?(:admin) || user.is?(:photographer)

@@ -1,0 +1,77 @@
+<h3>Blockorder</h3>
+  <%= form_for [form_prefix, @blockorder] do |f| %>
+  <% if @blockorder.errors.any? %>
+    <div class="alert alert-danger alert-dismissable">
+      <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+      <ul>
+      <% @blockorder.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<div class="row">
+  <div class="col-xs-12 col-sm-12 col-md-6">
+    <div class="form-group">
+      <%= f.label :sektion_id, "Sektion" %>
+      <%= f.select :sektion_id, options_from_collection_for_select(Sektion.all, :id, :name), {prompt: "-- Välj sektion --"}, {class: "form-control", id: "sektion_select"} %>
+    </div>
+  </div>
+</div>
+<% @product_categories.each do |c| %>
+<% products = c.products.where(warehouse_code: @warehouse_code, active: true).order("name ASC") %>
+<% if !products.blank? %>
+<h4><%= c.name %></h4>
+<div class="table-responsive">
+  <table class="table table-fixed">
+    <thead>
+      <tr>
+        <th style="width: 8%;">Antal i blockorder</th>
+        <th style="width: 25%;">Varunamn</th>
+        <th style="width: 13%;">Streckkod</th>
+        <th style="width: 13%;">Lagerplats</th>
+        <th style="width: 6%;">Enhet</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% products.each do |p| %>
+      <tr>
+        <td>
+          <% blockorder_product = p.blockorder_products.where(blockorder_id: @blockorder.id) %>
+          <%= f.fields_for :blockorder_products, blockorder_product.blank? ? p.blockorder_products.build : blockorder_product do |bp| %>
+            <%= bp.number_field :amount, class: "form-control", style: "width: 100%;" %>
+            <%= bp.hidden_field :product_id, :value => p.id %>
+          <% end %>
+        </td>
+        <td>
+          <a data-toggle="modal" href="#product<%= p.id %>"><%= p.name %></a>
+<!-- Modal -->
+<div class="modal fade" id="product<%= p.id %>" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title text-info" id="product<%= p.id %>Label">Produktinfo</h4>
+      </div>
+      <div class="modal-body">
+        <%= render partial: 'warehouse/products/show', locals: { p: p } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-dismiss="modal">Stäng</button>
+      </div>
+    </div>
+  </div>
+</div>
+        </td>
+        <td><%= p.ean %></td>
+        <td><%= p.stock_location %></td>
+        <td><%= p.unit %></td>
+      </tr>
+      <% end %>
+    </tbody>
+  </table>
+</div>
+<% end %>
+<% end %>
+<%= f.submit "Spara", class: "btn btn-primary" %>
+<% end %>

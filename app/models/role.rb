@@ -34,6 +34,8 @@ class Role < ActiveRecord::Base
       'Kan lägga beställningar i snaxeriets lagersystem' ],
     [ :kassor_festmasteriet,
       'Kan administera vissa funktioner i festmästeriets lagersystem' ],
+    [ :kassor_snaxeriet,
+      'Kan administera vissa funktioner i snaxeriets lagersystem' ],
     [ :sektionsadmin_fabriken,
       'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar) i fabrikens lagersystem.' ],
     [ :sektionsadmin_festmasteriet,

@@ -160,6 +160,7 @@
       collection do
         get 'weekly_overview', to: 'products#weekly_overview'
         get 'daily_overview', to: 'products#daily_overview'
+        get 'sektion_summary', to: 'products#sektion_summary'
         get 'inventory', to: 'products#inventory'
         post 'update_inventory', to: 'products#update_inventory'
       end
@@ -173,6 +174,7 @@
     resources :product_categories
     resources :order_products
     resources :partial_deliveries
+    resources :blockorders
   end
 
   namespace :warehouse, path: 'fabriken', as: 'fabriken' do
