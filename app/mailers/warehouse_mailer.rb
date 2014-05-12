@@ -8,8 +8,9 @@ class WarehouseMailer < ActionMailer::Base
     mail(to: receiver, subject: subject, from: sender)
   end
 
-  def new_order(sender, receiver, subject, order)
+  def new_order(sender, receiver, subject, order, warehouse_code)
     @order = order
+    @warehouse_code = warehouse_code
     mail(to: receiver, subject: subject, from: sender)
   end
 end
