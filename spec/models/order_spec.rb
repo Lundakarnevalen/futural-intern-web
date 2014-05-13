@@ -37,10 +37,13 @@ describe Order do
     end
   end
 
-  describe "start time" do
-    it "should return the delivery date" do
-      o = FactoryGirl.build(:order, sektion: sektion, order_date: DateTime.now, delivery_date: Date.tomorrow.to_time)
-      o.start_time.should eq(Date.tomorrow.to_time)
+  describe "as_json" do
+    let(:o) { FactoryGirl.create(:order, sektion: sektion) }
+    it "should return a json object" do
+      j = o.to_json
+      j.should have_json_path("start")
+      j.should have_json_path("title")
+      j.should have_json_path("end")
     end
   end
 end
