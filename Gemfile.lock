@@ -236,7 +236,7 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0.0)
-    simple_calendar (0.1.10)
+    simple_calendar (1.1.0)
       rails (>= 3.0)
     slop (3.5.0)
     sprockets (2.11.0)
@@ -320,7 +320,7 @@ DEPENDENCIES
   rspec-rails
   sanitize
   sass-rails (= 4.0.2)
-  simple_calendar (~> 0.1.10)
+  simple_calendar (~> 1.1.0)
   sprockets (= 2.11.0)
   sqlite3
   thin

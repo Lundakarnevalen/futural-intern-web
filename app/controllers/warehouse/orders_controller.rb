@@ -9,7 +9,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def show
-    @partial_delivery = PartialDelivery.new 
+    @partial_delivery = PartialDelivery.new
     @partial_delivery.partial_delivery_products.build
     @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
@@ -161,7 +161,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @bestallare = false
     render :index
   end
-  
+
   def sektion
     if params[:sektion_id]
       @sektioner = params[:sektion_id]
@@ -177,6 +177,12 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def calendar
     @orders = Order.where("delivery_date IS NOT NULL AND warehouse_code = ?", @warehouse_code)
+    @orders = @orders.between(params[:start], params[:end]) if params[:start] && params[:end]
+    puts @orders.size
+    respond_to do |format|
+      format.html
+      format.json { render json: @orders.to_json(warehouse_code: @warehouse_code) }
+    end
   end
 
   def return_products
