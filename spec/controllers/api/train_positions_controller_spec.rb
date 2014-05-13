@@ -10,7 +10,6 @@ describe Api::TrainPositionsController do
       p = FactoryGirl.create(:train_position, lat: 70.01, lng: -15.10)
       get :index, format: :json
       response.code.should eq("200")
-      puts response.body
       response.body.should be_json_eql({ success: true, train_positions: [p] }.to_json)
     end
 

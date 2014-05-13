@@ -1,7 +1,7 @@
 # -*- encoding : utf-8 -*-
 class Api::KarnevalisterController < Api::ApiController
   before_filter :authenticate_user_from_token!
-  before_filter :karnevalist_params
+  before_filter :karnevalist_params, only: [:update]
   def update
     g_token = karnevalist_params[:google_token]
     ios_token = karnevalist_params[:ios_token]

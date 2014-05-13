@@ -14,7 +14,11 @@
     devise_for :users
     get '/tests', to: 'test#index'
     resources :clusters, only: [:create, :update, :index]
-    resources :karnevalister, only: [:update]
+    resources :karnevalister, only: [:update] do
+      collection do
+        get 'fetch', action: 'fetch'
+      end
+    end
     resources :notifications, only: [:index]
     resources :photos, only: [:create, :index, :show]
     resources :train_positions, except: [:destroy, :edit, :new]
