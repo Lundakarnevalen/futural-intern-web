@@ -178,7 +178,6 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def calendar
     @orders = Order.where("delivery_date IS NOT NULL AND warehouse_code = ?", @warehouse_code)
     @orders = @orders.between(params[:start], params[:end]) if params[:start] && params[:end]
-    puts @orders.size
     respond_to do |format|
       format.html
       format.json { render json: @orders.to_json(warehouse_code: @warehouse_code) }
