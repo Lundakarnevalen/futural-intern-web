@@ -178,4 +178,9 @@ FactoryGirl.define do
   factory :attendance do
     comment 'Allergisk mot protoner'
   end
+
+  factory :train_position do
+    lat 0
+    lng 0
+  end
 end
