@@ -7,17 +7,17 @@ describe Api::TrainPositionsController do
   describe "GET to APi::TrainPositionsController" do
 
     it "should return an array containing train positions" do
-      FactoryGirl.create(:train_position, lat: 70.01, lng: -15.10)
+      p = FactoryGirl.create(:train_position, lat: 70.01, lng: -15.10)
       get :index, format: :json
       response.code.should eq("200")
-      response.body.should have_json_path("train_positions")
+      puts response.body
+      response.body.should be_json_eql({ success: true, train_positions: [p] }.to_json)
     end
 
     it "should return no content if there are no positions" do
       get :index, format: :json
       response.code.should eq("204")
       response.body.should_not have_json_path("train_positions")
-      response.body.should have_json_path("success")
     end
 
   end
@@ -44,8 +44,7 @@ describe Api::TrainPositionsController do
 
       it "should not create a train_pos if the user is unathorized" do
         post :create, { token: @user.authentication_token, train_position: { lat:0, lng:0 } }, format: :json
-        response.code.should eq("200")
-        response.body.should have_json_path("train_position")
+        response.code.should eq("401")
         TrainPosition.all.should be_empty
       end
 
@@ -60,6 +59,7 @@ describe Api::TrainPositionsController do
         put :update, { token: @user.authentication_token, train_position: { lat: 35.17, lng: -137.50 }, id: @p.id }, format: :json
         response.code.should eq("200")
         response.body.should have_json_path("train_position")
+        @p.reload
         lat_before.should_not eq(@p.lat)
       end
 
