@@ -274,6 +274,14 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   def info
   end
 
+  def export
+    @orders = Order.includes(:order_products => { :product => :product_category })
+                   .where :warehouse_code => @warehouse_code
+    render :xlsx => 'export',
+           :filename => 'ordrar.xlsx',
+           :disposition => 'attachment'
+  end
+
   private
     def find_order
       @order = Order.find(params[:id])
