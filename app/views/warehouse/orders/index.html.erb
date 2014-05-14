@@ -16,7 +16,10 @@
       <%= submit_tag "Filtrera", class: "btn btn-primary" %>
     <% end %>
 <% end %>
-<%= link_to 'Exportera som Excel', './export' %>
+<% if !@bestallare && !@sektion_orders %>
+  <hr>
+  <%= button_to 'Exportera till Excel', './export', method: "get", class: "btn btn-primary" %>
+<% end %>
 <% if !@all_completed_orders %>
 <h4>Pågående ordrar</h4>
 <div class="table-responsive">

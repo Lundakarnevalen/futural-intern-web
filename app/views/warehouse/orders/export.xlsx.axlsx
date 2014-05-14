@@ -3,7 +3,7 @@ ws_name = "Orders, #{Time.now.strftime '%Y%m%d'}"[0..30]
 
 xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
   sheet.add_row(
-    [ 'Ordernr', 'Status', 'Beställare', 'Sektion', 'Orderdatum', 'Leveransdatum', 
+    [ 'Ordernr', 'Status', 'Beställare', 'Sektion', 'Beställningsdatum', 'Hämtdatum', 
       'Totalpris order', 'Varunamn', 'Kategori', 'Mängd', 'Styckpris', 
       'Totalpris vara', 'Levererat antal' ]
   )
@@ -15,12 +15,12 @@ xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
     o.order_products.each do |op|
       sheet.add_row(
         # Repeat order information
-        [ o.id,
+        [ o.order_number,
           o.status,
           o.karnevalist.name,
           o.sektion.name,
-          o.order_date,
-          o.delivery_date,
+          o.order_date.strftime("%Y-%m-%d %H:%M"),
+          o.delivery_date.strftime("%Y-%m-%d %H:%M"),
           '%.2f' % order_gt,
         # Product information
           op.product.name,

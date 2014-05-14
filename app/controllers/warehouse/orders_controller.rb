@@ -276,7 +276,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def export
     @orders = Order.includes(:order_products => { :product => :product_category })
-                   .where :warehouse_code => @warehouse_code
+                   .where("status IS NOT NULL AND warehouse_code = ?", @warehouse_code)
     render :xlsx => 'export',
            :filename => 'ordrar.xlsx',
            :disposition => 'attachment'
