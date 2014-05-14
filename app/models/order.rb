@@ -23,20 +23,21 @@ class Order < ActiveRecord::Base
   }
   ORDER_PATHS = {
     fabriken: 'fabriken_order_path',
-    fest: 'festmasteriet_order_path',
+    fest: 'fest_order_path',
     snaxeriet: 'snaxeriet_order_path'
   }
 
   def as_json(options = {})
     wh_code = options[:warehouse_code] || 0
     path = wh_code == 0 ? 'fabriken' : (wh_code == 1 ? 'fest' : 'snaxeriet')
+    all_day = wh_code == 2 ? false : true
     {
       id: self.id,
       title: self.sektion.name,
       description: "",
       start: self.delivery_date,
       end: self.delivery_date.advance(minutes: 20),
-      allDay: false,
+      allDay: all_day,
       recurring: false,
       url: Rails.application.routes.url_helpers.send(ORDER_PATHS[path.to_sym], self.id)
     }

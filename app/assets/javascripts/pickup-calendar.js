@@ -2,6 +2,7 @@ $(function() {
   var $el = $('#pickup-calendar'),
       location = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1'),
       defaultView = location === 'snaxeriet' ? 'agendaDay' : 'month'
+      allDaySlot = location ==='snaxeriet' ? false : true
   $el.fullCalendar({
 
     header: {
@@ -11,10 +12,11 @@ $(function() {
     },
     defaultView: defaultView,
     height: 700,
+    firstDay: 1,
     slotMinutes: 60,
     axisFormat: 'H:mm { - H:mm } ',
     slotEventOverlap: false,
-    allDaySlot: false,
+    allDaySlot: allDaySlot,
 
     eventSources:[{
       url: '/' + location + '/orders/calendar.json'
