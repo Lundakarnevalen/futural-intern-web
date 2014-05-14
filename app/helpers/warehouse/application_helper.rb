@@ -36,6 +36,10 @@ module Warehouse::ApplicationHelper
   def confirm_put_order_path(o)
     @warehouse_code == 0 ? confirm_put_fabriken_order_path(o) : (@warehouse_code == 1 ? confirm_put_fest_order_path(o) : confirm_put_snaxeriet_order_path(o)) 
   end
+  
+  def confirm_date_order_path(o)
+    @warehouse_code == 0 ? confirm_date_fabriken_order_path(o) : (@warehouse_code == 1 ? confirm_date_fest_order_path(o) : confirm_date_snaxeriet_order_path(o)) 
+  end
 
   def list_orders_path
     @warehouse_code == 0 ? list_fabriken_orders_path : (@warehouse_code == 1 ? list_fest_orders_path : list_snaxeriet_orders_path) 

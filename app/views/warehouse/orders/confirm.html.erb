@@ -98,7 +98,7 @@
       <div class="form-group">
         <%= label_tag :delivery_time, "Hämttid" %>
         <div class="input-group bootstrap-timepicker">
-          <%= text_field_tag :delivery_time, nil, {class: "form-control timepicker"} %>
+          <%= text_field_tag :delivery_time, nil, {autocomplete: 'off', class: "form-control timepicker"} %>
           <span class="input-group-addon"><span class="glyphicon glyphicon-time"></span></span>
         </div>
       </div>
@@ -122,5 +122,5 @@
   <% end %>
 </div>
 </div>
-<%= f.submit "Bekräfta order", class: "btn btn-primary", name: "confirm" %>
+<%= f.submit "Skicka in beställning", class: "btn btn-primary", name: "confirm" %>
 <% end %>

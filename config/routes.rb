@@ -159,6 +159,7 @@
         put 'return_products', to: 'orders#return_products'
         get 'confirm', to: 'orders#confirm'
         put 'confirm_put', to: 'orders#confirm_put'
+        put 'confirm_date', to: 'orders#confirm_date'
       end
     end
 

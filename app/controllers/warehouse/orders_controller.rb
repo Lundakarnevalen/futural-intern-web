@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Warehouse::OrdersController < Warehouse::ApplicationController
-  before_filter :find_order, only: [:show, :update, :confirm, :confirm_put]
+  before_filter :find_order, only: [:show, :update, :confirm, :confirm_put, :confirm_date]
 
   def index
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC")
@@ -63,7 +63,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def confirm_put
     if params[:confirm]
-      @order.status = "Bearbetas"
+      if @warehouse_code == 2
+        @order.status = "Ej bekräftad"
+      else
+        @order.status = "Bearbetas"
+      end
     end
     if @order.update_attributes(order_params)
         if params[:delivery_time]
@@ -97,6 +101,14 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     else
       render :confirm
     end
+  end
+
+  def confirm_date
+    @order.delivery_date = DateTime.strptime("#{params[:order][:delivery_date]} #{params[:delivery_time]} CEST", "%Y-%m-%d %H:%M %Z")
+    @order.status = "Bearbetas"
+    @order.save
+    WarehouseMailer.date_confirmation("it@lundakarnevalen.se", @order.karnevalist.email, "Bekräftad hämttid för din order", @order, @warehouse_code).deliver
+    redirect_to order_path(@order)
   end
 
   def direct_selling
