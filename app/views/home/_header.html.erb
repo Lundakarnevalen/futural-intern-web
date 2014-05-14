@@ -49,4 +49,15 @@
     </div><!-- /.navbar-collapse -->
   </div><!-- /.container-fluid -->
 </nav>
+<% elsif current_page?(internapp_path) %>
+<nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <div id="logotype" class="navbar-left">
+        <%=link_to (image_tag "karnevalist-logotyp@2x.png"), root_url %>
+      </div>
+    </div>
+  </div>
+</nav>
 <% end %>
+
