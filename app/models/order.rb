@@ -35,7 +35,7 @@ class Order < ActiveRecord::Base
       title: self.sektion.name,
       description: "",
       start: self.delivery_date,
-      end: self.delivery_date.advance(minutes: 30),
+      end: self.delivery_date.advance(minutes: 20),
       allDay: false,
       recurring: false,
       url: Rails.application.routes.url_helpers.send(ORDER_PATHS[path.to_sym], self.id)

@@ -1,7 +1,7 @@
 $(function() {
   var $el = $('#pickup-calendar'),
       location = window.location.pathname.replace(/^\/([^\/]*).*$/, '$1'),
-      defaultView = location === 'snaxeriet' ? 'agendaDay' : 'agendaWeek'
+      defaultView = location === 'snaxeriet' ? 'agendaDay' : 'month'
   $el.fullCalendar({
 
     header: {
