@@ -20,7 +20,7 @@ xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
           o.karnevalist.name,
           o.sektion.name,
           o.order_date.strftime("%Y-%m-%d %H:%M"),
-          o.delivery_date.strftime("%Y-%m-%d %H:%M"),
+          o.delivery_date.blank? ? o.order_date.strftime("%Y-%m-%d %H:%M") : o.delivery_date.strftime("%Y-%m-%d %H:%M"),
           '%.2f' % order_gt,
         # Product information
           op.product.name,
