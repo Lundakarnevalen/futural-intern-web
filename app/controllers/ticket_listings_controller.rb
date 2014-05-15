@@ -82,6 +82,6 @@ class TicketListingsController < ApplicationController
   end
 
   def filtering_params params
-    params.slice(:event_id, :seller_id, :selling)
+    params.slice(:event_id, :seller_id, :listing_type)
   end
 end

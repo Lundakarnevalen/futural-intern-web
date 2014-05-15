@@ -8,6 +8,7 @@ class TicketListing < ActiveRecord::Base
 
   validates :seller, :presence => true
   validates :event, :presence => true
+  validates :listing_type, :presence => true
   validates :price, :presence => true,
                     :numericality =>
                       { :message => 'Måste vara ett helt antal kronor' },
@@ -16,7 +17,7 @@ class TicketListing < ActiveRecord::Base
                         :message => 'Priset ser lite misstänkt ut' }
 
   scope :event_id, -> (event_id) { where event_id: event_id }
-  scope :selling, -> (selling) { where selling: (selling == 'true') }
+  scope :listing_type, -> (listing_type) { where listing_type: listing_type }
   scope :seller_id, -> (seller_id) { where seller_id: seller_id }
 
   validate do # event

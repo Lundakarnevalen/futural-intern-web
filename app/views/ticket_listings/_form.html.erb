@@ -2,22 +2,25 @@
   <%= form_for @listing do |f| %>
     <fieldset>
       <div>
-        <%= f.label :event_id, 'Vilken händelse?' %><br>
+        <%= f.label :event_id, 'Till vilken händelse?' %><br>
         <%= f.collection_select :event_id, @events,
               :id, :to_s, :selected => @selected %>
       </div>
 
       <div>
-        <%= f.label :price, "Pris (kr)" %>
+        <%= f.label :price, "Pris i kr (endast siffror i detta fältet)" %>
         <%= f.text_field :price %>
       </div>
 
       <div>
-        <strong>Vill du byta eller sälja?</strong>
-        <%= f.label :selling, 'Byta', :value => false %>
-        <%= f.radio_button :selling, false %>
-        <%= f.label :selling, 'Sälja', :value => true %>
-        <%= f.radio_button :selling, true %>
+        <strong>Varför är du här? Vill du:</strong>
+        <%= f.label :listing_type, 'A) Byta', :value => 'byta' %>
+        <%= f.radio_button :listing_type, 'byta' %>
+        <%= f.label :listing_type, 'B) Sälja', :value => 'sälja' %>
+        <%= f.radio_button :listing_type, 'sälja' %>
+        <%= f.label :listing_type, 'C) Köpa', :value => 'köpa' %>
+        <%= f.radio_button :listing_type, 'köpa' %>
+        <strong>biljett(er)?</strong>
       </div>
 
       <div>
