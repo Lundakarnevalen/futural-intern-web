@@ -177,7 +177,12 @@
       end
     end
 
-    resources :incoming_deliveries
+    resources :incoming_deliveries do
+      collection do
+        get 'export', :to => 'incoming_deliveries#export'
+      end
+    end
+
     resources :product_categories
     resources :order_products
     resources :partial_deliveries
