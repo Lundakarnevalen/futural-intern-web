@@ -1,6 +1,6 @@
 # -*- encoding : utf-8 -*-
 class Warehouse::OrdersController < Warehouse::ApplicationController
-  before_filter :find_order, only: [:show, :update, :confirm, :confirm_put]
+  before_filter :find_order, only: [:show, :update, :confirm, :confirm_put, :confirm_date]
 
   def index
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC")
@@ -9,7 +9,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def show
-    @partial_delivery = PartialDelivery.new 
+    @partial_delivery = PartialDelivery.new
     @partial_delivery.partial_delivery_products.build
     @bestallare = true if @order.karnevalist_id == current_user.karnevalist.id
     @levererad = false
@@ -63,7 +63,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def confirm_put
     if params[:confirm]
-      @order.status = "Bearbetas"
+      if @warehouse_code == 2
+        @order.status = "Ej bekräftad"
+      else
+        @order.status = "Bearbetas"
+      end
     end
     if @order.update_attributes(order_params)
         if params[:delivery_time]
@@ -97,6 +101,14 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     else
       render :confirm
     end
+  end
+
+  def confirm_date
+    @order.delivery_date = DateTime.strptime("#{params[:order][:delivery_date]} #{params[:delivery_time]} CEST", "%Y-%m-%d %H:%M %Z")
+    @order.status = "Bearbetas"
+    @order.save
+    WarehouseMailer.date_confirmation("it@lundakarnevalen.se", @order.karnevalist.email, "Bekräftad hämttid för din order", @order, @warehouse_code).deliver
+    redirect_to order_path(@order)
   end
 
   def direct_selling
@@ -161,7 +173,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
     @bestallare = false
     render :index
   end
-  
+
   def sektion
     if params[:sektion_id]
       @sektioner = params[:sektion_id]
@@ -177,6 +189,11 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def calendar
     @orders = Order.where("delivery_date IS NOT NULL AND warehouse_code = ?", @warehouse_code)
+    @orders = @orders.between(params[:start], params[:end]) if params[:start] && params[:end]
+    respond_to do |format|
+      format.html
+      format.json { render json: @orders.to_json(warehouse_code: @warehouse_code) }
+    end
   end
 
   def return_products
@@ -267,6 +284,14 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
   end
 
   def info
+  end
+
+  def export
+    @orders = Order.includes(:order_products => { :product => :product_category })
+                   .where("status IS NOT NULL AND warehouse_code = ?", @warehouse_code)
+    render :xlsx => 'export',
+           :filename => 'ordrar.xlsx',
+           :disposition => 'attachment'
   end
 
   private

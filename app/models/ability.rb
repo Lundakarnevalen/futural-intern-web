@@ -168,7 +168,6 @@ class Ability
       can [:read, :diagram], Bookkeeping
     end
 
-
     # Admin
     if user.is? :admin
       can :manage, :all

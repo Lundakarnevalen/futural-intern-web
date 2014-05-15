@@ -1,6 +1,4 @@
-<div class="table-responsive">
-  <%= calendar @orders do |order| %>
-    <div><%= link_to order.sektion.name, order_path(order) %></div>
-  <% end %>
+<h3>Kalender Hämtdatum</h3>
+<div class="container-fluid">
+  <div id="pickup-calendar"></div>
 </div>
-<div id="test"></div>

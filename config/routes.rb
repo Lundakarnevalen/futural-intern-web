@@ -14,9 +14,14 @@
     devise_for :users
     get '/tests', to: 'test#index'
     resources :clusters, only: [:create, :update, :index]
-    resources :karnevalister, only: [:update]
+    resources :karnevalister, only: [:update] do
+      collection do
+        get 'fetch', action: 'fetch'
+      end
+    end
     resources :notifications, only: [:index]
     resources :photos, only: [:create, :index, :show]
+    resources :train_positions, except: [:destroy, :edit, :new]
   end
 
   resources :notifications, only: [:new, :create, :show, :index]
@@ -148,11 +153,13 @@
         post 'direct_selling_post', to: 'orders#direct_selling_post'
         get 'update_customers', to: 'orders#update_customers'
         get 'info', to: 'orders#info'
+        get 'export', :to => 'orders#export'
       end
       member do
         put 'return_products', to: 'orders#return_products'
         get 'confirm', to: 'orders#confirm'
         put 'confirm_put', to: 'orders#confirm_put'
+        put 'confirm_date', to: 'orders#confirm_date'
       end
     end
 
@@ -170,7 +177,12 @@
       end
     end
 
-    resources :incoming_deliveries
+    resources :incoming_deliveries do
+      collection do
+        get 'export', :to => 'incoming_deliveries#export'
+      end
+    end
+
     resources :product_categories
     resources :order_products
     resources :partial_deliveries

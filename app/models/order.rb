@@ -14,12 +14,44 @@ class Order < ActiveRecord::Base
 
   accepts_nested_attributes_for :order_products, :reject_if => proc { |a| a['amount'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :products
-  
+
+  scope :between, lambda { |start_time, end_time|
+    where("? < delivery_date < ?",
+      Order.format_date(start_time),
+      Order.format_date(end_time)
+    )
+  }
+  ORDER_PATHS = {
+    fabriken: 'fabriken_order_path',
+    fest: 'fest_order_path',
+    snaxeriet: 'snaxeriet_order_path'
+  }
+
+  def as_json(options = {})
+    wh_code = options[:warehouse_code] || 0
+    path = wh_code == 0 ? 'fabriken' : (wh_code == 1 ? 'fest' : 'snaxeriet')
+    all_day = wh_code == 2 ? false : true
+    {
+      id: self.id,
+      title: self.sektion.name,
+      description: "",
+      start: self.delivery_date,
+      end: self.delivery_date.advance(minutes: 20),
+      allDay: all_day,
+      recurring: false,
+      url: Rails.application.routes.url_helpers.send(ORDER_PATHS[path.to_sym], self.id)
+    }
+  end
+
   HUMANIZED_ATTRIBUTES = {
     :delivery_date => "Hämtdatum",
     :sektion => "Sektion",
     :karnevalist => "Kund"
   }
+
+  def self.format_date(date_time)
+    Time.at(date_time.to_i).to_formatted_s(:db)
+  end
 
   def self.human_attribute_name(attr, options = {})
     HUMANIZED_ATTRIBUTES[attr.to_sym] || super
@@ -37,10 +69,6 @@ class Order < ActiveRecord::Base
     self.order_number = Order.where(warehouse_code: self.warehouse_code).count + 1
   end
 
-  def start_time
-    self.delivery_date
-  end
-
   def total_sum
     sum = 0
     self.products.each do |p|
@@ -56,7 +84,7 @@ class Order < ActiveRecord::Base
     end
     return sum
   end
-  
+
   def self.my_completed_orders_total_sum(karnevalist_id, warehouse_code)
     sum = 0
     Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND karnevalist_id = ?", warehouse_code, karnevalist_id).each do |o|
@@ -64,7 +92,7 @@ class Order < ActiveRecord::Base
     end
     return sum
   end
-  
+
   def self.sektion_active_orders_total_sum(sektioner, warehouse_code)
     sum = 0
     Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id IN (?)", warehouse_code, sektioner).each do |o|
@@ -72,7 +100,7 @@ class Order < ActiveRecord::Base
     end
     return sum
   end
-  
+
   def self.sektion_completed_orders_total_sum(sektioner, warehouse_code)
     sum = 0
     Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", warehouse_code, sektioner).each do |o|

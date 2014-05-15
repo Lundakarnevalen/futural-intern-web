@@ -13,4 +13,10 @@ class WarehouseMailer < ActionMailer::Base
     @warehouse_code = warehouse_code
     mail(to: receiver, subject: subject, from: sender)
   end
+  
+  def date_confirmation(sender, receiver, subject, order, warehouse_code)
+    @order = order
+    @warehouse_code = warehouse_code
+    mail(to: receiver, subject: subject, from: sender)
+  end
 end

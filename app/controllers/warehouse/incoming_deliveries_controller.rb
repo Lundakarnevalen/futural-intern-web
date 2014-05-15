@@ -148,6 +148,17 @@ class Warehouse::IncomingDeliveriesController < Warehouse::ApplicationController
   def delete
   end
 
+  def export
+    @delivs = IncomingDelivery.includes(:karnevalister,
+                                        :incoming_delivery_products => 
+                                          { :product => :product_category })
+                              .where('warehouse_code = ?', 
+                                     @warehouse_code)
+    render :xlsx => 'export',
+           :filename => 'inleveranser.xlsx',
+           :disposition => 'attachment'
+  end
+
   private
     def find_incoming_delivery
       @incoming_delivery = IncomingDelivery.find(params[:id])

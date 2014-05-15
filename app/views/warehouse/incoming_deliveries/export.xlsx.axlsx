@@ -1,0 +1,28 @@
+ws_name = "Inleveranser, #{Time.now.strftime '%Y%m%d'}"[0..30]
+
+xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
+  sheet.add_row(
+    [ 'Fakturanr', 'Påbörjad', 'Hanterad av', 'Status', 'Leveranskostnad', 
+      'Varunamn', 'Kategori', 'Streckkod', 'Lagerplats', 'Nytt antal' ]
+  )
+  @delivs.each do |d|
+    d.incoming_delivery_products.each do |dp|
+      karnevalister = d.karnevalister.map{|k| k.name}.join(",")
+      sheet.add_row(
+        # Repeat order information
+        [ d.invoice_nbr,
+          d.created_at.strftime("%Y-%m-%d %H:%M"),
+          karnevalister,
+          d.ongoing ? "Pågående" : "Avslutad",
+          d.delivery_cost.blank? ? 0 : d.delivery_cost, 
+        # Product information
+          dp.product.name,
+          dp.product.product_category.name,
+          dp.product.ean, 
+          dp.product.stock_location,
+          "#{dp.amount} #{dp.product.unit}"]
+      )
+    end
+  end
+end
+

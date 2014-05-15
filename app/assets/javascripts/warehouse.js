@@ -13,6 +13,7 @@ $(function() {
 
     defaultView: 'agendaWeek',
     height: 700,
+    firstDay: 1,
     slotMinutes: 60,
     minTime: 12,
     maxTime: 22,

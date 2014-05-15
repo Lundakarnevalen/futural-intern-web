@@ -7,7 +7,7 @@ body {
   padding-top: 50px;
 }
 .fc-widget-content {
-  height: 55px;
+  height: 50px;
 }
 
 /*
@@ -142,14 +142,6 @@ tr.sum td {
 .panel form {
     display: inline;
     margin-right: 3px;
-}
-
-.calendar {
-    width: auto;
-    td {
-        height: 100px;
-        width: 10%;
-    }
 }
 
 @media (min-width: 768px) {

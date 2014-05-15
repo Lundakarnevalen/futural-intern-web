@@ -1,0 +1,36 @@
+ws_name = "Orders, #{Time.now.strftime '%Y%m%d'}"[0..30]
+
+
+xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
+  sheet.add_row(
+    [ 'Ordernr', 'Status', 'Beställare', 'Sektion', 'Beställningsdatum', 'Hämtdatum', 
+      'Totalpris order', 'Varunamn', 'Kategori', 'Mängd', 'Styckpris', 
+      'Totalpris vara', 'Levererat antal' ]
+  )
+  @orders.each do |o|
+    order_gt = o.order_products.map{ |op|
+      op.amount * op.product.sale_price
+    }.sum
+
+    o.order_products.each do |op|
+      sheet.add_row(
+        # Repeat order information
+        [ o.order_number,
+          o.status,
+          o.karnevalist.name,
+          o.sektion.name,
+          o.order_date.strftime("%Y-%m-%d %H:%M"),
+          o.delivery_date.blank? ? o.order_date.strftime("%Y-%m-%d %H:%M") : o.delivery_date.strftime("%Y-%m-%d %H:%M"),
+          '%.2f' % order_gt,
+        # Product information
+          op.product.name,
+          op.product.product_category.name,
+          "#{op.amount} #{op.product.unit}",
+          '%.2f' % op.product.sale_price,
+          '%.2f' % (op.amount * op.product.sale_price),
+          op.delivered_amount ]
+      )
+    end
+  end
+end
+

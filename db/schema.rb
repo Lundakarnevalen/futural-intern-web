@@ -379,6 +379,11 @@ ActiveRecord::Schema.define(version: 20140515112138) do
     t.string   "listing_type"
   end
 
+  create_table "train_positions", force: true do |t|
+    t.float "lat"
+    t.float "lng"
+  end
+
   create_table "users", force: true do |t|
     t.string   "email",                  default: "", null: false
     t.string   "encrypted_password",     default: "", null: false
