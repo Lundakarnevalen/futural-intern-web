@@ -18,7 +18,7 @@
 <% end %>
 <% if !@bestallare && !@sektion_orders %>
   <hr>
-  <%= button_to 'Exportera till Excel', './export', method: "get", class: "btn btn-primary" %>
+  <%= button_to 'Exportera till Excel', export_orders_path, method: "get", class: "btn btn-primary" %>
 <% end %>
 <% if !@all_completed_orders %>
 <h4>Pågående ordrar</h4>
