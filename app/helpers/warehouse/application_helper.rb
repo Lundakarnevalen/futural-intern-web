@@ -24,6 +24,10 @@ module Warehouse::ApplicationHelper
   def orders_path
     @warehouse_code == 0 ? fabriken_orders_path : (@warehouse_code == 1 ? fest_orders_path : snaxeriet_orders_path)
   end
+  
+  def export_orders_path
+    @warehouse_code == 0 ? export_fabriken_orders_path : (@warehouse_code == 1 ? export_fest_orders_path : export_snaxeriet_orders_path)
+  end
 
   def new_order_path
     @warehouse_code == 0 ? new_fabriken_order_path : (@warehouse_code == 1 ? new_fest_order_path : new_snaxeriet_order_path)
@@ -88,6 +92,10 @@ module Warehouse::ApplicationHelper
   #deliveries
   def incoming_deliveries_path
     @warehouse_code == 0 ? fabriken_incoming_deliveries_path : (@warehouse_code == 1 ? fest_incoming_deliveries_path : snaxeriet_incoming_deliveries_path)
+  end
+  
+  def export_incoming_deliveries_path
+    @warehouse_code == 0 ? export_fabriken_incoming_deliveries_path : (@warehouse_code == 1 ? export_fest_incoming_deliveries_path : export_snaxeriet_incoming_deliveries_path)
   end
 
   def incoming_delivery_path(i, format = :html)

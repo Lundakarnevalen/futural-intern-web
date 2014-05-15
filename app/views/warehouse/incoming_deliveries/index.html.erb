@@ -1,4 +1,6 @@
 <%= link_to "Ny inleverans", new_incoming_delivery_path, class: "btn btn-primary"  %>
+<hr>
+<%= button_to 'Exportera till Excel', export_incoming_deliveries_path, method: "get", class: "btn btn-primary" %>
 <% if !@incoming_deliveries_ongoing.blank? %>
 <h3>Pågående inleveranser</h3>
 <div class="table-responsive">

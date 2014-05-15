@@ -2,23 +2,25 @@ ws_name = "Inleveranser, #{Time.now.strftime '%Y%m%d'}"[0..30]
 
 xlsx_package.workbook.add_worksheet :name => ws_name do |sheet|
   sheet.add_row(
-    [ 'Fakturanr.', 'Påbörjad', 'Hanteras av', 'Status', 
-      'Vara', 'Streckkod', 'Lagerplats', 'Enhet', 'Antal' ]
+    [ 'Fakturanr', 'Påbörjad', 'Hanterad av', 'Status', 'Leveranskostnad', 
+      'Varunamn', 'Kategori', 'Streckkod', 'Lagerplats', 'Nytt antal' ]
   )
   @delivs.each do |d|
-    d.incoming_delivery_products.each do |idp|
+    d.incoming_delivery_products.each do |dp|
+      karnevalister = d.karnevalister.map{|k| k.name}.join(",")
       sheet.add_row(
-        # Repeat deliv information
+        # Repeat order information
         [ d.invoice_nbr,
-          d.created_at,
-          d.karnevalister.map(&:name).join(', '),
-          (d.ongoing ? 'Pågående' : 'Avslutad'),
+          d.created_at.strftime("%Y-%m-%d %H:%M"),
+          karnevalister,
+          d.ongoing ? "Pågående" : "Avslutad",
+          d.delivery_cost.blank? ? 0 : d.delivery_cost, 
         # Product information
-          idp.product.name,
-          idp.product.product_category.name,
-          idp.product.stock_location,
-          idp.product.unit,
-          idp.amount ]
+          dp.product.name,
+          dp.product.product_category.name,
+          dp.product.ean, 
+          dp.product.stock_location,
+          "#{dp.amount} #{dp.product.unit}"]
       )
     end
   end
