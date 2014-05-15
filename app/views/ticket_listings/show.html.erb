@@ -16,6 +16,9 @@
     <dt>Säljare</dt>
     <dd><%= @listing.seller.fornamn %></dd>
 
+    <dt>Önskar</dt>
+    <dd><%= @listing.listing_type.titleize %> biljett</dd>
+
     <dt>Pris</dt>
     <dd><%= number_to_currency @listing.price %></dd>
 
