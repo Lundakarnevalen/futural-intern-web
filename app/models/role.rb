@@ -44,6 +44,8 @@ class Role < ActiveRecord::Base
       'Kan skapa nya rapporteringar och se befintliga i bokföringssystemet' ],
     [ :admin_bookkeeping_lite,
       'Kan se alla rapporteringar i bokföringssystemet' ],
+    [ :photographer,
+      'Kan administrera Futugram' ],
   ]
 
   def self.seed_roles
