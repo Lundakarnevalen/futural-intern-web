@@ -4,7 +4,7 @@
         <li class="nav-header disabled"><a>Ordrar</a></li>
         <li class="<%= 'active' if current_page?(orders_path) %>"><%= link_to "Mina ordrar", orders_path %></li>
         <li class="<%= 'active' if current_page?(new_order_path) %>"><%= link_to "Ny order", new_order_path %></li>
-        <% if (((current_user.is? :sektionsadmin_fabriken) || (current_user.is? :admin_fabriken)) && @warehouse_code == 0) || (((current_user.is? :sektionsadmin_festmasteriet) || (current_user.is? :admin_festmasteriet)) && @warehouse_code == 1) || ((current_user.is? :admin_snaxeriet) && @warehouse_code == 2) || (current_user.is? :admin) %>
+        <% if (((current_user.is? :sektionsadmin_fabriken) || (current_user.is? :admin_fabriken)) && @warehouse_code == 0) || (((current_user.is? :sektionsadmin_festmasteriet) || (current_user.is? :admin_festmasteriet)) && @warehouse_code == 1) || (((current_user.is? :sektionsadmin_snaxeriet) || (current_user.is? :admin_snaxeriet)) && @warehouse_code == 2) || (current_user.is? :admin) %>
           <li class="<%= 'active' if current_page?(sektion_orders_path) %>"><%= link_to "Min sektions ordrar", sektion_orders_path %></li>
         <% end %>
         <li class="<%= 'active' if current_page?(info_orders_path) %>"><%= link_to "Information", info_orders_path %></li>

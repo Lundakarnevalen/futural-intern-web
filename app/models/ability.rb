@@ -134,7 +134,7 @@ class Ability
     end
 
     # Lagersystem - sektionsadmin
-    if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet)
+    if (user.is? :sektionsadmin_fabriken) || (user.is? :sektionsadmin_festmasteriet) || (user.is? :sektionsadmin_snaxeriet)
       can [:sektion, :read], Order, :sektion_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
 

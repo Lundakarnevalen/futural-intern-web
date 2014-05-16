@@ -40,6 +40,8 @@ class Role < ActiveRecord::Base
       'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar) i fabrikens lagersystem.' ],
     [ :sektionsadmin_festmasteriet,
       'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar) i festmästeriets lagersystem.' ],
+    [ :sektionsadmin_snaxeriet,
+      'Kan se ordrar för hela sin sektion (ej endast sina egna ordrar) i snaxeriets lagersystem.' ],
     [ :admin_bookkeeping,
       'Kan skapa nya rapporteringar och se befintliga i bokföringssystemet' ],
     [ :admin_bookkeeping_lite,
