@@ -37,7 +37,7 @@ class Ability
     can [:read, :step2, :enter_pwd, :step3, :step3_put, :step4], Karnevalist, :user_id => user.id
     can [:read], Post
     can [:read], Event
-    can [:manage], TicketListing, :seller => user.karnevalist
+    can :read, TicketListing
     can [:read, :sign_up, :attend], Event
     can [:read, :show_english, :show_contact, :image_index], Sektion
     can [:show], Image
@@ -49,7 +49,7 @@ class Ability
     # Notification
     if user.karnevalist?
       can :read, Notification, :recipient_id => user.karnevalist.tilldelade_sektioner.map{|s| s.id}.push(0)
-      can :read, TicketListing
+      can [:manage], TicketListing, :seller => user.karnevalist
     end
 
     # Phone
