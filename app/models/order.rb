@@ -10,7 +10,7 @@ class Order < ActiveRecord::Base
   validates :sektion, presence: true
   before_create :set_order_date, :set_order_number
   validates :delivery_date, presence: true, on: :update
-  validate :delivery_date_time, on: :update, if: "!self.delivery_date.blank?"
+  #validate :delivery_date_time, on: :update, if: "!self.delivery_date.blank? && self.status.blank?"
 
   accepts_nested_attributes_for :order_products, :reject_if => proc { |a| a['amount'].blank? }, :allow_destroy => true
   accepts_nested_attributes_for :products
