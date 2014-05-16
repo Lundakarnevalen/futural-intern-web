@@ -117,8 +117,8 @@
     <p>Uthämtning sker på onsdagar 11:00 till 13:00 samt fredagar 12:00 till 14:00 i AF-borgens källare.</p>
     <p>Vid större arrangemang där leveranser önskas direkt till plats bör kontakt tas senast två veckor innan för att vi ska kunna administrera. Tänk även på att ha alkoholtillståndet färdigt i god tid, inget tillstånd betyder ingen leverans!</p>
     <p>Vi tar gärna emot returer, men enbart föranmälda under våra öppettider. Vi tar endast emot hela förpackningar, flaskor och flak!</p>
-  <% else %>
-    <p><strong>Information:</strong><br>Orderinformation från Snaxeriet.</p>
+  <% elsif @warehouse_code == 2 %>
+    <p><strong>Information:</strong><br>Tänk på att folkvimlet kommer hindra er framfart så beställ i tid!</p>
   <% end %>
 </div>
 </div>
