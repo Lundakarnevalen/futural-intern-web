@@ -27,12 +27,14 @@
       <li><%= link_to 'Pushnotiser', Notification, :class => "button" %></li>
     <% end %>
 
-    <li><%= link_to 'Karneblocket', TicketListing, :class => 'button' %></li>
+    <% if can? :read TicketListing %>
+      <li><%= link_to 'Karneblocket', TicketListing, :class => 'button' %></li>
+    <% end %>
 
     <% if can? :read, Photo %>
       <li><%= link_to 'Futugram', Photo, :class => "button" %></li>
     <% end %>
-    
+
     <li><%= link_to 'Internappen', internapp_path, :class => 'button' %></li>
 
   </ul>
