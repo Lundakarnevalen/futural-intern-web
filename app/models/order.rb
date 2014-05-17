@@ -71,8 +71,14 @@ class Order < ActiveRecord::Base
 
   def total_sum
     sum = 0
-    self.products.each do |p|
-      sum += p.total_price(p.amount(self.id))
+    if (self.status != "Makulerad") && (self.status != "Dellevererad/Makulerad")
+      self.products.each do |p|
+        sum += p.total_price(p.amount(self.id))
+      end
+    else
+      self.products.each do |p|
+        sum += p.total_price(p.delivered_amount(self.id))
+      end
     end
     return sum
   end

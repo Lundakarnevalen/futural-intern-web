@@ -216,14 +216,13 @@ module Warehouse::ApplicationHelper
         text "Hämtdatum: #{collect_date}"
         product_number = 1
         table_data = Array.new
-        titles = ["Vara","Mängd","Styckpris","Totalt pris"]
+        titles = ["Vara","Levererat antal","Styckpris","Totalt pris"]
         table_data.push(titles)
         products.each do |p|
-          amount = p.amount(order.id)
+          amount = p.delivered_amount(order.id)
           total_price = ActionController::Base.helpers.number_to_currency(p.total_price(amount))
           sale_price = ActionController::Base.helpers.number_to_currency(p.sale_price)
-          order_product = OrderProduct.where(:order_id => order.id, :product_id => p.id).first
-          data = ["#{p.name}", "#{order_product.amount} #{p.unit}","#{sale_price}", "#{total_price}"]
+          data = ["#{p.name}", "#{amount} #{p.unit}","#{sale_price}", "#{total_price}"]
           table_data.push(data)
           product_number += 1
         end
