@@ -20,7 +20,6 @@
   <hr>
   <%= button_to 'Exportera till Excel', export_orders_path, method: "get", class: "btn btn-primary" %>
 <% end %>
-<% if !@all_completed_orders %>
 <h4>Pågående ordrar</h4>
 <div class="table-responsive">
   <table class="table table-striped table-fixed">
@@ -63,7 +62,6 @@
     </tbody>
   </table>
 </div>
-<% end %>
 <% if !@completed_orders.blank? %>
 <h4>Avslutade ordrar</h4>
 <div class="table-responsive">
@@ -105,9 +103,5 @@
     </tbody>
   </table>
 </div>
-<% if @completed_orders.count >= 50 && !@bestallare && !@sektion_orders && !@all_completed_orders %>
-  <%= form_tag list_orders_path, method: :get, class: "form-inline" do %>
-    <%= submit_tag "Visa alla avslutade ordrar", name: "all_completed", class: "btn btn-primary" %>
-  <% end %>
-<% end %>
+<%= paginate @completed_orders %>
 <% end %>

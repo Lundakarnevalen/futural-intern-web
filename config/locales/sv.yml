@@ -7,6 +7,13 @@ sv:
       carrierwave_download_error: kunde inte laddas ner
       extension_white_list_error: "Du får inte ladda upp %{extension} filer, tillåtna: %{allowed_types}"
       extension_black_list_error: "Du får inte ladda upp %{extension} filer, förbjudna: %{prohibited_types}"
+  # Pagination (Kaminari)
+  views:
+    pagination:
+      first: "&laquo; Första"
+      last: "Sista &raquo;"
+      previous: "&lsaquo; Föregående"
+      next: "Nästa &rsaquo;"
   # Can can
   unauthorized:
     manage:

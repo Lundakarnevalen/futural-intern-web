@@ -54,6 +54,7 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
     last_week_number = 21
     date_first_day = DateTime.new(2014,4,7,0,0,0,'+1')
     @weeks = calculate_weeks(date_first_day, first_week_number, last_week_number)
+    @weeks = Kaminari.paginate_array(@weeks).page(params[:page]).per(2)
   end
 
   def daily_overview
@@ -98,8 +99,8 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
   end
 
   def sektion_summary
-    @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC")
     if params[:sektion_id]
+      @product_categories = ProductCategory.where(warehouse_code: @warehouse_code).order("name ASC").page(params[:page]).per(2)
       @sektion = Sektion.find(params[:sektion_id])
       @orders = Order.where(sektion_id: params[:sektion_id], warehouse_code: @warehouse_code)
     end

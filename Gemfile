@@ -34,6 +34,7 @@ gem 'sanitize'
 gem 'turbolinks'
 gem 'jquery-turbolinks'
 gem 'chartkick'
+gem 'kaminari'
 
 group :production do
   gem 'rails_12factor'
