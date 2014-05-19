@@ -48,22 +48,23 @@ class Warehouse::ProductsController < Warehouse::ApplicationController
   end
 
   def weekly_overview
-    @orders = Order.where(warehouse_code: @warehouse_code, status: "Levererad")
+    @orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code)
     @incoming_deliveries = IncomingDelivery.where(warehouse_code: @warehouse_code)
     first_week_number = 15
+    last_week_number = 21
     date_first_day = DateTime.new(2014,4,7,0,0,0,'+1')
-    @weeks = calculate_weeks(date_first_day, first_week_number)
+    @weeks = calculate_weeks(date_first_day, first_week_number, last_week_number)
   end
 
   def daily_overview
-    @orders = Order.where(warehouse_code: @warehouse_code, status: "Levererad")
+    @orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code)
     @incoming_deliveries = IncomingDelivery.where(warehouse_code: @warehouse_code)
     @dates = Order.find_all_dates(@warehouse_code)
   end
 
-  def calculate_weeks date_first_day, first_week_number
+  def calculate_weeks date_first_day, first_week_number, last_week_number
     weeks = Array.new
-    for i in first_week_number..52
+    for i in first_week_number..last_week_number
       weeks.push({day_1: date_first_day, day_7: date_first_day + 7.days - 1.seconds, week: i})
       date_first_day = date_first_day + 7.days
     end

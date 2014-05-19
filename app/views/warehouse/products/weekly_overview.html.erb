@@ -1,6 +1,8 @@
 <h2>Veckoöversikt</h2>
 <% @weeks.each do |w| %>
-  <% if Order.has_week(w, @warehouse_code) || IncomingDelivery.has_week(w, @warehouse_code) %>
+  <% orders = Order.find_orders_in_week(w, @warehouse_code) %>
+  <% incoming_deliveries = IncomingDelivery.find_incoming_deliveries_in_week(w, @warehouse_code) %>
+  <% if !orders.blank? || !incoming_deliveries.blank? %>
   <% week = w[:week] %>
     <h3> Vecka <%= week %></h3>
       <div class="row">
@@ -16,7 +18,7 @@
                     </thead>
                     <tbody>
                       <% sum_all_orders = 0 %>
-                      <% Order.find_orders_in_week(w, @warehouse_code).each do |o| %>
+                      <% orders.each do |o| %>
                         <tr>
                           <td><%= link_to "#{o.order_number}", order_path(o.id) %></td>
                           <td><%= number_to_currency(o.total_sum) %></td>
@@ -42,7 +44,7 @@
                     </thead>
                     <tbody>
                       <% sum_all_deliveries = 0 %>
-                      <% IncomingDelivery.find_incoming_deliveries_in_week(w, @warehouse_code).each do |i| %>
+                      <% incoming_deliveries.each do |i| %>
                         <tr>
                           <td><%= link_to "#{i.invoice_nbr}", incoming_delivery_path(i.id) %></td>
                           <% incoming_delivery_products = i.incoming_delivery_products %>

@@ -168,17 +168,8 @@ class Order < ActiveRecord::Base
   end
 
   def self.find_orders_in_week week, warehouse_code
-    orders = Order.where("finished_at >= ?", week[:day_1]).where("finished_at <= ?", week[:day_7]).where(warehouse_code:  warehouse_code).order("finished_at ASC")
+    orders = Order.where("finished_at >= ? AND finished_at <= ? AND warehouse_code = ?", week[:day_1], week[:day_7], warehouse_code).order("finished_at ASC")
     return orders
-  end
-
-  def self.has_week week, warehouse_code
-    orders = Order.where("finished_at >= ?", week[:day_1]).where("finished_at <= ?", week[:day_7]).where(warehouse_code: warehouse_code)
-    if orders.count >= 1
-      return true
-    else
-      return false
-    end
   end
 
 end
