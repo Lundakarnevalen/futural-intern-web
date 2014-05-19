@@ -14,6 +14,7 @@ sv:
       last: "Sista &raquo;"
       previous: "&lsaquo; Föregående"
       next: "Nästa &rsaquo;"
+      truncate: "&hellip;"
   # Can can
   unauthorized:
     manage:
