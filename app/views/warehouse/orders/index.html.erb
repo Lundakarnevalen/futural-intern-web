@@ -103,5 +103,7 @@
     </tbody>
   </table>
 </div>
-<%= paginate @completed_orders %>
+<% if @warehouse_code == 0 %>
+  <%= paginate @completed_orders %>
+<% end %>
 <% end %>

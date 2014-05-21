@@ -68,5 +68,7 @@
 </div>
 <% end %>
 <% end %>
-<%= paginate @product_categories %>
+<% if @warehouse_code == 0 %>
+  <%= paginate @product_categories %>
+<% end %>
 <% end %>

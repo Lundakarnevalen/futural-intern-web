@@ -71,4 +71,6 @@
 
   <% end %>
 <% end %>
-<%= paginate @weeks %>
+<% if @warehouse_code == 0 %>
+  <%= paginate @weeks %>
+<% end %>
