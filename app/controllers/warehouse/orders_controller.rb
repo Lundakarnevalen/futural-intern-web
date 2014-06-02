@@ -4,11 +4,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def index
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC")
-    if @warehouse_code == 0
-      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC").page(params[:page]).per(50)
-    else
-      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC")
-    end
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND karnevalist_id = ?", @warehouse_code, current_user.karnevalist.id).order("id DESC").page(params[:page]).per(50)
     @bestallare = true
   end
 
@@ -168,11 +164,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
 
   def list
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ?", @warehouse_code).order("delivery_date ASC, id DESC")
-    if @warehouse_code == 0
-      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at DESC").page(params[:page]).per(50)
-    else
-      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at DESC")
-    end
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ?", @warehouse_code).order("finished_at DESC").page(params[:page]).per(50)
     @bestallare = false
     render :index
   end
@@ -184,11 +176,7 @@ class Warehouse::OrdersController < Warehouse::ApplicationController
       @sektioner = current_user.karnevalist.tilldelade_sektioner.map{|s| s.id}
     end
     @active_orders = Order.where("status IS NOT NULL AND finished_at IS NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
-    if @warehouse_code == 0
-      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC").page(params[:page]).per(50)
-    else
-      @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC")
-    end
+    @completed_orders = Order.where("status IS NOT NULL AND finished_at IS NOT NULL AND warehouse_code = ? AND sektion_id IN (?)", @warehouse_code, @sektioner).order("id DESC").page(params[:page]).per(50)
     @bestallare = false
     @sektion_orders = true
     render :index

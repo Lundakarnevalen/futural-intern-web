@@ -68,7 +68,5 @@
 </div>
 <% end %>
 <% end %>
-<% if @warehouse_code == 0 %>
-  <%= paginate @product_categories %>
-<% end %>
+<%= paginate @product_categories, url: proc{|page| sektion_summary_products_path(sektion_id: @sektion.id, page: page)} %>
 <% end %>

@@ -21,8 +21,8 @@ module Warehouse::ApplicationHelper
     @warehouse_code == 0 ? fabriken_order_url(o) : (@warehouse_code == 1 ? fest_order_url(o) : snaxeriet_order_url(o))
   end
 
-  def orders_path
-    @warehouse_code == 0 ? fabriken_orders_path : (@warehouse_code == 1 ? fest_orders_path : snaxeriet_orders_path)
+  def orders_path(p = nil)
+    @warehouse_code == 0 ? fabriken_orders_path(p) : (@warehouse_code == 1 ? fest_orders_path(p) : snaxeriet_orders_path(p))
   end
   
   def export_orders_path
@@ -45,12 +45,12 @@ module Warehouse::ApplicationHelper
     @warehouse_code == 0 ? confirm_date_fabriken_order_path(o) : (@warehouse_code == 1 ? confirm_date_fest_order_path(o) : confirm_date_snaxeriet_order_path(o)) 
   end
 
-  def list_orders_path
-    @warehouse_code == 0 ? list_fabriken_orders_path : (@warehouse_code == 1 ? list_fest_orders_path : list_snaxeriet_orders_path) 
+  def list_orders_path(p = nil)
+    @warehouse_code == 0 ? list_fabriken_orders_path(p) : (@warehouse_code == 1 ? list_fest_orders_path(p) : list_snaxeriet_orders_path(p)) 
   end
 
-  def sektion_orders_path
-    @warehouse_code == 0 ? sektion_fabriken_orders_path : (@warehouse_code == 1 ? sektion_fest_orders_path : sektion_snaxeriet_orders_path)
+  def sektion_orders_path(p = nil)
+    @warehouse_code == 0 ? sektion_fabriken_orders_path(p) : (@warehouse_code == 1 ? sektion_fest_orders_path(p) : sektion_snaxeriet_orders_path(p))
   end
 
   def return_products_order_path
@@ -127,8 +127,8 @@ module Warehouse::ApplicationHelper
   end
 
   # products
-  def weekly_overview_products_path
-    @warehouse_code == 0 ? weekly_overview_fabriken_products_path : (@warehouse_code == 1 ? weekly_overview_fest_products_path : weekly_overview_snaxeriet_products_path)
+  def weekly_overview_products_path(p = nil)
+    @warehouse_code == 0 ? weekly_overview_fabriken_products_path(p) : (@warehouse_code == 1 ? weekly_overview_fest_products_path(p) : weekly_overview_snaxeriet_products_path(p))
   end
 
   def daily_overview_products_path
@@ -167,8 +167,8 @@ module Warehouse::ApplicationHelper
     @warehouse_code == 0 ? update_inventory_fabriken_products_path : (@warehouse_code == 1 ? update_inventory_fest_products_path : update_inventory_snaxeriet_products_path)
   end
   
-  def sektion_summary_products_path
-    @warehouse_code == 0 ? sektion_summary_fabriken_products_path : (@warehouse_code == 1 ? sektion_summary_fest_products_path : sektion_summary_snaxeriet_products_path)
+  def sektion_summary_products_path(p = nil)
+    @warehouse_code == 0 ? sektion_summary_fabriken_products_path(p) : (@warehouse_code == 1 ? sektion_summary_fest_products_path(p) : sektion_summary_snaxeriet_products_path(p))
   end
 
   # categories

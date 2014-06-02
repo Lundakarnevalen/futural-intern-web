@@ -71,6 +71,4 @@
 
   <% end %>
 <% end %>
-<% if @warehouse_code == 0 %>
-  <%= paginate @weeks %>
-<% end %>
+<%= paginate @weeks, url: proc{|page| weekly_overview_products_path(page: page)} %>

@@ -103,7 +103,15 @@
     </tbody>
   </table>
 </div>
-<% if @warehouse_code == 0 %>
-  <%= paginate @completed_orders %>
+<% if @bestallare %>
+  <%= paginate @completed_orders, url: proc{|page| orders_path(page: page)} %>
+<% elsif @sektion_orders %>
+  <% if !@sektioner.kind_of?(Array) %>
+    <%= paginate @completed_orders, url: proc{|page| sektion_orders_path(sektion_id: Sektion.find(@sektioner).id, page: page)} %>
+  <% else %>
+    <%= paginate @completed_orders, url: proc{|page| sektion_orders_path(page: page)} %>
+  <% end %>
+<% else %>
+  <%= paginate @completed_orders, url: proc{|page| list_orders_path(page: page)} %>
 <% end %>
 <% end %>
