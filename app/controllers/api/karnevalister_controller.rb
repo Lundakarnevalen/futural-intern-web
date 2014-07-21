@@ -20,6 +20,24 @@ class Api::KarnevalisterController < Api::ApiController
     render status: 200 , json: { success: true, karnevalist: k }
   end
 
+  def search
+    unless current_user.is? :exporter
+      return render status: :unauthorized, json: {errors: [t('not authorized')]}
+    end
+
+    if params[:q].present?
+      @results = Karnevalist.search params[:q]
+    else
+      @results = Karnevalist.order(id: :asc).includes(:sektioner, :intressen)
+    end
+
+    render :json =>
+      { :status => :success,
+        :records => @results.length,
+        :remaining => false,
+        :karnevalister => @results }
+  end
+
   private
     def karnevalist_params
       params.require(:karnevalist).permit!

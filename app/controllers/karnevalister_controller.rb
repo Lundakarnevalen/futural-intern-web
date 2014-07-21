@@ -182,13 +182,6 @@ class KarnevalisterController < ApplicationController
           end
         end
       end
-      format.json do
-        render :json =>
-          { :status => :success,
-            :records => @karnevalister.length,
-            :remaining => false,
-            :karnevalister => @karnevalister }
-      end
     end
   end
 
