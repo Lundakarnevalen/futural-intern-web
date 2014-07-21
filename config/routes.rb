@@ -17,6 +17,7 @@
     resources :karnevalister, only: [:update] do
       collection do
         get 'fetch', action: 'fetch'
+        get 'search', action: 'search'
       end
     end
     resources :notifications, only: [:index]

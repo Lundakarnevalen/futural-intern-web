@@ -81,7 +81,7 @@ class Karnevalist < ActiveRecord::Base
   def self.search str
     words = str.split ' '
     # Search terms are chained together, one term after the other.
-    q = self.all
+    q = self.order(id: :asc).includes(:sektioner, :intressen)
     words.each do |w|
       if (i = Integer w rescue nil)
         # Search term is integer. Attempt direct match against id.
