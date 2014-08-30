@@ -2,7 +2,8 @@
 # MySQL hack by Johan Förberg
 
 PROGNAME="$(basename $0)"
-CACHEDCMD="$(dirname $0)/.mysql.cmd"
+DIRNAME="$(dirname $0)"
+CACHEDCMD="${DIRNAME}/.mysql.cmd"
 
 say()
 {
@@ -15,7 +16,8 @@ if [ -e "$CACHEDCMD" ]; then
 else
     say Fetching login details from Heroku...
 
-    URL=$(heroku config:get DATABASE_URL --app karnevalist)
+    # Make sure renv.production.envfile is set before running this. See README.rdoc
+    URL=$(. ${DIRNAME}/renv.sh config:get DATABASE_URL --remote production)
     USER=$(echo `expr "$URL" : '^.*//\(.*\):'`)
     PASS=$(echo `expr "$URL" : '^.*:\(.*\)@'`)
     HOST=$(echo `expr "$URL" : '^.*@\(.*\)/'`)
