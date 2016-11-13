@@ -33,4 +33,7 @@
 # Ignore local DB config
 /config/database.yml
 
+# Ignore .pem files
+*.pem
+
 /bin/.*

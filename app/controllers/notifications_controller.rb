@@ -41,10 +41,9 @@ class NotificationsController < ApplicationController
 
   def create
     @notification = Notification.new notification_params
-    gcm_api_key = "***REMOVED***"
 
     if @notification.save
-      gcm = GCM.new(gcm_api_key)
+      gcm = GCM.new(ENV['GCM_API_KEY'])
       pusher = Grocer.pusher(certificate: Rails.root.join("config", "certificate.pem"), gateway: "gateway.push.apple.com")
       registration_ids = Array.new
       if @notification.recipient_id == 0

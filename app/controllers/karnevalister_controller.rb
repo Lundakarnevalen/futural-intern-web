@@ -113,8 +113,7 @@ class KarnevalisterController < ApplicationController
       end
     end
     if !@karnevalist.google_token.blank?
-      api_key = "***REMOVED***"
-      gcm = GCM.new(api_key)
+      gcm = GCM.new(ENV['GCM_API_KEY'])
       registration_id = Array.new
       registration_id.push @karnevalist.google_token
       options = {
