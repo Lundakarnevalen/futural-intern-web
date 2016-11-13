@@ -1,38 +1,11 @@
-== Futural internweb
+==Lundakarnevalen 2014 (Futuralkarnevalen)
 
-=== Kvalitetskontroll
+This is the internal website and API for {Lundakarnevalen}[http://www.lundakarnevalen.se/] 2014, a large student carnival arranged every fourth year.
 
-För repot gäller följande:
-
-==== master
-
-Master är den senaste släppta versionen. Release manager ansvarar för att 
-skjuta till master, andra utvecklare lämnar master ifred.
-
-Om man vill uppmärksamma release mgr. på att kod behöver skjutas till
-master kan man använda pull requests här på github.
-
-Vår huvudserver heroku/karnevalist följer master.
-
-==== develop
-
-Develop är den senaste utvecklingsversionen. Alla utvecklare får skjuta till
-develop, med vissa förbehåll.
-
-<em>Kod i develop bör klara sina tester</em>. Undvik att skjuta kod till develop som 
-failar sina tester, håll den koden i en egen bransch eller lokalt tills den 
-lever upp till kraven.
-
-Om du skriver ny kod till appen så ansvarar du för att skriva tester för att 
-dokumentera förväntat beteende. Om du hittar en bugg i någon annans kod så
-hjälper det att skriva tester som den failar pga. av ovan sagda bugg.
-
-Vår utvecklingsserver heroku/karnevalist-stage följer develop. Dock heter 
-branschen master på den servern. För att skjuta till stage används sålunda:
-
-    git push stage develop:master
-
-==== Övriga branscher 
-
-Här råder fri hopp och lek.
+The Ruby on Rails project includes a wide variety of functionalities, for example:
+ 
+* Different tools for registration and administration of "karnevalister" (students that take part in the carnival)
+* Order management system
+* API for communication between iOS/Android apps and the internal website
+* Tool for sending push notifications to Android and iOS app users
 
